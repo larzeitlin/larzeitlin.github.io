@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">LZ</h1>
+<p>
+<a href="./index.html">home</a>
+</p>
+
+<div id="outline-container-org8822f19" class="outline-2">
+<h2 id="org8822f19">Convolution</h2>
+<div class="outline-text-2" id="text-org8822f19">
+<p>
+Convolution is, to me at least, a really inspirational subject. Why?
+Because it can initially seem like DSP magic, but it's really not hard
+to understand at all..
+</p>
+
+<p>
+Convolution is a process that takes two input signals and produces an
+output signal. The result is can be described as a smearing of the two
+signals through each other.
+</p>
+
+<p>
+Before we start I'd like you to imagine two signals. we'll call them f
+and g. They are sounds. Now, and this will seem bizarre, imagine
+<b>flipping g back-to-front and then dragging it through f.</b> This is, in a
+nutshell, what convolution is. Hold that image in your head. It doesn't
+need to make sense right now, just try to picture it. We'll come back to
+it.
+</p>
+
+<p>
+Now, before we get onto how it works, let's first establish why we'd
+bother.
+</p>
+</div>
+
+<div id="outline-container-orge52630a" class="outline-3">
+<h3 id="orge52630a">What can convolution do for us?</h3>
+<div class="outline-text-3" id="text-orge52630a">
+<p>
+Quite a lot actually. We can use convolution to model any <b>linear time
+invariant</b> (LTI) system. Let's explore that term:
+</p>
+
+<p>
+A Linear system, just means a system that will apply the same treatment
+to the input regardless of what the input is. Actually <i>linear</i> is a
+slightly ambiguous term in mathematics, but here we are talking about
+the <a href="https://en.wikipedia.org/wiki/Linear_map">linear mapping</a>
+definition.
+</p>
+
+<p>
+Say we have a <i>times 2 multiplier</i> number machine, what ever you feed
+into it gets multiplied by two. Doesn't matter what number you put in,
+it always does the same thing. Put in 1, you get out 2. Put in 5 you get
+out 10. 1 goes to 2 as 5 goes to 10. These two pairs have the same
+relationship. Inputs map to outputs linearly. that's a <b>linear system.</b>
+</p>
+
+<p>
+<b>Linear systems must have, by definition, two qualities: Additivity and
+homogeneity.</b>
+</p>
+
+<p>
+<b>Additivity.</b> This just means that adding two things together and then
+sticking them in the input will yield the same result as sticking them
+through individually and then adding them together afterwards. As shown
+below, A and B produce the same results because a <i>times 5</i> number
+machine is additive.
+</p>
+
+
+
+<p>
+<b>Homogeneity.</b> This just means that a scaling coefficient applied to the
+input is equivalent to the same coefficient applied at the output.
+Again, this is shown by A producing the same result as B.
+</p>
+
+
+<div class="figure">
+<p><img src="images/linear1.jpg" alt="linear1.jpg" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="images/3.1.png" alt="3.1.png" />
+</p>
+</div>
+
+
+<p>
+Any system that can meet these two conditions is called <b>linear.</b>
+</p>
+
+<p>
+As for <b>time invariance</b>, it's exactly what it sounds like. The system
+doesn't change over time. Again, our number-machine above is time
+invariant. It doesn't care <i>when</i> you put your input in, it'll always
+give the same output for that input.
+</p>
+
+<p>
+As an example of a non-LTI system, think of a compressor. It has an
+attack time, a decay time and it behaves differently at different gain
+levels. We can't easily model a compressor of any quality with
+convolution.
+</p>
+
+<p>
+How about other tools in your standard music production kit? High Pass,
+Low Pass, Band Pass, (&#x2026;etc) Filters, EQs, even comb filters, reverbs,
+delays &#x2026;the list goes on. Provided none of the parameters are
+modulated, provided they are linear and they don't change with time,
+those can all be modelled with convolution! So, it looks like
+convolution might be pretty handy.
+</p>
+
+<p>
+There is a caveat here: Modelling something like a delay with a feedback
+&gt;= 100% would hypothetically require an infinitely long <b>impulse
+response.</b> (we'll get to IRs shortly) So people don't really use
+convolution for delays so much. We could call convolution a FIR (Finite
+Impulse Response) filter. Any filter that uses feedback, including most
+implementations of delays, HPF, LPF, combs, flangers, etc, are what we
+call IIR (Infinite Impulse Response) filters.
+</p>
+
+<p>
+Furthermore, saying that something can be modelled with convolution is
+not to say it should be. There are more efficient, more sensible ways to
+do a lot of these things. None the less, in many cases it is possible to
+do so.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org04aff88" class="outline-3">
+<h3 id="org04aff88">Do LTI systems exist?</h3>
+<div class="outline-text-3" id="text-org04aff88">
+<p>
+<i>"What what? You just told us that a whole heap of stuff is LTI!"</i>
+</p>
+
+<p>
+So, that seems like a bit of a non-sequitur. But it's a valid question -
+Do LTI systems exist <b>in reality?</b> In the squidgy, crude, moving
+physical world with changing air pressure and temperature and a billion
+other things going on, how can there ever be a true LTI?
+</p>
+
+<p>
+To cut a long story short - I don't know, but I find it hard to imagine
+how their could be. However, plenty of stuff is really so close to being
+LTI that it doesn't really matter. One example of “real things“ that are
+so damn close to being LTI are the reverberations of spaces. We can use
+convolution to capture the sound of a room. Not <b>the sound of a specific
+sound in a room</b>, but what a room would do to <b>any sound</b>. Kind of like
+stealing the room's soul. Magic, right?
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga06b2d3" class="outline-3">
+<h3 id="orga06b2d3">OK, lets convolve!</h3>
+<div class="outline-text-3" id="text-orga06b2d3">
+<p>
+Before going any further, I should point out that the mathematical
+operator for convolution is often drawn as an asterisk: * . This is a
+pain because in c++ we use that for standard multiplication (as we did
+above). It should be obvious from context which is intended, none the
+less I'll try to only use it for convolution going forward in this
+article.
+</p>
+
+<p>
+The definition of discrete-time convolution is as follows:
+</p>
+
+
+<div class="figure">
+<p><img src="images/3.2.jpeg" alt="3.2.jpeg" />
+</p>
+</div>
+
+<p>
+&#x2026;and now you are thinking:
+</p>
+
+<p>
+<i>"Apart from these fun colours, this doesn't look like school-level
+maths at all!"</i>
+</p>
+
+<p>
+But it's really not too bad if we go step by step. What we have here is
+a recipe for each sample of the output of our convolution. Follow the
+colours:
+</p>
+
+<ul class="org-ul">
+<li>The <font color="red"> nth</font> sample of the of <font color="green">convolution of signals f and g</font> is equal to (or more
+accurately, defined as)&#x2026;</li>
+<li>The <font color="blue"> the sum</font>, from m = -infinity to m = infinity, of&#x2026;</li>
+<li><font color="orange"> the mth sample of f</font> times <font color="purple"> the (n-m)th sample of g</font></li>
+</ul>
+
+<p>
+Let's translate that into more normal language:
+</p>
+
+<ul class="org-ul">
+<li>f[m] is really just the same as one of the input signals: f[n]. We've
+renamed the n axis as this new variable m doesn't change as we
+increment n. So our signal f stays in one place.</li>
+<li>g[n - m] is a back-to-front version of one of our input signals: g[n],
+but it moves along one step to the right every time we increment
+n. Why? well g[m] would be a copy of g[n], so g[-m] is a copy of g[n]
+<b>but flipped around the y-axis.</b> So, g[n-m] is that flipped version
+but bumped right however much we've incremented n. </li>
+</ul>
+
+<p>
+Now all together:
+</p>
+
+<p>
+We keep f where it is, flip g around the y axis, bump it along n steps,
+and then multiply them together point-for-point:
+</p>
+
+<pre class="example">
+(... g[-2]f[-2], g[-1]f[-1], g[0]f[0], g[1]f[1], g[2]f[2] ... etc )
+</pre>
+
+<p>
+and then add together all of those multiplications. That sum gives us
+the value of (f * g) at point n.
+</p>
+
+<p>
+Here is the process in action:
+</p>
+
+<ul class="org-ul">
+<li>The <font color="blue">blue signal is f.</font></li>
+<li>The <font color="orange">orange signal is g</font> (see how it gets
+flipped around 0 on the y axis)</li>
+<li>The resulting <font color="green"> green line is the output of the convolution (f * g)</font>￼</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="images/3.3.gif" alt="3.3.gif" />
+</p>
+</div>
+
+<p>
+We're really imagining that our two signals are zero-padded an infinite
+amount at ether end. That is to say that we'd hypothetically just shove
+an endless line of 0s at ether end of our signal.
+</p>
+
+<p>
+For example:
+</p>
+
+<p>
+if g was: 
+</p>
+<pre class="example">
+[2, 3, 4]
+</pre>
+
+<p>
+then a infinitely zero-padded g would look like: 
+</p>
+
+<pre class="example">
+[...0, 0, 0, 0, 2, 3, 4, 0, 0, 0, 0, ...]
+</pre>
+
+<p>
+&#x2026;with ether side stretching off to infinity.
+</p>
+
+<p>
+In reality this is unnecessary and impractical to say the least. We'll
+just make sure we have enough room on ether side to capture everything.
+</p>
+
+<p>
+Notice how the value of the output will always be 0 when our two input
+signals don't overlap (because anything times 0 is 0), and the more area
+under both functions on any given iteration of n, the higher the output
+value is at that point. Really convolution is discribing this shared
+area.
+</p>
+
+<p>
+You can see here how the output is a bit like the two signals <b>smudged
+together.</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c72780" class="outline-3">
+<h3 id="org7c72780">Why do we do the flip?</h3>
+<div class="outline-text-3" id="text-org7c72780">
+<p>
+We need to flip g because we want the <b>beginning of g</b> to meet the
+<b>beginning of f</b> first, and the <b>end of g</b> to meet the <b>end of f</b> last,
+as it does in the animation above. If we didn't flip that wouldn't
+happen.
+</p>
+
+<p>
+Also, it should be noted that it doesn't matter which signal stays still
+and which does the flip-and-drag. Convolution is <b>commutative</b>. This
+means that (f * g) is the same as (g * f). They make the same results.
+For music stuff though we're usually gonna think of one as the filter
+and the other as the input.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0888301" class="outline-3">
+<h3 id="impulse-responses">Impulse Responses</h3>
+<div class="outline-text-3" id="text-impulse-responses">
+<p>
+Now we know how to convolve, but how does that help us capture the
+reverberation of a space, or the sonic quality of a piece of hardware?
+To do that we need to fire off some signal in the space and record the
+response. We could do this with all sorts of noises and then compare the
+inputs to the outputs, but if we use a very specific signal as an input
+we can save ourselves a lot of mathematical trouble later on. Let's see
+how:  An impulse (in discrete time) is a signal that is at 0 for all
+points apart from one point where it's value is 1. For example: [0, 1, 0,
+0, 0].
+</p>
+
+
+<div class="figure">
+<p><img src="images/3.4.jpeg" alt="3.4.jpeg" />
+</p>
+</div>
+
+<p>
+The continuous time equivalent is called a Dirac delta function.
+Conceptually it's more complicated in continuous time and we needn't
+trouble ourselves with that here, but it's worth knowing the term.
+</p>
+
+<p>
+This impulse is the perfect probe because it just so happens that an
+impulse creates every possible frequency in an equal amount. To show why
+that is would be a major digression here, so you'll have to take my word
+for it right now. When I write a post about Fourier we'll see why.
+</p>
+
+<p>
+If we convolve our input signal with an impulse response if an LTI, the
+output is the same as though the signal had been fed into that LTI. When
+you think about it, any digital input signal is just a train of
+impulses. So it makes sense that the convolution of the signal (which is
+applied to every sample) creates a series of overlapping IRs that
+recreates the system's response to that sound.
+</p>
+
+<p>
+Capturing the IR of hardware is pretty simple, we just need to input the
+impulse and record the response. In nature it's a bit more tricky. One
+of the most common methods to capture a reverb impulse response of a
+space is to pop a balloon and record the result. The contained,
+pressurised air in the ballon suddenly being exposed to the air in the
+space in all directions can be a decent approximation of a Dirac delta
+function. Of course the process of then capturing the result accurately
+is no doubt pretty technical and equipment intensive.
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

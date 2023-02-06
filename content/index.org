@@ -1,0 +1,10 @@
+#+title: LZ
+#+OPTIONS: toc:nil
+
+
+hi i'm luke - this is my blog
+
+- [[./convolution.org][convolution]]
+- [[file:dft.org][discrete fourier transform]]
+- [[file:ring-modulation.org][ring modulation and frequency shifting]]
+- [[file:aes-encryption.org][aes encryption]]
