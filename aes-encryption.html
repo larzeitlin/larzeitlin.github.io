@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">LZ</h1>
+<p>
+<a href="./index.html">home</a>
+</p>
+
+<div id="outline-container-org289fe2c" class="outline-2">
+<h2 id="org289fe2c">Advanced Encryption Standard in Clojure</h2>
+<div class="outline-text-2" id="text-org289fe2c">
+<p>
+The Advanced Encryption Standard (a.k.a Rijndael) is a widely used encryption specification. To learn how it works, and some of the motivation behind the design, I decided to build it in Clojure.
+</p>
+
+<blockquote>
+<p>
+WARNING!! Obviously don't use any of this code, or your own implementation of the AES, in production. It will be less efficient and less secure than using the standard libraries for your language of choice. This is just for educational perposes only.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-org9ce9337" class="outline-3">
+<h3 id="org9ce9337">Overview</h3>
+<div class="outline-text-3" id="text-org9ce9337">
+<p>
+We're looking at AES-128 in ECB mode. 128 is the key size in bits. ECB (electronic codebook) simply means that each block (16 bytes) of our plaintext will be encrypted statelessly and independently of each other block. It is simpler and less secure than other modes.
+Each block is processed with a number of steps including 11 rounds. Something a little different happens in the first and last rounds. Each round needs its own 16-byte key, but since we only have one 16-byte key to start with, we'll use it to generate more.
+As you've probably noticed, everything is happening in chunks of 16 bytes. When it comes to encrypting blocks, we might as well think about them as being in a 4x4 grid in column-major order (ie. the grid is filled from top to bottom, left to right).
+</p>
+
+
+<div class="figure">
+<p><img src="images/column-major.png" alt="column-major.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8937321" class="outline-4">
+<h4 id="org8937321">Processing per round (except first and last)</h4>
+<div class="outline-text-4" id="text-org8937321">
+<ol class="org-ol">
+<li>Replace each byte with another from a fixed lookup-table</li>
+<li>Shift rows</li>
+<li>Mix columns</li>
+<li>XOR with the round-key</li>
+</ol>
+
+<p>
+That’s pretty much it. We’ll deal with the details when they come. Let’s dive in.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org43a8e2f" class="outline-3">
+<h3 id="org43a8e2f">Key Expansion</h3>
+<div class="outline-text-3" id="text-org43a8e2f">
+<p>
+We need to make more keys. The 128-bit key is broken up into 4 32-bit words. These will be used to make a total of 44 words (4 for each of our 11 rounds). words w(0) to w(3) are just the original first 4 words. From there on each new word w(n) is made by XOR-ing w(n - 4) with w(n - 1), except every 4th word, where we use something different. Let’s call this something t.
+</p>
+
+
+<div class="figure">
+<p><img src="images/key-expansion.png" alt="key-expansion.png" />
+</p>
+</div>
+
+<p>
+We calculate t by rotating the previous word, switching the bytes with different bytes from a lookup table which we’ll call s-box, and then XOR-ing this with a round-constant, which is a set value depending on the round. There is some mathematics behind the s-box, and we’ll also use it again in a later part of this journey, but for now all that matters is that each possible byte can be looked up and will return a different byte, so we can just do this with a Clojure map. We’ll just use integers to represent them. Here you go:
+</p>
+</div>
+
+
+<div id="outline-container-org5ff55d3" class="outline-4">
+<h4 id="org5ff55d3">s-box</h4>
+<div class="outline-text-4" id="text-org5ff55d3">
+<div class="org-src-container">
+<pre class="src src-clojure">(def s-box 
+  {0 99 249 153 121 182 65 131 70 90 218 87 62 178 74 214 164 73 186
+   244 233 30 188 101 240 140 110 159 130 19 128 205 210 181 229 217
+   153 238 213 3 7 197 59 226 86 177 154 184 20 250 224 225 72 82 58
+   128 205 189 60 235 175 121 27 175 1 124 69 110 101 77 24 173 102 
+   51 135 23 55 154 206 139 165 6 85 252 225 248 39 204 88 106 217 53
+   46 49 149 42 239 223 157 94 4 242 204 75 77 227 106 2 197 166 232
+   155 119 245 222 29 95 207 144 96 176 231 192 186 54 5 92 74 221 193
+   141 93 137 167 234 135 104 69 15 118 48 4 242 137 50 35 251 15 116
+   146 75 179 159 219 99 251 21 89 31 192 113 163 32 183 136 196 139
+   61 174 228 208 112 182 78 214 246 193 120 241 161 226 152 235 233
+   40 52 129 12 91 57 117 157 172 145 108 80 156 222 223 158 181 213
+   56 7 33 253 13 215 22 71 168 194 90 190 237 85 109 60 216 97 191 
+   8 143 115 178 55 247 104 167 92 36 54 41 165 187 234 195 46 118 
+   56 150 144 238 40 196 28 162 58 184 108 219 185 89 203 100 67 243
+   13 131 236 122 218 43 241 231 148 61 39 29 164 151 136 44 113 250
+   45 93 76 6 111 111 168 28 156 134 68 64 9 189 122 198 180 155 20 
+   248 65 227 17 220 134 103 133 170 172 51 195 25 212 201 221 166 36
+   34 147 252 176 146 79 228 105 125 255 148 34 17 130 3 123 12 254 
+   152 70 2 119 66 44 236 206 142 25 107 127 23 240 230 142 47 21 180
+   141 158 11 35 38 127 210 82 0 76 41 215 14 97 239 19 125 57 18 202
+   116 68 27 200 232 11 43 115 143 255 22 9 1 145 129 5 107 244 191 
+   112 81 179 109 245 230 254 187 83 237 138 126 14 171 45 216 53 150
+   78 47 132 95 26 162 123 33 203 31 140 100 16 202 133 151 163 10 81
+   209 120 188 79 132 211 102 38 247 173 149 126 243 98 170 124 16 
+   171 98 87 91 169 211 160 224 30 114 207 138 194 37 73 59 96 208 
+   10 103 18 201 105 249 185 86 52 24 114 64 253 84 209 62 147 220 
+   67 26 161 50 71 160 42 229 80 83 199 198 37 63 183 169 63 117 212
+   72 94 88 8 48 246 66 190 174 177 200 49 199 84 32})
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0592365" class="outline-3">
+<h3 id="org0592365">Round Constants</h3>
+<div class="outline-text-3" id="text-org0592365">
+<p>
+The round constants are 4-byte words, the 3 least-significant-bytes are 0, and the most-significant byte comes from a list at the index determined by the round number. here is this list:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(def round-constants
+ (map #(vector % 0 0 0) [1 2 4 8 16 32 64 128 27 54]))
+</pre>
+</div>
+
+<p>
+With the above bits of data we can do the key expansion like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(defn forth-words-temp [prev counter]
+  (let [rotated (take 4 (drop 1 (cycle prev)))
+	round-key (nth round-key (dec (/ counter 4)))]
+     (-&gt;&gt; rotated
+	 (map s-box)
+	 (map bit-xor round-key))))
+
+(defn next-word [words-so-far counter]
+  (let [prev (last words-so-far)
+	n-minus-4th (nth words-so-far (- counter 4))
+	temp (if (zero? (mod counter 4))
+	       (forth-words-temp prev counter)
+	       (last words-so-far))]
+    (map bit-xor n-minus-4th temp)))
+
+(defn key-expansion [key]
+  (-&gt;&gt;
+    (let [input-key-words (vec (partition 4 key))]
+      (loop [output-words input-key-words
+	     counter 4]
+	(if
+	  (&lt; counter 44)
+	  (recur (conj output-words
+		       (next-word output-words counter))
+		 (inc counter))
+	  ; else
+	  output-words)))
+    flatten
+    (partition 16)))
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga651dc5" class="outline-3">
+<h3 id="orga651dc5">Encryption Process</h3>
+<div class="outline-text-3" id="text-orga651dc5">
+<p>
+Now we have 11 keys we can get on with the work of encrypting a block. round 0 uses the first key and just consists of a simple XOR. 1 to 9 are as described above, and the final round is the same as those except there is no Mix Columns stage. Why? Because the whole point of Mix Columns is to diffuse, meaning to jumble up the information. If it were used in the final round, it would be trivially reversible, so it has no value.
+</p>
+
+
+<div class="figure">
+<p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
+</p>
+</div>
+
+<p>
+We’ve already looked at the S-box (yes, it’s the same one), so let’s see how Shift Rows works:
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc5dd90f" class="outline-3">
+<h3 id="orgc5dd90f">Shift Rows</h3>
+<div class="outline-text-3" id="text-orgc5dd90f">
+<p>
+Each row gets cycled to the left by a set number of steps. Easy.
+</p>
+
+
+<div class="figure">
+<p><img src="images/shift-rows.png" alt="shift-rows.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(defn shift-row [idx row]
+  (-&gt;&gt; row cycle (drop idx) (take 4)))
+
+; we have to do this (apply map vector) malarkey 
+; because we are in column-major order
+; and we want to get at the rows.
+
+(defn shift-rows [block]
+  (-&gt;&gt; block
+       (partition 4)
+       (apply map vector)
+       (map-indexed shift-row)
+       (apply map vector)
+       flatten))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org65d42c7" class="outline-3">
+<h3 id="org65d42c7">Mix Columns</h3>
+<div class="outline-text-3" id="text-org65d42c7">
+<p>
+Bit more tricky. The main idea is a matrix-vector multiplication, like so:
+</p>
+
+
+<div class="figure">
+<p><img src="images/mix-columns.png" alt="mix-columns.png" />
+</p>
+</div>
+
+<p>
+This looks simple enough. If you need a refresher on matrix-vector multiplication then <a href="https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces/null-column-space/v/matrix-vector-products">this will do</a>.
+</p>
+
+<p>
+However, there is a catch. we need to keep each element within the range of 1 byte. How to do that? we do the additions as XORs and the multiplications within Finite Field 256. Here we make a major detour…
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9171247" class="outline-3">
+<h3 id="org9171247">Galois Fields</h3>
+<div class="outline-text-3" id="text-org9171247">
+<p>
+Now I’ll make all the mathematicians wince with some loose speak. A Finite Field, also called Galois Field, is a field with a finite number of elements. A field, in casual terms, is a set of numbers with some rules that allow us to do addition, subtraction, multiplication, and division without ever leaving that set of numbers. Galois Fields exist where the number of elements equals a prime to the power of some positive integer. We are interested in GF(2<sup>8</sup>) a.k.a GF(256). In order to multiply in this field, we need to remember polynomial maths and write some code that does polynomial arithmetic.
+</p>
+
+
+<p>
+<a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)">https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)</a><sub>finite</sub><sub>field</sub>
+</p>
+<blockquote>
+<p>
+Disclaimer! this is not the most efficient way to do these calculations. I think it’s better to write something understandable first, and then optimise later, rather than transcribing some <a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)_finite_field">bit-shifting magic</a> and not getting it.
+</p>
+</blockquote>
+
+<p>
+We need to be able to do add, multiply, and divide. (don’t worry about subtraction, we can just negate one of the operands to get that for free). To do all of this, we are going to think about numbers in GF(2<sup>8</sup>) as polynomials. These polynomials represent binary arrays where the coefficients are the numbers {1, 0} and the exponents are the positions of each bit in a byte.
+</p>
+
+<p>
+For example, the number 74 can be represented in binary as:
+</p>
+
+<pre class="example">
+[0 1 0 0 1 0 1 0]
+</pre>
+
+<p>
+As a polynomial, where x = 2:
+</p>
+
+
+<div class="figure">
+<p><img src="images/binary-poly.png" alt="binary-poly.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf2597db" class="outline-3">
+<h3 id="orgf2597db">Polynomial addition</h3>
+<div class="outline-text-3" id="text-orgf2597db">
+<p>
+We’ll use vectors to represent polynomials just like the binary array above.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-clojure">(defn padding [x len]
+  (-&gt; (take (- len (count x)) (repeat 0))
+      (concat x)))
+
+(defn add [a b]
+  (let [max-length (max (count a) (count b))]
+    (-&gt;&gt; (map + (padding a max-length)
+		(padding b max-length))
+	 (drop-while zero?))))
+
+
+
+(add [1 0 1 0] [1])
+; =&gt; (1 0 1 1)
+
+</pre>
+</div>
+
+
+<p>
+Hey, that looks a lot like XOR! and if we were to throw a mod 2 on the end of it then it would be, since addition in our finite field is mod 2, we’ll just use bit-xor later on in our matrix-multiplication.
+</p>
+
+<p>
+Multiplication, you may remember from school, involved multiplying each element with every other element. I like to think about it in a grid.
+</p>
+
+<p>
+For example: 
+</p>
+
+<pre class="example">
+[1 0 1 1] [0 0 1 0] = [1 0 1 1 0]
+</pre>
+
+
+<div class="figure">
+<p><img src="images/bit-multip.png" alt="bit-multip.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(defn mult [a b]
+  (let [max-length (max (count a) (count b))
+	a' (-&gt; (padding a max-length) reverse vec)
+	b' (-&gt; (padding b max-length) reverse vec)]
+    (-&gt;&gt; (for [i (range max-length)
+	       j (range max-length)]
+	   {(+ i j) (* (a' i) (b' j))})
+	 (apply merge-with +)
+	 (sort-by key &gt;)
+	 (map second)
+	 (drop-while zero?))))
+</pre>
+</div>
+
+
+<p>
+Finally, division. This is good old long-division. You sort the polynomials into order with the biggest exponent first. See how many times the most significant element of the denominator goes into the most significant element of the numerator. Put that ratio down in your result, multiply the denominator by that ratio, subtract that multiplication from the numerator (you’ve just eliminated the most significant element of the numerator). Repeat until you can’t eliminate any more, adding up the results as you go. Here’s some code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(defn &gt;poly 
+  "test if a is greater than b"
+  [a b]
+  (let [a' (drop-while zero? a)
+	b' (drop-while zero? b)]
+    (cond
+      (= a' b') false
+      (&gt; (count a') (count b')) true
+      (&lt; (count a') (count b')) false
+      (empty? (drop-while #(&gt;= 0 %) (map - a' b'))) false
+      :else true)))
+
+
+(defn div
+  "returns a vector of ratio and remainder"
+  [n d]
+  (cond (= n d) [[1] [0]]
+	(&gt;poly d n) [[0] n]
+	:else
+	(loop [remain n
+	       res []]
+	  (let [new-exp (- (count remain) (count d))
+		new-coef (/ (first remain) (first d))
+		new-res-element (cons new-coef (take new-exp (repeat 0)))
+		new-remain (add remain (map - (mult d new-res-element)))]
+	    (if (&lt; new-exp 0)
+	      [res new-remain]
+	      (recur new-remain
+		     (add res new-res-element)))))))
+</pre>
+</div>
+
+<p>
+Now we have the bits we need for multiplication in GF(2<sup>8</sup>). Galois field multiplication works with modulo, to prevent us from leaving the set, but the divisor of the modulo is itself a polynomial. This has to be an <a href="https://en.wikipedia.org/wiki/Irreducible_polynomial">irreducible polynomial</a>. For the AES algorithm, we use the binary representation of 283, which is [1 0 0 0 1 1 0 1 1]. Our division function above gives us a remainder, so we can use it for modulus. If the result of our multiplication is big enough to hit the 9th bit…
+</p>
+
+<p>
+&gt; [1 1 1 1 1 1 1 1]
+</p>
+
+<p>
+… then we’ll divide by our divisor and take the remainder. Here’s how. There’s some extra cruft to deal with switching between these vectors representing binary arrays and integers.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-clojure">(defn int-&gt;bin-vec [x]
+  (-&gt;&gt; x
+       Integer/toBinaryString
+       (map int)
+       (map #(- % 48))
+       vec))
+
+(defn gf-256-mult [a b ip]
+  (let [poly-prod (mult (int-&gt;bin-vec a) (int-&gt;bin-vec b))
+	[_ poly-mod] (div poly-prod (int-&gt;bin-vec ip))]
+    (-&gt;&gt; poly-mod
+	 (map #(mod % 2))
+	 reverse
+	 (map-indexed (fn [idx val] (* val (Math/pow 2 idx))))
+	 (reduce +)
+	 int)))
+</pre>
+</div>
+
+<p>
+…phew! Okay, now we can finally do our finite field multiplications. Let’s travel back up the stack to Mix Columns.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb5e49a6" class="outline-3">
+<h3 id="orgb5e49a6">Mix Columns continued</h3>
+<div class="outline-text-3" id="text-orgb5e49a6">
+<p>
+So we had our matrix multiplication laid out above. Now we know how to multiply.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(def column-mix-matrix
+  [[2 3 1 1]
+   [1 2 3 1]
+   [1 1 2 3]
+   [3 1 1 2]])
+
+(defn mix-column [matrix irr column]
+  (for [row matrix]
+    (let [result (apply bit-xor
+			(map gf/gf-256-mult
+			     row
+			     column
+			     (repeat irr)))]
+      (if (&gt; 0x100 result)
+	result
+	(bit-xor irr result)))))
+
+(defn mix-columns [block]
+  (-&gt;&gt; block
+       (partition 4)
+       (map (partial mix-column column-mix-matrix 0x11b))
+       flatten))
+
+</pre>
+</div>
+
+<p>
+That’s it. We can just tie it all together with a few orchestrating functions. Before doing so let’s just refresh our memory as to what the whole process should look like.
+</p>
+
+
+<div class="figure">
+<p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(defn normal-round [round-key block]
+  (-&gt;&gt; block
+       (map s-box)
+       shift-rows
+       mix-columns
+       (map bit-xor round-key)))
+
+(defn apply-normal-rounds [split-keys block]
+  (loop [b block
+	 r-keys split-keys
+	 n 1]
+    (let [[round-key &amp; other-keys] r-keys]
+      (if (&lt; n 10)
+	(recur (normal-round round-key b)
+	       other-keys
+	       (inc n))
+	b))))
+
+(defn aes-128-encrypt-block [key block]
+  (let [split-keys (key-expansion key)]
+    (-&gt;&gt; block
+	 (map bit-xor (first split-keys))
+	 (apply-normal-rounds (rest split-keys))
+	 (map s-box)
+	 shift-rows
+	 (map bit-xor (last split-keys)))))
+</pre>
+</div>
+
+<p>
+Boom. Happy encrypting. Decryption is pretty straight forward, by the way, I’ll let you figure that out for yourself.
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
