@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">LZ</h1>
+<p>
+<a href="./index.html">home</a>
+</p>
+
+<div id="outline-container-orgedbe7d0" class="outline-2">
+<h2 id="orgedbe7d0">How this blog works</h2>
+<div class="outline-text-2" id="text-orgedbe7d0">
+<p>
+Thought I'd share a few details about it because I've been looking for the right 
+blogging method for me, and finally I've fallen on something that I think will work 
+nicely.
+</p>
+</div>
+
+<div id="outline-container-org6758acc" class="outline-3">
+<h3 id="org6758acc">Org mode</h3>
+<div class="outline-text-3" id="text-org6758acc">
+<p>
+Org mode is a markup format that comes from the Emacs world (although it is used outside
+Emacs as well). It's nice to write in because the marked-up text is still very clean 
+and readable.
+</p>
+
+<p>
+Org mode has some build-in "publishing" capability. It is able to export to HTML. I
+use a short emacs-lisp script to achive this. It simply sets a few config vars and
+calls the <code>org-publish-project-alist</code> function to walk the content directory and 
+convert my blog posts to html.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-elisp">(require 'ox-publish)
+
+(setq org-html-validation-link nil
+      org-html-head-include-scripts nil
+      org-html-head-include-default-style nil
+      org-html-head "&lt;link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" /&gt;")
+
+
+;; Define the publishing project
+(setq org-publish-project-alist
+      (list
+       (list
+	"orgfiles"
+	:recursive t
+	:base-directory "./content"
+	:publishing-directory "./"
+	:publishing-function 'org-html-publish-to-html
+	:with-author nil
+	:include-toc nil
+	:section-numbers nil
+	:time-stamp-file nil)))
+
+;; Generate the site output
+(org-publish-all t)
+
+(message "Build complete!")
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org63a3d75" class="outline-3">
+<h3 id="org63a3d75">Github pages</h3>
+<div class="outline-text-3" id="text-org63a3d75">
+<p>
+You can <a href="https://github.com/larzeitlin/blog">see the repo here</a>. Github pages detects the <code>index.html</code>, which then links to the 
+other files.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org452c71f" class="outline-3">
+<h3 id="org452c71f">Thanks</h3>
+<div class="outline-text-3" id="text-org452c71f">
+<p>
+This was inspired by <a href="https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/">System Crafters</a>. So thanks to David for that and all his great content.
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

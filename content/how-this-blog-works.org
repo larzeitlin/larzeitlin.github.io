@@ -1,0 +1,59 @@
+#+title: LZ
+#+options: toc:nil
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+[[./index.org][home]]
+
+* How this blog works
+
+Thought I'd share a few details about it because I've been looking for the right 
+blogging method for me, and finally I've fallen on something that I think will work 
+nicely.
+
+** Org mode
+Org mode is a markup format that comes from the Emacs world (although it is used outside
+Emacs as well). It's nice to write in because the marked-up text is still very clean 
+and readable.
+
+Org mode has some build-in "publishing" capability. It is able to export to HTML. I
+use a short emacs-lisp script to achive this. It simply sets a few config vars and
+calls the ~org-publish-project-alist~ function to walk the content directory and 
+convert my blog posts to html.
+
+
+#+begin_src elisp
+(require 'ox-publish)
+
+(setq org-html-validation-link nil
+      org-html-head-include-scripts nil
+      org-html-head-include-default-style nil
+      org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+
+
+;; Define the publishing project
+(setq org-publish-project-alist
+      (list
+       (list
+	"orgfiles"
+        :recursive t
+        :base-directory "./content"
+        :publishing-directory "./"
+        :publishing-function 'org-html-publish-to-html
+	:with-author nil
+	:include-toc nil
+        :section-numbers nil
+	:time-stamp-file nil)))
+
+;; Generate the site output
+(org-publish-all t)
+
+(message "Build complete!")
+#+end_src
+
+
+** Github pages
+You can [[https://github.com/larzeitlin/blog][see the repo here]]. Github pages detects the ~index.html~, which then links to the 
+other files.
+
+** Thanks 
+This was inspired by [[https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/][System Crafters]]. So thanks to David for that and all his great content.
