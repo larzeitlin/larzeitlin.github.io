@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">LZ</h1>
+<p>
+<a href="./index.html">home</a>
+</p>
+
+
+<div id="outline-container-orgc6c71b8" class="outline-2">
+<h2 id="orgc6c71b8">Look mum, no HTTP client!</h2>
+<div class="outline-text-2" id="text-orgc6c71b8">
+<p>
+Usually when you want to make an HTTP GET request in your favorite programming language you probably do something like import an HTTP library, make a client, call a GET method on that client and away we go. Just for fun, and to get more familiar with Common Lisp I figured I'd instead make a request from scratch. But, because of Sagan, apple pie and turtles all the way down, I won't be doing anything "from scratch". Instead we'll just be dipping one layer down.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8379678" class="outline-2">
+<h2 id="org8379678">Networking basics</h2>
+<div class="outline-text-2" id="text-org8379678">
+</div>
+<div id="outline-container-orgc2ca55e" class="outline-3">
+<h3 id="orgc2ca55e">TCP/IP</h3>
+<div class="outline-text-3" id="text-orgc2ca55e">
+
+<div class="figure">
+<p><img src="images/http-layers.png" alt="http-layers.png" />
+</p>
+</div>
+
+<p>
+<code>HTTP</code> is build on top of a few protocols. <code>TCP</code> is the main thing we want to deal with. <code>Transmission Control Protocol</code>. This is the main protocol (alongside <code>UDP</code>) of the <code>Transport Layer</code>, which sits between <code>Network Layer</code> and the <code>Application Layer</code> the <code>TCP/IP model</code>. 
+</p>
+
+
+<div class="figure">
+<p><img src="images/700px-IP_stack_connections.svg.png" alt="700px-IP_stack_connections.svg.png" />
+</p>
+</div>
+
+<p>
+TCP ensures that internet applications can talk reliably to each other with error checked byte-streams. We can use communicate using <code>TCP</code> on Linux with sockets.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org25a0f37" class="outline-3">
+<h3 id="org25a0f37">Sockets</h3>
+<div class="outline-text-3" id="text-org25a0f37">
+<p>
+Linux sockets are essentially file-like-things that represent network connections. They are identified by a combination of host and port-number. We can write to and read from a socket. Writes will be turned into packets and sent out. Addresses can be a an <code>IP address</code> or a <code>hostname</code>. In the latter case we perform a <code>DNS lookup</code> to get the <code>IP address</code> associated with the <code>hostname</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0df99eb" class="outline-2">
+<h2 id="org0df99eb">Sockets in Common Lisp</h2>
+<div class="outline-text-2" id="text-org0df99eb">
+<p>
+To play around with sockets in common lisp we are going to use a package called <code>usocket</code>. Start up a REPL and load it up with Quicklisp. Let's set a variable to hold the host address. Initially we'll use the loopback interface (localhost) which is always at <code>127.0.0.1</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(ql:quickload "usocket")
+
+(defvar host "127.0.0.1")
+</pre>
+</div>
+
+<p>
+Okay, lets make a socket. Various ports are reserved by the operating system. If this fails you may be trying to use one of those.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(usocket:socket-listen host 3333)
+</pre>
+</div>
+
+<p>
+This listens on the port. There is no active connection yet though, that needs to be made on the other side. Lets open up a terminal and use <code>nc</code> to make the connection:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">nc 127.0.0.1 3333
+</pre>
+</div>
+
+<p>
+Now we'll accept that connection from the REPL:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(defvar connection (usocket:socket-accept s1 :element-type 'character))
+</pre>
+</div>
+
+<p>
+Let's have a look at it:
+</p>
+
+<pre class="example">
+(describe connection)
+
+;=&gt;
+; #&lt;USOCKET:STREAM-USOCKET {10047260C3}&gt;
+;   [standard-object]
+; 
+; Slots with :INSTANCE allocation:
+;   SOCKET    = #&lt;SB-BSD-SOCKETS:INET-SOCKET 127.0.0.1:3333, peer: 127.0.0.1:57776, fd..
+;   WAIT-LIST = NIL
+;   STATE     = NIL
+;   STREAM    = #&lt;SB-SYS:FD-STREAM for "socket 127.0.0.1:3333, peer: 127.0.0.1:57776" ..
+</pre>
+
+<p>
+To send the message we want to write to the stream:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(with-open-stream (my-stream (usocket:socket-stream connection))
+ (format my-stream "hello world~%"))
+</pre>
+</div>
+
+<p>
+This should appear in the terminal where we ran <code>nc</code>. The connection is now closed. Congratulations, you did a sockets.
+</p>
+
+<p>
+Here the REPL was the server and the terminal was the client. Let's play the client this time. We write to the socket-stream with a string that represents the HTTP request. We just have to specify the version of HTTP and the host name (let's point at <a href="http://xahlee.info/">Xah Lee's blog</a> since it's not likely to change to HTTPS any time soon). <code>force-output</code> is used as per the the <a href="https://usocket.common-lisp.dev/api-docs.shtml#stream-usocket">USocket docs</a>. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">
+(defvar s2 (usocket:socket-connect "xahlee.info" 80 :element-type 'character))
+
+(defvar *new-line* (#\Return #\Newline))
+
+(format (usocket:socket-stream s2)
+	"~A"
+	(concatenate 'string
+		     "GET / HTTP/1.1"
+		     *new-line*
+		     "Host: xahlee.info"
+		     *new-line* *new-line*))
+
+(force-output (usocket:socket-stream a))
+
+(read-line (usocket:socket-stream a) nil)
+;=&gt; "HTTP/1.1 200 OK"
+
+</pre>
+</div>
+
+<p>
+And that's it. Keep evaluating the read-line expression to read more lines from the response. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc8e731d" class="outline-2">
+<h2 id="orgc8e731d">Final notes</h2>
+<div class="outline-text-2" id="text-orgc8e731d">
+<ul class="org-ul">
+<li>The above uses plain HTTP. HTTPS adds a whole layer of complexity that is glossed over here.</li>
+<li>This method is just for fun and learning. If you are making something serious then you'll want to use a fully featured HTTP client library.</li>
+<li>If you do use usockets in Common Lisp for something more serious then be sure to close connections as you go.</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

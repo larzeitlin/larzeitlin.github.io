@@ -1,0 +1,110 @@
+#+title: LZ
+#+options: toc:nil
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+
+[[./index.org][home]]
+
+
+* Look mum, no HTTP client!
+Usually when you want to make an HTTP GET request in your favorite programming language you probably do something like import an HTTP library, make a client, call a GET method on that client and away we go. Just for fun, and to get more familiar with Common Lisp I figured I'd instead make a request from scratch. But, because of Sagan, apple pie and turtles all the way down, I won't be doing anything "from scratch". Instead we'll just be dipping one layer down.
+
+* Networking basics
+
+** TCP/IP
+
+[[file:images/http-layers.png]]
+
+~HTTP~ is build on top of a few protocols. ~TCP~ is the main thing we want to deal with. ~Transmission Control Protocol~. This is the main protocol (alongside ~UDP~) of the ~Transport Layer~, which sits between ~Network Layer~ and the ~Application Layer~ the ~TCP/IP model~. 
+
+[[file:images/700px-IP_stack_connections.svg.png]]
+
+TCP ensures that internet applications can talk reliably to each other with error checked byte-streams. We can use communicate using ~TCP~ on Linux with sockets.
+
+** Sockets
+Linux sockets are essentially file-like-things that represent network connections. They are identified by a combination of host and port-number. We can write to and read from a socket. Writes will be turned into packets and sent out. Addresses can be a an ~IP address~ or a ~hostname~. In the latter case we perform a ~DNS lookup~ to get the ~IP address~ associated with the ~hostname~.
+
+* Sockets in Common Lisp
+
+  To play around with sockets in common lisp we are going to use a package called ~usocket~. Start up a REPL and load it up with Quicklisp. Let's set a variable to hold the host address. Initially we'll use the loopback interface (localhost) which is always at ~127.0.0.1~.
+
+  #+begin_src lisp
+(ql:quickload "usocket")
+
+(defvar host "127.0.0.1")
+  #+end_src
+
+  Okay, lets make a socket. Various ports are reserved by the operating system. If this fails you may be trying to use one of those.
+
+  #+begin_src lisp
+(usocket:socket-listen host 3333)
+  #+end_src
+
+  This listens on the port. There is no active connection yet though, that needs to be made on the other side. Lets open up a terminal and use ~nc~ to make the connection:
+
+  #+begin_src shell
+nc 127.0.0.1 3333
+  #+end_src
+
+  Now we'll accept that connection from the REPL:
+
+  #+begin_src lisp
+(defvar connection (usocket:socket-accept s1 :element-type 'character))
+  #+end_src
+
+  Let's have a look at it:
+
+  #+begin_src 
+(describe connection)
+
+;=>
+; #<USOCKET:STREAM-USOCKET {10047260C3}>
+;   [standard-object]
+; 
+; Slots with :INSTANCE allocation:
+;   SOCKET    = #<SB-BSD-SOCKETS:INET-SOCKET 127.0.0.1:3333, peer: 127.0.0.1:57776, fd..
+;   WAIT-LIST = NIL
+;   STATE     = NIL
+;   STREAM    = #<SB-SYS:FD-STREAM for "socket 127.0.0.1:3333, peer: 127.0.0.1:57776" ..
+  #+end_src
+
+  To send the message we want to write to the stream:
+
+  #+begin_src lisp
+(with-open-stream (my-stream (usocket:socket-stream connection))
+ (format my-stream "hello world~%"))
+  #+end_src
+
+  This should appear in the terminal where we ran ~nc~. The connection is now closed. Congratulations, you did a sockets.
+
+  Here the REPL was the server and the terminal was the client. Let's play the client this time. We write to the socket-stream with a string that represents the HTTP request. We just have to specify the version of HTTP and the host name (let's point at [[http://xahlee.info/][Xah Lee's blog]] since it's not likely to change to HTTPS any time soon). ~force-output~ is used as per the the [[https://usocket.common-lisp.dev/api-docs.shtml#stream-usocket][USocket docs]]. 
+
+  #+begin_src lisp
+
+(defvar s2 (usocket:socket-connect "xahlee.info" 80 :element-type 'character))
+
+(defvar *new-line* (#\Return #\Newline))
+
+(format (usocket:socket-stream s2)
+        "~A"
+        (concatenate 'string
+	             "GET / HTTP/1.1"
+		     *new-line*
+		     "Host: xahlee.info"
+		     *new-line* *new-line*))
+		     
+(force-output (usocket:socket-stream a))
+
+(read-line (usocket:socket-stream a) nil)
+;=> "HTTP/1.1 200 OK"
+
+  #+end_src
+
+And that's it. Keep evaluating the read-line expression to read more lines from the response. 
+
+* Final notes
+
+- The above uses plain HTTP. HTTPS adds a whole layer of complexity that is glossed over here.
+- This method is just for fun and learning. If you are making something serious then you'll want to use a fully featured HTTP client library.
+- If you do use usockets in Common Lisp for something more serious then be sure to close connections as you go.
+ 
