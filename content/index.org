@@ -9,3 +9,4 @@ hi i'm luke - this is my blog
 - [[file:ring-modulation.org][ring modulation and frequency shifting]]
 - [[file:aes-encryption.org][aes encryption]]
 - [[file:how-this-blog-works.org][how this blog works]] 
+- [[file:networking-in-lisp.org][tcp sockets in common lisp]]
