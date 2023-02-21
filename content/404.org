@@ -4,5 +4,5 @@
 
 * 404 - page not found
 
-my bad probably, i moved some stuff around. head [[./index.org][home]] to find what you are looking for.
+my bad probably, i moved some stuff around. head [[https://larzeitlin.github.io][home]] to find what you are looking for.
 
