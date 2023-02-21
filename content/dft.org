@@ -45,11 +45,13 @@ right-angle triangle as its angle $\theta$ changes. You may have seen
 some sort of visual representation of this with a right-angle triangle
 in the unit circle, like this:
 
+#+ATTR_HTML: :align center
 [[file:images/4.1.gif]]
 
 If we add a more circles to our system we can start to make more
 elaborate periodic signals, like so:
 
+#+ATTR_HTML: :align center
 [[file:images/4.2.gif]]
 
 So we have this idea that given enough circles, you can make all sorts
@@ -82,6 +84,7 @@ within a constellation of epicycles, finite in number, revolving around
 a fixed deferent.
 #+end_quote
 
+#+ATTR_HTML: :align center
 [[file:images/4.3.jpg]]
 
 Rather than trying to work through any formal proof here, I think it's
@@ -106,10 +109,13 @@ in time.
 
 Here's a sinusoid with its amplitude being changed:
 
+
+#+ATTR_HTML: :align center
 [[file:images/4.5.gif]]
 
 And here's one with its phase value being changed:
 
+#+ATTR_HTML: :align center
 [[file:images/4.4.gif]]
 
 Phase is aurally a strange property because we don't really hear it in
