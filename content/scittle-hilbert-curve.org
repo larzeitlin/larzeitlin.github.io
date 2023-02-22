@@ -19,7 +19,7 @@ Let's make a hilbert curve on is page in Clojure (the one @@html:
 &#10084@@) and allow the reader to manipulate the code in-place.
 
 * what is a hilbert curve?
-A [[http://en.wikipedia.org/wiki/Hilbert_curve][Hibert Curve]] is a space-filling fractal. it's useful for mapping 2 dimensional onto 1 dimension. I like it because it looks good.
+A [[http://en.wikipedia.org/wiki/Hilbert_curve][Hibert Curve]] is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 
 [[file:images/HC-3-iterations.png]]
 
