@@ -88,7 +88,8 @@ First let's make a ~textarea~ in html to get the user input. We'd like a button 
  
 </script>
 <body>
-<textarea id="code-area">
+<textarea id="code-area"
+          style="font-family:monospace;">
 (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
 </textarea>
 <button onclick="read_input()">eval</button>
@@ -121,7 +122,8 @@ First let's make a ~textarea~ in html to get the user input. We'd like a button 
  
 </script>
 <body>
-<textarea id="code-area">
+<textarea id="code-area"
+          style="font-family:monospace;">
 (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
 </textarea>
 <button onclick="read_input()">eval</button>
