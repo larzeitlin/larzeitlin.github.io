@@ -18,12 +18,12 @@
 Let's make a hilbert curve on is page in Clojure (the one @@html:
 &#10084@@) and allow the reader to manipulate the code in-place.
 
-* What is a Hilbert Curve?
+* what is a hilbert curve?
 A [[http://en.wikipedia.org/wiki/Hilbert_curve][Hibert Curve]] is a space-filling fractal. it's useful for mapping 2 dimensional onto 1 dimension. I like it because it looks good.
 
 [[file:images/HC-3-iterations.png]]
 
-* What is Scittle?
+* what is scittle?
 [[https://github.com/babashka/scittle][Scittle]] is is a small Clojure interpreter designed to be embedded inside web pages using js ~<script>~ tags. For example to evaluate code input by the user.
 
 ** Aside
@@ -59,9 +59,9 @@ It's crazy how simple Scittle is to use. I'm writing in an [[https://orgmode.org
 
 Then I run my regular [[file:how-this-blog-works.org][build script]] and away we go, running Clojure in my blog post via skittle via js via org-mode-export with practically no extra configuration at all. That's wild.
 
-* 1. Handle user input code
+* handle user input code
 
-First let's make a ~textarea~ in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneth.
+First let's make a ~textarea~ in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 
 #+begin_src html
 <script type="application/x-scittle">
@@ -214,8 +214,8 @@ Let's have it so that the user can pass in an vector of points that the line wil
 
 Now it's just a matter of choosing the right points.
 
-* Hilbert Curve
-How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quaters, and each one of those quaters can be swapped for one of the origional four patterns. Recursion.
+* making the hilbert curve
+How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 
 Here's the details of that mapping:
 
@@ -265,7 +265,7 @@ To turn this into the next iteration we need to subdivide the space into four ce
 ;    {:cell (1 0), :pattern :B})
 #+end_src
 
-Okay, now we would like to iterate that, each time concatinating the results into a single sequence. 
+Okay, now we would like to iterate that, each time concatenating the results into a single sequence. 
 
 #+begin_src clojure
 (defn hilbert-curve-cells [iterations]

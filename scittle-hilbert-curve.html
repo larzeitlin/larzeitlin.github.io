@@ -30,9 +30,9 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org278aac2" class="outline-2">
-<h2 id="org278aac2">What is a Hilbert Curve?</h2>
-<div class="outline-text-2" id="text-org278aac2">
+<div id="outline-container-orgb141974" class="outline-2">
+<h2 id="orgb141974">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-orgb141974">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional onto 1 dimension. I like it because it looks good.
 </p>
@@ -45,17 +45,17 @@ A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a spa
 </div>
 </div>
 
-<div id="outline-container-org56ad2eb" class="outline-2">
-<h2 id="org56ad2eb">What is Scittle?</h2>
-<div class="outline-text-2" id="text-org56ad2eb">
+<div id="outline-container-org4d75b89" class="outline-2">
+<h2 id="org4d75b89">what is scittle?</h2>
+<div class="outline-text-2" id="text-org4d75b89">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using js <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-org2af92ba" class="outline-3">
-<h3 id="org2af92ba">Aside</h3>
-<div class="outline-text-3" id="text-org2af92ba">
+<div id="outline-container-org6230613" class="outline-3">
+<h3 id="org6230613">Aside</h3>
+<div class="outline-text-3" id="text-org6230613">
 <p>
 It's crazy how simple Scittle is to use. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -94,11 +94,11 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-org74aad64" class="outline-2">
-<h2 id="org74aad64">1. Handle user input code</h2>
-<div class="outline-text-2" id="text-org74aad64">
+<div id="outline-container-orgdc75910" class="outline-2">
+<h2 id="orgdc75910">handle user input code</h2>
+<div class="outline-text-2" id="text-orgdc75910">
 <p>
-First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneth.
+First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
 
 <div class="org-src-container">
@@ -174,9 +174,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-orgf840e24" class="outline-2">
-<h2 id="orgf840e24">drawing</h2>
-<div class="outline-text-2" id="text-orgf840e24">
+<div id="outline-container-orgd2bd00b" class="outline-2">
+<h2 id="orgd2bd00b">drawing</h2>
+<div class="outline-text-2" id="text-orgd2bd00b">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -262,11 +262,11 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-org1534ca3" class="outline-2">
-<h2 id="org1534ca3">Hilbert Curve</h2>
-<div class="outline-text-2" id="text-org1534ca3">
+<div id="outline-container-org67268c8" class="outline-2">
+<h2 id="org67268c8">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-org67268c8">
 <p>
-How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quaters, and each one of those quaters can be swapped for one of the origional four patterns. Recursion.
+How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
 
 <p>
@@ -329,7 +329,7 @@ To turn this into the next iteration we need to subdivide the space into four ce
 </div>
 
 <p>
-Okay, now we would like to iterate that, each time concatinating the results into a single sequence. 
+Okay, now we would like to iterate that, each time concatenating the results into a single sequence. 
 </p>
 
 <div class="org-src-container">
