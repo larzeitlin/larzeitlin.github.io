@@ -23,11 +23,11 @@ A [[http://en.wikipedia.org/wiki/Hilbert_curve][Hibert Curve]] is a space-fillin
 
 [[file:images/HC-3-iterations.png]]
 
-* What is Skittle?
-[[https://github.com/babashka/scittle][Skittle]] is is a small Clojure interpreter designed to be embedded inside applications, for example to evaluate Clojure input by the user.
+* What is Scittle?
+[[https://github.com/babashka/scittle][Scittle]] is is a small Clojure interpreter designed to be embedded inside applications, for example to evaluate Clojure input by the user.
 
 ** Aside
-It's crazy how simple Skittle is to use. I'm writing in an [[https://orgmode.org][org file]] in Emacs. I embed some script tags in a [[https://orgmode.org/manual/Quoting-HTML-tags.html][export block]]. Like so:
+It's crazy how simple Scittle is to use. I'm writing in an [[https://orgmode.org][org file]] in Emacs. I embed some script tags in a [[https://orgmode.org/manual/Quoting-HTML-tags.html][export block]]. Like so:
 
 #+begin_src org
   ,#+begin_export html

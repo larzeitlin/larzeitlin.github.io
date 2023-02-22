@@ -30,9 +30,9 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org47713e1" class="outline-2">
-<h2 id="org47713e1">What is a Hilbert Curve?</h2>
-<div class="outline-text-2" id="text-org47713e1">
+<div id="outline-container-orgbde0ca4" class="outline-2">
+<h2 id="orgbde0ca4">What is a Hilbert Curve?</h2>
+<div class="outline-text-2" id="text-orgbde0ca4">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional onto 1 dimension. I like it because it looks good.
 </p>
@@ -45,19 +45,19 @@ A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a spa
 </div>
 </div>
 
-<div id="outline-container-org7a58294" class="outline-2">
-<h2 id="org7a58294">What is Skittle?</h2>
-<div class="outline-text-2" id="text-org7a58294">
+<div id="outline-container-org85110d5" class="outline-2">
+<h2 id="org85110d5">What is Scittle?</h2>
+<div class="outline-text-2" id="text-org85110d5">
 <p>
-<a href="https://github.com/babashka/scittle">Skittle</a> is is a small Clojure interpreter designed to be embedded inside applications, for example to evaluate Clojure input by the user.
+<a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside applications, for example to evaluate Clojure input by the user.
 </p>
 </div>
 
-<div id="outline-container-orgabc25ee" class="outline-3">
-<h3 id="orgabc25ee">Aside</h3>
-<div class="outline-text-3" id="text-orgabc25ee">
+<div id="outline-container-org6681d67" class="outline-3">
+<h3 id="org6681d67">Aside</h3>
+<div class="outline-text-3" id="text-org6681d67">
 <p>
-It's crazy how simple Skittle is to use. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
+It's crazy how simple Scittle is to use. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
 
 <div class="org-src-container">
@@ -94,9 +94,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-orgc9df7b2" class="outline-2">
-<h2 id="orgc9df7b2">1. Handle user input in Clojure</h2>
-<div class="outline-text-2" id="text-orgc9df7b2">
+<div id="outline-container-org3277fa2" class="outline-2">
+<h2 id="org3277fa2">1. Handle user input in Clojure</h2>
+<div class="outline-text-2" id="text-org3277fa2">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneth.
 </p>
@@ -172,9 +172,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-org8252afb" class="outline-2">
-<h2 id="org8252afb">drawing in HTML</h2>
-<div class="outline-text-2" id="text-org8252afb">
+<div id="outline-container-org5dc8a18" class="outline-2">
+<h2 id="org5dc8a18">drawing in HTML</h2>
+<div class="outline-text-2" id="text-org5dc8a18">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -260,9 +260,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-org1ba418a" class="outline-2">
-<h2 id="org1ba418a">Hilbert Curve</h2>
-<div class="outline-text-2" id="text-org1ba418a">
+<div id="outline-container-org2f45659" class="outline-2">
+<h2 id="org2f45659">Hilbert Curve</h2>
+<div class="outline-text-2" id="text-org2f45659">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quaters, and each one of those quaters can be swapped for one of the origional four patterns. Recursion.
 </p>
@@ -480,7 +480,7 @@ Lovely. Okay we don't care about the patterns any more, but we do want co change
 </body>
 
 <p>
-That's it. Muck about with the code and see what results you can get. 
+That's it. Muck about with the code and see what results you can get.
 </p>
 </div>
 </div>
