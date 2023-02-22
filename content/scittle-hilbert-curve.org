@@ -24,7 +24,7 @@ A [[http://en.wikipedia.org/wiki/Hilbert_curve][Hibert Curve]] is a space-fillin
 [[file:images/HC-3-iterations.png]]
 
 * What is Scittle?
-[[https://github.com/babashka/scittle][Scittle]] is is a small Clojure interpreter designed to be embedded inside applications, for example to evaluate Clojure input by the user.
+[[https://github.com/babashka/scittle][Scittle]] is is a small Clojure interpreter designed to be embedded inside applications, for example to evaluate code input by the user.
 
 ** Aside
 It's crazy how simple Scittle is to use. I'm writing in an [[https://orgmode.org][org file]] in Emacs. I embed some script tags in a [[https://orgmode.org/manual/Quoting-HTML-tags.html][export block]]. Like so:
@@ -59,7 +59,7 @@ It's crazy how simple Scittle is to use. I'm writing in an [[https://orgmode.org
 
 Then I run my regular [[file:how-this-blog-works.org][build script]] and away we go, running Clojure in my blog post via skittle via js via org-mode-export with practically no extra configuration at all. That's wild.
 
-* 1. Handle user input in Clojure
+* 1. Handle user input code
 
 First let's make a ~textarea~ in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneth.
 
@@ -131,7 +131,7 @@ First let's make a ~textarea~ in html to get the user input. We'd like a button 
 
 Right nice.
 
-* drawing in HTML
+* drawing
 I think the easiest way to do this will be with ~canvas~.
 
 
