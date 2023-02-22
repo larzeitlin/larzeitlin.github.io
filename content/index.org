@@ -11,3 +11,4 @@ hi i'm luke - this is my blog
 - [[file:how-this-blog-works.org][how this blog works]] 
 - [[file:networking-in-lisp.org][tcp sockets in common lisp]]
 - [[https://larzeitlin.github.io/simple-flashcards][simple flashcards]]
+- [[file:skittle-hilbert-curve.org][skittle hilbert curve]]

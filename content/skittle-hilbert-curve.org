@@ -1,0 +1,415 @@
+#+title: LZ
+#+options: toc:nil
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+[[./index.org][home]]
+
+#+BEGIN_EXPORT html
+<script src="https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"
+        type="application/javascript"></script>
+<script type="application/x-scittle">
+  (defn my-alert []
+   (js/alert "You clicked!"))
+  ;; export function to use from JavaScript:
+  (set! (.-my_alert js/window) my-alert)
+</script>
+#+END_EXPORT
+
+Let's make a hilbert curve on is page in Clojure (the one @@html:
+&#10084@@) and allow the reader to manipulate the code in-place.
+
+* What is a Hilbert Curve?
+A [[http://en.wikipedia.org/wiki/Hilbert_curve][Hibert Curve]] is a space-filling fractal. it's useful for mapping 2 dimensional onto 1 dimension. I like it because it looks good.
+
+[[file:images/HC-3-iterations.png]]
+
+* What is Skittle?
+[[https://github.com/babashka/scittle][Skittle]] is is a small Clojure interpreter designed to be embedded inside applications, for example to evaluate Clojure input by the user.
+
+** Aside
+It's crazy how simple Skittle is to use. I'm writing in an [[https://orgmode.org][org file]] in Emacs. I embed some script tags in a [[https://orgmode.org/manual/Quoting-HTML-tags.html][export block]]. Like so:
+
+#+begin_src org
+  ,#+begin_export html
+  <script src="https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"
+	  type="application/javascript"></script>
+  <script type="application/x-scittle">
+    (defn my-alert []
+     (js/alert "You clicked!"))
+    ;; export function to use from JavaScript:
+    (set! (.-my_alert js/window) my-alert)
+  </script>
+
+  <body>
+    <button onclick="my_alert()">
+      Click me!
+    </button>
+  </body>
+  ,#+end_export
+#+end_src
+
+#+begin_export html
+<body>
+  <button onclick="my_alert()">
+    Click me!
+  </button>
+</body>
+#+end_export
+
+
+Then I run my regular [[file:how-this-blog-works.org][build script]] and away we go, running Clojure in my blog post via skittle via js via org-mode-export with practically no extra configuration at all. That's wild.
+
+* 1. Handle user input in Clojure
+
+First let's make a ~textarea~ in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneth.
+
+#+begin_src html
+<script type="application/x-scittle">
+
+(defn set-output-area [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(set! (.-read_input js/window)
+      #(set-output-area (read-eval-input "code-area")
+                        "output-area"))
+ 
+</script>
+<body>
+<textarea id="code-area">
+(take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
+</textarea>
+<button onclick="read_input()">eval</button>
+<p id="output-area">...</p>
+</body>
+#+end_src
+
+#+begin_export html
+<script type="application/x-scittle">
+
+(defn set-output-area [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(set! (.-read_input js/window)
+      #(set-output-area (read-eval-input "code-area")
+                        "output-area"))
+ 
+</script>
+<body>
+<textarea id="code-area">
+(take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
+</textarea>
+<button onclick="read_input()">eval</button>
+<p id="output-area">...</p>
+</body>
+#+end_export
+
+Right nice.
+
+* drawing in HTML
+I think the easiest way to do this will be with ~canvas~.
+
+
+#+begin_src html
+<canvas id="my-canvas" width="400" height="400"></canvas>
+
+<script type="application/x-scittle">  
+(def c (js/document.getElementById "my-canvas"))
+(def ctx (.getContext c "2d"))
+
+(.moveTo ctx 50 50)
+(.lineTo ctx 50 150)
+(.lineTo ctx 150 150)
+(.lineTo ctx 150 50)
+(.stroke ctx)
+</script>
+#+end_src
+
+
+
+#+begin_export html
+<canvas id="my-canvas" width="200" height="200"></canvas>
+
+<script type="application/x-scittle">  
+(def c (js/document.getElementById "my-canvas"))
+(def ctx (.getContext c "2d"))
+
+(.moveTo ctx 50 50)
+(.lineTo ctx 50 150)
+(.lineTo ctx 150 150)
+(.lineTo ctx 150 50)
+(.stroke ctx)
+</script>
+#+end_export
+
+Let's have it so that the user can pass in an vector of points that the line will go through:
+
+#+begin_export html
+<canvas id="user-points-canvas" width="200" height="200"></canvas>
+
+<script type="application/x-scittle">
+
+(def c (js/document.getElementById "user-points-canvas"))
+(def ctx (.getContext c "2d"))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn draw-line-from-points [context points]
+  (.clearRect context 0 0 (.-width c) (.-height c))
+  (.beginPath context)
+  (.moveTo context (-> points first first) (-> points first second))
+  (doseq [[x y] (rest points)]
+    (.lineTo context x y))
+  (.stroke context))
+
+(set! (.-read_points js/window)
+      #(->> (read-eval-input "user-points-input")
+            (draw-line-from-points ctx)))
+
+</script>
+<body>
+<textarea id="user-points-input"
+          style="font-family:monospace;">
+[[50 50] [50 150] [150 150] [150 50]]
+</textarea>
+<button onclick="read_points()">Draw points</button>
+</body>
+#+end_export
+
+Now it's just a matter of choosing the right points.
+
+* Hilbert Curve
+How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quaters, and each one of those quaters can be swapped for one of the origional four patterns. Recursion.
+
+Here's the details of that mapping:
+
+#+begin_src clojure
+(def rules {:A {:path [[0 0] [0 1] [1 1] [1 0]]
+                :next-iteration [:D :A :A :B]}
+            :B {:path [[1 1] [0 1] [0 0] [1 0]]
+                :next-iteration [:C :B :B :A]}
+            :C {:path [[1 1] [1 0] [0 0] [0 1]]
+                :next-iteration [:B :C :C :D]}
+            :D {:path [[0 0] [1 0] [1 1] [0 1]]
+                :next-iteration [:A :D :D :C]}})
+#+end_src
+
+So each path has four points we can think about it as tracing three sides of a square in a specific order. Let's say the origin is top-left, then the path for ~:A~ is from the origin, across the top, down the right side and from right to left across the bottom. The sides and the order we go through the points is all significant.
+
+Let's think about our canvas as a square split up into square cells. The number of cells is controlled by the number of iterations we perform (4^n). Each cell contains a pattern, we need to have the right order of cells and the right pattern for each. So we'll aim for a vector of ~cells~, where a ~cell~ is an [x, y] vector identifying the cell, and a pattern keyword. Here's the zero'th iteration with a single cell in it:
+
+#+begin_src clojure 
+(def init [{:cell [0 0] :pattern :A}])
+#+end_src
+
+To turn this into the next iteration we need to subdivide the space into four cells, and then add a pattern for each one:
+
+#+begin_src clojure
+(defn ->subcells
+  [{:keys [cell pattern]}]
+  (let [top-left-subcell (map (partial * 2) cell)
+        path-step->subcells (fn [path-step]
+                              (map + top-left-subcell
+                                     path-step)) 
+        path (->> rules
+                  pattern
+                  :path
+                  (map path-step->subcells))
+        cell-patterns (-> rules pattern :next-iteration)]
+    (map (fn [cell pattern]
+           {:cell cell :pattern pattern})
+         path
+         cell-patterns)))
+
+(->subcells init)
+
+;=> ({:cell (0 0), :pattern :D}
+;    {:cell (0 1), :pattern :A}
+;    {:cell (1 1), :pattern :A}
+;    {:cell (1 0), :pattern :B})
+#+end_src
+
+Okay, now we would like to iterate that, each time concatinating the results into a single sequence. 
+
+#+begin_src clojure
+(defn hilbert-curve-cells [iterations]
+  (-> (iterate #(->> % (map ->subcells) (apply concat)) init)
+      (nth iterations)))
+
+(hilbert-curve-cells 2)
+
+;=> ({:cell (0 0), :pattern :A}
+;    {:cell (1 0), :pattern :D}
+;    {:cell (1 1), :pattern :D}
+;    {:cell (0 1), :pattern :C}
+;    {:cell (0 2), :pattern :D}
+;    {:cell (0 3), :pattern :A}
+;    {:cell (1 3), :pattern :A}
+;    {:cell (1 2), :pattern :B}
+;    {:cell (2 2), :pattern :D}
+;    {:cell (2 3), :pattern :A}
+;    {:cell (3 3), :pattern :A}
+;    {:cell (3 2), :pattern :B}
+;    {:cell (3 1), :pattern :C}
+;    {:cell (2 1), :pattern :B}
+;    {:cell (2 0), :pattern :B}
+;    {:cell (3 0), :pattern :A})
+#+end_src
+
+Lovely. Okay we don't care about the patterns any more, but we do want co change from cells to points. Let's grab the ordered cells and use the canvas dimensions to turn them into pixels.
+
+#+begin_src clojure
+(defn cells->points [cells iterations canvas-width]
+  (let [width-in-cells (js/Math.pow 2 iterations)
+        step-width (/ canvas-width width-in-cells)]
+    (->> cells
+         (map :cell)
+         (map #(map * 1% 2%) (repeat [step-width step-width])))))
+
+(defn hilbert-curve-points [iterations canvas-width]
+  (-> (hilbert-curve-cells iterations)
+      (cells->points iterations canvas-width)))
+
+(hilbert-curve-points 2 400)
+
+;=> ((0.0 0.0)
+;    (100.0 0.0)
+;    (100.0 100.0)
+;    (0.0 100.0)
+;    (0.0 200.0)
+;    (0.0 300.0)
+;    (100.0 300.0)
+;    (100.0 200.0)
+;    (200.0 200.0)
+;    (200.0 300.0)
+;    (300.0 300.0)
+;    (300.0 200.0)
+;    (300.0 100.0)
+;    (200.0 100.0)
+;    (200.0 0.0)
+;    (300.0 0.0))
+
+#+end_src
+
+#+begin_export html
+<canvas id="hilbert-canvas" width="600" height="600"></canvas>
+
+<script type="application/x-scittle">
+
+(def hc (js/document.getElementById "hilbert-canvas"))
+(def hctx (.getContext hc "2d"))
+(set! (.-lineWidth hctx 20))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn draw-line-from-points [context points]
+  (.clearRect context 0 0 (.-width hc) (.-height hc))
+  (.beginPath context)
+  (.moveTo context (-> points first first) (-> points first second))
+  (doseq [[x y] (rest points)]
+    (.lineTo context x y))
+  (.stroke context))
+
+(set! (.-read_hilbert_points js/window)
+      #(->> (read-eval-input "hilbert-input")
+            (draw-line-from-points hctx)))
+
+</script>
+<body>
+<textarea id="hilbert-input"
+          rows="20"
+          style="font-family:monospace;">
+(def rules 
+  {:A {:path [[0 0] [0 1] [1 1] [1 0]]
+   :next-iteration [:D :A :A :B]}
+   :B {:path [[1 1] [0 1] [0 0] [1 0]]
+   :next-iteration [:C :B :B :A]}
+   :C {:path [[1 1] [1 0] [0 0] [0 1]]
+   :next-iteration [:B :C :C :D]}
+   :D {:path [[0 0] [1 0] [1 1] [0 1]]
+   :next-iteration [:A :D :D :C]}})
+   
+(def init [{:cell [0 0] :pattern :A}])
+
+(defn ->subcells
+  [{:keys [cell pattern]}]
+  (let [top-left-subcell (map (partial * 2) cell)
+        path-step->subcells (fn [path-step]
+                              (map + top-left-subcell
+                                     path-step)) 
+        path (->> rules
+                  pattern
+                  :path
+                  (map path-step->subcells))
+        cell-patterns (-> rules pattern :next-iteration)]
+    (map (fn [cell pattern]
+           {:cell cell :pattern pattern})
+         path
+         cell-patterns)))
+
+(defn hilbert-curve-cells [iterations]
+  (-> (iterate #(->> % (map ->subcells) (apply concat)) init)
+      (nth iterations)))
+
+(defn cells->points [cells iterations canvas-width]
+  (let [width-in-cells (js/Math.pow 2 iterations)
+        step-width (/ canvas-width width-in-cells)]
+    (->> cells
+         (map :cell)
+         (map #(map * %1 %2) (repeat [step-width step-width])))))
+
+(defn hilbert-curve-points [iterations canvas-width]
+  (-> (hilbert-curve-cells iterations)
+      (cells->points iterations canvas-width)))
+
+(hilbert-curve-points 6 600)
+
+</textarea>
+<button onclick="read_hilbert_points()">Draw points</button>
+</body>
+#+end_export
+
+That's it. Muck about with the code and see what results you can get.
