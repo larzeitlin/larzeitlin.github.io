@@ -230,7 +230,7 @@ Here's the details of that mapping:
 
 So each path has four points we can think about it as tracing three sides of a square in a specific order. Let's say the origin is top-left, then the path for ~:A~ is from the origin, across the top, down the right side and from right to left across the bottom. The sides and the order we go through the points is all significant.
 
-Let's think about our canvas as a square split up into square cells. The number of cells is controlled by the number of iterations we perform (4^n). Each cell contains a pattern, we need to have the right order of cells and the right pattern for each. So we'll aim for a vector of ~cells~, where a ~cell~ is an [x, y] vector identifying the cell, and a pattern keyword. Here's the zero'th iteration with a single cell in it:
+Let's think about our canvas as a square split up into square cells. The number of cells is controlled by the number of iterations we perform (4^n). Each cell contains a pattern, we need to have the right order of cells and the right pattern for each. So we'll aim for a sequence of ~cells~, where a ~cell~ is an [x, y] vector identifying the cell, and a pattern. Here's the zero'th iteration with a single cell in it:
 
 #+begin_src clojure 
 (def init [{:cell [0 0] :pattern :A}])
@@ -290,7 +290,7 @@ Okay, now we would like to iterate that, each time concatinating the results int
 ;    {:cell (3 0), :pattern :A})
 #+end_src
 
-Lovely. Okay we don't care about the patterns any more, but we do want co change from cells to points. Let's grab the ordered cells and use the canvas dimensions to turn them into pixels.
+Lovely. Okay we don't care about the patterns any more once we have finished iterating, but we do want co change from cells to points on the canvas. Let's grab the ordered cells and use the canvas dimensions to turn them into points.
 
 #+begin_src clojure
 (defn cells->points [cells iterations canvas-width]
