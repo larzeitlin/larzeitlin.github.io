@@ -171,6 +171,47 @@ I think the easiest way to do this will be with ~canvas~.
 
 Let's have it so that the user can pass in an vector of points that the line will go through:
 
+#+begin_src html
+<canvas id="user-points-canvas" width="200" height="200"></canvas>
+
+<script type="application/x-scittle">
+
+(def c (js/document.getElementById "user-points-canvas"))
+(def ctx (.getContext c "2d"))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn draw-line-from-points [context points]
+  (.clearRect context 0 0 (.-width c) (.-height c))
+  (.beginPath context)
+  (.moveTo context (-> points first first) (-> points first second))
+  (doseq [[x y] (rest points)]
+    (.lineTo context x y))
+  (.stroke context))
+
+(set! (.-read_points js/window)
+      #(->> (read-eval-input "user-points-input")
+            (draw-line-from-points ctx)))
+
+</script>
+<body>
+<textarea id="user-points-input"
+          style="font-family:monospace;">
+[[50 50] [50 150] [150 150] [150 50]]
+</textarea>
+<button onclick="read_points()">Draw points</button>
+</body>
+#+end_src
+
 #+begin_export html
 <canvas id="user-points-canvas" width="200" height="200"></canvas>
 

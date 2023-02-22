@@ -30,9 +30,9 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-orgb141974" class="outline-2">
-<h2 id="orgb141974">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-orgb141974">
+<div id="outline-container-orgd15e2e6" class="outline-2">
+<h2 id="orgd15e2e6">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-orgd15e2e6">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional onto 1 dimension. I like it because it looks good.
 </p>
@@ -45,17 +45,17 @@ A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a spa
 </div>
 </div>
 
-<div id="outline-container-org4d75b89" class="outline-2">
-<h2 id="org4d75b89">what is scittle?</h2>
-<div class="outline-text-2" id="text-org4d75b89">
+<div id="outline-container-org2a89c66" class="outline-2">
+<h2 id="org2a89c66">what is scittle?</h2>
+<div class="outline-text-2" id="text-org2a89c66">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using js <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-org6230613" class="outline-3">
-<h3 id="org6230613">Aside</h3>
-<div class="outline-text-3" id="text-org6230613">
+<div id="outline-container-org00e4723" class="outline-3">
+<h3 id="org00e4723">Aside</h3>
+<div class="outline-text-3" id="text-org00e4723">
 <p>
 It's crazy how simple Scittle is to use. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -94,9 +94,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-orgdc75910" class="outline-2">
-<h2 id="orgdc75910">handle user input code</h2>
-<div class="outline-text-2" id="text-orgdc75910">
+<div id="outline-container-org4f2c6e8" class="outline-2">
+<h2 id="org4f2c6e8">handle user input code</h2>
+<div class="outline-text-2" id="text-org4f2c6e8">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -174,9 +174,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-orgd2bd00b" class="outline-2">
-<h2 id="orgd2bd00b">drawing</h2>
-<div class="outline-text-2" id="text-orgd2bd00b">
+<div id="outline-container-orgced8cbc" class="outline-2">
+<h2 id="orgced8cbc">drawing</h2>
+<div class="outline-text-2" id="text-orgced8cbc">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -216,6 +216,48 @@ I think the easiest way to do this will be with <code>canvas</code>.
 <p>
 Let's have it so that the user can pass in an vector of points that the line will go through:
 </p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;canvas id="user-points-canvas" width="200" height="200"&gt;&lt;/canvas&gt;
+
+&lt;script type="application/x-scittle"&gt;
+
+(def c (js/document.getElementById "user-points-canvas"))
+(def ctx (.getContext c "2d"))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-&gt; input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn draw-line-from-points [context points]
+  (.clearRect context 0 0 (.-width c) (.-height c))
+  (.beginPath context)
+  (.moveTo context (-&gt; points first first) (-&gt; points first second))
+  (doseq [[x y] (rest points)]
+    (.lineTo context x y))
+  (.stroke context))
+
+(set! (.-read_points js/window)
+      #(-&gt;&gt; (read-eval-input "user-points-input")
+	    (draw-line-from-points ctx)))
+
+&lt;/script&gt;
+&lt;body&gt;
+&lt;textarea id="user-points-input"
+	  style="font-family:monospace;"&gt;
+[[50 50] [50 150] [150 150] [150 50]]
+&lt;/textarea&gt;
+&lt;button onclick="read_points()"&gt;Draw points&lt;/button&gt;
+&lt;/body&gt;
+</pre>
+</div>
 
 <canvas id="user-points-canvas" width="200" height="200"></canvas>
 
@@ -262,9 +304,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-org67268c8" class="outline-2">
-<h2 id="org67268c8">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-org67268c8">
+<div id="outline-container-org10bbec8" class="outline-2">
+<h2 id="org10bbec8">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-org10bbec8">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
