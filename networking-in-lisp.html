@@ -17,22 +17,22 @@
 </p>
 
 
-<div id="outline-container-orgbe12f3b" class="outline-2">
-<h2 id="orgbe12f3b">Look mum, no HTTP client!</h2>
-<div class="outline-text-2" id="text-orgbe12f3b">
+<div id="outline-container-org003c357" class="outline-2">
+<h2 id="org003c357">Look mum, no HTTP client!</h2>
+<div class="outline-text-2" id="text-org003c357">
 <p>
 Usually when you want to make an HTTP GET request in your favorite programming language you probably do something like import an HTTP library, make a client, call a GET method on that client and away we go. Just for fun, and to get more familiar with Common Lisp I figured I'd instead make a request from scratch. But, because of Sagan, apple pie and turtles all the way down, I won't be doing anything "from scratch". Instead we'll just be dipping one layer down.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org092d351" class="outline-2">
-<h2 id="org092d351">Networking basics</h2>
-<div class="outline-text-2" id="text-org092d351">
+<div id="outline-container-org2872dea" class="outline-2">
+<h2 id="org2872dea">Networking basics</h2>
+<div class="outline-text-2" id="text-org2872dea">
 </div>
-<div id="outline-container-org231f0ec" class="outline-3">
-<h3 id="org231f0ec">TCP/IP</h3>
-<div class="outline-text-3" id="text-org231f0ec">
+<div id="outline-container-org3241ca4" class="outline-3">
+<h3 id="org3241ca4">TCP/IP</h3>
+<div class="outline-text-3" id="text-org3241ca4">
 
 <div class="figure">
 <p><img src="images/http-layers.png" alt="http-layers.png" />
@@ -55,9 +55,9 @@ TCP ensures that internet applications can talk reliably to each other with erro
 </div>
 </div>
 
-<div id="outline-container-orgf2bb482" class="outline-3">
-<h3 id="orgf2bb482">Sockets</h3>
-<div class="outline-text-3" id="text-orgf2bb482">
+<div id="outline-container-orgf471d8c" class="outline-3">
+<h3 id="orgf471d8c">Sockets</h3>
+<div class="outline-text-3" id="text-orgf471d8c">
 <p>
 Linux sockets are essentially file-like-things that represent network connections. They are identified by a combination of host and port-number. We can write to and read from a socket. Writes will be turned into packets and sent out. Addresses can be a an <code>IP address</code> or a <code>hostname</code>. In the latter case we perform a <code>DNS lookup</code> to get the <code>IP address</code> associated with the <code>hostname</code>.
 </p>
@@ -65,17 +65,17 @@ Linux sockets are essentially file-like-things that represent network connection
 </div>
 </div>
 
-<div id="outline-container-org0bdcf1e" class="outline-2">
-<h2 id="org0bdcf1e">Sockets in Common Lisp</h2>
-<div class="outline-text-2" id="text-org0bdcf1e">
+<div id="outline-container-orgbeac6ed" class="outline-2">
+<h2 id="orgbeac6ed">Sockets in Common Lisp</h2>
+<div class="outline-text-2" id="text-orgbeac6ed">
 <p>
 To play around with sockets in common lisp we are going to use a package called <code>usocket</code>. Start up a REPL and load it up with Quicklisp. Let's set a variable to hold the host address. Initially we'll use the loopback interface (localhost) which is always at <code>127.0.0.1</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(ql:quickload "usocket")
+<pre class="src src-lisp">(ql:quickload <span class="org-string">"usocket"</span>)
 
-(defvar host "127.0.0.1")
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">host</span> <span class="org-string">"127.0.0.1"</span>)
 </pre>
 </div>
 
@@ -102,7 +102,7 @@ Now we'll accept that connection from the REPL:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(defvar connection (usocket:socket-accept s1 :element-type 'character))
+<pre class="src src-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">connection</span> (usocket:socket-accept s1 <span class="org-builtin">:element-type</span> 'character))
 </pre>
 </div>
 
@@ -129,8 +129,8 @@ To send the message we want to write to the stream:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">(with-open-stream (my-stream (usocket:socket-stream connection))
- (format my-stream "hello world~%"))
+<pre class="src src-lisp">(<span class="org-keyword">with-open-stream</span> (my-stream (usocket:socket-stream connection))
+ (format my-stream <span class="org-string">"hello world~%"</span>))
 </pre>
 </div>
 
@@ -144,22 +144,22 @@ Here the REPL was the server and the terminal was the client. Let's play the cli
 
 <div class="org-src-container">
 <pre class="src src-lisp">
-(defvar s2 (usocket:socket-connect "xahlee.info" 80 :element-type 'character))
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">s2</span> (usocket:socket-connect <span class="org-string">"xahlee.info"</span> 80 <span class="org-builtin">:element-type</span> 'character))
 
-(defvar *new-line* (#\Return #\Newline))
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">*new-line*</span> (#\Return #\Newline))
 
 (format (usocket:socket-stream s2)
-	"~A"
-	(concatenate 'string
-		     "GET / HTTP/1.1"
-		     *new-line*
-		     "Host: xahlee.info"
-		     *new-line* *new-line*))
+        <span class="org-string">"~A"</span>
+        (concatenate 'string
+                     <span class="org-string">"GET / HTTP/1.1"</span>
+                     *new-line*
+                     <span class="org-string">"Host: xahlee.info"</span>
+                     *new-line* *new-line*))
 
 (force-output (usocket:socket-stream a))
 
 (read-line (usocket:socket-stream a) nil)
-;=&gt; "HTTP/1.1 200 OK"
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; "HTTP/1.1 200 OK"</span>
 
 </pre>
 </div>
@@ -170,9 +170,9 @@ And that's it. Keep evaluating the read-line expression to read more lines from 
 </div>
 </div>
 
-<div id="outline-container-org54ef058" class="outline-2">
-<h2 id="org54ef058">Final notes</h2>
-<div class="outline-text-2" id="text-org54ef058">
+<div id="outline-container-org90f0b46" class="outline-2">
+<h2 id="org90f0b46">Final notes</h2>
+<div class="outline-text-2" id="text-org90f0b46">
 <ul class="org-ul">
 <li>The above uses plain HTTP. HTTPS adds a whole layer of complexity that is glossed over here.</li>
 <li>This method is just for fun and learning. If you are making something serious then you'll want to use a fully featured HTTP client library.</li>

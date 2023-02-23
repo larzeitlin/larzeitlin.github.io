@@ -30,9 +30,9 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-orgc24778d" class="outline-2">
-<h2 id="orgc24778d">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-orgc24778d">
+<div id="outline-container-org284a62d" class="outline-2">
+<h2 id="org284a62d">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-org284a62d">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
@@ -45,37 +45,37 @@ A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a spa
 </div>
 </div>
 
-<div id="outline-container-org01e1d2e" class="outline-2">
-<h2 id="org01e1d2e">what is scittle?</h2>
-<div class="outline-text-2" id="text-org01e1d2e">
+<div id="outline-container-org4a2b4bc" class="outline-2">
+<h2 id="org4a2b4bc">what is scittle?</h2>
+<div class="outline-text-2" id="text-org4a2b4bc">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-orgee96add" class="outline-3">
-<h3 id="orgee96add">Aside</h3>
-<div class="outline-text-3" id="text-orgee96add">
+<div id="outline-container-org076c4b3" class="outline-3">
+<h3 id="org076c4b3">Aside</h3>
+<div class="outline-text-3" id="text-org076c4b3">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org">#+begin_export html
-&lt;script src="https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"
-	type="application/javascript"&gt;&lt;/script&gt;
-&lt;script type="application/x-scittle"&gt;
+<pre class="src src-html">#+begin_export html
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"</span>
+        <span class="org-variable-name">type</span>=<span class="org-string">"application/javascript"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
   (defn my-alert []
    (js/alert "You clicked!"))
   ;; export function to use from JavaScript:
   (set! (.-my_alert js/window) my-alert)
-&lt;/script&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
 
-&lt;body&gt;
-  &lt;button onclick="my_alert()"&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+  &lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"my_alert()"</span>&gt;
     Click me!
-  &lt;/button&gt;
-&lt;/body&gt;
+  &lt;/<span class="org-function-name">button</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
 #+end_export
 </pre>
 </div>
@@ -94,15 +94,15 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-orgb247ad5" class="outline-2">
-<h2 id="orgb247ad5">handle user input code</h2>
-<div class="outline-text-2" id="text-orgb247ad5">
+<div id="outline-container-orge964e89" class="outline-2">
+<h2 id="orge964e89">handle user input code</h2>
+<div class="outline-text-2" id="text-orge964e89">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;script type="application/x-scittle"&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
 
 (defn set-output-area [v output-id]
   (-&gt; (js/document.getElementById output-id)
@@ -122,17 +122,17 @@ First let's make a <code>textarea</code> in html to get the user input. We'd lik
 
 (set! (.-read_input js/window)
       #(set-output-area (read-eval-input "code-area")
-			"output-area"))
+                        "output-area"))
 
-&lt;/script&gt;
-&lt;body&gt;
-&lt;textarea id="code-area"
-	  style="font-family:monospace;"&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"code-area"</span>
+          <span class="org-variable-name">style</span>=<span class="org-string">"font-family:monospace;"</span>&gt;
 (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
-&lt;/textarea&gt;
-&lt;button onclick="read_input()"&gt;eval&lt;/button&gt;
-&lt;p id="output-area"&gt;...&lt;/p&gt;
-&lt;/body&gt;
+&lt;/<span class="org-function-name">textarea</span>&gt;
+&lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_input()"</span>&gt;eval&lt;/<span class="org-function-name">button</span>&gt;
+&lt;<span class="org-function-name">p</span> <span class="org-variable-name">id</span>=<span class="org-string">"output-area"</span>&gt;...&lt;/<span class="org-function-name">p</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
 </pre>
 </div>
 
@@ -174,18 +174,18 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-org90e3dda" class="outline-2">
-<h2 id="org90e3dda">drawing</h2>
-<div class="outline-text-2" id="text-org90e3dda">
+<div id="outline-container-orgf2c1a46" class="outline-2">
+<h2 id="orgf2c1a46">drawing</h2>
+<div class="outline-text-2" id="text-orgf2c1a46">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;canvas id="my-canvas" width="400" height="400"&gt;&lt;/canvas&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"my-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"400"</span> <span class="org-variable-name">height</span>=<span class="org-string">"400"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
 
-&lt;script type="application/x-scittle"&gt;  
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;  
 (def c (js/document.getElementById "my-canvas"))
 (def ctx (.getContext c "2d"))
 
@@ -194,7 +194,7 @@ I think the easiest way to do this will be with <code>canvas</code>.
 (.lineTo ctx 150 150)
 (.lineTo ctx 150 50)
 (.stroke ctx)
-&lt;/script&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
 </pre>
 </div>
 
@@ -218,9 +218,9 @@ Let's have it so that the user can pass in an vector of points that the line wil
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;canvas id="user-points-canvas" width="200" height="200"&gt;&lt;/canvas&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"user-points-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"200"</span> <span class="org-variable-name">height</span>=<span class="org-string">"200"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
 
-&lt;script type="application/x-scittle"&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
 
 (def c (js/document.getElementById "user-points-canvas"))
 (def ctx (.getContext c "2d"))
@@ -246,16 +246,16 @@ Let's have it so that the user can pass in an vector of points that the line wil
 
 (set! (.-read_points js/window)
       #(-&gt;&gt; (read-eval-input "user-points-input")
-	    (draw-line-from-points ctx)))
+            (draw-line-from-points ctx)))
 
-&lt;/script&gt;
-&lt;body&gt;
-&lt;textarea id="user-points-input"
-	  style="font-family:monospace;"&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"user-points-input"</span>
+          <span class="org-variable-name">style</span>=<span class="org-string">"font-family:monospace;"</span>&gt;
 [[50 50] [50 150] [150 150] [150 50]]
-&lt;/textarea&gt;
-&lt;button onclick="read_points()"&gt;Draw points&lt;/button&gt;
-&lt;/body&gt;
+&lt;/<span class="org-function-name">textarea</span>&gt;
+&lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_points()"</span>&gt;Draw points&lt;/<span class="org-function-name">button</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
 </pre>
 </div>
 
@@ -304,9 +304,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-org3f6dd83" class="outline-2">
-<h2 id="org3f6dd83">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-org3f6dd83">
+<div id="outline-container-org0be92dc" class="outline-2">
+<h2 id="org0be92dc">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-org0be92dc">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
@@ -316,14 +316,14 @@ Here's the details of that mapping:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(def rules {:A {:path [[0 0] [0 1] [1 1] [1 0]]
-		:next-iteration [:D :A :A :B]}
-	    :B {:path [[1 1] [0 1] [0 0] [1 0]]
-		:next-iteration [:C :B :B :A]}
-	    :C {:path [[1 1] [1 0] [0 0] [0 1]]
-		:next-iteration [:B :C :C :D]}
-	    :D {:path [[0 0] [1 0] [1 1] [0 1]]
-		:next-iteration [:A :D :D :C]}})
+<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">rules</span> {<span class="org-clojure-keyword">:A</span> {<span class="org-clojure-keyword">:path</span> [[0 0] [0 1] [1 1] [1 0]]
+                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:B</span>]}
+            <span class="org-clojure-keyword">:B</span> {<span class="org-clojure-keyword">:path</span> [[1 1] [0 1] [0 0] [1 0]]
+                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:A</span>]}
+            <span class="org-clojure-keyword">:C</span> {<span class="org-clojure-keyword">:path</span> [[1 1] [1 0] [0 0] [0 1]]
+                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:D</span>]}
+            <span class="org-clojure-keyword">:D</span> {<span class="org-clojure-keyword">:path</span> [[0 0] [1 0] [1 1] [0 1]]
+                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:C</span>]}})
 </pre>
 </div>
 
@@ -336,7 +336,7 @@ Let's think about our canvas as a square split up into square cells. The number 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(def init [{:cell [0 0] :pattern :A}])
+<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">init</span> [{<span class="org-clojure-keyword">:cell</span> [0 0] <span class="org-clojure-keyword">:pattern</span> <span class="org-clojure-keyword">:A</span>}])
 </pre>
 </div>
 
@@ -345,28 +345,28 @@ To turn this into the next iteration we need to subdivide the space into four ce
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn -&gt;subcells
-  [{:keys [cell pattern]}]
-  (let [top-left-subcell (map (partial * 2) cell)
-	path-step-&gt;subcells (fn [path-step]
-			      (map + top-left-subcell
-				     path-step)) 
-	path (-&gt;&gt; rules
-		  pattern
-		  :path
-		  (map path-step-&gt;subcells))
-	cell-patterns (-&gt; rules pattern :next-iteration)]
-    (map (fn [cell pattern]
-	   {:cell cell :pattern pattern})
-	 path
-	 cell-patterns)))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">-&gt;subcells</span>
+  [{<span class="org-clojure-keyword">:keys</span> [cell pattern]}]
+  (<span class="org-keyword">let</span> [top-left-subcell (map (partial * 2) cell)
+        path-step-&gt;subcells (<span class="org-keyword">fn</span> [path-step]
+                              (map + top-left-subcell
+                                     path-step)) 
+        path (<span class="org-keyword">-&gt;&gt;</span> rules
+                  pattern
+                  <span class="org-clojure-keyword">:path</span>
+                  (map path-step-&gt;subcells))
+        cell-patterns (<span class="org-keyword">-&gt;</span> rules pattern <span class="org-clojure-keyword">:next-iteration</span>)]
+    (map (<span class="org-keyword">fn</span> [cell pattern]
+           {<span class="org-clojure-keyword">:cell</span> cell <span class="org-clojure-keyword">:pattern</span> pattern})
+         path
+         cell-patterns)))
 
 (-&gt;subcells init)
 
-;=&gt; ({:cell (0 0), :pattern :D}
-;    {:cell (0 1), :pattern :A}
-;    {:cell (1 1), :pattern :A}
-;    {:cell (1 0), :pattern :B})
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ({:cell (0 0), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 1), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 1), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 0), :pattern :B})</span>
 </pre>
 </div>
 
@@ -375,28 +375,28 @@ Okay, now we would like to iterate that, each time concatenating the results int
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn hilbert-curve-cells [iterations]
-  (-&gt; (iterate #(-&gt;&gt; % (map -&gt;subcells) (apply concat)) init)
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-cells</span> [iterations]
+  (<span class="org-keyword">-&gt;</span> (iterate #(<span class="org-keyword">-&gt;&gt;</span> <span class="org-variable-name">%</span> (map -&gt;subcells) (apply concat)) init)
       (nth iterations)))
 
 (hilbert-curve-cells 2)
 
-;=&gt; ({:cell (0 0), :pattern :A}
-;    {:cell (1 0), :pattern :D}
-;    {:cell (1 1), :pattern :D}
-;    {:cell (0 1), :pattern :C}
-;    {:cell (0 2), :pattern :D}
-;    {:cell (0 3), :pattern :A}
-;    {:cell (1 3), :pattern :A}
-;    {:cell (1 2), :pattern :B}
-;    {:cell (2 2), :pattern :D}
-;    {:cell (2 3), :pattern :A}
-;    {:cell (3 3), :pattern :A}
-;    {:cell (3 2), :pattern :B}
-;    {:cell (3 1), :pattern :C}
-;    {:cell (2 1), :pattern :B}
-;    {:cell (2 0), :pattern :B}
-;    {:cell (3 0), :pattern :A})
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ({:cell (0 0), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 0), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 1), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 1), :pattern :C}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 2), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 2), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 2), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 2), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 1), :pattern :C}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 1), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 0), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 0), :pattern :A})</span>
 </pre>
 </div>
 
@@ -405,35 +405,35 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn cells-&gt;points [cells iterations canvas-width]
-  (let [width-in-cells (js/Math.pow 2 iterations)
-	step-width (/ canvas-width width-in-cells)]
-    (-&gt;&gt; cells
-	 (map :cell)
-	 (map #(map * 1% 2%) (repeat [step-width step-width])))))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">cells-&gt;points</span> [cells iterations canvas-width]
+  (<span class="org-keyword">let</span> [width-in-cells (<span class="org-type">js</span>/Math.pow 2 iterations)
+        step-width (/ canvas-width width-in-cells)]
+    (<span class="org-keyword">-&gt;&gt;</span> cells
+         (map <span class="org-clojure-keyword">:cell</span>)
+         (map #(map * 1% 2%) (repeat [step-width step-width])))))
 
-(defn hilbert-curve-points [iterations canvas-width]
-  (-&gt; (hilbert-curve-cells iterations)
+(<span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-points</span> [iterations canvas-width]
+  (<span class="org-keyword">-&gt;</span> (hilbert-curve-cells iterations)
       (cells-&gt;points iterations canvas-width)))
 
 (hilbert-curve-points 2 400)
 
-;=&gt; ((0.0 0.0)
-;    (100.0 0.0)
-;    (100.0 100.0)
-;    (0.0 100.0)
-;    (0.0 200.0)
-;    (0.0 300.0)
-;    (100.0 300.0)
-;    (100.0 200.0)
-;    (200.0 200.0)
-;    (200.0 300.0)
-;    (300.0 300.0)
-;    (300.0 200.0)
-;    (300.0 100.0)
-;    (200.0 100.0)
-;    (200.0 0.0)
-;    (300.0 0.0))
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ((0.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 0.0))</span>
 
 </pre>
 </div>

@@ -16,9 +16,9 @@
 <a href="./index.html">home</a>
 </p>
 
-<div id="outline-container-org16ecd0e" class="outline-2">
-<h2 id="org16ecd0e">How this blog works</h2>
-<div class="outline-text-2" id="text-org16ecd0e">
+<div id="outline-container-org4caa433" class="outline-2">
+<h2 id="org4caa433">How this blog works</h2>
+<div class="outline-text-2" id="text-org4caa433">
 <p>
 Thought I'd share a few details about it because I've been looking for the right 
 blogging method for me, and finally I've fallen on something that I think will work 
@@ -26,9 +26,9 @@ nicely.
 </p>
 </div>
 
-<div id="outline-container-org5da4683" class="outline-3">
-<h3 id="org5da4683">Org mode</h3>
-<div class="outline-text-3" id="text-org5da4683">
+<div id="outline-container-org1e05a27" class="outline-3">
+<h3 id="org1e05a27">Org mode</h3>
+<div class="outline-text-3" id="text-org1e05a27">
 <p>
 Org mode is a markup format that comes from the Emacs world (although it is used outside
 Emacs as well). It's nice to write in because the marked-up text is still very clean 
@@ -44,41 +44,41 @@ convert my blog posts to html.
 
 
 <div class="org-src-container">
-<pre class="src src-elisp">(require 'ox-publish)
+<pre class="src src-elisp">(<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
 
-(setq org-html-validation-link nil
+(<span class="org-keyword">setq</span> org-html-validation-link nil
       org-html-head-include-scripts nil
       org-html-head-include-default-style nil
-      org-html-head "&lt;link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" /&gt;")
+      org-html-head <span class="org-string">"&lt;link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" /&gt;"</span>)
 
 
-;; Define the publishing project
-(setq org-publish-project-alist
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Define the publishing project</span>
+(<span class="org-keyword">setq</span> org-publish-project-alist
       (list
        (list
-	"orgfiles"
-	:recursive t
-	:base-directory "./content"
-	:publishing-directory "./"
-	:publishing-function 'org-html-publish-to-html
-	:with-author nil
-	:include-toc nil
-	:section-numbers nil
-	:time-stamp-file nil)))
+        <span class="org-string">"orgfiles"</span>
+        <span class="org-builtin">:recursive</span> t
+        <span class="org-builtin">:base-directory</span> <span class="org-string">"./content"</span>
+        <span class="org-builtin">:publishing-directory</span> <span class="org-string">"./"</span>
+        <span class="org-builtin">:publishing-function</span> 'org-html-publish-to-html
+        <span class="org-builtin">:with-author</span> nil
+        <span class="org-builtin">:include-toc</span> nil
+        <span class="org-builtin">:section-numbers</span> nil
+        <span class="org-builtin">:time-stamp-file</span> nil)))
 
-;; Generate the site output
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Generate the site output</span>
 (org-publish-all t)
 
-(message "Build complete!")
+(message <span class="org-string">"Build complete!"</span>)
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org3d381b1" class="outline-3">
-<h3 id="org3d381b1">Github pages</h3>
-<div class="outline-text-3" id="text-org3d381b1">
+<div id="outline-container-org719191a" class="outline-3">
+<h3 id="org719191a">Github pages</h3>
+<div class="outline-text-3" id="text-org719191a">
 <p>
 You can <a href="https://github.com/larzeitlin/blog">see the repo here</a>. Github pages detects the <code>index.html</code>, which then links to the 
 other files.
@@ -86,9 +86,9 @@ other files.
 </div>
 </div>
 
-<div id="outline-container-org193a961" class="outline-3">
-<h3 id="org193a961">Thanks</h3>
-<div class="outline-text-3" id="text-org193a961">
+<div id="outline-container-org133b1e9" class="outline-3">
+<h3 id="org133b1e9">Thanks</h3>
+<div class="outline-text-3" id="text-org133b1e9">
 <p>
 This was inspired by <a href="https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/">System Crafters</a>. So thanks to David for that and all his great content.
 </p>

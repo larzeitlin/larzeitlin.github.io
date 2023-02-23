@@ -29,7 +29,7 @@ A [[http://en.wikipedia.org/wiki/Hilbert_curve][Hibert Curve]] is a space-fillin
 ** Aside
 It's great how simple Scittle is to use inside this blog. I'm writing in an [[https://orgmode.org][org file]] in Emacs. I embed some script tags in a [[https://orgmode.org/manual/Quoting-HTML-tags.html][export block]]. Like so:
 
-#+begin_src org
+#+begin_src html
   ,#+begin_export html
   <script src="https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"
 	  type="application/javascript"></script>

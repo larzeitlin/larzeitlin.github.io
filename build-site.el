@@ -1,10 +1,17 @@
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(package-install 'htmlize)
+
 (require 'ox-publish)
 
 (setq org-html-validation-link nil
       org-html-head-include-scripts nil
       org-html-head-include-default-style nil
-      org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+      org-html-head (concat "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />"))
 
+(setq org-html-htmlize-output-type 'css)
 
 
 ;; Define the publishing project

@@ -16,9 +16,9 @@
 <a href="./index.html">home</a>
 </p>
 
-<div id="outline-container-org7ff2402" class="outline-2">
-<h2 id="org7ff2402">Advanced Encryption Standard in Clojure</h2>
-<div class="outline-text-2" id="text-org7ff2402">
+<div id="outline-container-orgd92b5c5" class="outline-2">
+<h2 id="orgd92b5c5">Advanced Encryption Standard in Clojure</h2>
+<div class="outline-text-2" id="text-orgd92b5c5">
 <p>
 The Advanced Encryption Standard (a.k.a Rijndael) is a widely used encryption specification. To learn how it works, and some of the motivation behind the design, I decided to build it in Clojure.
 </p>
@@ -30,9 +30,9 @@ WARNING!! Obviously don't use any of this code, or your own implementation of th
 </blockquote>
 </div>
 
-<div id="outline-container-org5547fb3" class="outline-3">
-<h3 id="org5547fb3">Overview</h3>
-<div class="outline-text-3" id="text-org5547fb3">
+<div id="outline-container-org7e3cc50" class="outline-3">
+<h3 id="org7e3cc50">Overview</h3>
+<div class="outline-text-3" id="text-org7e3cc50">
 <p>
 We're looking at AES-128 in ECB mode. 128 is the key size in bits. ECB (electronic codebook) simply means that each block (16 bytes) of our plaintext will be encrypted statelessly and independently of each other block. It is simpler and less secure than other modes.
 Each block is processed with a number of steps including 11 rounds. Something a little different happens in the first and last rounds. Each round needs its own 16-byte key, but since we only have one 16-byte key to start with, we'll use it to generate more.
@@ -46,9 +46,9 @@ As you've probably noticed, everything is happening in chunks of 16 bytes. When 
 </div>
 </div>
 
-<div id="outline-container-org71b8342" class="outline-4">
-<h4 id="org71b8342">Processing per round (except first and last)</h4>
-<div class="outline-text-4" id="text-org71b8342">
+<div id="outline-container-orgead1231" class="outline-4">
+<h4 id="orgead1231">Processing per round (except first and last)</h4>
+<div class="outline-text-4" id="text-orgead1231">
 <ol class="org-ol">
 <li>Replace each byte with another from a fixed lookup-table</li>
 <li>Shift rows</li>
@@ -63,9 +63,9 @@ That’s pretty much it. We’ll deal with the details when they come. Let’s d
 </div>
 </div>
 
-<div id="outline-container-org0c4a75b" class="outline-3">
-<h3 id="org0c4a75b">Key Expansion</h3>
-<div class="outline-text-3" id="text-org0c4a75b">
+<div id="outline-container-org52a2ac3" class="outline-3">
+<h3 id="org52a2ac3">Key Expansion</h3>
+<div class="outline-text-3" id="text-org52a2ac3">
 <p>
 We need to make more keys. The 128-bit key is broken up into 4 32-bit words. These will be used to make a total of 44 words (4 for each of our 11 rounds). words w(0) to w(3) are just the original first 4 words. From there on each new word w(n) is made by XOR-ing w(n - 4) with w(n - 1), except every 4th word, where we use something different. Let’s call this something t.
 </p>
@@ -82,11 +82,11 @@ We calculate t by rotating the previous word, switching the bytes with different
 </div>
 
 
-<div id="outline-container-org3360f0f" class="outline-4">
-<h4 id="org3360f0f">s-box</h4>
-<div class="outline-text-4" id="text-org3360f0f">
+<div id="outline-container-org92c86f9" class="outline-4">
+<h4 id="org92c86f9">s-box</h4>
+<div class="outline-text-4" id="text-org92c86f9">
 <div class="org-src-container">
-<pre class="src src-clojure">(def s-box 
+<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">s-box</span> 
   {0 99 249 153 121 182 65 131 70 90 218 87 62 178 74 214 164 73 186
    244 233 30 188 101 240 140 110 159 130 19 128 205 210 181 229 217
    153 238 213 3 7 197 59 226 86 177 154 184 20 250 224 225 72 82 58
@@ -121,16 +121,16 @@ We calculate t by rotating the previous word, switching the bytes with different
 </div>
 </div>
 
-<div id="outline-container-org1b73976" class="outline-3">
-<h3 id="org1b73976">Round Constants</h3>
-<div class="outline-text-3" id="text-org1b73976">
+<div id="outline-container-org6800643" class="outline-3">
+<h3 id="org6800643">Round Constants</h3>
+<div class="outline-text-3" id="text-org6800643">
 <p>
 The round constants are 4-byte words, the 3 least-significant-bytes are 0, and the most-significant byte comes from a list at the index determined by the round number. here is this list:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(def round-constants
- (map #(vector % 0 0 0) [1 2 4 8 16 32 64 128 27 54]))
+<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">round-constants</span>
+ (map #(vector <span class="org-variable-name">%</span> 0 0 0) [1 2 4 8 16 32 64 128 27 54]))
 </pre>
 </div>
 
@@ -139,33 +139,33 @@ With the above bits of data we can do the key expansion like so:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn forth-words-temp [prev counter]
-  (let [rotated (take 4 (drop 1 (cycle prev)))
-	round-key (nth round-key (dec (/ counter 4)))]
-     (-&gt;&gt; rotated
-	 (map s-box)
-	 (map bit-xor round-key))))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">forth-words-temp</span> [prev counter]
+  (<span class="org-keyword">let</span> [rotated (take 4 (drop 1 (cycle prev)))
+        round-key (nth round-key (dec (/ counter 4)))]
+     (<span class="org-keyword">-&gt;&gt;</span> rotated
+         (map s-box)
+         (map bit-xor round-key))))
 
-(defn next-word [words-so-far counter]
-  (let [prev (last words-so-far)
-	n-minus-4th (nth words-so-far (- counter 4))
-	temp (if (zero? (mod counter 4))
-	       (forth-words-temp prev counter)
-	       (last words-so-far))]
+(<span class="org-keyword">defn</span> <span class="org-function-name">next-word</span> [words-so-far counter]
+  (<span class="org-keyword">let</span> [prev (last words-so-far)
+        n-minus-4th (nth words-so-far (- counter 4))
+        temp (<span class="org-keyword">if</span> (zero? (mod counter 4))
+               (forth-words-temp prev counter)
+               (last words-so-far))]
     (map bit-xor n-minus-4th temp)))
 
-(defn key-expansion [key]
-  (-&gt;&gt;
-    (let [input-key-words (vec (partition 4 key))]
-      (loop [output-words input-key-words
-	     counter 4]
-	(if
-	  (&lt; counter 44)
-	  (recur (conj output-words
-		       (next-word output-words counter))
-		 (inc counter))
-	  ; else
-	  output-words)))
+(<span class="org-keyword">defn</span> <span class="org-function-name">key-expansion</span> [key]
+  (<span class="org-keyword">-&gt;&gt;</span>
+    (<span class="org-keyword">let</span> [input-key-words (vec (partition 4 key))]
+      (<span class="org-keyword">loop</span> [output-words input-key-words
+             counter 4]
+        (<span class="org-keyword">if</span>
+          (&lt; counter 44)
+          (<span class="org-keyword">recur</span> (conj output-words
+                       (next-word output-words counter))
+                 (inc counter))
+          <span class="org-comment">; else</span>
+          output-words)))
     flatten
     (partition 16)))
 </pre>
@@ -174,9 +174,9 @@ With the above bits of data we can do the key expansion like so:
 </div>
 
 
-<div id="outline-container-org6d9c72f" class="outline-3">
-<h3 id="org6d9c72f">Encryption Process</h3>
-<div class="outline-text-3" id="text-org6d9c72f">
+<div id="outline-container-org4d7a880" class="outline-3">
+<h3 id="org4d7a880">Encryption Process</h3>
+<div class="outline-text-3" id="text-org4d7a880">
 <p>
 Now we have 11 keys we can get on with the work of encrypting a block. round 0 uses the first key and just consists of a simple XOR. 1 to 9 are as described above, and the final round is the same as those except there is no Mix Columns stage. Why? Because the whole point of Mix Columns is to diffuse, meaning to jumble up the information. If it were used in the final round, it would be trivially reversible, so it has no value.
 </p>
@@ -193,9 +193,9 @@ We’ve already looked at the S-box (yes, it’s the same one), so let’s see h
 </div>
 </div>
 
-<div id="outline-container-orgaeae04e" class="outline-3">
-<h3 id="orgaeae04e">Shift Rows</h3>
-<div class="outline-text-3" id="text-orgaeae04e">
+<div id="outline-container-org76b6d97" class="outline-3">
+<h3 id="org76b6d97">Shift Rows</h3>
+<div class="outline-text-3" id="text-org76b6d97">
 <p>
 Each row gets cycled to the left by a set number of steps. Easy.
 </p>
@@ -207,15 +207,15 @@ Each row gets cycled to the left by a set number of steps. Easy.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn shift-row [idx row]
-  (-&gt;&gt; row cycle (drop idx) (take 4)))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">shift-row</span> [idx row]
+  (<span class="org-keyword">-&gt;&gt;</span> row cycle (drop idx) (take 4)))
 
-; we have to do this (apply map vector) malarkey 
-; because we are in column-major order
-; and we want to get at the rows.
+<span class="org-comment-delimiter">; </span><span class="org-comment">we have to do this (apply map vector) malarkey </span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">because we are in column-major order</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">and we want to get at the rows.</span>
 
-(defn shift-rows [block]
-  (-&gt;&gt; block
+(<span class="org-keyword">defn</span> <span class="org-function-name">shift-rows</span> [block]
+  (<span class="org-keyword">-&gt;&gt;</span> block
        (partition 4)
        (apply map vector)
        (map-indexed shift-row)
@@ -226,9 +226,9 @@ Each row gets cycled to the left by a set number of steps. Easy.
 </div>
 </div>
 
-<div id="outline-container-org522f782" class="outline-3">
-<h3 id="org522f782">Mix Columns</h3>
-<div class="outline-text-3" id="text-org522f782">
+<div id="outline-container-org9f28b29" class="outline-3">
+<h3 id="org9f28b29">Mix Columns</h3>
+<div class="outline-text-3" id="text-org9f28b29">
 <p>
 Bit more tricky. The main idea is a matrix-vector multiplication, like so:
 </p>
@@ -249,9 +249,9 @@ However, there is a catch. we need to keep each element within the range of 1 by
 </div>
 </div>
 
-<div id="outline-container-org1410c90" class="outline-3">
-<h3 id="org1410c90">Galois Fields</h3>
-<div class="outline-text-3" id="text-org1410c90">
+<div id="outline-container-orgf277b21" class="outline-3">
+<h3 id="orgf277b21">Galois Fields</h3>
+<div class="outline-text-3" id="text-orgf277b21">
 <p>
 Now I’ll make all the mathematicians wince with some loose speak. A Finite Field, also called Galois Field, is a field with a finite number of elements. A field, in casual terms, is a set of numbers with some rules that allow us to do addition, subtraction, multiplication, and division without ever leaving that set of numbers. Galois Fields exist where the number of elements equals a prime to the power of some positive integer. We are interested in GF(2<sup>8</sup>) a.k.a GF(256). In order to multiply in this field, we need to remember polynomial maths and write some code that does polynomial arithmetic.
 </p>
@@ -290,29 +290,29 @@ As a polynomial, where x = 2:
 </div>
 </div>
 
-<div id="outline-container-orga8cabd7" class="outline-3">
-<h3 id="orga8cabd7">Polynomial addition</h3>
-<div class="outline-text-3" id="text-orga8cabd7">
+<div id="outline-container-orgb2b675c" class="outline-3">
+<h3 id="orgb2b675c">Polynomial addition</h3>
+<div class="outline-text-3" id="text-orgb2b675c">
 <p>
 We’ll use vectors to represent polynomials just like the binary array above.
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn padding [x len]
-  (-&gt; (take (- len (count x)) (repeat 0))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">padding</span> [x len]
+  (<span class="org-keyword">-&gt;</span> (take (- len (count x)) (repeat 0))
       (concat x)))
 
-(defn add [a b]
-  (let [max-length (max (count a) (count b))]
-    (-&gt;&gt; (map + (padding a max-length)
-		(padding b max-length))
-	 (drop-while zero?))))
+(<span class="org-keyword">defn</span> <span class="org-function-name">add</span> [a b]
+  (<span class="org-keyword">let</span> [max-length (max (count a) (count b))]
+    (<span class="org-keyword">-&gt;&gt;</span> (map + (padding a max-length)
+                (padding b max-length))
+         (drop-while zero?))))
 
 
 
 (add [1 0 1 0] [1])
-; =&gt; (1 0 1 1)
+<span class="org-comment-delimiter">; </span><span class="org-comment">=&gt; (1 0 1 1)</span>
 
 </pre>
 </div>
@@ -341,17 +341,17 @@ For example:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn mult [a b]
-  (let [max-length (max (count a) (count b))
-	a' (-&gt; (padding a max-length) reverse vec)
-	b' (-&gt; (padding b max-length) reverse vec)]
-    (-&gt;&gt; (for [i (range max-length)
-	       j (range max-length)]
-	   {(+ i j) (* (a' i) (b' j))})
-	 (apply merge-with +)
-	 (sort-by key &gt;)
-	 (map second)
-	 (drop-while zero?))))
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">mult</span> [a b]
+  (<span class="org-keyword">let</span> [max-length (max (count a) (count b))
+        a' (<span class="org-keyword">-&gt;</span> (padding a max-length) reverse vec)
+        b' (<span class="org-keyword">-&gt;</span> (padding b max-length) reverse vec)]
+    (<span class="org-keyword">-&gt;&gt;</span> (<span class="org-keyword">for</span> [i (range max-length)
+               j (range max-length)]
+           {(+ i j) (* (a' i) (b' j))})
+         (apply merge-with +)
+         (sort-by key &gt;)
+         (map second)
+         (drop-while zero?))))
 </pre>
 </div>
 
@@ -361,35 +361,35 @@ Finally, division. This is good old long-division. You sort the polynomials into
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn &gt;poly 
-  "test if a is greater than b"
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">&gt;poly</span> 
+  <span class="org-doc">"test if a is greater than b"</span>
   [a b]
-  (let [a' (drop-while zero? a)
-	b' (drop-while zero? b)]
-    (cond
-      (= a' b') false
-      (&gt; (count a') (count b')) true
-      (&lt; (count a') (count b')) false
-      (empty? (drop-while #(&gt;= 0 %) (map - a' b'))) false
-      :else true)))
+  (<span class="org-keyword">let</span> [a' (drop-while zero? a)
+        b' (drop-while zero? b)]
+    (<span class="org-keyword">cond</span>
+      (= a' b') <span class="org-constant">false</span>
+      (&gt; (count a') (count b')) <span class="org-constant">true</span>
+      (&lt; (count a') (count b')) <span class="org-constant">false</span>
+      (empty? (drop-while #(&gt;= 0 <span class="org-variable-name">%</span>) (map - a' b'))) <span class="org-constant">false</span>
+      <span class="org-clojure-keyword">:else</span> <span class="org-constant">true</span>)))
 
 
-(defn div
-  "returns a vector of ratio and remainder"
+(<span class="org-keyword">defn</span> <span class="org-function-name">div</span>
+  <span class="org-doc">"returns a vector of ratio and remainder"</span>
   [n d]
-  (cond (= n d) [[1] [0]]
-	(&gt;poly d n) [[0] n]
-	:else
-	(loop [remain n
-	       res []]
-	  (let [new-exp (- (count remain) (count d))
-		new-coef (/ (first remain) (first d))
-		new-res-element (cons new-coef (take new-exp (repeat 0)))
-		new-remain (add remain (map - (mult d new-res-element)))]
-	    (if (&lt; new-exp 0)
-	      [res new-remain]
-	      (recur new-remain
-		     (add res new-res-element)))))))
+  (<span class="org-keyword">cond</span> (= n d) [[1] [0]]
+        (&gt;poly d n) [[0] n]
+        <span class="org-clojure-keyword">:else</span>
+        (<span class="org-keyword">loop</span> [remain n
+               res []]
+          (<span class="org-keyword">let</span> [new-exp (- (count remain) (count d))
+                new-coef (/ (first remain) (first d))
+                new-res-element (cons new-coef (take new-exp (repeat 0)))
+                new-remain (add remain (map - (mult d new-res-element)))]
+            (<span class="org-keyword">if</span> (&lt; new-exp 0)
+              [res new-remain]
+              (<span class="org-keyword">recur</span> new-remain
+                     (add res new-res-element)))))))
 </pre>
 </div>
 
@@ -407,22 +407,22 @@ Now we have the bits we need for multiplication in GF(2<sup>8</sup>). Galois fie
 
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn int-&gt;bin-vec [x]
-  (-&gt;&gt; x
-       Integer/toBinaryString
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">int-&gt;bin-vec</span> [x]
+  (<span class="org-keyword">-&gt;&gt;</span> x
+       <span class="org-type">Integer</span>/toBinaryString
        (map int)
-       (map #(- % 48))
+       (map #(- <span class="org-variable-name">%</span> 48))
        vec))
 
-(defn gf-256-mult [a b ip]
-  (let [poly-prod (mult (int-&gt;bin-vec a) (int-&gt;bin-vec b))
-	[_ poly-mod] (div poly-prod (int-&gt;bin-vec ip))]
-    (-&gt;&gt; poly-mod
-	 (map #(mod % 2))
-	 reverse
-	 (map-indexed (fn [idx val] (* val (Math/pow 2 idx))))
-	 (reduce +)
-	 int)))
+(<span class="org-keyword">defn</span> <span class="org-function-name">gf-256-mult</span> [a b ip]
+  (<span class="org-keyword">let</span> [poly-prod (mult (int-&gt;bin-vec a) (int-&gt;bin-vec b))
+        [_ poly-mod] (div poly-prod (int-&gt;bin-vec ip))]
+    (<span class="org-keyword">-&gt;&gt;</span> poly-mod
+         (map #(mod <span class="org-variable-name">%</span> 2))
+         reverse
+         (map-indexed (<span class="org-keyword">fn</span> [idx val] (* val (<span class="org-type">Math</span>/pow 2 idx))))
+         (reduce +)
+         int)))
 </pre>
 </div>
 
@@ -432,33 +432,33 @@ Now we have the bits we need for multiplication in GF(2<sup>8</sup>). Galois fie
 </div>
 </div>
 
-<div id="outline-container-org6d00e62" class="outline-3">
-<h3 id="org6d00e62">Mix Columns continued</h3>
-<div class="outline-text-3" id="text-org6d00e62">
+<div id="outline-container-org2176471" class="outline-3">
+<h3 id="org2176471">Mix Columns continued</h3>
+<div class="outline-text-3" id="text-org2176471">
 <p>
 So we had our matrix multiplication laid out above. Now we know how to multiply.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(def column-mix-matrix
+<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">column-mix-matrix</span>
   [[2 3 1 1]
    [1 2 3 1]
    [1 1 2 3]
    [3 1 1 2]])
 
-(defn mix-column [matrix irr column]
-  (for [row matrix]
-    (let [result (apply bit-xor
-			(map gf/gf-256-mult
-			     row
-			     column
-			     (repeat irr)))]
-      (if (&gt; 0x100 result)
-	result
-	(bit-xor irr result)))))
+(<span class="org-keyword">defn</span> <span class="org-function-name">mix-column</span> [matrix irr column]
+  (<span class="org-keyword">for</span> [row matrix]
+    (<span class="org-keyword">let</span> [result (apply bit-xor
+                        (map <span class="org-type">gf</span>/gf-256-mult
+                             row
+                             column
+                             (repeat irr)))]
+      (<span class="org-keyword">if</span> (&gt; 0x100 result)
+        result
+        (bit-xor irr result)))))
 
-(defn mix-columns [block]
-  (-&gt;&gt; block
+(<span class="org-keyword">defn</span> <span class="org-function-name">mix-columns</span> [block]
+  (<span class="org-keyword">-&gt;&gt;</span> block
        (partition 4)
        (map (partial mix-column column-mix-matrix 0x11b))
        flatten))
@@ -477,32 +477,32 @@ That’s it. We can just tie it all together with a few orchestrating functions.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(defn normal-round [round-key block]
-  (-&gt;&gt; block
+<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">normal-round</span> [round-key block]
+  (<span class="org-keyword">-&gt;&gt;</span> block
        (map s-box)
        shift-rows
        mix-columns
        (map bit-xor round-key)))
 
-(defn apply-normal-rounds [split-keys block]
-  (loop [b block
-	 r-keys split-keys
-	 n 1]
-    (let [[round-key &amp; other-keys] r-keys]
-      (if (&lt; n 10)
-	(recur (normal-round round-key b)
-	       other-keys
-	       (inc n))
-	b))))
+(<span class="org-keyword">defn</span> <span class="org-function-name">apply-normal-rounds</span> [split-keys block]
+  (<span class="org-keyword">loop</span> [b block
+         r-keys split-keys
+         n 1]
+    (<span class="org-keyword">let</span> [[round-key &amp; other-keys] r-keys]
+      (<span class="org-keyword">if</span> (&lt; n 10)
+        (<span class="org-keyword">recur</span> (normal-round round-key b)
+               other-keys
+               (inc n))
+        b))))
 
-(defn aes-128-encrypt-block [key block]
-  (let [split-keys (key-expansion key)]
-    (-&gt;&gt; block
-	 (map bit-xor (first split-keys))
-	 (apply-normal-rounds (rest split-keys))
-	 (map s-box)
-	 shift-rows
-	 (map bit-xor (last split-keys)))))
+(<span class="org-keyword">defn</span> <span class="org-function-name">aes-128-encrypt-block</span> [key block]
+  (<span class="org-keyword">let</span> [split-keys (key-expansion key)]
+    (<span class="org-keyword">-&gt;&gt;</span> block
+         (map bit-xor (first split-keys))
+         (apply-normal-rounds (rest split-keys))
+         (map s-box)
+         shift-rows
+         (map bit-xor (last split-keys)))))
 </pre>
 </div>
 
