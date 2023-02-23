@@ -5,34 +5,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LZ</title>
+<title>LZ 👻</title>
 <meta name="generator" content="Org mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
 <div id="content">
-<h1 class="title">LZ</h1>
+<h1 class="title">LZ 👻</h1>
 <p>
 <a href="./index.html">home</a>
 </p>
 
 
-<div id="outline-container-org003c357" class="outline-2">
-<h2 id="org003c357">Look mum, no HTTP client!</h2>
-<div class="outline-text-2" id="text-org003c357">
+<div id="outline-container-org8709041" class="outline-2">
+<h2 id="org8709041">Look mum, no HTTP client!</h2>
+<div class="outline-text-2" id="text-org8709041">
 <p>
 Usually when you want to make an HTTP GET request in your favorite programming language you probably do something like import an HTTP library, make a client, call a GET method on that client and away we go. Just for fun, and to get more familiar with Common Lisp I figured I'd instead make a request from scratch. But, because of Sagan, apple pie and turtles all the way down, I won't be doing anything "from scratch". Instead we'll just be dipping one layer down.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2872dea" class="outline-2">
-<h2 id="org2872dea">Networking basics</h2>
-<div class="outline-text-2" id="text-org2872dea">
+<div id="outline-container-org90ce79c" class="outline-2">
+<h2 id="org90ce79c">Networking basics</h2>
+<div class="outline-text-2" id="text-org90ce79c">
 </div>
-<div id="outline-container-org3241ca4" class="outline-3">
-<h3 id="org3241ca4">TCP/IP</h3>
-<div class="outline-text-3" id="text-org3241ca4">
+<div id="outline-container-orgba67abd" class="outline-3">
+<h3 id="orgba67abd">TCP/IP</h3>
+<div class="outline-text-3" id="text-orgba67abd">
 
 <div class="figure">
 <p><img src="images/http-layers.png" alt="http-layers.png" />
@@ -55,9 +55,9 @@ TCP ensures that internet applications can talk reliably to each other with erro
 </div>
 </div>
 
-<div id="outline-container-orgf471d8c" class="outline-3">
-<h3 id="orgf471d8c">Sockets</h3>
-<div class="outline-text-3" id="text-orgf471d8c">
+<div id="outline-container-org911c9c2" class="outline-3">
+<h3 id="org911c9c2">Sockets</h3>
+<div class="outline-text-3" id="text-org911c9c2">
 <p>
 Linux sockets are essentially file-like-things that represent network connections. They are identified by a combination of host and port-number. We can write to and read from a socket. Writes will be turned into packets and sent out. Addresses can be a an <code>IP address</code> or a <code>hostname</code>. In the latter case we perform a <code>DNS lookup</code> to get the <code>IP address</code> associated with the <code>hostname</code>.
 </p>
@@ -65,9 +65,9 @@ Linux sockets are essentially file-like-things that represent network connection
 </div>
 </div>
 
-<div id="outline-container-orgbeac6ed" class="outline-2">
-<h2 id="orgbeac6ed">Sockets in Common Lisp</h2>
-<div class="outline-text-2" id="text-orgbeac6ed">
+<div id="outline-container-org6e38973" class="outline-2">
+<h2 id="org6e38973">Sockets in Common Lisp</h2>
+<div class="outline-text-2" id="text-org6e38973">
 <p>
 To play around with sockets in common lisp we are going to use a package called <code>usocket</code>. Start up a REPL and load it up with Quicklisp. Let's set a variable to hold the host address. Initially we'll use the loopback interface (localhost) which is always at <code>127.0.0.1</code>.
 </p>
@@ -170,9 +170,9 @@ And that's it. Keep evaluating the read-line expression to read more lines from 
 </div>
 </div>
 
-<div id="outline-container-org90f0b46" class="outline-2">
-<h2 id="org90f0b46">Final notes</h2>
-<div class="outline-text-2" id="text-org90f0b46">
+<div id="outline-container-orga798d0c" class="outline-2">
+<h2 id="orga798d0c">Final notes</h2>
+<div class="outline-text-2" id="text-orga798d0c">
 <ul class="org-ul">
 <li>The above uses plain HTTP. HTTPS adds a whole layer of complexity that is glossed over here.</li>
 <li>This method is just for fun and learning. If you are making something serious then you'll want to use a fully featured HTTP client library.</li>

@@ -5,13 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LZ</title>
+<title>LZ 👻</title>
 <meta name="generator" content="Org mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
 <div id="content">
-<h1 class="title">LZ</h1>
+<h1 class="title">LZ 👻</h1>
 <p>
 <a href="./index.html">home</a>
 </p>
@@ -30,9 +30,9 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org284a62d" class="outline-2">
-<h2 id="org284a62d">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-org284a62d">
+<div id="outline-container-org182d072" class="outline-2">
+<h2 id="org182d072">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-org182d072">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
@@ -45,17 +45,17 @@ A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a spa
 </div>
 </div>
 
-<div id="outline-container-org4a2b4bc" class="outline-2">
-<h2 id="org4a2b4bc">what is scittle?</h2>
-<div class="outline-text-2" id="text-org4a2b4bc">
+<div id="outline-container-org27ff80e" class="outline-2">
+<h2 id="org27ff80e">what is scittle?</h2>
+<div class="outline-text-2" id="text-org27ff80e">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-org076c4b3" class="outline-3">
-<h3 id="org076c4b3">Aside</h3>
-<div class="outline-text-3" id="text-org076c4b3">
+<div id="outline-container-orgb283f73" class="outline-3">
+<h3 id="orgb283f73">Aside</h3>
+<div class="outline-text-3" id="text-orgb283f73">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -94,9 +94,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-orge964e89" class="outline-2">
-<h2 id="orge964e89">handle user input code</h2>
-<div class="outline-text-2" id="text-orge964e89">
+<div id="outline-container-org57b6ad8" class="outline-2">
+<h2 id="org57b6ad8">handle user input code</h2>
+<div class="outline-text-2" id="text-org57b6ad8">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -174,9 +174,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-orgf2c1a46" class="outline-2">
-<h2 id="orgf2c1a46">drawing</h2>
-<div class="outline-text-2" id="text-orgf2c1a46">
+<div id="outline-container-orge971d40" class="outline-2">
+<h2 id="orge971d40">drawing</h2>
+<div class="outline-text-2" id="text-orge971d40">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -304,9 +304,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-org0be92dc" class="outline-2">
-<h2 id="org0be92dc">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-org0be92dc">
+<div id="outline-container-orgee35e2f" class="outline-2">
+<h2 id="orgee35e2f">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-orgee35e2f">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
