@@ -1,4 +1,4 @@
-#+title: LZ 👻
+#+title: LZ
 #+options: toc:nil
 #+MACRO: color @@html:<font color="$1">$2</font>@@
 

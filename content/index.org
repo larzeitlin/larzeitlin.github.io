@@ -1,4 +1,4 @@
-#+title: LZ 👻
+#+title: LZ
 #+OPTIONS: toc:nil
 
 
