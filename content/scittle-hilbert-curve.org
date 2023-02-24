@@ -298,12 +298,12 @@ To turn this into the next iteration we need to subdivide the space into four ce
          path
          cell-patterns)))
 
-(->subcells init)
+(map ->subcells init)
 
-;=> ({:cell (0 0), :pattern :D}
-;    {:cell (0 1), :pattern :A}
-;    {:cell (1 1), :pattern :A}
-;    {:cell (1 0), :pattern :B})
+;=> (({:cell (0 0), :pattern :D}
+;     {:cell (0 1), :pattern :A}
+;     {:cell (1 1), :pattern :A}
+;     {:cell (1 0), :pattern :B}))
 #+end_src
 
 Okay, now we would like to iterate that, each time concatenating the results into a single sequence. 

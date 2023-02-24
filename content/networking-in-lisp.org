@@ -2,9 +2,7 @@
 #+options: toc:nil
 #+MACRO: color @@html:<font color="$1">$2</font>@@
 
-
 [[./index.org][home]]
-
 
 * Look mum, no HTTP client!
 Usually when you want to make an HTTP GET request in your favorite programming language you probably do something like import an HTTP library, make a client, call a GET method on that client and away we go. Just for fun, and to get more familiar with Common Lisp I figured I'd instead make a request from scratch. But, because of Sagan, apple pie and turtles all the way down, I won't be doing anything "from scratch". Instead we'll just be dipping one layer down.
