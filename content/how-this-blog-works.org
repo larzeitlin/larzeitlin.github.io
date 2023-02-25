@@ -56,7 +56,7 @@ I have a directory called ~content~ which I keep all the ~.org~ files in, as wel
 With a few click [[https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site][Github Pages]] can be set up to serve static content in a repo. It detects the ~index.html~, which is made from the ~index.org~ file, which then links to the other files. You can [[https://github.com/larzeitlin/blog][see the repo here]].
 
 * Why I like this
-I've tried various platforms and static site blog generators (Jekyll, Hugo), as well as building more complicated things from scratch in ClojureScript. These all felt they had too much unneccecery complexity. I considered going fully the other way - just writing it directly into HTML. That's tempting but it's just a bit too unpleasent to read while writing, and a little bit less portable if I want to change to another system in the future. This a happy compromise where it's pretty transparent and flexible while staying really simple.
+I've tried various platforms and static site blog generators (Jekyll, Hugo), as well as building more complicated things from scratch in ClojureScript. These all felt they had too much unnecessary complexity. I considered going fully the other way - just writing it directly into HTML. That's tempting but it's just a bit too unpleasant to read while writing, and a little bit less portable if I want to change to another system in the future. This a happy compromise where it's pretty transparent and flexible while staying really simple.
 
 * Thanks 
 This was pretty much copied from the [[https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/][System Crafters]] website. So thanks to David over there for that and all his great content about Emacs.
