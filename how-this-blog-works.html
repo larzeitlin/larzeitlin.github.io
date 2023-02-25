@@ -16,9 +16,9 @@
 <a href="./index.html">home</a>
 </p>
 
-<div id="outline-container-org1665c86" class="outline-2">
-<h2 id="org1665c86">How this blog works</h2>
-<div class="outline-text-2" id="text-org1665c86">
+<div id="outline-container-orgfe75174" class="outline-2">
+<h2 id="orgfe75174">How this blog works</h2>
+<div class="outline-text-2" id="text-orgfe75174">
 <p>
 Thought I'd share a few details about it because I've been looking for the right 
 blogging method for me, and finally I've fallen on something that I think will work 
@@ -26,31 +26,34 @@ nicely.
 </p>
 </div>
 
-<div id="outline-container-org4027751" class="outline-3">
-<h3 id="org4027751">Org mode</h3>
-<div class="outline-text-3" id="text-org4027751">
+<div id="outline-container-org332298c" class="outline-3">
+<h3 id="org332298c">Org mode</h3>
+<div class="outline-text-3" id="text-org332298c">
 <p>
-Org mode is a markup format that comes from the Emacs world (although it is used outside
-Emacs as well). It's nice to write in because the marked-up text is still very clean 
-and readable.
+<a href="https://orgmode.org/">org</a> is a markup format that is associated with Emacs. The plaintext is very readable and there are some nice features for it built into Emacs. One such feature is the capability to render it to HTML.
 </p>
 
 <p>
-Org mode has some build-in "publishing" capability. It is able to export to HTML. I
-use a short emacs-lisp script to achive this. It simply sets a few config vars and
-calls the <code>org-publish-project-alist</code> function to walk the content directory and 
-convert my blog posts to html.
+I have a directory called <code>content</code> which I keep all the <code>.org</code> files in, as well as images. This is am emacs-lisp script I run sets some config to walk the <code>content</code> directory and convert my blog posts to HTML. It also sets a favicon and uses <code>htmlize</code> to get syntax highlighting in the code blocks.
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-elisp">(<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
+<pre class="src src-elisp">(package-initialize)
+(<span class="org-keyword">unless</span> package-archive-contents
+  (package-refresh-contents))
+
+(package-install 'htmlize)
+
+(<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
 
 (<span class="org-keyword">setq</span> org-html-validation-link nil
       org-html-head-include-scripts nil
       org-html-head-include-default-style nil
-      org-html-head <span class="org-string">"&lt;link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" /&gt;"</span>)
+      org-html-head (concat <span class="org-string">"&lt;link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" /&gt;"</span>
+                            <span class="org-string">"&lt;link rel=\"icon\" href=\"data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;&#128123;&lt;/text&gt;&lt;/svg&gt;\"&gt;"</span>))
 
+(<span class="org-keyword">setq</span> org-html-htmlize-output-type 'css)
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Define the publishing project</span>
 (<span class="org-keyword">setq</span> org-publish-project-alist
@@ -74,25 +77,32 @@ convert my blog posts to html.
 </div>
 </div>
 </div>
+</div>
 
-
-<div id="outline-container-org4a3e2ad" class="outline-3">
-<h3 id="org4a3e2ad">Github pages</h3>
-<div class="outline-text-3" id="text-org4a3e2ad">
+<div id="outline-container-org397b290" class="outline-2">
+<h2 id="org397b290">Github pages</h2>
+<div class="outline-text-2" id="text-org397b290">
 <p>
-You can <a href="https://github.com/larzeitlin/blog">see the repo here</a>. Github pages detects the <code>index.html</code>, which then links to the 
-other files.
+With a few click <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Github Pages</a> can be set up to serve static content in a repo. It detects the <code>index.html</code>, which is made from the <code>index.org</code> file, which then links to the other files. You can <a href="https://github.com/larzeitlin/blog">see the repo here</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1f41b1b" class="outline-3">
-<h3 id="org1f41b1b">Thanks</h3>
-<div class="outline-text-3" id="text-org1f41b1b">
+<div id="outline-container-orgfc0c03e" class="outline-2">
+<h2 id="orgfc0c03e">Why I like this</h2>
+<div class="outline-text-2" id="text-orgfc0c03e">
 <p>
-This was inspired by <a href="https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/">System Crafters</a>. So thanks to David for that and all his great content.
+I've tried various platforms and static site blog generators (Jekyll, Hugo), as well as building more complicated things from scratch in ClojureScript. These all felt they had too much unneccecery complexity. I considered going fully the other way - just writing it directly into HTML. That's tempting but it's just a bit too unpleasent to read while writing, and a little bit less portable if I want to change to another system in the future. This a happy compromise where it's pretty transparent and flexible while staying really simple.
 </p>
 </div>
+</div>
+
+<div id="outline-container-org53c2aa9" class="outline-2">
+<h2 id="org53c2aa9">Thanks</h2>
+<div class="outline-text-2" id="text-org53c2aa9">
+<p>
+This was pretty much copied from the <a href="https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/">System Crafters</a> website. So thanks to David over there for that and all his great content about Emacs.
+</p>
 </div>
 </div>
 </div>

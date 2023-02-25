@@ -5,30 +5,32 @@
 [[./index.org][home]]
 
 * How this blog works
-
 Thought I'd share a few details about it because I've been looking for the right 
 blogging method for me, and finally I've fallen on something that I think will work 
 nicely.
 
 ** Org mode
-Org mode is a markup format that comes from the Emacs world (although it is used outside
-Emacs as well). It's nice to write in because the marked-up text is still very clean 
-and readable.
+[[https://orgmode.org/][org]] is a markup format that is associated with Emacs. The plaintext is very readable and there are some nice features for it built into Emacs. One such feature is the capability to render it to HTML.
 
-Org mode has some build-in "publishing" capability. It is able to export to HTML. I
-use a short emacs-lisp script to achive this. It simply sets a few config vars and
-calls the ~org-publish-project-alist~ function to walk the content directory and 
-convert my blog posts to html.
+I have a directory called ~content~ which I keep all the ~.org~ files in, as well as images. This is am emacs-lisp script I run sets some config to walk the ~content~ directory and convert my blog posts to HTML. It also sets a favicon and uses ~htmlize~ to get syntax highlighting in the code blocks.
 
 
 #+begin_src elisp
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(package-install 'htmlize)
+
 (require 'ox-publish)
 
 (setq org-html-validation-link nil
       org-html-head-include-scripts nil
       org-html-head-include-default-style nil
-      org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />")
+      org-html-head (concat "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" />"
+			    "<link rel=\"icon\" href=\"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>\">"))
 
+(setq org-html-htmlize-output-type 'css)
 
 ;; Define the publishing project
 (setq org-publish-project-alist
@@ -50,10 +52,11 @@ convert my blog posts to html.
 (message "Build complete!")
 #+end_src
 
+* Github pages
+With a few click [[https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site][Github Pages]] can be set up to serve static content in a repo. It detects the ~index.html~, which is made from the ~index.org~ file, which then links to the other files. You can [[https://github.com/larzeitlin/blog][see the repo here]].
 
-** Github pages
-You can [[https://github.com/larzeitlin/blog][see the repo here]]. Github pages detects the ~index.html~, which then links to the 
-other files.
+* Why I like this
+I've tried various platforms and static site blog generators (Jekyll, Hugo), as well as building more complicated things from scratch in ClojureScript. These all felt they had too much unneccecery complexity. I considered going fully the other way - just writing it directly into HTML. That's tempting but it's just a bit too unpleasent to read while writing, and a little bit less portable if I want to change to another system in the future. This a happy compromise where it's pretty transparent and flexible while staying really simple.
 
-** Thanks 
-This was inspired by [[https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/][System Crafters]]. So thanks to David for that and all his great content.
+* Thanks 
+This was pretty much copied from the [[https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/][System Crafters]] website. So thanks to David over there for that and all his great content about Emacs.
