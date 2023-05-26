@@ -40,6 +40,8 @@ We generate two hexagrams in parallel. We go line by line from the bottom to the
 
 Broken refers to the line in the first hexagram, changing refers to whether that bit is flipped in the second hexagram. We will refer to each state by its number. These numbers tie into the hexagram generation process.
 
+There are multiple versions of this method. I've chosen what appeared to be the most common one without some prefix such as "modified" or "simplified" from a brief web search.
+
 ** To generate a hexagram:
 We are going to make various piles of stalks. I will refer to these with single character names (~l~, ~r~, ~d~, etc). We also want to recall intermediary results that go into the final result. These will be referred to as ~result-a~, ~result-b~, ~result-c~. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 
@@ -60,8 +62,11 @@ We are going to make various piles of stalks. I will refer to these with single 
 15. Gather all the stalks apart from the one removed in step 2. Repeat steps 3 to 14 for each of the remaining 5 lines (ascending).
 
 ** Implementation Notes
-The algorithm explained above is implemented here in ClojureScript using Scittle to run it in the browser. The code is editable do feel free to tweak it and play around with it. Pseudo-randomness is added at the approx half splitting point in step 3. To make this somewhat realistic we will sample randomly from a normal distribution using a Box-Muller transform, and then round to the nearest integer to create an offset to the split.
+The algorithm explained above is implemented here in ClojureScript using Scittle to run it in the browser. The code is editable do feel free to tweak it and play around with it. Pseudo-randomness is added at the approx half splitting point in step 3. To make this somewhat realistic we sample from a normal distribution using a Box-Muller transform, and then round to the nearest integer to create an offset to the split.
 
+We use the line generation process and record this as a 6 digit array of 1s and 0s representing the lines. This is converted into an decimal integer and then mapped to its King Wen number. The King Wen number can then be used to get the Unicode symbol and as a reference to look up the symbol's description elsewhere.
+
+The sole purpose of the code below is to represent a common version of the yarrow stalks algorithm as accurately as reasonable in a digital way.
 #+begin_export html
 <script type="application/x-scittle">
 
