@@ -45,21 +45,21 @@ There are multiple versions of this method. I've chosen what appeared to be the 
 ** To generate a hexagram:
 We are going to make various piles of stalks. I will refer to these with single character names (~l~, ~r~, ~d~, etc). We also want to recall intermediary results that go into the final result. These will be referred to as ~result-a~, ~result-b~, ~result-c~. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 
-1. Start with 50 stalks
-2. Remove one stalk (place it in discard pile ~d~). This one will not be used for generating this hexagram. We are left with 49.
-3. Divide into two approximately equal piles. We will call these piles ~l~ and ~r~.
-4. Take one stalk from ~r~. We will store this in pile ~s~.
+1. Start with 50 stalks in the initial pile ~i~
+2. Remove one stalk (place it in pile ~x~). This one will not be used for generating this hexagram. We are left with 49.
+3. Divide ~i~ into two approximately equal piles. We will call these piles ~l~ (left) and ~r~ (right).
+4. Take one stalk from ~r~. We will store this in pile of a single stalk ~s~.
 5. Draw from ~l~ in groups of 4, placing the groups of 4 into pile ~p~, until there are 4 or fewer remaining in ~l~.
 6. Draw from ~r~ in groups of 4, placing the groups of 4 into ~p~, until there are 4 or fewer remaining in ~r~.
 7. Sum the count of ~l~,  ~r~ and ~s~. If this sum is 5 set ~result-a~ to 3, if the sum is 9 then set ~result-a~ to 2. These are the only possible sums if the method is followed correctly.
-8. Discard the contents of ~l~, ~r~ and ~s~ into ~d~.
-9. Repeat steps 3 to 6.
+8. Discard the contents of ~l~, ~r~ and ~s~ into discard pile ~d~.
+9. Move the contents of ~p~ back into the initial pile ~i~ Repeat steps 3 to 6.
 10. Sum the new contents of ~l~, ~r~ and ~s~. If this sum is 8 set ~result-b~ to 2, if the sum is 4 then set ~result-b~ to 3. These are the only possible sums if the method is followed correctly.
 11. Discard the contents of ~l~, ~r~ and ~s~ into ~d~.
-12. Repeat steps 3 to 6.
-13. Sum the new contents of ~l~ and ~r~ and this time also ~s~. If this sum is 8 set ~result-c~ to 2, if the sum is 4 then set ~result-c~ to 3. These are the only possible sums if the method is followed correctly.
-14. Sum the values of ~result-a~, ~result-b~ and ~result-c~. This will be ether 6, 7, 8 or 9. This represents the selected bottom line. 
-15. Gather all the stalks apart from the one removed in step 2. Repeat steps 3 to 14 for each of the remaining 5 lines (ascending).
+12. Move the contents of ~p~ back into the initial pile ~i~ Repeat steps 3 to 6.
+13. Sum the new contents of ~l~, ~r~ and  ~s~. If this sum is 8 set ~result-c~ to 2, if the sum is 4 then set ~result-c~ to 3. These are the only possible sums if the method is followed correctly.
+14. Sum the values of ~result-a~, ~result-b~ and ~result-c~. This will be ether 6, 7, 8 or 9. This is line's value. 
+15. Gather all the stalks from all piles apart from ~x~ (the one removed in step 2). Repeat steps 3 to 14 for each of the remaining 5 lines (ascending).
 
 ** Implementation Notes
 The algorithm explained above is implemented here in ClojureScript using Scittle to run it in the browser. The code is editable do feel free to tweak it and play around with it. Pseudo-randomness is added at the approx half splitting point in step 3. To make this somewhat realistic we sample from a normal distribution using a Box-Muller transform, and then round to the nearest integer to create an offset to the split.

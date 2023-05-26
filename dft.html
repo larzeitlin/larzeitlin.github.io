@@ -39,9 +39,9 @@
 </p>
 
 
-<div id="outline-container-orgc1ec7a4" class="outline-2">
-<h2 id="orgc1ec7a4">Discrete Fourier Transform</h2>
-<div class="outline-text-2" id="text-orgc1ec7a4">
+<div id="outline-container-orgb5e1ac3" class="outline-2">
+<h2 id="orgb5e1ac3">Discrete Fourier Transform</h2>
+<div class="outline-text-2" id="text-orgb5e1ac3">
 <p>
 This is just my understanding / intuitive explanation of what this algorithm means.
 </p>
@@ -74,9 +74,9 @@ and phase?"</i></li>
 </ul>
 </div>
 
-<div id="outline-container-org8798592" class="outline-3">
-<h3 id="org8798592">A Roundabout Introduction</h3>
-<div class="outline-text-3" id="text-org8798592">
+<div id="outline-container-org966d4b6" class="outline-3">
+<h3 id="org966d4b6">A Roundabout Introduction</h3>
+<div class="outline-text-3" id="text-org966d4b6">
 <p>
 <a href="https://en.wikipedia.org/wiki/Joseph_Fourier">Joseph Fourier</a>
 was a French mathematician who was doing his thing at the end of the 18th to
@@ -90,9 +90,9 @@ sinusoids.
 </p>
 </div>
 
-<div id="outline-container-org3579ece" class="outline-4">
-<h4 id="org3579ece">Sinusoids, circles and epicycles</h4>
-<div class="outline-text-4" id="text-org3579ece">
+<div id="outline-container-org76462b9" class="outline-4">
+<h4 id="org76462b9">Sinusoids, circles and epicycles</h4>
+<div class="outline-text-4" id="text-org76462b9">
 <p>
 Let's start by thinking of a sinusoid as an aspect of circular movement
 in relation to time. As we probably all learned in school at some stage,
@@ -183,9 +183,9 @@ here, and the end result is intuitive.
 </div>
 </div>
 
-<div id="outline-container-org99f3433" class="outline-4">
-<h4 id="org99f3433">Amplitude and Phase</h4>
-<div class="outline-text-4" id="text-org99f3433">
+<div id="outline-container-orgca16bad" class="outline-4">
+<h4 id="orgca16bad">Amplitude and Phase</h4>
+<div class="outline-text-4" id="text-orgca16bad">
 <p>
 What we do need is a method to find out <b>which sinusoids</b> are in a given
 signal. Just the frequency of those sinusoids isn't enough information.
@@ -241,9 +241,9 @@ of the article
 </div>
 </div>
 
-<div id="outline-container-org112cbf3" class="outline-3">
-<h3 id="org112cbf3">Imaginary and Complex Numbers</h3>
-<div class="outline-text-3" id="text-org112cbf3">
+<div id="outline-container-org098b7cf" class="outline-3">
+<h3 id="org098b7cf">Imaginary and Complex Numbers</h3>
+<div class="outline-text-3" id="text-org098b7cf">
 <p>
 \[i = \sqrt{−1}\]
 </p>
@@ -321,9 +321,9 @@ boot up some other concepts we'll need.
 </div>
 </div>
 
-<div id="outline-container-orgb75599a" class="outline-3">
-<h3 id="orgb75599a">Euler's Number</h3>
-<div class="outline-text-3" id="text-orgb75599a">
+<div id="outline-container-org8ca1fe3" class="outline-3">
+<h3 id="org8ca1fe3">Euler's Number</h3>
+<div class="outline-text-3" id="text-org8ca1fe3">
 <p>
 Usually known as simply e, Euler's number is a mathematical constant.
 It's a real,
@@ -334,9 +334,9 @@ how we get to e through an analogy to compound interest.
 </p>
 </div>
 
-<div id="outline-container-org1ca0c22" class="outline-4">
-<h4 id="org1ca0c22">Growth</h4>
-<div class="outline-text-4" id="text-org1ca0c22">
+<div id="outline-container-org7da2ac6" class="outline-4">
+<h4 id="org7da2ac6">Growth</h4>
+<div class="outline-text-4" id="text-org7da2ac6">
 <p>
 This section seems pretty unrelated at first, but it's actually key to
 understanding the DFT. I should add that this bank loan analogy is just
@@ -453,7 +453,7 @@ help us make a tool for seeking out sinusoids in a signal.
 </div>
 </div>
 
-<div id="outline-container-orgd23b690" class="outline-4">
+<div id="outline-container-orgb2844a0" class="outline-4">
 <h4 id="imaginary-growth-is-anticlockwise-rotation">Imaginary Growth is Anticlockwise Rotation</h4>
 <div class="outline-text-4" id="text-imaginary-growth-is-anticlockwise-rotation">
 <p>
@@ -508,9 +508,9 @@ The upshot is we can use e to make circles. This is the basis of the
 </div>
 </div>
 
-<div id="outline-container-orgf5522b3" class="outline-3">
-<h3 id="orgf5522b3">Complex sinusoid</h3>
-<div class="outline-text-3" id="text-orgf5522b3">
+<div id="outline-container-org960c072" class="outline-3">
+<h3 id="org960c072">Complex sinusoid</h3>
+<div class="outline-text-3" id="text-org960c072">
 <p>
 The complex sinusoid is really just the sum of two sinusoids, one real
 and one imaginary. These two sinusoids are in <i>phase quadrature</i>, which
@@ -588,9 +588,9 @@ Using a complex sinusoid helps us keep it all compact and tidy.
 </div>
 </div>
 
-<div id="outline-container-org4b571cc" class="outline-3">
-<h3 id="org4b571cc">The Discrete Fourier Transform</h3>
-<div class="outline-text-3" id="text-org4b571cc">
+<div id="outline-container-orgd21eca9" class="outline-3">
+<h3 id="orgd21eca9">The Discrete Fourier Transform</h3>
+<div class="outline-text-3" id="text-orgd21eca9">
 <p>
 We've got all the bits we need! We're going to just dive in:
 </p>
@@ -686,9 +686,9 @@ You may be asking yourself&#x2026;
 </p>
 </div>
 
-<div id="outline-container-org0c21ae6" class="outline-4">
-<h4 id="org0c21ae6">Why are we multiplying our input signal by sinusoids?</h4>
-<div class="outline-text-4" id="text-org0c21ae6">
+<div id="outline-container-org501e9cb" class="outline-4">
+<h4 id="org501e9cb">Why are we multiplying our input signal by sinusoids?</h4>
+<div class="outline-text-4" id="text-org501e9cb">
 <p>
 The complex sinusoid is different for each bin. It's frequency is set by
 k. This complex sinusoid hunts for a sinusoid that matches it in our
@@ -760,9 +760,9 @@ through some examples:
 </div>
 </div>
 
-<div id="outline-container-org27efce2" class="outline-4">
-<h4 id="org27efce2">Examples</h4>
-<div class="outline-text-4" id="text-org27efce2">
+<div id="outline-container-orge76938f" class="outline-4">
+<h4 id="orge76938f">Examples</h4>
+<div class="outline-text-4" id="text-orge76938f">
 <p>
 We'll start with a signal to test. Here's a signal made from two
 sinusoids. We'll use the just the real part of the DFT to find out which
@@ -857,7 +857,7 @@ a static frequency spectrum of that sound.
 </div>
 </div>
 
-<div id="outline-container-orgfd48d03" class="outline-3">
+<div id="outline-container-orga29cc72" class="outline-3">
 <h3 id="some-properties-of-the-dft">Some Properties of the DFT</h3>
 <div class="outline-text-3" id="text-some-properties-of-the-dft">
 <p>
@@ -915,7 +915,7 @@ you'll have to divide it by N.
 </div>
 </div>
 
-<div id="outline-container-orgc7f33a9" class="outline-3">
+<div id="outline-container-org5dd1595" class="outline-3">
 <h3 id="where-next">Where next?</h3>
 <div class="outline-text-3" id="text-where-next">
 <p>
