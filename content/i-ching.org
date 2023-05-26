@@ -38,7 +38,7 @@ We generate two hexagrams in parallel. We go line by line from the bottom to the
 - (8), - -, broken, not changing
 - (9), -o-, unbroken, changing
 
-Broken refers to the line in the first hexagram, changing refers to whether that bit is flipped in the second hexagram. We will refer to each state by it's number. These numbers tie into the hexagram generation process.
+Broken refers to the line in the first hexagram, changing refers to whether that bit is flipped in the second hexagram. We will refer to each state by its number. These numbers tie into the hexagram generation process.
 
 ** To generate a hexagram:
 We are going to make various piles of stalks. I will refer to these with single character names (~l~, ~r~, ~d~, etc). We also want to recall intermediary results that go into the final result. These will be referred to as ~result-a~, ~result-b~, ~result-c~. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
@@ -52,10 +52,10 @@ We are going to make various piles of stalks. I will refer to these with single 
 7. Sum the count of ~l~,  ~r~ and ~s~. If this sum is 5 set ~result-a~ to 3, if the sum is 9 then set ~result-a~ to 2. These are the only possible sums if the method is followed correctly.
 8. Discard the contents of ~l~, ~r~ and ~s~ into ~d~.
 9. Repeat steps 3 to 6.
-10. Sum the new contents of ~l~, ~r~ and ~s~. If this sum is 8 set ~result-a~ to 2, if the sum is 4 then set ~result-b~ to 3. These are the only possible sums if the method is followed correctly.
+10. Sum the new contents of ~l~, ~r~ and ~s~. If this sum is 8 set ~result-b~ to 2, if the sum is 4 then set ~result-b~ to 3. These are the only possible sums if the method is followed correctly.
 11. Discard the contents of ~l~, ~r~ and ~s~ into ~d~.
 12. Repeat steps 3 to 6.
-13. Sum the new contents of ~l~ and ~r~ and this time also ~s~. If this sum is 8 set ~result-a~ to 2, if the sum is 4 then set ~result-c~ to 3. These are the only possible sums if the method is followed correctly.
+13. Sum the new contents of ~l~ and ~r~ and this time also ~s~. If this sum is 8 set ~result-c~ to 2, if the sum is 4 then set ~result-c~ to 3. These are the only possible sums if the method is followed correctly.
 14. Sum the values of ~result-a~, ~result-b~ and ~result-c~. This will be ether 6, 7, 8 or 9. This represents the selected bottom line. 
 15. Gather all the stalks apart from the one removed in step 2. Repeat steps 3 to 14 for each of the remaining 5 lines (ascending).
 

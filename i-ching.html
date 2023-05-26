@@ -22,9 +22,9 @@
 </script>
 
 
-<div id="outline-container-org2fdc761" class="outline-2">
-<h2 id="org2fdc761">I Ching</h2>
-<div class="outline-text-2" id="text-org2fdc761">
+<div id="outline-container-org35dadcf" class="outline-2">
+<h2 id="org35dadcf">I Ching</h2>
+<div class="outline-text-2" id="text-org35dadcf">
 <p>
 The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
 </p>
@@ -35,9 +35,9 @@ Let's make an I Ching simulation step-by-step.
 </div>
 </div>
 
-<div id="outline-container-orgfa5feb1" class="outline-2">
-<h2 id="orgfa5feb1">Hexagrams</h2>
-<div class="outline-text-2" id="text-orgfa5feb1">
+<div id="outline-container-org6192bd1" class="outline-2">
+<h2 id="org6192bd1">Hexagrams</h2>
+<div class="outline-text-2" id="text-org6192bd1">
 <p>
 Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
 </p>
@@ -52,26 +52,26 @@ These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/Ki
 </div>
 </div>
 
-<div id="outline-container-org4238191" class="outline-2">
-<h2 id="org4238191">Hexagram selection</h2>
-<div class="outline-text-2" id="text-org4238191">
+<div id="outline-container-orgca62f24" class="outline-2">
+<h2 id="orgca62f24">Hexagram selection</h2>
+<div class="outline-text-2" id="text-orgca62f24">
 <p>
 To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org879001f" class="outline-2">
-<h2 id="org879001f">Yarrow stalks algorithm</h2>
-<div class="outline-text-2" id="text-org879001f">
+<div id="outline-container-org1b9ddc4" class="outline-2">
+<h2 id="org1b9ddc4">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-org1b9ddc4">
 <p>
 There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
 </p>
 </div>
 
-<div id="outline-container-orge25d956" class="outline-3">
-<h3 id="orge25d956">Process</h3>
-<div class="outline-text-3" id="text-orge25d956">
+<div id="outline-container-orgc94b037" class="outline-3">
+<h3 id="orgc94b037">Process</h3>
+<div class="outline-text-3" id="text-orgc94b037">
 <p>
 We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
 </p>
@@ -83,14 +83,14 @@ We generate two hexagrams in parallel. We go line by line from the bottom to the
 </ul>
 
 <p>
-Broken refers to the line in the first hexagram, changing refers to whether that bit is flipped in the second hexagram. We will refer to each state by it's number. These numbers tie into the hexagram generation process.
+Broken refers to the line in the first hexagram, changing refers to whether that bit is flipped in the second hexagram. We will refer to each state by its number. These numbers tie into the hexagram generation process.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orge0370ea" class="outline-3">
-<h3 id="orge0370ea">To generate a hexagram:</h3>
-<div class="outline-text-3" id="text-orge0370ea">
+<div id="outline-container-org4fd50c5" class="outline-3">
+<h3 id="org4fd50c5">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-org4fd50c5">
 <p>
 We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 </p>
@@ -105,10 +105,10 @@ We are going to make various piles of stalks. I will refer to these with single 
 <li>Sum the count of <code>l</code>,  <code>r</code> and <code>s</code>. If this sum is 5 set <code>result-a</code> to 3, if the sum is 9 then set <code>result-a</code> to 2. These are the only possible sums if the method is followed correctly.</li>
 <li>Discard the contents of <code>l</code>, <code>r</code> and <code>s</code> into <code>d</code>.</li>
 <li>Repeat steps 3 to 6.</li>
-<li>Sum the new contents of <code>l</code>, <code>r</code> and <code>s</code>. If this sum is 8 set <code>result-a</code> to 2, if the sum is 4 then set <code>result-b</code> to 3. These are the only possible sums if the method is followed correctly.</li>
+<li>Sum the new contents of <code>l</code>, <code>r</code> and <code>s</code>. If this sum is 8 set <code>result-b</code> to 2, if the sum is 4 then set <code>result-b</code> to 3. These are the only possible sums if the method is followed correctly.</li>
 <li>Discard the contents of <code>l</code>, <code>r</code> and <code>s</code> into <code>d</code>.</li>
 <li>Repeat steps 3 to 6.</li>
-<li>Sum the new contents of <code>l</code> and <code>r</code> and this time also <code>s</code>. If this sum is 8 set <code>result-a</code> to 2, if the sum is 4 then set <code>result-c</code> to 3. These are the only possible sums if the method is followed correctly.</li>
+<li>Sum the new contents of <code>l</code> and <code>r</code> and this time also <code>s</code>. If this sum is 8 set <code>result-c</code> to 2, if the sum is 4 then set <code>result-c</code> to 3. These are the only possible sums if the method is followed correctly.</li>
 <li>Sum the values of <code>result-a</code>, <code>result-b</code> and <code>result-c</code>. This will be ether 6, 7, 8 or 9. This represents the selected bottom line.</li>
 <li>Gather all the stalks apart from the one removed in step 2. Repeat steps 3 to 14 for each of the remaining 5 lines (ascending).</li>
 </ol>
