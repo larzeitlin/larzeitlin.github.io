@@ -22,9 +22,9 @@
 </script>
 
 
-<div id="outline-container-org35dadcf" class="outline-2">
-<h2 id="org35dadcf">I Ching</h2>
-<div class="outline-text-2" id="text-org35dadcf">
+<div id="outline-container-orgbf9a6b4" class="outline-2">
+<h2 id="orgbf9a6b4">I Ching</h2>
+<div class="outline-text-2" id="text-orgbf9a6b4">
 <p>
 The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
 </p>
@@ -35,9 +35,9 @@ Let's make an I Ching simulation step-by-step.
 </div>
 </div>
 
-<div id="outline-container-org6192bd1" class="outline-2">
-<h2 id="org6192bd1">Hexagrams</h2>
-<div class="outline-text-2" id="text-org6192bd1">
+<div id="outline-container-orgc84cbac" class="outline-2">
+<h2 id="orgc84cbac">Hexagrams</h2>
+<div class="outline-text-2" id="text-orgc84cbac">
 <p>
 Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
 </p>
@@ -52,26 +52,26 @@ These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/Ki
 </div>
 </div>
 
-<div id="outline-container-orgca62f24" class="outline-2">
-<h2 id="orgca62f24">Hexagram selection</h2>
-<div class="outline-text-2" id="text-orgca62f24">
+<div id="outline-container-org11e8fea" class="outline-2">
+<h2 id="org11e8fea">Hexagram selection</h2>
+<div class="outline-text-2" id="text-org11e8fea">
 <p>
 To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1b9ddc4" class="outline-2">
-<h2 id="org1b9ddc4">Yarrow stalks algorithm</h2>
-<div class="outline-text-2" id="text-org1b9ddc4">
+<div id="outline-container-org96cb93f" class="outline-2">
+<h2 id="org96cb93f">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-org96cb93f">
 <p>
 There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
 </p>
 </div>
 
-<div id="outline-container-orgc94b037" class="outline-3">
-<h3 id="orgc94b037">Process</h3>
-<div class="outline-text-3" id="text-orgc94b037">
+<div id="outline-container-org571c649" class="outline-3">
+<h3 id="org571c649">Process</h3>
+<div class="outline-text-3" id="text-org571c649">
 <p>
 We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
 </p>
@@ -88,9 +88,9 @@ Broken refers to the line in the first hexagram, changing refers to whether that
 </div>
 </div>
 
-<div id="outline-container-org4fd50c5" class="outline-3">
-<h3 id="org4fd50c5">To generate a hexagram:</h3>
-<div class="outline-text-3" id="text-org4fd50c5">
+<div id="outline-container-orgbc9a339" class="outline-3">
+<h3 id="orgbc9a339">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-orgbc9a339">
 <p>
 We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 </p>
