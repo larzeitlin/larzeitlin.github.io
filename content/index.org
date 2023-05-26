@@ -12,3 +12,4 @@ hi i'm luke - this is my blog
 - [[file:networking-in-lisp.org][tcp sockets in common lisp]]
 - [[https://larzeitlin.github.io/simple-flashcards][simple flashcards]]
 - [[file:scittle-hilbert-curve.org][scittle hilbert curve]]
+- [[file:i-ching.org][I Ching]]

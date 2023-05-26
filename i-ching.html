@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+</head>
+<body>
+<div id="content">
+<h1 class="title">LZ</h1>
+<p>
+<a href="./index.html">home</a>
+</p>
+
+<script src="https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"
+        type="application/javascript"></script>
+<script type="application/x-scittle">
+</script>
+
+
+<div id="outline-container-org2fdc761" class="outline-2">
+<h2 id="org2fdc761">I Ching</h2>
+<div class="outline-text-2" id="text-org2fdc761">
+<p>
+The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
+</p>
+
+<p>
+Let's make an I Ching simulation step-by-step.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfa5feb1" class="outline-2">
+<h2 id="orgfa5feb1">Hexagrams</h2>
+<div class="outline-text-2" id="text-orgfa5feb1">
+<p>
+Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
+</p>
+
+<p>
+<p style="font-size:50px;text-align:center">&#19904; &#19905; &#19906; &#19907; &#19908; &#19909;</p>
+</p>
+
+<p>
+These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/King_Wen_sequence">King Wen sequence</a>. This special sequence is not intuitive (from the binary perspective) but is typically how the hexagrams are ordered.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4238191" class="outline-2">
+<h2 id="org4238191">Hexagram selection</h2>
+<div class="outline-text-2" id="text-org4238191">
+<p>
+To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org879001f" class="outline-2">
+<h2 id="org879001f">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-org879001f">
+<p>
+There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
+</p>
+</div>
+
+<div id="outline-container-orge25d956" class="outline-3">
+<h3 id="orge25d956">Process</h3>
+<div class="outline-text-3" id="text-orge25d956">
+<p>
+We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
+</p>
+<ul class="org-ul">
+<li>(6), -x-, broken, changing</li>
+<li>(7), &#x2014;, unbroken, not changing</li>
+<li>(8), - -, broken, not changing</li>
+<li>(9), -o-, unbroken, changing</li>
+</ul>
+
+<p>
+Broken refers to the line in the first hexagram, changing refers to whether that bit is flipped in the second hexagram. We will refer to each state by it's number. These numbers tie into the hexagram generation process.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge0370ea" class="outline-3">
+<h3 id="orge0370ea">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-orge0370ea">
+<p>
+We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
+</p>
+
+<ol class="org-ol">
+<li>Start with 50 stalks</li>
+<li>Remove one stalk (place it in discard pile <code>d</code>). This one will not be used for generating this hexagram. We are left with 49.</li>
+<li>Divide into two approximately equal piles. We will call these piles <code>l</code> and <code>r</code>.</li>
+<li>Take one stalk from <code>r</code>. We will store this in pile <code>s</code>.</li>
+<li>Draw from <code>l</code> in groups of 4, placing the groups of 4 into pile <code>p</code>, until there are 4 or fewer remaining in <code>l</code>.</li>
+<li>Draw from <code>r</code> in groups of 4, placing the groups of 4 into <code>p</code>, until there are 4 or fewer remaining in <code>r</code>.</li>
+<li>Sum the count of <code>l</code>,  <code>r</code> and <code>s</code>. If this sum is 5 set <code>result-a</code> to 3, if the sum is 9 then set <code>result-a</code> to 2. These are the only possible sums if the method is followed correctly.</li>
+<li>Discard the contents of <code>l</code>, <code>r</code> and <code>s</code> into <code>d</code>.</li>
+<li>Repeat steps 3 to 6.</li>
+<li>Sum the new contents of <code>l</code>, <code>r</code> and <code>s</code>. If this sum is 8 set <code>result-a</code> to 2, if the sum is 4 then set <code>result-b</code> to 3. These are the only possible sums if the method is followed correctly.</li>
+<li>Discard the contents of <code>l</code>, <code>r</code> and <code>s</code> into <code>d</code>.</li>
+<li>Repeat steps 3 to 6.</li>
+<li>Sum the new contents of <code>l</code> and <code>r</code> and this time also <code>s</code>. If this sum is 8 set <code>result-a</code> to 2, if the sum is 4 then set <code>result-c</code> to 3. These are the only possible sums if the method is followed correctly.</li>
+<li>Sum the values of <code>result-a</code>, <code>result-b</code> and <code>result-c</code>. This will be ether 6, 7, 8 or 9. This represents the selected bottom line.</li>
+<li>Gather all the stalks apart from the one removed in step 2. Repeat steps 3 to 14 for each of the remaining 5 lines (ascending).</li>
+</ol>
+
+
+
+<script type="application/x-scittle">
+
+(defn set-output-area [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+(defn set-image-src [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-src)
+      (set! v)))
+
+
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn hex-unicode [hex-n]
+  (str "&#" (+ hex-n 19903) ";"))
+
+(set! (.-read_input js/window)
+      (fn [] 
+        (let [result (read-eval-input "code-area")]
+           (set-output-area result 
+                        "output-area")
+	   (set-output-area (->> result :hexagrams first hex-unicode)
+                        "hex1")
+	   (set-output-area (->> result :hexagrams second hex-unicode)
+                        "hex2"))))
+		
+
+</script>
+<body>
+<textarea id="code-area"
+          style="font-family:monospace;height:400px;">
+(defn split-stalks [stalks]
+  (let [approx-half (-> (count stalks)
+                         (/ 2)
+                         (+ (rand-int 4)))]
+    [(take approx-half stalks)
+     (drop approx-half stalks)]))
+
+(def count->result 
+  {5 3
+   9 2
+   8 2
+   4 3})
+
+(defn intermediate-result [stalks]
+  (let [[l r] (split-stalks stalks)
+        [s r] ((juxt #(take 1 %) rest) r)
+        r (last (partition 4 4 nil r))
+        l (last (partition 4 4 nil l))
+        cnt (reduce + (map count [r l s]))
+        remaining-stalks (- (count stalks) cnt)]
+    [(count->result cnt) (take remaining-stalks
+                               (repeat :stalk))]))
+
+(defn generate-line [stalks]
+  (let [[result-a remaining-stalks] 
+        (intermediate-result stalks)
+        
+        [result-b remaining-stalks] 
+        (intermediate-result remaining-stalks)
+        
+        [result-c _]
+        (intermediate-result remaining-stalks)]
+  (+ result-a result-b result-c)))
+
+(defn array->bin [array]
+  (reduce (fn [acc bit]
+            (bit-or (bit-shift-left acc 1) bit))
+          0
+          (reverse array)))
+
+(def bin->king-wen 
+  (zipmap (range 64)
+          [2 24 7 19 15 36 46 11 16 51 40 54 62 55 32 34 8 3 29 60 39 63 48 5 45 17 47 58 31 49 28 43 23 27 4 41 52 22 18 26 35 21 64 38 56 30 50 14 20 42 59 61 53 37 57 9 12 25 6 10 33 13 44 1]))
+
+(defn lines->hexagrams [lines]
+  (let [h1-map {6 0
+                7 1
+                8 0
+                9 1}
+        h2-map {6 1
+                7 1
+                8 0
+                9 0}]
+    (->> [(mapv h1-map lines)
+          (mapv h2-map lines)]
+         (map array->bin)
+         (map bin->king-wen))))
+
+(defn generate-hexagrams []
+  (let [stalks (->> (repeat :stalk) (take 50))
+        stalks (rest stalks) ;; yep...
+        lines (take 6 (repeatedly #(generate-line stalks)))]
+    {:lines lines
+     :hexagrams (lines->hexagrams lines)}))
+
+(generate-hexagrams)
+</textarea>
+<button onclick="read_input()">divinate!</button>
+<p style="font-size:100px;text-align:center">
+<span id="hex1"></span>
+<span id="hex2"></span>
+<p id="output-area">...</p>
+</p>
+</body>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -16,22 +16,22 @@
 <a href="./index.html">home</a>
 </p>
 
-<div id="outline-container-org09e713f" class="outline-2">
-<h2 id="org09e713f">Look mum, no HTTP client!</h2>
-<div class="outline-text-2" id="text-org09e713f">
+<div id="outline-container-orgf8045bc" class="outline-2">
+<h2 id="orgf8045bc">Look mum, no HTTP client!</h2>
+<div class="outline-text-2" id="text-orgf8045bc">
 <p>
 Usually when you want to make an HTTP GET request in your favorite programming language you probably do something like import an HTTP library, make a client, call a GET method on that client and away we go. Just for fun, and to get more familiar with Common Lisp I figured I'd instead make a request from scratch. But, because of Sagan, apple pie and turtles all the way down, I won't be doing anything "from scratch". Instead we'll just be dipping one layer down.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org351f147" class="outline-2">
-<h2 id="org351f147">Networking basics</h2>
-<div class="outline-text-2" id="text-org351f147">
+<div id="outline-container-orga2a406c" class="outline-2">
+<h2 id="orga2a406c">Networking basics</h2>
+<div class="outline-text-2" id="text-orga2a406c">
 </div>
-<div id="outline-container-org2f6c36b" class="outline-3">
-<h3 id="org2f6c36b">TCP/IP</h3>
-<div class="outline-text-3" id="text-org2f6c36b">
+<div id="outline-container-org05a6f19" class="outline-3">
+<h3 id="org05a6f19">TCP/IP</h3>
+<div class="outline-text-3" id="text-org05a6f19">
 
 <div class="figure">
 <p><img src="images/http-layers.png" alt="http-layers.png" />
@@ -54,9 +54,9 @@ TCP ensures that internet applications can talk reliably to each other with erro
 </div>
 </div>
 
-<div id="outline-container-orgcdf1a37" class="outline-3">
-<h3 id="orgcdf1a37">Sockets</h3>
-<div class="outline-text-3" id="text-orgcdf1a37">
+<div id="outline-container-org620ba34" class="outline-3">
+<h3 id="org620ba34">Sockets</h3>
+<div class="outline-text-3" id="text-org620ba34">
 <p>
 Linux sockets are essentially file-like-things that represent network connections. They are identified by a combination of host and port-number. We can write to and read from a socket. Writes will be turned into packets and sent out. Addresses can be a an <code>IP address</code> or a <code>hostname</code>. In the latter case we perform a <code>DNS lookup</code> to get the <code>IP address</code> associated with the <code>hostname</code>.
 </p>
@@ -64,9 +64,9 @@ Linux sockets are essentially file-like-things that represent network connection
 </div>
 </div>
 
-<div id="outline-container-org41219e1" class="outline-2">
-<h2 id="org41219e1">Sockets in Common Lisp</h2>
-<div class="outline-text-2" id="text-org41219e1">
+<div id="outline-container-orgcc97793" class="outline-2">
+<h2 id="orgcc97793">Sockets in Common Lisp</h2>
+<div class="outline-text-2" id="text-orgcc97793">
 <p>
 To play around with sockets in common lisp we are going to use a package called <code>usocket</code>. Start up a REPL and load it up with Quicklisp. Let's set a variable to hold the host address. Initially we'll use the loopback interface (localhost) which is always at <code>127.0.0.1</code>.
 </p>
@@ -169,9 +169,9 @@ And that's it. Keep evaluating the read-line expression to read more lines from 
 </div>
 </div>
 
-<div id="outline-container-org7df7d93" class="outline-2">
-<h2 id="org7df7d93">Final notes</h2>
-<div class="outline-text-2" id="text-org7df7d93">
+<div id="outline-container-orgd7f0233" class="outline-2">
+<h2 id="orgd7f0233">Final notes</h2>
+<div class="outline-text-2" id="text-orgd7f0233">
 <ul class="org-ul">
 <li>The above uses plain HTTP. HTTPS adds a whole layer of complexity that is glossed over here.</li>
 <li>This method is just for fun and learning. If you are making something serious then you'll want to use a fully featured HTTP client library.</li>
