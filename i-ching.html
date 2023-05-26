@@ -22,9 +22,9 @@
 </script>
 
 
-<div id="outline-container-orgbf9a6b4" class="outline-2">
-<h2 id="orgbf9a6b4">I Ching</h2>
-<div class="outline-text-2" id="text-orgbf9a6b4">
+<div id="outline-container-org409dfdc" class="outline-2">
+<h2 id="org409dfdc">I Ching</h2>
+<div class="outline-text-2" id="text-org409dfdc">
 <p>
 The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
 </p>
@@ -35,9 +35,9 @@ Let's make an I Ching simulation step-by-step.
 </div>
 </div>
 
-<div id="outline-container-orgc84cbac" class="outline-2">
-<h2 id="orgc84cbac">Hexagrams</h2>
-<div class="outline-text-2" id="text-orgc84cbac">
+<div id="outline-container-org5aa9c1f" class="outline-2">
+<h2 id="org5aa9c1f">Hexagrams</h2>
+<div class="outline-text-2" id="text-org5aa9c1f">
 <p>
 Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
 </p>
@@ -52,26 +52,26 @@ These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/Ki
 </div>
 </div>
 
-<div id="outline-container-org11e8fea" class="outline-2">
-<h2 id="org11e8fea">Hexagram selection</h2>
-<div class="outline-text-2" id="text-org11e8fea">
+<div id="outline-container-org9b83b6d" class="outline-2">
+<h2 id="org9b83b6d">Hexagram selection</h2>
+<div class="outline-text-2" id="text-org9b83b6d">
 <p>
 To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org96cb93f" class="outline-2">
-<h2 id="org96cb93f">Yarrow stalks algorithm</h2>
-<div class="outline-text-2" id="text-org96cb93f">
+<div id="outline-container-org37bd1f4" class="outline-2">
+<h2 id="org37bd1f4">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-org37bd1f4">
 <p>
 There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
 </p>
 </div>
 
-<div id="outline-container-org571c649" class="outline-3">
-<h3 id="org571c649">Process</h3>
-<div class="outline-text-3" id="text-org571c649">
+<div id="outline-container-org1a89ab7" class="outline-3">
+<h3 id="org1a89ab7">Process</h3>
+<div class="outline-text-3" id="text-org1a89ab7">
 <p>
 We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
 </p>
@@ -88,9 +88,9 @@ Broken refers to the line in the first hexagram, changing refers to whether that
 </div>
 </div>
 
-<div id="outline-container-orgbc9a339" class="outline-3">
-<h3 id="orgbc9a339">To generate a hexagram:</h3>
-<div class="outline-text-3" id="text-orgbc9a339">
+<div id="outline-container-orgf408961" class="outline-3">
+<h3 id="orgf408961">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-orgf408961">
 <p>
 We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 </p>
@@ -233,6 +233,25 @@ We are going to make various piles of stalks. I will refer to these with single 
 </p>
 </body>
 </div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org35eb908" class="outline-2">
+<h2 id="org35eb908">Meanings</h2>
+<div class="outline-text-2" id="text-org35eb908">
+<p>
+The general idea seems to be the transition from the first to the second hexagram. (Book of Changes, remember) You can look up the symbols and contemplate their interpretations here:
+</p>
+
+<p>
+<a href="http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html">Wilhelm Translation</a>
+</p>
+
+<p>
+cba to scrape the symbol names / interpretations to put inline here right now. Maybe will come back and do that later&#x2026; xx 
+</p>
 </div>
 </div>
 </div>

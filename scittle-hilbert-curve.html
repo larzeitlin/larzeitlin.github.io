@@ -30,9 +30,9 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org39d059c" class="outline-2">
-<h2 id="org39d059c">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-org39d059c">
+<div id="outline-container-org55a7e42" class="outline-2">
+<h2 id="org55a7e42">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-org55a7e42">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
@@ -45,17 +45,17 @@ A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a spa
 </div>
 </div>
 
-<div id="outline-container-org4be25b6" class="outline-2">
-<h2 id="org4be25b6">what is scittle?</h2>
-<div class="outline-text-2" id="text-org4be25b6">
+<div id="outline-container-org0848c9b" class="outline-2">
+<h2 id="org0848c9b">what is scittle?</h2>
+<div class="outline-text-2" id="text-org0848c9b">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-org3033a6c" class="outline-3">
-<h3 id="org3033a6c">Aside</h3>
-<div class="outline-text-3" id="text-org3033a6c">
+<div id="outline-container-orgf25d475" class="outline-3">
+<h3 id="orgf25d475">Aside</h3>
+<div class="outline-text-3" id="text-orgf25d475">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -94,9 +94,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-org5c839ba" class="outline-2">
-<h2 id="org5c839ba">handle user input code</h2>
-<div class="outline-text-2" id="text-org5c839ba">
+<div id="outline-container-org9fbc19b" class="outline-2">
+<h2 id="org9fbc19b">handle user input code</h2>
+<div class="outline-text-2" id="text-org9fbc19b">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -174,9 +174,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-orgdb7696c" class="outline-2">
-<h2 id="orgdb7696c">drawing</h2>
-<div class="outline-text-2" id="text-orgdb7696c">
+<div id="outline-container-org73b4f25" class="outline-2">
+<h2 id="org73b4f25">drawing</h2>
+<div class="outline-text-2" id="text-org73b4f25">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -304,9 +304,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-org5291b6d" class="outline-2">
-<h2 id="org5291b6d">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-org5291b6d">
+<div id="outline-container-org9223c26" class="outline-2">
+<h2 id="org9223c26">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-org9223c26">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
