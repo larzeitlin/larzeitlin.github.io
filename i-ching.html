@@ -22,9 +22,9 @@
 </script>
 
 
-<div id="outline-container-orgd87d489" class="outline-2">
-<h2 id="orgd87d489">I Ching</h2>
-<div class="outline-text-2" id="text-orgd87d489">
+<div id="outline-container-org3d34433" class="outline-2">
+<h2 id="org3d34433">I Ching</h2>
+<div class="outline-text-2" id="text-org3d34433">
 <p>
 The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
 </p>
@@ -35,9 +35,9 @@ Let's make an I Ching simulation step-by-step.
 </div>
 </div>
 
-<div id="outline-container-org847fd78" class="outline-2">
-<h2 id="org847fd78">Hexagrams</h2>
-<div class="outline-text-2" id="text-org847fd78">
+<div id="outline-container-orgb70d2e1" class="outline-2">
+<h2 id="orgb70d2e1">Hexagrams</h2>
+<div class="outline-text-2" id="text-orgb70d2e1">
 <p>
 Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
 </p>
@@ -52,26 +52,26 @@ These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/Ki
 </div>
 </div>
 
-<div id="outline-container-orgd43f852" class="outline-2">
-<h2 id="orgd43f852">Hexagram selection</h2>
-<div class="outline-text-2" id="text-orgd43f852">
+<div id="outline-container-org1f720d4" class="outline-2">
+<h2 id="org1f720d4">Hexagram selection</h2>
+<div class="outline-text-2" id="text-org1f720d4">
 <p>
 To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbe59818" class="outline-2">
-<h2 id="orgbe59818">Yarrow stalks algorithm</h2>
-<div class="outline-text-2" id="text-orgbe59818">
+<div id="outline-container-orgc9588f3" class="outline-2">
+<h2 id="orgc9588f3">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-orgc9588f3">
 <p>
 There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
 </p>
 </div>
 
-<div id="outline-container-org46c4061" class="outline-3">
-<h3 id="org46c4061">Process</h3>
-<div class="outline-text-3" id="text-org46c4061">
+<div id="outline-container-org19e5bdf" class="outline-3">
+<h3 id="org19e5bdf">Process</h3>
+<div class="outline-text-3" id="text-org19e5bdf">
 <p>
 We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
 </p>
@@ -92,9 +92,9 @@ There are multiple versions of this method. I've chosen what appeared to be the 
 </div>
 </div>
 
-<div id="outline-container-org9e924ab" class="outline-3">
-<h3 id="org9e924ab">To generate a hexagram:</h3>
-<div class="outline-text-3" id="text-org9e924ab">
+<div id="outline-container-orga7e8a79" class="outline-3">
+<h3 id="orga7e8a79">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-orga7e8a79">
 <p>
 We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 </p>
@@ -119,9 +119,9 @@ We are going to make various piles of stalks. I will refer to these with single 
 </div>
 </div>
 
-<div id="outline-container-org77974bf" class="outline-3">
-<h3 id="org77974bf">Implementation Notes</h3>
-<div class="outline-text-3" id="text-org77974bf">
+<div id="outline-container-org5588bd4" class="outline-3">
+<h3 id="org5588bd4">Implementation Notes</h3>
+<div class="outline-text-3" id="text-org5588bd4">
 <p>
 The algorithm explained above is implemented here in ClojureScript using Scittle to run it in the browser. The code is editable do feel free to tweak it and play around with it. Pseudo-randomness is added at the approx half splitting point in step 3. To make this somewhat realistic we sample from a normal distribution using a Box-Muller transform, and then round to the nearest integer to create an offset to the split.
 </p>
@@ -261,9 +261,9 @@ The sole purpose of the code below is to represent a common version of the yarro
 </div>
 
 
-<div id="outline-container-orge2e5cf4" class="outline-2">
-<h2 id="orge2e5cf4">Meanings</h2>
-<div class="outline-text-2" id="text-orge2e5cf4">
+<div id="outline-container-org147bcec" class="outline-2">
+<h2 id="org147bcec">Meanings</h2>
+<div class="outline-text-2" id="text-org147bcec">
 <p>
 The general idea seems to be the transition from the first to the second hexagram. (Book of Changes, remember) You can look up the symbols and contemplate their interpretations here:
 </p>
