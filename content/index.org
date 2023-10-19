@@ -12,3 +12,4 @@ hi i'm luke - this is my blog
 - [[https://larzeitlin.github.io/simple-flashcards][simple flashcards]]
 - [[file:scittle-hilbert-curve.org][scittle hilbert curve]]
 - [[file:i-ching.org][i ching]]
+- [[http://www.lzeitlin.xyz/lzboard/][habit tracker]]
