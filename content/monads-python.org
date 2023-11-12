@@ -212,14 +212,14 @@ print([run(operations, 5), run(operations, None)])
 
 
 ** Monad laws
-Monads must satisfy the monad laws. Avoiding the technical language of the laws and just getting at their essence, these are satisfied by:
+Monads must satisfy the monad laws. Without dwelling on the the technical language of the laws and just getting at their essence, these are satisfied by:
 *** ret is a left-identity for bind
 #+BEGIN_SRC
 bind(f)(ret(x))() == f(x)
 #+END_SRC
 
 Binding the function f and passing it the monadic value of x, when all evaluated, is the same as the f(x).
-*** ret is a right-identity or bind
+*** ret is also a right-identity for bind
 #+BEGIN_SRC
 bind(ret(x)) == ret(x)
 #+END_SRC
