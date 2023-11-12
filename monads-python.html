@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+</head>
+<body>
+<div id="content">
+<h1 class="title">LZ</h1>
+<p>
+<a href="./index.html">home</a>
+</p>
+
+
+<div id="outline-container-org9f0f624" class="outline-2">
+<h2 id="org9f0f624">Implementing Monads in Python</h2>
+<div class="outline-text-2" id="text-org9f0f624">
+<p>
+Monads are both useful and also often over-complicated. If you understand higher-order functions then you are already well on the way to grokking monads. We are going to use Python, a language that we don't commonly think of as a functional language. These are the reasons I chose to write this post in Python:
+</p>
+<ul class="org-ul">
+<li>To reach an audience that perhaps would not typically receive this sort of content.</li>
+<li>To show that this is not the exclusive domain of obscure, academic programming languages.</li>
+</ul>
+
+<p>
+I'm not saying you should write Python like this, I'm just saying that you could, and if you did you would be monad-ing.
+</p>
+</div>
+
+<div id="outline-container-orgb583344" class="outline-3">
+<h3 id="orgb583344">What is a monad?</h3>
+<div class="outline-text-3" id="text-orgb583344">
+<p>
+We are doing to learn by doing rather than with upfront definitions because I think the definitions are difficult. But as a bit of colour to start with: Monads are a functional programming design pattern used to reduce boilerplate code and abstract away side-effects, among other things. It comes from a field of maths called Category Theory which has seeded many concepts found in functional programming.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f90444" class="outline-3">
+<h3 id="org1f90444">The non-monadic way</h3>
+<div class="outline-text-3" id="text-org1f90444">
+<p>
+Let's start with some primitive value in Python; a number or string or whatever. Now, we could pass around that value, do things to it, pass it around some more. Great. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">my_message</span> = <span class="org-string">"hello"</span>
+<span class="org-variable-name">another_message</span> = my_message + <span class="org-string">", world"</span>
+<span class="org-variable-name">uppercase_msg</span> = another_message.upper()
+
+<span class="org-keyword">print</span>(uppercase_msg)
+</pre>
+</div>
+
+<pre class="example">
+HELLO, WORLD
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2612fa8" class="outline-3">
+<h3 id="org2612fa8">Higher order functions</h3>
+<div class="outline-text-3" id="text-org2612fa8">
+<p>
+We can make higher order functions in Python. That is to say functions that return functions. So, rather than passing around that value, we could instead wrap it up in a function that returns that value and then instead pass around that function to other custom functions that handle it. These functions can also return functions rather than the value itself. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">my_message_fn</span>():
+  <span class="org-keyword">return</span> <span class="org-string">"hello"</span>
+
+<span class="org-keyword">def</span> <span class="org-function-name">another_message_fn</span>(message_fn):
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
+    <span class="org-keyword">return</span> message_fn() + <span class="org-string">", world"</span>
+  <span class="org-keyword">return</span> new_msg_fn
+
+<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase_fn</span>(message_fn):
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
+    <span class="org-keyword">return</span> message_fn().upper()
+  <span class="org-keyword">return</span> new_msg_fn
+
+<span class="org-variable-name">result</span> = to_uppercase_fn(another_message_fn(my_message_fn))
+
+<span class="org-keyword">print</span>(result())
+</pre>
+</div>
+
+<pre class="example">
+HELLO, WORLD
+</pre>
+
+<p>
+Easy enough, but we've just created a bunch of extra faff to do the same thing. "What gives?".
+</p>
+
+<p>
+A couple of things give. Firstly, our functions returned the message, but it could have done some other stuff as well. Perhaps some side-effect like logging. So maybe that's useful. Also, we could delay evaluation of some extra behavior inside <code>my_message_fn</code>, so that it is only run once function is finally called. We could also add other extra capabilities that the primitive string doesn't have, like handling <code>None</code> values in some special way.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7f57fc1" class="outline-3">
+<h3 id="org7f57fc1">New capabilities</h3>
+<div class="outline-text-3" id="text-org7f57fc1">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">my_message_fn</span>():
+  <span class="org-keyword">print</span>(<span class="org-string">"delayed evaluation"</span>)
+  <span class="org-keyword">return</span> <span class="org-string">"hello"</span>
+
+<span class="org-keyword">def</span> <span class="org-function-name">another_message_fn</span>(message_fn):
+  <span class="org-keyword">print</span>(<span class="org-string">"inside another_message_fn"</span>)
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
+    <span class="org-keyword">return</span> message_fn() + <span class="org-string">", world"</span>
+  <span class="org-keyword">return</span> new_msg_fn
+
+<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase_fn</span>(message_fn):
+  <span class="org-keyword">print</span>(<span class="org-string">"inside to_uppercase_fn"</span>)
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
+    <span class="org-keyword">return</span> message_fn().upper()
+  <span class="org-keyword">return</span> new_msg_fn
+
+<span class="org-variable-name">result</span> = to_uppercase_fn(another_message_fn(my_message_fn))
+
+<span class="org-keyword">print</span>(result())
+</pre>
+</div>
+
+<pre class="example">
+inside another_message_fn
+inside to_uppercase_fn
+delayed evaluation
+HELLO, WORLD
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org93fe61d" class="outline-3">
+<h3 id="org93fe61d">Just DRY it up a bit</h3>
+<div class="outline-text-3" id="text-org93fe61d">
+<p>
+Still, it seems like a bit of a faff to get those benefits. It could be useful in some situations, but now all of our regular functions have to be rewritten to handle functions rather than strings. That is annoying and messy. Still, maybe we can avoid having to do it all over again each time with a couple of helper functions:
+</p>
+<ul class="org-ul">
+<li>One to take a string and turn it into a function that contains that string. We'll call this one <code>ret</code>. (it would be called <code>return</code> but this is a special word in Python)</li>
+<li>Another to take regular string functions and turn them into our special string functions. We'll call this one <code>bind</code>.</li>
+</ul>
+
+<p>
+So, let's do that such that that we get the functions logged out when they are invoked.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">ret</span>(s):
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_value</span>():
+    <span class="org-keyword">return</span> s
+  <span class="org-keyword">return</span> monadic_value
+
+<span class="org-keyword">def</span> <span class="org-function-name">bind</span>(f):
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_f</span>(monadic_value):
+    <span class="org-keyword">def</span> <span class="org-function-name">new_mv</span>():
+      <span class="org-keyword">print</span>(<span class="org-string">"using function: "</span>, f)
+      <span class="org-keyword">return</span> f(monadic_value())
+    <span class="org-keyword">return</span> new_mv
+  <span class="org-keyword">return</span> monadic_f
+
+<span class="org-keyword">def</span> <span class="org-function-name">append_world</span>(s):
+  <span class="org-keyword">return</span> s + <span class="org-string">", world"</span>
+
+<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase</span>(s):
+  <span class="org-keyword">return</span> s.upper()
+
+<span class="org-variable-name">mv</span> = ret(<span class="org-string">"hello"</span>)
+<span class="org-variable-name">m_append</span> = bind(append_world)
+<span class="org-variable-name">m_upper</span> = bind(to_uppercase)
+<span class="org-variable-name">result</span> = m_upper(m_append(mv))
+
+<span class="org-keyword">print</span>(result())
+</pre>
+</div>
+
+<pre class="example">
+using function:  &lt;function to_uppercase at 0x7ff382e46050&gt;
+using function:  &lt;function append_world at 0x7ff382e457e0&gt;
+HELLO, WORLD
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orga734afe" class="outline-3">
+<h3 id="orga734afe">monaDONE</h3>
+<div class="outline-text-3" id="text-orga734afe">
+<p>
+And that's it, we just did a monad. For any given monad the <code>ret</code> and <code>bind</code> functions have to work together to handle the same sort of value.
+</p>
+
+<p>
+Now, you can probably imagine doing this with types and objects in Python, and sure that works too. You'd have a class with a constructor rather than <code>ret</code> and a method or accessor that returns the original value, rather than just evaluating the function to get the result as we have been doing. I prefer just doing it with functions because it's simpler, clearer and more in the functional programming style.
+</p>
+
+<p>
+Let's do another one.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org964673a" class="outline-3">
+<h3 id="org964673a">Maybe monad</h3>
+<div class="outline-text-3" id="text-org964673a">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">ret</span>(s):
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_value</span>():
+    <span class="org-keyword">return</span> s
+  <span class="org-keyword">return</span> monadic_value
+
+<span class="org-keyword">def</span> <span class="org-function-name">bind</span>(f):
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_f</span>(monadic_value):
+    <span class="org-keyword">def</span> <span class="org-function-name">new_mv</span>():
+      <span class="org-keyword">if</span> monadic_value():
+        <span class="org-keyword">return</span> f(monadic_value())
+      <span class="org-keyword">else</span>:
+        <span class="org-keyword">return</span> <span class="org-constant">None</span>
+    <span class="org-keyword">return</span> new_mv
+  <span class="org-keyword">return</span> monadic_f
+
+<span class="org-keyword">def</span> <span class="org-function-name">inc</span>(x):
+  <span class="org-keyword">return</span> x + 1
+
+<span class="org-keyword">def</span> <span class="org-function-name">times_ten</span>(x):
+  <span class="org-keyword">return</span> x * 10
+
+<span class="org-variable-name">mv</span> = ret(1)
+<span class="org-variable-name">m_inc</span> = bind(inc)
+<span class="org-variable-name">m_times_ten</span> = bind(times_ten)
+<span class="org-variable-name">one_result</span> = m_times_ten(m_inc(ret(1)))
+<span class="org-variable-name">none_result</span> = m_times_ten(m_inc(ret(<span class="org-constant">None</span>)))
+
+<span class="org-keyword">print</span>([one_result(), none_result()])
+</pre>
+</div>
+
+<pre class="example">
+[20, None]
+</pre>
+
+<p>
+With the Maybe monad we gave our functions the capability to handle <code>None</code> as well as number values. This is a little clunky in regular Python, so we are going to introduce some Functional programming patterns:
+</p>
+<ul class="org-ul">
+<li>Currying - Take a function with multiple arguments and "pre-fill" one or more of those arguments.</li>
+<li>We can also get Python's operators such as <code>add</code> as functions from the <code>operator</code> package. This way we don't need to define all the intermediary functions like <code>inc</code>, <code>m_inc</code>, <code>m_times_ten</code>, etc.</li>
+<li>We'll make a function that can compose a bunch of functions and then run them all. We'll call it <code>run</code>.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">from</span> functools <span class="org-keyword">import</span> partial
+<span class="org-keyword">from</span> operator <span class="org-keyword">import</span> *
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">The same as before, with lambda</span>
+<span class="org-keyword">def</span> <span class="org-function-name">ret</span>(x):
+  <span class="org-keyword">return</span> <span class="org-keyword">lambda</span>: x
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">The same as before, with lambda and python syntax sugar</span>
+<span class="org-keyword">def</span> <span class="org-function-name">bind</span>(f):
+  <span class="org-keyword">return</span> <span class="org-keyword">lambda</span> mv: <span class="org-keyword">lambda</span>: <span class="org-constant">None</span> <span class="org-keyword">if</span> (result := mv()) <span class="org-keyword">is</span> <span class="org-constant">None</span> <span class="org-keyword">else</span> f(result)
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">create the monadic value and then run the operations on it</span>
+<span class="org-keyword">def</span> <span class="org-function-name">run</span>(operations, initial_value):
+  <span class="org-variable-name">v</span> = ret(initial_value)
+  <span class="org-keyword">for</span> op <span class="org-keyword">in</span> operations:
+    <span class="org-variable-name">v</span> = bind(op)(v)
+  <span class="org-keyword">return</span> v()
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">some operations</span>
+<span class="org-variable-name">operations</span> = [partial(add, 1), 
+              partial(mul, 10)]
+
+<span class="org-keyword">print</span>([run(operations, 5), run(operations, <span class="org-constant">None</span>)])
+</pre>
+</div>
+
+<pre class="example">
+[60, None]
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orgdf0d7b5" class="outline-3">
+<h3 id="orgdf0d7b5">Monad laws</h3>
+<div class="outline-text-3" id="text-orgdf0d7b5">
+<p>
+Monads must satisfy the monad laws. Avoiding the technical language of the laws and just getting at their essence, these are satisfied by:
+</p>
+</div>
+<div id="outline-container-org175cd34" class="outline-4">
+<h4 id="org175cd34">ret is a left-identity for bind</h4>
+<div class="outline-text-4" id="text-org175cd34">
+<pre class="example">
+bind(f)(ret(x))() == f(x)
+</pre>
+
+<p>
+Binding the function f and passing it the monadic value of x, when all evaluated, is the same as the f(x).
+</p>
+</div>
+</div>
+<div id="outline-container-org95a6018" class="outline-4">
+<h4 id="org95a6018">ret is a right-identity or bind</h4>
+<div class="outline-text-4" id="text-org95a6018">
+<pre class="example">
+bind(ret(x)) == ret(x)
+</pre>
+<p>
+Binding the function which is the monadic value of x is the same as the monadic value of x
+</p>
+</div>
+</div>
+<div id="outline-container-orgc0d82a4" class="outline-4">
+<h4 id="orgc0d82a4">bind is associative</h4>
+<div class="outline-text-4" id="text-orgc0d82a4">
+<pre class="example">
+def h(x):
+  return g(f(x))
+
+bind(g)(bind(f)(ret(x))) == bind(h)(ret(x))
+</pre>
+<p>
+It doesn't matter if we first compose g and f, and then bind, or bind and then compose, the result is the same.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org861a6cb" class="outline-3">
+<h3 id="org861a6cb">Objections</h3>
+<div class="outline-text-3" id="text-org861a6cb">
+</div>
+<div id="outline-container-orgf3a0b25" class="outline-4">
+<h4 id="orgf3a0b25">This is still more complicated than just adding those extra capabilities by hand</h4>
+<div class="outline-text-4" id="text-orgf3a0b25">
+<p>
+Yes in this short example, but in a real world application it might end up as more concise. No silver bullet is offered.
+</p>
+</div>
+</div>
+<div id="outline-container-org364f0c8" class="outline-4">
+<h4 id="org364f0c8">This is not pythonic™</h4>
+<div class="outline-text-4" id="text-org364f0c8">
+<p>
+Perhaps so, and this is for educational purposes only. No snakes were harmed in the creation of this article. Convention has its place, but there is also benefit to cross-pollination and trying new things. In the words of Ralph Waldo Emerson:
+</p>
+
+<blockquote>
+<p>
+"A foolish consistency is the hobgoblin of little minds."
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org51d8e6f" class="outline-3">
+<h3 id="org51d8e6f">What else can it do?</h3>
+<div class="outline-text-3" id="text-org51d8e6f">
+<p>
+Monads are a pretty useful design pattern, we can use them for all sorts of state, metadata, logging, side-effects. Basically anything where we want to write code as though we are just passing around and handling simple values with functions, but at the same time other stuff is going on "behind the scenes".
+</p>
+</div>
+</div>
+
+<div id="outline-container-org94f8eeb" class="outline-3">
+<h3 id="org94f8eeb">Functional Python</h3>
+<div class="outline-text-3" id="text-org94f8eeb">
+<p>
+At this point I reiterate that the Python community does not tend to use monads for any of this, nor does this article propose that you should. Thou shalt be Pythonic, whatever that means. Nonetheless <code>itertools</code> opens up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as <a href="https://github.com/tobgu/pyrsistent">Pyrisistent</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge405f4c" class="outline-3">
+<h3 id="orge405f4c">Further reading</h3>
+<div class="outline-text-3" id="text-orge405f4c">
+<p>
+Do I really need to paste a Wikipedia URL here?
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

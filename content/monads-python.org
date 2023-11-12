@@ -1,0 +1,254 @@
+#+title: LZ
+#+options: toc:nil
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+[[./index.org][home]]
+
+
+* Implementing Monads in Python
+Monads are both useful and also often over-complicated. If you understand higher-order functions then you are already well on the way to grokking monads. We are going to use Python, a language that we don't commonly think of as a functional language. These are the reasons I chose to write this post in Python:
+- To reach an audience that perhaps would not typically receive this sort of content.
+- To show that this is not the exclusive domain of obscure, academic programming languages.
+
+I'm not saying you should write Python like this, I'm just saying that you could, and if you did you would be monad-ing.
+
+** What is a monad?
+We are doing to learn by doing rather than with upfront definitions because I think the definitions are difficult. But as a bit of colour to start with: Monads are a functional programming design pattern used to reduce boilerplate code and abstract away side-effects, among other things. It comes from a field of maths called Category Theory which has seeded many concepts found in functional programming.
+
+** The non-monadic way
+Let's start with some primitive value in Python; a number or string or whatever. Now, we could pass around that value, do things to it, pass it around some more. Great. 
+
+#+BEGIN_SRC python :session
+my_message = "hello"
+another_message = my_message + ", world"
+uppercase_msg = another_message.upper()
+
+print(uppercase_msg)
+#+END_SRC
+
+#+BEGIN_SRC
+HELLO, WORLD
+#+END_SRC
+
+** Higher order functions
+We can make higher order functions in Python. That is to say functions that return functions. So, rather than passing around that value, we could instead wrap it up in a function that returns that value and then instead pass around that function to other custom functions that handle it. These functions can also return functions rather than the value itself. 
+
+#+BEGIN_SRC python :session
+def my_message_fn():
+  return "hello"
+
+def another_message_fn(message_fn):
+  def new_msg_fn():
+    return message_fn() + ", world"
+  return new_msg_fn
+
+def to_uppercase_fn(message_fn):
+  def new_msg_fn():
+    return message_fn().upper()
+  return new_msg_fn
+    
+result = to_uppercase_fn(another_message_fn(my_message_fn))
+
+print(result())
+#+END_SRC
+
+#+BEGIN_SRC
+HELLO, WORLD
+#+END_SRC
+
+Easy enough, but we've just created a bunch of extra faff to do the same thing. "What gives?".
+
+A couple of things give. Firstly, our functions returned the message, but it could have done some other stuff as well. Perhaps some side-effect like logging. So maybe that's useful. Also, we could delay evaluation of some extra behavior inside ~my_message_fn~, so that it is only run once function is finally called. We could also add other extra capabilities that the primitive string doesn't have, like handling ~None~ values in some special way.
+
+** New capabilities
+#+BEGIN_SRC python :session
+def my_message_fn():
+  print("delayed evaluation")
+  return "hello"
+
+def another_message_fn(message_fn):
+  print("inside another_message_fn")
+  def new_msg_fn():
+    return message_fn() + ", world"
+  return new_msg_fn
+
+def to_uppercase_fn(message_fn):
+  print("inside to_uppercase_fn")
+  def new_msg_fn():
+    return message_fn().upper()
+  return new_msg_fn
+    
+result = to_uppercase_fn(another_message_fn(my_message_fn))
+
+print(result())
+#+END_SRC
+
+#+BEGIN_SRC
+inside another_message_fn
+inside to_uppercase_fn
+delayed evaluation
+HELLO, WORLD
+#+END_SRC
+
+** Just DRY it up a bit
+Still, it seems like a bit of a faff to get those benefits. It could be useful in some situations, but now all of our regular functions have to be rewritten to handle functions rather than strings. That is annoying and messy. Still, maybe we can avoid having to do it all over again each time with a couple of helper functions:
+- One to take a string and turn it into a function that contains that string. We'll call this one ~ret~. (it would be called ~return~ but this is a special word in Python)
+- Another to take regular string functions and turn them into our special string functions. We'll call this one ~bind~.
+
+So, let's do that such that that we get the functions logged out when they are invoked.
+
+#+BEGIN_SRC python :session
+def ret(s):
+  def monadic_value():
+    return s
+  return monadic_value
+
+def bind(f):
+  def monadic_f(monadic_value):
+    def new_mv():
+      print("using function: ", f)
+      return f(monadic_value())
+    return new_mv
+  return monadic_f
+
+def append_world(s):
+  return s + ", world"
+
+def to_uppercase(s):
+  return s.upper()
+
+mv = ret("hello")
+m_append = bind(append_world)
+m_upper = bind(to_uppercase)
+result = m_upper(m_append(mv))
+
+print(result())
+#+END_SRC
+
+#+BEGIN_SRC
+using function:  <function to_uppercase at 0x7ff382e46050>
+using function:  <function append_world at 0x7ff382e457e0>
+HELLO, WORLD
+#+END_SRC
+
+** monaDONE
+And that's it, we just did a monad. For any given monad the ~ret~ and ~bind~ functions have to work together to handle the same sort of value.
+
+Now, you can probably imagine doing this with types and objects in Python, and sure that works too. You'd have a class with a constructor rather than ~ret~ and a method or accessor that returns the original value, rather than just evaluating the function to get the result as we have been doing. I prefer just doing it with functions because it's simpler, clearer and more in the functional programming style.
+
+Let's do another one.
+
+** Maybe monad
+
+#+BEGIN_SRC python
+def ret(s):
+  def monadic_value():
+    return s
+  return monadic_value
+
+def bind(f):
+  def monadic_f(monadic_value):
+    def new_mv():
+      if monadic_value():
+        return f(monadic_value())
+      else:
+        return None
+    return new_mv
+  return monadic_f
+
+def inc(x):
+  return x + 1
+
+def times_ten(x):
+  return x * 10
+
+mv = ret(1)
+m_inc = bind(inc)
+m_times_ten = bind(times_ten)
+one_result = m_times_ten(m_inc(ret(1)))
+none_result = m_times_ten(m_inc(ret(None)))
+
+print([one_result(), none_result()])
+#+END_SRC
+
+#+BEGIN_SRC
+[20, None]
+#+END_SRC
+
+With the Maybe monad we gave our functions the capability to handle ~None~ as well as number values. This is a little clunky in regular Python, so we are going to introduce some Functional programming patterns:
+- Currying - Take a function with multiple arguments and "pre-fill" one or more of those arguments.
+- We can also get Python's operators such as ~add~ as functions from the ~operator~ package. This way we don't need to define all the intermediary functions like ~inc~, ~m_inc~, ~m_times_ten~, etc. 
+- We'll make a function that can compose a bunch of functions and then run them all. We'll call it ~run~.
+ 
+#+BEGIN_SRC python
+from functools import partial
+from operator import *
+
+# The same as before, with lambda
+def ret(x):
+  return lambda: x
+
+# The same as before, with lambda and python syntax sugar
+def bind(f):
+  return lambda mv: lambda: None if (result := mv()) is None else f(result)
+
+# create the monadic value and then run the operations on it
+def run(operations, initial_value):
+  v = ret(initial_value)
+  for op in operations:
+    v = bind(op)(v)
+  return v()
+
+# some operations
+operations = [partial(add, 1), 
+              partial(mul, 10)]
+
+print([run(operations, 5), run(operations, None)])
+#+END_SRC
+
+#+BEGIN_SRC
+[60, None]
+#+END_SRC
+
+
+** Monad laws
+Monads must satisfy the monad laws. Avoiding the technical language of the laws and just getting at their essence, these are satisfied by:
+*** ret is a left-identity for bind
+#+BEGIN_SRC
+bind(f)(ret(x))() == f(x)
+#+END_SRC
+
+Binding the function f and passing it the monadic value of x, when all evaluated, is the same as the f(x).
+*** ret is a right-identity or bind
+#+BEGIN_SRC
+bind(ret(x)) == ret(x)
+#+END_SRC
+Binding the function which is the monadic value of x is the same as the monadic value of x
+*** bind is associative
+#+BEGIN_SRC
+def h(x):
+  return g(f(x))
+
+bind(g)(bind(f)(ret(x))) == bind(h)(ret(x))
+#+END_SRC
+It doesn't matter if we first compose g and f, and then bind, or bind and then compose, the result is the same.
+
+
+** Objections
+*** This is still more complicated than just adding those extra capabilities by hand
+Yes in this short example, but in a real world application it might end up as more concise. No silver bullet is offered.
+*** This is not pythonic™
+Perhaps so, and this is for educational purposes only. No snakes were harmed in the creation of this article. Convention has its place, but there is also benefit to cross-pollination and trying new things. In the words of Ralph Waldo Emerson:
+
+#+BEGIN_QUOTE
+"A foolish consistency is the hobgoblin of little minds."
+#+END_QUOTE
+
+** What else can it do?
+Monads are a pretty useful design pattern, we can use them for all sorts of state, metadata, logging, side-effects. Basically anything where we want to write code as though we are just passing around and handling simple values with functions, but at the same time other stuff is going on "behind the scenes".
+
+** Functional Python
+At this point I reiterate that the Python community does not tend to use monads for any of this, nor does this article propose that you should. Thou shalt be Pythonic, whatever that means. Nonetheless ~itertools~ opens up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as [[https://github.com/tobgu/pyrsistent][Pyrisistent]].
+
+** Further reading
+Do I really need to paste a Wikipedia URL here?
