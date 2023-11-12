@@ -13,3 +13,4 @@ hi i'm luke - this is my blog
 - [[file:scittle-hilbert-curve.org][scittle hilbert curve]]
 - [[file:i-ching.org][i ching]]
 - [[http://www.lzeitlin.xyz/lzboard/][habit tracker]]
+- [[file:monads-python.org][monads in python]]
