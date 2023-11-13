@@ -248,7 +248,7 @@ Perhaps so, and this is for educational purposes only. No snakes were harmed in 
 Monads are a pretty useful design pattern, we can use them for all sorts of state, metadata, logging, side-effects. Basically anything where we want to write code as though we are just passing around and handling simple values with functions, but at the same time other stuff is going on "behind the scenes".
 
 ** Functional Python
-At this point I reiterate that the Python community does not tend to use monads for any of this, nor does this article propose that you should. Thou shalt be Pythonic, whatever that means. Nonetheless ~itertools~ opens up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as [[https://github.com/tobgu/pyrsistent][Pyrisistent]].
+At this point I reiterate that the Python community does not tend to use monads for any of this, nor does this article propose that you should. Thou shalt be Pythonic, whatever that means. Nonetheless ~functools~ and ~itertools~ open up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as [[https://github.com/tobgu/pyrsistent][Pyrisistent]].
 
 ** Further reading
 Do I really need to paste a Wikipedia URL here?
