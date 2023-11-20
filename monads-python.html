@@ -6,20 +6,20 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
-<meta name="generator" content="Org mode" />
+<meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">LZ</h1>
 <p>
 <a href="./index.html">home</a>
 </p>
 
 
-<div id="outline-container-orgeefc8d3" class="outline-2">
-<h2 id="orgeefc8d3">Implementing Monads in Python</h2>
-<div class="outline-text-2" id="text-orgeefc8d3">
+<div id="outline-container-orgecb3df2" class="outline-2">
+<h2 id="orgecb3df2">Implementing Monads in Python</h2>
+<div class="outline-text-2" id="text-orgecb3df2">
 <p>
 Monads are both useful and also often over-complicated. If you understand higher-order functions then you are already well on the way to grokking monads. We are going to use Python, a language that we don't commonly think of as a functional language. These are the reasons I chose to write this post in Python:
 </p>
@@ -33,18 +33,18 @@ I'm not saying you should write Python like this, I'm just saying that you could
 </p>
 </div>
 
-<div id="outline-container-org6110036" class="outline-3">
-<h3 id="org6110036">What is a monad?</h3>
-<div class="outline-text-3" id="text-org6110036">
+<div id="outline-container-org5698aa6" class="outline-3">
+<h3 id="org5698aa6">What is a monad?</h3>
+<div class="outline-text-3" id="text-org5698aa6">
 <p>
 We are doing to learn by doing rather than with upfront definitions because I think the definitions are difficult. But as a bit of colour to start with: Monads are a functional programming design pattern used to reduce boilerplate code and abstract away side-effects, among other things. It comes from a field of maths called Category Theory which has seeded many concepts found in functional programming.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5900c3b" class="outline-3">
-<h3 id="org5900c3b">The non-monadic way</h3>
-<div class="outline-text-3" id="text-org5900c3b">
+<div id="outline-container-org025b698" class="outline-3">
+<h3 id="org025b698">The non-monadic way</h3>
+<div class="outline-text-3" id="text-org025b698">
 <p>
 Let's start with some primitive value in Python; a number or string or whatever. Now, we could pass around that value, do things to it, pass it around some more. Great. 
 </p>
@@ -52,9 +52,9 @@ Let's start with some primitive value in Python; a number or string or whatever.
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-variable-name">my_message</span> = <span class="org-string">"hello"</span>
 <span class="org-variable-name">another_message</span> = my_message + <span class="org-string">", world"</span>
-<span class="org-variable-name">uppercase_msg</span> = another_message.upper()
+<span class="org-variable-name">uppercase_msg</span> = another_message.upper<span class="org-rainbow-delimiters-depth-1">()</span>
 
-<span class="org-keyword">print</span>(uppercase_msg)
+<span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span>uppercase_msg<span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -64,30 +64,30 @@ HELLO, WORLD
 </div>
 </div>
 
-<div id="outline-container-orge3a5a32" class="outline-3">
-<h3 id="orge3a5a32">Higher order functions</h3>
-<div class="outline-text-3" id="text-orge3a5a32">
+<div id="outline-container-orgc33ecf0" class="outline-3">
+<h3 id="orgc33ecf0">Higher order functions</h3>
+<div class="outline-text-3" id="text-orgc33ecf0">
 <p>
 We can make higher order functions in Python. That is to say functions that return functions. So, rather than passing around that value, we could instead wrap it up in a function that returns that value and then instead pass around that function to other custom functions that handle it. These functions can also return functions rather than the value itself. 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">my_message_fn</span>():
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">my_message_fn</span><span class="org-rainbow-delimiters-depth-1">()</span>:
   <span class="org-keyword">return</span> <span class="org-string">"hello"</span>
 
-<span class="org-keyword">def</span> <span class="org-function-name">another_message_fn</span>(message_fn):
-  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
-    <span class="org-keyword">return</span> message_fn() + <span class="org-string">", world"</span>
+<span class="org-keyword">def</span> <span class="org-function-name">another_message_fn</span><span class="org-rainbow-delimiters-depth-1">(</span>message_fn<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+    <span class="org-keyword">return</span> message_fn<span class="org-rainbow-delimiters-depth-1">()</span> + <span class="org-string">", world"</span>
   <span class="org-keyword">return</span> new_msg_fn
 
-<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase_fn</span>(message_fn):
-  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
-    <span class="org-keyword">return</span> message_fn().upper()
+<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase_fn</span><span class="org-rainbow-delimiters-depth-1">(</span>message_fn<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+    <span class="org-keyword">return</span> message_fn<span class="org-rainbow-delimiters-depth-1">()</span>.upper<span class="org-rainbow-delimiters-depth-1">()</span>
   <span class="org-keyword">return</span> new_msg_fn
 
-<span class="org-variable-name">result</span> = to_uppercase_fn(another_message_fn(my_message_fn))
+<span class="org-variable-name">result</span> = to_uppercase_fn<span class="org-rainbow-delimiters-depth-1">(</span>another_message_fn<span class="org-rainbow-delimiters-depth-2">(</span>my_message_fn<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-keyword">print</span>(result())
+<span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span>result<span class="org-rainbow-delimiters-depth-2">()</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -105,29 +105,29 @@ A couple of things give. Firstly, our functions returned the message, but it cou
 </div>
 </div>
 
-<div id="outline-container-org81f5074" class="outline-3">
-<h3 id="org81f5074">New capabilities</h3>
-<div class="outline-text-3" id="text-org81f5074">
+<div id="outline-container-orga335e64" class="outline-3">
+<h3 id="orga335e64">New capabilities</h3>
+<div class="outline-text-3" id="text-orga335e64">
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">my_message_fn</span>():
-  <span class="org-keyword">print</span>(<span class="org-string">"delayed evaluation"</span>)
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">my_message_fn</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+  <span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"delayed evaluation"</span><span class="org-rainbow-delimiters-depth-1">)</span>
   <span class="org-keyword">return</span> <span class="org-string">"hello"</span>
 
-<span class="org-keyword">def</span> <span class="org-function-name">another_message_fn</span>(message_fn):
-  <span class="org-keyword">print</span>(<span class="org-string">"inside another_message_fn"</span>)
-  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
-    <span class="org-keyword">return</span> message_fn() + <span class="org-string">", world"</span>
+<span class="org-keyword">def</span> <span class="org-function-name">another_message_fn</span><span class="org-rainbow-delimiters-depth-1">(</span>message_fn<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"inside another_message_fn"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+    <span class="org-keyword">return</span> message_fn<span class="org-rainbow-delimiters-depth-1">()</span> + <span class="org-string">", world"</span>
   <span class="org-keyword">return</span> new_msg_fn
 
-<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase_fn</span>(message_fn):
-  <span class="org-keyword">print</span>(<span class="org-string">"inside to_uppercase_fn"</span>)
-  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span>():
-    <span class="org-keyword">return</span> message_fn().upper()
+<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase_fn</span><span class="org-rainbow-delimiters-depth-1">(</span>message_fn<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"inside to_uppercase_fn"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  <span class="org-keyword">def</span> <span class="org-function-name">new_msg_fn</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+    <span class="org-keyword">return</span> message_fn<span class="org-rainbow-delimiters-depth-1">()</span>.upper<span class="org-rainbow-delimiters-depth-1">()</span>
   <span class="org-keyword">return</span> new_msg_fn
 
-<span class="org-variable-name">result</span> = to_uppercase_fn(another_message_fn(my_message_fn))
+<span class="org-variable-name">result</span> = to_uppercase_fn<span class="org-rainbow-delimiters-depth-1">(</span>another_message_fn<span class="org-rainbow-delimiters-depth-2">(</span>my_message_fn<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-keyword">print</span>(result())
+<span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span>result<span class="org-rainbow-delimiters-depth-2">()</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -140,9 +140,9 @@ HELLO, WORLD
 </div>
 </div>
 
-<div id="outline-container-org5a4d9de" class="outline-3">
-<h3 id="org5a4d9de">Just DRY it up a bit</h3>
-<div class="outline-text-3" id="text-org5a4d9de">
+<div id="outline-container-org02e03c8" class="outline-3">
+<h3 id="org02e03c8">Just DRY it up a bit</h3>
+<div class="outline-text-3" id="text-org02e03c8">
 <p>
 Still, it seems like a bit of a faff to get those benefits. It could be useful in some situations, but now all of our regular functions have to be rewritten to handle functions rather than strings. That is annoying and messy. Still, maybe we can avoid having to do it all over again each time with a couple of helper functions:
 </p>
@@ -156,31 +156,31 @@ So, let's do that such that that we get the functions logged out when they are i
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">ret</span>(s):
-  <span class="org-keyword">def</span> <span class="org-function-name">monadic_value</span>():
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">ret</span><span class="org-rainbow-delimiters-depth-1">(</span>s<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_value</span><span class="org-rainbow-delimiters-depth-1">()</span>:
     <span class="org-keyword">return</span> s
   <span class="org-keyword">return</span> monadic_value
 
-<span class="org-keyword">def</span> <span class="org-function-name">bind</span>(f):
-  <span class="org-keyword">def</span> <span class="org-function-name">monadic_f</span>(monadic_value):
-    <span class="org-keyword">def</span> <span class="org-function-name">new_mv</span>():
-      <span class="org-keyword">print</span>(<span class="org-string">"using function: "</span>, f)
-      <span class="org-keyword">return</span> f(monadic_value())
+<span class="org-keyword">def</span> <span class="org-function-name">bind</span><span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_f</span><span class="org-rainbow-delimiters-depth-1">(</span>monadic_value<span class="org-rainbow-delimiters-depth-1">)</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">new_mv</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+      <span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"using function: "</span>, f<span class="org-rainbow-delimiters-depth-1">)</span>
+      <span class="org-keyword">return</span> f<span class="org-rainbow-delimiters-depth-1">(</span>monadic_value<span class="org-rainbow-delimiters-depth-2">()</span><span class="org-rainbow-delimiters-depth-1">)</span>
     <span class="org-keyword">return</span> new_mv
   <span class="org-keyword">return</span> monadic_f
 
-<span class="org-keyword">def</span> <span class="org-function-name">append_world</span>(s):
+<span class="org-keyword">def</span> <span class="org-function-name">append_world</span><span class="org-rainbow-delimiters-depth-1">(</span>s<span class="org-rainbow-delimiters-depth-1">)</span>:
   <span class="org-keyword">return</span> s + <span class="org-string">", world"</span>
 
-<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase</span>(s):
-  <span class="org-keyword">return</span> s.upper()
+<span class="org-keyword">def</span> <span class="org-function-name">to_uppercase</span><span class="org-rainbow-delimiters-depth-1">(</span>s<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">return</span> s.upper<span class="org-rainbow-delimiters-depth-1">()</span>
 
-<span class="org-variable-name">mv</span> = ret(<span class="org-string">"hello"</span>)
-<span class="org-variable-name">m_append</span> = bind(append_world)
-<span class="org-variable-name">m_upper</span> = bind(to_uppercase)
-<span class="org-variable-name">result</span> = m_upper(m_append(mv))
+<span class="org-variable-name">mv</span> = ret<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"hello"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">m_append</span> = bind<span class="org-rainbow-delimiters-depth-1">(</span>append_world<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">m_upper</span> = bind<span class="org-rainbow-delimiters-depth-1">(</span>to_uppercase<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">result</span> = m_upper<span class="org-rainbow-delimiters-depth-1">(</span>m_append<span class="org-rainbow-delimiters-depth-2">(</span>mv<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-keyword">print</span>(result())
+<span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span>result<span class="org-rainbow-delimiters-depth-2">()</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -192,9 +192,9 @@ HELLO, WORLD
 </div>
 </div>
 
-<div id="outline-container-org1b3e9e6" class="outline-3">
-<h3 id="org1b3e9e6">monaDONE</h3>
-<div class="outline-text-3" id="text-org1b3e9e6">
+<div id="outline-container-org3a5fbf8" class="outline-3">
+<h3 id="org3a5fbf8">monaDONE</h3>
+<div class="outline-text-3" id="text-org3a5fbf8">
 <p>
 And that's it, we just did a monad. For any given monad the <code>ret</code> and <code>bind</code> functions have to work together to handle the same sort of value.
 </p>
@@ -209,38 +209,38 @@ Let's do another one.
 </div>
 </div>
 
-<div id="outline-container-org30c2297" class="outline-3">
-<h3 id="org30c2297">Maybe monad</h3>
-<div class="outline-text-3" id="text-org30c2297">
+<div id="outline-container-org946ef69" class="outline-3">
+<h3 id="org946ef69">Maybe monad</h3>
+<div class="outline-text-3" id="text-org946ef69">
 <div class="org-src-container">
-<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">ret</span>(s):
-  <span class="org-keyword">def</span> <span class="org-function-name">monadic_value</span>():
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">ret</span><span class="org-rainbow-delimiters-depth-1">(</span>s<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_value</span><span class="org-rainbow-delimiters-depth-1">()</span>:
     <span class="org-keyword">return</span> s
   <span class="org-keyword">return</span> monadic_value
 
-<span class="org-keyword">def</span> <span class="org-function-name">bind</span>(f):
-  <span class="org-keyword">def</span> <span class="org-function-name">monadic_f</span>(monadic_value):
-    <span class="org-keyword">def</span> <span class="org-function-name">new_mv</span>():
-      <span class="org-keyword">if</span> monadic_value():
-        <span class="org-keyword">return</span> f(monadic_value())
+<span class="org-keyword">def</span> <span class="org-function-name">bind</span><span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">def</span> <span class="org-function-name">monadic_f</span><span class="org-rainbow-delimiters-depth-1">(</span>monadic_value<span class="org-rainbow-delimiters-depth-1">)</span>:
+    <span class="org-keyword">def</span> <span class="org-function-name">new_mv</span><span class="org-rainbow-delimiters-depth-1">()</span>:
+      <span class="org-keyword">if</span> monadic_value<span class="org-rainbow-delimiters-depth-1">()</span>:
+        <span class="org-keyword">return</span> f<span class="org-rainbow-delimiters-depth-1">(</span>monadic_value<span class="org-rainbow-delimiters-depth-2">()</span><span class="org-rainbow-delimiters-depth-1">)</span>
       <span class="org-keyword">else</span>:
         <span class="org-keyword">return</span> <span class="org-constant">None</span>
     <span class="org-keyword">return</span> new_mv
   <span class="org-keyword">return</span> monadic_f
 
-<span class="org-keyword">def</span> <span class="org-function-name">inc</span>(x):
+<span class="org-keyword">def</span> <span class="org-function-name">inc</span><span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>:
   <span class="org-keyword">return</span> x + 1
 
-<span class="org-keyword">def</span> <span class="org-function-name">times_ten</span>(x):
+<span class="org-keyword">def</span> <span class="org-function-name">times_ten</span><span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>:
   <span class="org-keyword">return</span> x * 10
 
-<span class="org-variable-name">mv</span> = ret(1)
-<span class="org-variable-name">m_inc</span> = bind(inc)
-<span class="org-variable-name">m_times_ten</span> = bind(times_ten)
-<span class="org-variable-name">one_result</span> = m_times_ten(m_inc(ret(1)))
-<span class="org-variable-name">none_result</span> = m_times_ten(m_inc(ret(<span class="org-constant">None</span>)))
+<span class="org-variable-name">mv</span> = ret<span class="org-rainbow-delimiters-depth-1">(</span>1<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">m_inc</span> = bind<span class="org-rainbow-delimiters-depth-1">(</span>inc<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">m_times_ten</span> = bind<span class="org-rainbow-delimiters-depth-1">(</span>times_ten<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">one_result</span> = m_times_ten<span class="org-rainbow-delimiters-depth-1">(</span>m_inc<span class="org-rainbow-delimiters-depth-2">(</span>ret<span class="org-rainbow-delimiters-depth-3">(</span>1<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">none_result</span> = m_times_ten<span class="org-rainbow-delimiters-depth-1">(</span>m_inc<span class="org-rainbow-delimiters-depth-2">(</span>ret<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">None</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-keyword">print</span>([one_result(), none_result()])
+<span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>one_result<span class="org-rainbow-delimiters-depth-3">()</span>, none_result<span class="org-rainbow-delimiters-depth-3">()</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -262,25 +262,25 @@ With the Maybe monad we gave our functions the capability to handle <code>None</
 <span class="org-keyword">from</span> operator <span class="org-keyword">import</span> *
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The same as before, with lambda</span>
-<span class="org-keyword">def</span> <span class="org-function-name">ret</span>(x):
+<span class="org-keyword">def</span> <span class="org-function-name">ret</span><span class="org-rainbow-delimiters-depth-1">(</span>x<span class="org-rainbow-delimiters-depth-1">)</span>:
   <span class="org-keyword">return</span> <span class="org-keyword">lambda</span>: x
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The same as before, with lambda and python syntax sugar</span>
-<span class="org-keyword">def</span> <span class="org-function-name">bind</span>(f):
-  <span class="org-keyword">return</span> <span class="org-keyword">lambda</span> mv: <span class="org-keyword">lambda</span>: <span class="org-constant">None</span> <span class="org-keyword">if</span> (result := mv()) <span class="org-keyword">is</span> <span class="org-constant">None</span> <span class="org-keyword">else</span> f(result)
+<span class="org-keyword">def</span> <span class="org-function-name">bind</span><span class="org-rainbow-delimiters-depth-1">(</span>f<span class="org-rainbow-delimiters-depth-1">)</span>:
+  <span class="org-keyword">return</span> <span class="org-keyword">lambda</span> mv: <span class="org-keyword">lambda</span>: <span class="org-constant">None</span> <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">(</span>result := mv<span class="org-rainbow-delimiters-depth-2">()</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-keyword">is</span> <span class="org-constant">None</span> <span class="org-keyword">else</span> f<span class="org-rainbow-delimiters-depth-1">(</span>result<span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">create the monadic value and then run the operations on it</span>
-<span class="org-keyword">def</span> <span class="org-function-name">run</span>(operations, initial_value):
-  <span class="org-variable-name">v</span> = ret(initial_value)
+<span class="org-keyword">def</span> <span class="org-function-name">run</span><span class="org-rainbow-delimiters-depth-1">(</span>operations, initial_value<span class="org-rainbow-delimiters-depth-1">)</span>:
+  v = ret<span class="org-rainbow-delimiters-depth-1">(</span>initial_value<span class="org-rainbow-delimiters-depth-1">)</span>
   <span class="org-keyword">for</span> op <span class="org-keyword">in</span> operations:
-    <span class="org-variable-name">v</span> = bind(op)(v)
-  <span class="org-keyword">return</span> v()
+    v = bind<span class="org-rainbow-delimiters-depth-1">(</span>op<span class="org-rainbow-delimiters-depth-1">)(</span>v<span class="org-rainbow-delimiters-depth-1">)</span>
+  <span class="org-keyword">return</span> v<span class="org-rainbow-delimiters-depth-1">()</span>
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">some operations</span>
-<span class="org-variable-name">operations</span> = [partial(add, 1), 
-              partial(mul, 10)]
+operations = <span class="org-rainbow-delimiters-depth-1">[</span>partial<span class="org-rainbow-delimiters-depth-2">(</span>add, 1<span class="org-rainbow-delimiters-depth-2">)</span>, 
+              partial<span class="org-rainbow-delimiters-depth-2">(</span>mul, 10<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">]</span>
 
-<span class="org-keyword">print</span>([run(operations, 5), run(operations, <span class="org-constant">None</span>)])
+<span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-rainbow-delimiters-depth-2">[</span>run<span class="org-rainbow-delimiters-depth-3">(</span>operations, 5<span class="org-rainbow-delimiters-depth-3">)</span>, run<span class="org-rainbow-delimiters-depth-3">(</span>operations, <span class="org-constant">None</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -291,16 +291,16 @@ With the Maybe monad we gave our functions the capability to handle <code>None</
 </div>
 
 
-<div id="outline-container-org38282ad" class="outline-3">
-<h3 id="org38282ad">Monad laws</h3>
-<div class="outline-text-3" id="text-org38282ad">
+<div id="outline-container-orga8340d3" class="outline-3">
+<h3 id="orga8340d3">Monad laws</h3>
+<div class="outline-text-3" id="text-orga8340d3">
 <p>
 Monads must satisfy the monad laws. Without dwelling on the the technical language of the laws and just getting at their essence, these are satisfied by:
 </p>
 </div>
-<div id="outline-container-orgca75dfb" class="outline-4">
-<h4 id="orgca75dfb">ret is a left-identity for bind</h4>
-<div class="outline-text-4" id="text-orgca75dfb">
+<div id="outline-container-orgdf5cd62" class="outline-4">
+<h4 id="orgdf5cd62">ret is a left-identity for bind</h4>
+<div class="outline-text-4" id="text-orgdf5cd62">
 <pre class="example">
 bind(f)(ret(x))() == f(x)
 </pre>
@@ -310,9 +310,9 @@ Binding the function f and passing it the monadic value of x, when all evaluated
 </p>
 </div>
 </div>
-<div id="outline-container-orgbbdeaea" class="outline-4">
-<h4 id="orgbbdeaea">ret is also a right-identity for bind</h4>
-<div class="outline-text-4" id="text-orgbbdeaea">
+<div id="outline-container-org105dbaf" class="outline-4">
+<h4 id="org105dbaf">ret is also a right-identity for bind</h4>
+<div class="outline-text-4" id="text-org105dbaf">
 <pre class="example">
 bind(ret(x)) == ret(x)
 </pre>
@@ -321,9 +321,9 @@ Binding the function which is the monadic value of x is the same as the monadic 
 </p>
 </div>
 </div>
-<div id="outline-container-orgf11e5b8" class="outline-4">
-<h4 id="orgf11e5b8">bind is associative</h4>
-<div class="outline-text-4" id="text-orgf11e5b8">
+<div id="outline-container-org078a2af" class="outline-4">
+<h4 id="org078a2af">bind is associative</h4>
+<div class="outline-text-4" id="text-org078a2af">
 <pre class="example">
 def h(x):
   return g(f(x))
@@ -338,21 +338,21 @@ It doesn't matter if we first compose g and f, and then bind, or bind and then c
 </div>
 
 
-<div id="outline-container-org3c30133" class="outline-3">
-<h3 id="org3c30133">Objections</h3>
-<div class="outline-text-3" id="text-org3c30133">
+<div id="outline-container-org344fb16" class="outline-3">
+<h3 id="org344fb16">Objections</h3>
+<div class="outline-text-3" id="text-org344fb16">
 </div>
-<div id="outline-container-orgffc9caf" class="outline-4">
-<h4 id="orgffc9caf">This is still more complicated than just adding those extra capabilities by hand</h4>
-<div class="outline-text-4" id="text-orgffc9caf">
+<div id="outline-container-org5f5ecea" class="outline-4">
+<h4 id="org5f5ecea">This is still more complicated than just adding those extra capabilities by hand</h4>
+<div class="outline-text-4" id="text-org5f5ecea">
 <p>
 Yes in this short example, but in a real world application it might end up as more concise. No silver bullet is offered.
 </p>
 </div>
 </div>
-<div id="outline-container-orga91b167" class="outline-4">
-<h4 id="orga91b167">This is not pythonic™</h4>
-<div class="outline-text-4" id="text-orga91b167">
+<div id="outline-container-org1939bf9" class="outline-4">
+<h4 id="org1939bf9">This is not pythonic™</h4>
+<div class="outline-text-4" id="text-org1939bf9">
 <p>
 Perhaps so, and this is for educational purposes only. No snakes were harmed in the creation of this article. Convention has its place, but there is also benefit to cross-pollination and trying new things. In the words of Ralph Waldo Emerson:
 </p>
@@ -366,27 +366,27 @@ Perhaps so, and this is for educational purposes only. No snakes were harmed in 
 </div>
 </div>
 
-<div id="outline-container-org4737087" class="outline-3">
-<h3 id="org4737087">What else can it do?</h3>
-<div class="outline-text-3" id="text-org4737087">
+<div id="outline-container-orgaf16d38" class="outline-3">
+<h3 id="orgaf16d38">What else can it do?</h3>
+<div class="outline-text-3" id="text-orgaf16d38">
 <p>
 Monads are a pretty useful design pattern, we can use them for all sorts of state, metadata, logging, side-effects. Basically anything where we want to write code as though we are just passing around and handling simple values with functions, but at the same time other stuff is going on "behind the scenes".
 </p>
 </div>
 </div>
 
-<div id="outline-container-org14d1d31" class="outline-3">
-<h3 id="org14d1d31">Functional Python</h3>
-<div class="outline-text-3" id="text-org14d1d31">
+<div id="outline-container-org06aa286" class="outline-3">
+<h3 id="org06aa286">Functional Python</h3>
+<div class="outline-text-3" id="text-org06aa286">
 <p>
 At this point I reiterate that the Python community does not tend to use monads for any of this, nor does this article propose that you should. Thou shalt be Pythonic, whatever that means. Nonetheless <code>functools</code> and <code>itertools</code> open up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as <a href="https://github.com/tobgu/pyrsistent">Pyrisistent</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org3a9df71" class="outline-3">
-<h3 id="org3a9df71">Further reading</h3>
-<div class="outline-text-3" id="text-org3a9df71">
+<div id="outline-container-org598c98f" class="outline-3">
+<h3 id="org598c98f">Further reading</h3>
+<div class="outline-text-3" id="text-org598c98f">
 <p>
 Do I really need to paste a Wikipedia URL here?
 </p>

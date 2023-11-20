@@ -6,19 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
-<meta name="generator" content="Org mode" />
+<meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">LZ</h1>
 <p>
 <a href="./index.html">home</a>
 </p>
 
-<div id="outline-container-org0e9382a" class="outline-2">
-<h2 id="org0e9382a">Advanced Encryption Standard in Clojure</h2>
-<div class="outline-text-2" id="text-org0e9382a">
+<div id="outline-container-org417bc38" class="outline-2">
+<h2 id="org417bc38">Advanced Encryption Standard in Clojure</h2>
+<div class="outline-text-2" id="text-org417bc38">
 <p>
 The Advanced Encryption Standard (a.k.a Rijndael) is a widely used encryption specification. To learn how it works, and some of the motivation behind the design, I decided to build it in Clojure.
 </p>
@@ -30,9 +30,9 @@ WARNING!! Obviously don't use any of this code, or your own implementation of th
 </blockquote>
 </div>
 
-<div id="outline-container-org0983beb" class="outline-3">
-<h3 id="org0983beb">Overview</h3>
-<div class="outline-text-3" id="text-org0983beb">
+<div id="outline-container-org76d6a23" class="outline-3">
+<h3 id="org76d6a23">Overview</h3>
+<div class="outline-text-3" id="text-org76d6a23">
 <p>
 We're looking at AES-128 in ECB mode. 128 is the key size in bits. ECB (electronic codebook) simply means that each block (16 bytes) of our plaintext will be encrypted statelessly and independently of each other block. It is simpler and less secure than other modes.
 Each block is processed with a number of steps including 11 rounds. Something a little different happens in the first and last rounds. Each round needs its own 16-byte key, but since we only have one 16-byte key to start with, we'll use it to generate more.
@@ -40,15 +40,15 @@ As you've probably noticed, everything is happening in chunks of 16 bytes. When 
 </p>
 
 
-<div class="figure">
+<div id="orgec9f722" class="figure">
 <p><img src="images/column-major.png" alt="column-major.png" />
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9232f47" class="outline-4">
-<h4 id="org9232f47">Processing per round (except first and last)</h4>
-<div class="outline-text-4" id="text-org9232f47">
+<div id="outline-container-org3880dfa" class="outline-4">
+<h4 id="org3880dfa">Processing per round (except first and last)</h4>
+<div class="outline-text-4" id="text-org3880dfa">
 <ol class="org-ol">
 <li>Replace each byte with another from a fixed lookup-table</li>
 <li>Shift rows</li>
@@ -63,15 +63,15 @@ That’s pretty much it. We’ll deal with the details when they come. Let’s d
 </div>
 </div>
 
-<div id="outline-container-org019935f" class="outline-3">
-<h3 id="org019935f">Key Expansion</h3>
-<div class="outline-text-3" id="text-org019935f">
+<div id="outline-container-orge4ed6cf" class="outline-3">
+<h3 id="orge4ed6cf">Key Expansion</h3>
+<div class="outline-text-3" id="text-orge4ed6cf">
 <p>
 We need to make more keys. The 128-bit key is broken up into 4 32-bit words. These will be used to make a total of 44 words (4 for each of our 11 rounds). words w(0) to w(3) are just the original first 4 words. From there on each new word w(n) is made by XOR-ing w(n - 4) with w(n - 1), except every 4th word, where we use something different. Let’s call this something t.
 </p>
 
 
-<div class="figure">
+<div id="orgf346404" class="figure">
 <p><img src="images/key-expansion.png" alt="key-expansion.png" />
 </p>
 </div>
@@ -82,12 +82,12 @@ We calculate t by rotating the previous word, switching the bytes with different
 </div>
 
 
-<div id="outline-container-org50debe2" class="outline-4">
-<h4 id="org50debe2">s-box</h4>
-<div class="outline-text-4" id="text-org50debe2">
+<div id="outline-container-orgcbd1f9c" class="outline-4">
+<h4 id="orgcbd1f9c">s-box</h4>
+<div class="outline-text-4" id="text-orgcbd1f9c">
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">s-box</span> 
-  {0 99 249 153 121 182 65 131 70 90 218 87 62 178 74 214 164 73 186
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">s-box</span> 
+  <span class="org-rainbow-delimiters-depth-2">{</span>0 99 249 153 121 182 65 131 70 90 218 87 62 178 74 214 164 73 186
    244 233 30 188 101 240 140 110 159 130 19 128 205 210 181 229 217
    153 238 213 3 7 197 59 226 86 177 154 184 20 250 224 225 72 82 58
    128 205 189 60 235 175 121 27 175 1 124 69 110 101 77 24 173 102 
@@ -114,23 +114,23 @@ We calculate t by rotating the previous word, switching the bytes with different
    171 98 87 91 169 211 160 224 30 114 207 138 194 37 73 59 96 208 
    10 103 18 201 105 249 185 86 52 24 114 64 253 84 209 62 147 220 
    67 26 161 50 71 160 42 229 80 83 199 198 37 63 183 169 63 117 212
-   72 94 88 8 48 246 66 190 174 177 200 49 199 84 32})
+   72 94 88 8 48 246 66 190 174 177 200 49 199 84 32<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org05110d4" class="outline-3">
-<h3 id="org05110d4">Round Constants</h3>
-<div class="outline-text-3" id="text-org05110d4">
+<div id="outline-container-orge4948b2" class="outline-3">
+<h3 id="orge4948b2">Round Constants</h3>
+<div class="outline-text-3" id="text-orge4948b2">
 <p>
 The round constants are 4-byte words, the 3 least-significant-bytes are 0, and the most-significant byte comes from a list at the index determined by the round number. here is this list:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">round-constants</span>
- (map #(vector <span class="org-variable-name">%</span> 0 0 0) [1 2 4 8 16 32 64 128 27 54]))
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">round-constants</span>
+ <span class="org-rainbow-delimiters-depth-2">(</span>map #<span class="org-rainbow-delimiters-depth-3">(</span>vector <span class="org-variable-name">%</span> 0 0 0<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">[</span>1 2 4 8 16 32 64 128 27 54<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -139,50 +139,50 @@ With the above bits of data we can do the key expansion like so:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">forth-words-temp</span> [prev counter]
-  (<span class="org-keyword">let</span> [rotated (take 4 (drop 1 (cycle prev)))
-        round-key (nth round-key (dec (/ counter 4)))]
-     (<span class="org-keyword">-&gt;&gt;</span> rotated
-         (map s-box)
-         (map bit-xor round-key))))
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">forth-words-temp</span> <span class="org-rainbow-delimiters-depth-2">[</span>prev counter<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>rotated <span class="org-rainbow-delimiters-depth-4">(</span>take 4 <span class="org-rainbow-delimiters-depth-5">(</span>drop 1 <span class="org-rainbow-delimiters-depth-6">(</span>cycle prev<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        round-key <span class="org-rainbow-delimiters-depth-4">(</span>nth round-key <span class="org-rainbow-delimiters-depth-5">(</span>dec <span class="org-rainbow-delimiters-depth-6">(</span>/ counter 4<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> rotated
+         <span class="org-rainbow-delimiters-depth-4">(</span>map s-box<span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>map bit-xor round-key<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">next-word</span> [words-so-far counter]
-  (<span class="org-keyword">let</span> [prev (last words-so-far)
-        n-minus-4th (nth words-so-far (- counter 4))
-        temp (<span class="org-keyword">if</span> (zero? (mod counter 4))
-               (forth-words-temp prev counter)
-               (last words-so-far))]
-    (map bit-xor n-minus-4th temp)))
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">next-word</span> <span class="org-rainbow-delimiters-depth-2">[</span>words-so-far counter<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>prev <span class="org-rainbow-delimiters-depth-4">(</span>last words-so-far<span class="org-rainbow-delimiters-depth-4">)</span>
+        n-minus-4th <span class="org-rainbow-delimiters-depth-4">(</span>nth words-so-far <span class="org-rainbow-delimiters-depth-5">(</span>- counter 4<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        temp <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-5">(</span>zero? <span class="org-rainbow-delimiters-depth-6">(</span>mod counter 4<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+               <span class="org-rainbow-delimiters-depth-5">(</span>forth-words-temp prev counter<span class="org-rainbow-delimiters-depth-5">)</span>
+               <span class="org-rainbow-delimiters-depth-5">(</span>last words-so-far<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>map bit-xor n-minus-4th temp<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">key-expansion</span> [key]
-  (<span class="org-keyword">-&gt;&gt;</span>
-    (<span class="org-keyword">let</span> [input-key-words (vec (partition 4 key))]
-      (<span class="org-keyword">loop</span> [output-words input-key-words
-             counter 4]
-        (<span class="org-keyword">if</span>
-          (&lt; counter 44)
-          (<span class="org-keyword">recur</span> (conj output-words
-                       (next-word output-words counter))
-                 (inc counter))
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">key-expansion</span> <span class="org-rainbow-delimiters-depth-2">[</span>key<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-4">[</span>input-key-words <span class="org-rainbow-delimiters-depth-5">(</span>vec <span class="org-rainbow-delimiters-depth-6">(</span>partition 4 key<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">]</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">loop</span> <span class="org-rainbow-delimiters-depth-5">[</span>output-words input-key-words
+             counter 4<span class="org-rainbow-delimiters-depth-5">]</span>
+        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">if</span>
+          <span class="org-rainbow-delimiters-depth-6">(</span>&lt; counter 44<span class="org-rainbow-delimiters-depth-6">)</span>
+          <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">recur</span> <span class="org-rainbow-delimiters-depth-7">(</span>conj output-words
+                       <span class="org-rainbow-delimiters-depth-8">(</span>next-word output-words counter<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span>
+                 <span class="org-rainbow-delimiters-depth-7">(</span>inc counter<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
           <span class="org-comment">; else</span>
-          output-words)))
+          output-words<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
     flatten
-    (partition 16)))
+    <span class="org-rainbow-delimiters-depth-3">(</span>partition 16<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-orgc118f2e" class="outline-3">
-<h3 id="orgc118f2e">Encryption Process</h3>
-<div class="outline-text-3" id="text-orgc118f2e">
+<div id="outline-container-orgf707c6c" class="outline-3">
+<h3 id="orgf707c6c">Encryption Process</h3>
+<div class="outline-text-3" id="text-orgf707c6c">
 <p>
 Now we have 11 keys we can get on with the work of encrypting a block. round 0 uses the first key and just consists of a simple XOR. 1 to 9 are as described above, and the final round is the same as those except there is no Mix Columns stage. Why? Because the whole point of Mix Columns is to diffuse, meaning to jumble up the information. If it were used in the final round, it would be trivially reversible, so it has no value.
 </p>
 
 
-<div class="figure">
+<div id="org55f885e" class="figure">
 <p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
 </p>
 </div>
@@ -193,48 +193,48 @@ We’ve already looked at the S-box (yes, it’s the same one), so let’s see h
 </div>
 </div>
 
-<div id="outline-container-org8f22792" class="outline-3">
-<h3 id="org8f22792">Shift Rows</h3>
-<div class="outline-text-3" id="text-org8f22792">
+<div id="outline-container-org7031bec" class="outline-3">
+<h3 id="org7031bec">Shift Rows</h3>
+<div class="outline-text-3" id="text-org7031bec">
 <p>
 Each row gets cycled to the left by a set number of steps. Easy.
 </p>
 
 
-<div class="figure">
+<div id="org4f1b51c" class="figure">
 <p><img src="images/shift-rows.png" alt="shift-rows.png" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">shift-row</span> [idx row]
-  (<span class="org-keyword">-&gt;&gt;</span> row cycle (drop idx) (take 4)))
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">shift-row</span> <span class="org-rainbow-delimiters-depth-2">[</span>idx row<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span> row cycle <span class="org-rainbow-delimiters-depth-3">(</span>drop idx<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>take 4<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-comment-delimiter">; </span><span class="org-comment">we have to do this (apply map vector) malarkey </span>
 <span class="org-comment-delimiter">; </span><span class="org-comment">because we are in column-major order</span>
 <span class="org-comment-delimiter">; </span><span class="org-comment">and we want to get at the rows.</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">shift-rows</span> [block]
-  (<span class="org-keyword">-&gt;&gt;</span> block
-       (partition 4)
-       (apply map vector)
-       (map-indexed shift-row)
-       (apply map vector)
-       flatten))
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">shift-rows</span> <span class="org-rainbow-delimiters-depth-2">[</span>block<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span> block
+       <span class="org-rainbow-delimiters-depth-3">(</span>partition 4<span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>apply map vector<span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>map-indexed shift-row<span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>apply map vector<span class="org-rainbow-delimiters-depth-3">)</span>
+       flatten<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org31984dc" class="outline-3">
-<h3 id="org31984dc">Mix Columns</h3>
-<div class="outline-text-3" id="text-org31984dc">
+<div id="outline-container-org43e23ce" class="outline-3">
+<h3 id="org43e23ce">Mix Columns</h3>
+<div class="outline-text-3" id="text-org43e23ce">
 <p>
 Bit more tricky. The main idea is a matrix-vector multiplication, like so:
 </p>
 
 
-<div class="figure">
+<div id="orge2f1e7d" class="figure">
 <p><img src="images/mix-columns.png" alt="mix-columns.png" />
 </p>
 </div>
@@ -249,16 +249,16 @@ However, there is a catch. we need to keep each element within the range of 1 by
 </div>
 </div>
 
-<div id="outline-container-orgcef2161" class="outline-3">
-<h3 id="orgcef2161">Galois Fields</h3>
-<div class="outline-text-3" id="text-orgcef2161">
+<div id="outline-container-org434dba0" class="outline-3">
+<h3 id="org434dba0">Galois Fields</h3>
+<div class="outline-text-3" id="text-org434dba0">
 <p>
 Now I’ll make all the mathematicians wince with some loose speak. A Finite Field, also called Galois Field, is a field with a finite number of elements. A field, in casual terms, is a set of numbers with some rules that allow us to do addition, subtraction, multiplication, and division without ever leaving that set of numbers. Galois Fields exist where the number of elements equals a prime to the power of some positive integer. We are interested in GF(2<sup>8</sup>) a.k.a GF(256). In order to multiply in this field, we need to remember polynomial maths and write some code that does polynomial arithmetic.
 </p>
 
 
 <p>
-<a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)">https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)</a><sub>finite</sub><sub>field</sub>
+<a href="https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)_finite_field">https://en.wikipedia.org/wiki/Finite_field_arithmetic#Rijndael's_(AES)_finite_field</a>
 </p>
 <blockquote>
 <p>
@@ -283,35 +283,35 @@ As a polynomial, where x = 2:
 </p>
 
 
-<div class="figure">
+<div id="org07fc8b3" class="figure">
 <p><img src="images/binary-poly.png" alt="binary-poly.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf4481c5" class="outline-3">
-<h3 id="orgf4481c5">Polynomial addition</h3>
-<div class="outline-text-3" id="text-orgf4481c5">
+<div id="outline-container-org12f4018" class="outline-3">
+<h3 id="org12f4018">Polynomial addition</h3>
+<div class="outline-text-3" id="text-org12f4018">
 <p>
 We’ll use vectors to represent polynomials just like the binary array above.
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">padding</span> [x len]
-  (<span class="org-keyword">-&gt;</span> (take (- len (count x)) (repeat 0))
-      (concat x)))
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">padding</span> <span class="org-rainbow-delimiters-depth-2">[</span>x len<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-3">(</span>take <span class="org-rainbow-delimiters-depth-4">(</span>- len <span class="org-rainbow-delimiters-depth-5">(</span>count x<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">(</span>repeat 0<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>concat x<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">add</span> [a b]
-  (<span class="org-keyword">let</span> [max-length (max (count a) (count b))]
-    (<span class="org-keyword">-&gt;&gt;</span> (map + (padding a max-length)
-                (padding b max-length))
-         (drop-while zero?))))
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">add</span> <span class="org-rainbow-delimiters-depth-2">[</span>a b<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>max-length <span class="org-rainbow-delimiters-depth-4">(</span>max <span class="org-rainbow-delimiters-depth-5">(</span>count a<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>count b<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> <span class="org-rainbow-delimiters-depth-4">(</span>map + <span class="org-rainbow-delimiters-depth-5">(</span>padding a max-length<span class="org-rainbow-delimiters-depth-5">)</span>
+                <span class="org-rainbow-delimiters-depth-5">(</span>padding b max-length<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>drop-while zero?<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 
 
-(add [1 0 1 0] [1])
+<span class="org-rainbow-delimiters-depth-1">(</span>add <span class="org-rainbow-delimiters-depth-2">[</span>1 0 1 0<span class="org-rainbow-delimiters-depth-2">]</span> <span class="org-rainbow-delimiters-depth-2">[</span>1<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-comment-delimiter">; </span><span class="org-comment">=&gt; (1 0 1 1)</span>
 
 </pre>
@@ -335,23 +335,23 @@ For example:
 </pre>
 
 
-<div class="figure">
+<div id="org8b9b76a" class="figure">
 <p><img src="images/bit-multip.png" alt="bit-multip.png" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">mult</span> [a b]
-  (<span class="org-keyword">let</span> [max-length (max (count a) (count b))
-        a' (<span class="org-keyword">-&gt;</span> (padding a max-length) reverse vec)
-        b' (<span class="org-keyword">-&gt;</span> (padding b max-length) reverse vec)]
-    (<span class="org-keyword">-&gt;&gt;</span> (<span class="org-keyword">for</span> [i (range max-length)
-               j (range max-length)]
-           {(+ i j) (* (a' i) (b' j))})
-         (apply merge-with +)
-         (sort-by key &gt;)
-         (map second)
-         (drop-while zero?))))
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">mult</span> <span class="org-rainbow-delimiters-depth-2">[</span>a b<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>max-length <span class="org-rainbow-delimiters-depth-4">(</span>max <span class="org-rainbow-delimiters-depth-5">(</span>count a<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>count b<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        a' <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-5">(</span>padding a max-length<span class="org-rainbow-delimiters-depth-5">)</span> reverse vec<span class="org-rainbow-delimiters-depth-4">)</span>
+        b' <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-5">(</span>padding b max-length<span class="org-rainbow-delimiters-depth-5">)</span> reverse vec<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-5">[</span>i <span class="org-rainbow-delimiters-depth-6">(</span>range max-length<span class="org-rainbow-delimiters-depth-6">)</span>
+               j <span class="org-rainbow-delimiters-depth-6">(</span>range max-length<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">]</span>
+           <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-rainbow-delimiters-depth-6">(</span>+ i j<span class="org-rainbow-delimiters-depth-6">)</span> <span class="org-rainbow-delimiters-depth-6">(</span>* <span class="org-rainbow-delimiters-depth-7">(</span>a' i<span class="org-rainbow-delimiters-depth-7">)</span> <span class="org-rainbow-delimiters-depth-7">(</span>b' j<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>apply merge-with +<span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>sort-by key &gt;<span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>map second<span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>drop-while zero?<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -361,35 +361,35 @@ Finally, division. This is good old long-division. You sort the polynomials into
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">&gt;poly</span> 
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">&gt;poly</span> 
   <span class="org-doc">"test if a is greater than b"</span>
-  [a b]
-  (<span class="org-keyword">let</span> [a' (drop-while zero? a)
-        b' (drop-while zero? b)]
-    (<span class="org-keyword">cond</span>
-      (= a' b') <span class="org-constant">false</span>
-      (&gt; (count a') (count b')) <span class="org-constant">true</span>
-      (&lt; (count a') (count b')) <span class="org-constant">false</span>
-      (empty? (drop-while #(&gt;= 0 <span class="org-variable-name">%</span>) (map - a' b'))) <span class="org-constant">false</span>
-      <span class="org-clojure-keyword">:else</span> <span class="org-constant">true</span>)))
+  <span class="org-rainbow-delimiters-depth-2">[</span>a b<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>a' <span class="org-rainbow-delimiters-depth-4">(</span>drop-while zero? a<span class="org-rainbow-delimiters-depth-4">)</span>
+        b' <span class="org-rainbow-delimiters-depth-4">(</span>drop-while zero? b<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">cond</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>= a' b'<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-constant">false</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>&gt; <span class="org-rainbow-delimiters-depth-5">(</span>count a'<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>count b'<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-constant">true</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>&lt; <span class="org-rainbow-delimiters-depth-5">(</span>count a'<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>count b'<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-constant">false</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span>empty? <span class="org-rainbow-delimiters-depth-5">(</span>drop-while #<span class="org-rainbow-delimiters-depth-6">(</span>&gt;= 0 <span class="org-variable-name">%</span><span class="org-rainbow-delimiters-depth-6">)</span> <span class="org-rainbow-delimiters-depth-6">(</span>map - a' b'<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-constant">false</span>
+      <span class="org-clojure-keyword">:else</span> <span class="org-constant">true</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">div</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">div</span>
   <span class="org-doc">"returns a vector of ratio and remainder"</span>
-  [n d]
-  (<span class="org-keyword">cond</span> (= n d) [[1] [0]]
-        (&gt;poly d n) [[0] n]
+  <span class="org-rainbow-delimiters-depth-2">[</span>n d<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">cond</span> <span class="org-rainbow-delimiters-depth-3">(</span>= n d<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-rainbow-delimiters-depth-4">[</span>1<span class="org-rainbow-delimiters-depth-4">]</span> <span class="org-rainbow-delimiters-depth-4">[</span>0<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">]</span>
+        <span class="org-rainbow-delimiters-depth-3">(</span>&gt;poly d n<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-rainbow-delimiters-depth-4">[</span>0<span class="org-rainbow-delimiters-depth-4">]</span> n<span class="org-rainbow-delimiters-depth-3">]</span>
         <span class="org-clojure-keyword">:else</span>
-        (<span class="org-keyword">loop</span> [remain n
-               res []]
-          (<span class="org-keyword">let</span> [new-exp (- (count remain) (count d))
-                new-coef (/ (first remain) (first d))
-                new-res-element (cons new-coef (take new-exp (repeat 0)))
-                new-remain (add remain (map - (mult d new-res-element)))]
-            (<span class="org-keyword">if</span> (&lt; new-exp 0)
-              [res new-remain]
-              (<span class="org-keyword">recur</span> new-remain
-                     (add res new-res-element)))))))
+        <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">loop</span> <span class="org-rainbow-delimiters-depth-4">[</span>remain n
+               res <span class="org-rainbow-delimiters-depth-5">[]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+          <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-5">[</span>new-exp <span class="org-rainbow-delimiters-depth-6">(</span>- <span class="org-rainbow-delimiters-depth-7">(</span>count remain<span class="org-rainbow-delimiters-depth-7">)</span> <span class="org-rainbow-delimiters-depth-7">(</span>count d<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+                new-coef <span class="org-rainbow-delimiters-depth-6">(</span>/ <span class="org-rainbow-delimiters-depth-7">(</span>first remain<span class="org-rainbow-delimiters-depth-7">)</span> <span class="org-rainbow-delimiters-depth-7">(</span>first d<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+                new-res-element <span class="org-rainbow-delimiters-depth-6">(</span>cons new-coef <span class="org-rainbow-delimiters-depth-7">(</span>take new-exp <span class="org-rainbow-delimiters-depth-8">(</span>repeat 0<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+                new-remain <span class="org-rainbow-delimiters-depth-6">(</span>add remain <span class="org-rainbow-delimiters-depth-7">(</span>map - <span class="org-rainbow-delimiters-depth-8">(</span>mult d new-res-element<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">]</span>
+            <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-6">(</span>&lt; new-exp 0<span class="org-rainbow-delimiters-depth-6">)</span>
+              <span class="org-rainbow-delimiters-depth-6">[</span>res new-remain<span class="org-rainbow-delimiters-depth-6">]</span>
+              <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">recur</span> new-remain
+                     <span class="org-rainbow-delimiters-depth-7">(</span>add res new-res-element<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -407,22 +407,22 @@ Now we have the bits we need for multiplication in GF(2<sup>8</sup>). Galois fie
 
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">int-&gt;bin-vec</span> [x]
-  (<span class="org-keyword">-&gt;&gt;</span> x
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">int-&gt;bin-vec</span> <span class="org-rainbow-delimiters-depth-2">[</span>x<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span> x
        <span class="org-type">Integer</span>/toBinaryString
-       (map int)
-       (map #(- <span class="org-variable-name">%</span> 48))
-       vec))
+       <span class="org-rainbow-delimiters-depth-3">(</span>map int<span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>map #<span class="org-rainbow-delimiters-depth-4">(</span>- <span class="org-variable-name">%</span> 48<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+       vec<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">gf-256-mult</span> [a b ip]
-  (<span class="org-keyword">let</span> [poly-prod (mult (int-&gt;bin-vec a) (int-&gt;bin-vec b))
-        [_ poly-mod] (div poly-prod (int-&gt;bin-vec ip))]
-    (<span class="org-keyword">-&gt;&gt;</span> poly-mod
-         (map #(mod <span class="org-variable-name">%</span> 2))
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">gf-256-mult</span> <span class="org-rainbow-delimiters-depth-2">[</span>a b ip<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>poly-prod <span class="org-rainbow-delimiters-depth-4">(</span>mult <span class="org-rainbow-delimiters-depth-5">(</span>int-&gt;bin-vec a<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>int-&gt;bin-vec b<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">[</span>_ poly-mod<span class="org-rainbow-delimiters-depth-4">]</span> <span class="org-rainbow-delimiters-depth-4">(</span>div poly-prod <span class="org-rainbow-delimiters-depth-5">(</span>int-&gt;bin-vec ip<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> poly-mod
+         <span class="org-rainbow-delimiters-depth-4">(</span>map #<span class="org-rainbow-delimiters-depth-5">(</span>mod <span class="org-variable-name">%</span> 2<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
          reverse
-         (map-indexed (<span class="org-keyword">fn</span> [idx val] (* val (<span class="org-type">Math</span>/pow 2 idx))))
-         (reduce +)
-         int)))
+         <span class="org-rainbow-delimiters-depth-4">(</span>map-indexed <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-6">[</span>idx val<span class="org-rainbow-delimiters-depth-6">]</span> <span class="org-rainbow-delimiters-depth-6">(</span>* val <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-type">Math</span>/pow 2 idx<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>reduce +<span class="org-rainbow-delimiters-depth-4">)</span>
+         int<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -432,36 +432,36 @@ Now we have the bits we need for multiplication in GF(2<sup>8</sup>). Galois fie
 </div>
 </div>
 
-<div id="outline-container-org8ad2815" class="outline-3">
-<h3 id="org8ad2815">Mix Columns continued</h3>
-<div class="outline-text-3" id="text-org8ad2815">
+<div id="outline-container-orgb542bb8" class="outline-3">
+<h3 id="orgb542bb8">Mix Columns continued</h3>
+<div class="outline-text-3" id="text-orgb542bb8">
 <p>
 So we had our matrix multiplication laid out above. Now we know how to multiply.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">column-mix-matrix</span>
-  [[2 3 1 1]
-   [1 2 3 1]
-   [1 1 2 3]
-   [3 1 1 2]])
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">column-mix-matrix</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span>2 3 1 1<span class="org-rainbow-delimiters-depth-3">]</span>
+   <span class="org-rainbow-delimiters-depth-3">[</span>1 2 3 1<span class="org-rainbow-delimiters-depth-3">]</span>
+   <span class="org-rainbow-delimiters-depth-3">[</span>1 1 2 3<span class="org-rainbow-delimiters-depth-3">]</span>
+   <span class="org-rainbow-delimiters-depth-3">[</span>3 1 1 2<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">mix-column</span> [matrix irr column]
-  (<span class="org-keyword">for</span> [row matrix]
-    (<span class="org-keyword">let</span> [result (apply bit-xor
-                        (map <span class="org-type">gf</span>/gf-256-mult
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">mix-column</span> <span class="org-rainbow-delimiters-depth-2">[</span>matrix irr column<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-3">[</span>row matrix<span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-4">[</span>result <span class="org-rainbow-delimiters-depth-5">(</span>apply bit-xor
+                        <span class="org-rainbow-delimiters-depth-6">(</span>map <span class="org-type">gf</span>/gf-256-mult
                              row
                              column
-                             (repeat irr)))]
-      (<span class="org-keyword">if</span> (&gt; 0x100 result)
+                             <span class="org-rainbow-delimiters-depth-7">(</span>repeat irr<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">]</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-5">(</span>&gt; 0x100 result<span class="org-rainbow-delimiters-depth-5">)</span>
         result
-        (bit-xor irr result)))))
+        <span class="org-rainbow-delimiters-depth-5">(</span>bit-xor irr result<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">mix-columns</span> [block]
-  (<span class="org-keyword">-&gt;&gt;</span> block
-       (partition 4)
-       (map (partial mix-column column-mix-matrix 0x11b))
-       flatten))
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">mix-columns</span> <span class="org-rainbow-delimiters-depth-2">[</span>block<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span> block
+       <span class="org-rainbow-delimiters-depth-3">(</span>partition 4<span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>map <span class="org-rainbow-delimiters-depth-4">(</span>partial mix-column column-mix-matrix 0x11b<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+       flatten<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 </pre>
 </div>
@@ -471,38 +471,38 @@ That’s it. We can just tie it all together with a few orchestrating functions.
 </p>
 
 
-<div class="figure">
+<div id="org0b3f17b" class="figure">
 <p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
 </p>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">normal-round</span> [round-key block]
-  (<span class="org-keyword">-&gt;&gt;</span> block
-       (map s-box)
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">normal-round</span> <span class="org-rainbow-delimiters-depth-2">[</span>round-key block<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span> block
+       <span class="org-rainbow-delimiters-depth-3">(</span>map s-box<span class="org-rainbow-delimiters-depth-3">)</span>
        shift-rows
        mix-columns
-       (map bit-xor round-key)))
+       <span class="org-rainbow-delimiters-depth-3">(</span>map bit-xor round-key<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">apply-normal-rounds</span> [split-keys block]
-  (<span class="org-keyword">loop</span> [b block
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">apply-normal-rounds</span> <span class="org-rainbow-delimiters-depth-2">[</span>split-keys block<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">loop</span> <span class="org-rainbow-delimiters-depth-3">[</span>b block
          r-keys split-keys
-         n 1]
-    (<span class="org-keyword">let</span> [[round-key &amp; other-keys] r-keys]
-      (<span class="org-keyword">if</span> (&lt; n 10)
-        (<span class="org-keyword">recur</span> (normal-round round-key b)
+         n 1<span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>round-key &amp; other-keys<span class="org-rainbow-delimiters-depth-5">]</span> r-keys<span class="org-rainbow-delimiters-depth-4">]</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-5">(</span>&lt; n 10<span class="org-rainbow-delimiters-depth-5">)</span>
+        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">recur</span> <span class="org-rainbow-delimiters-depth-6">(</span>normal-round round-key b<span class="org-rainbow-delimiters-depth-6">)</span>
                other-keys
-               (inc n))
-        b))))
+               <span class="org-rainbow-delimiters-depth-6">(</span>inc n<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+        b<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">aes-128-encrypt-block</span> [key block]
-  (<span class="org-keyword">let</span> [split-keys (key-expansion key)]
-    (<span class="org-keyword">-&gt;&gt;</span> block
-         (map bit-xor (first split-keys))
-         (apply-normal-rounds (rest split-keys))
-         (map s-box)
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">aes-128-encrypt-block</span> <span class="org-rainbow-delimiters-depth-2">[</span>key block<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>split-keys <span class="org-rainbow-delimiters-depth-4">(</span>key-expansion key<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> block
+         <span class="org-rainbow-delimiters-depth-4">(</span>map bit-xor <span class="org-rainbow-delimiters-depth-5">(</span>first split-keys<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>apply-normal-rounds <span class="org-rainbow-delimiters-depth-5">(</span>rest split-keys<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>map s-box<span class="org-rainbow-delimiters-depth-4">)</span>
          shift-rows
-         (map bit-xor (last split-keys)))))
+         <span class="org-rainbow-delimiters-depth-4">(</span>map bit-xor <span class="org-rainbow-delimiters-depth-5">(</span>last split-keys<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 

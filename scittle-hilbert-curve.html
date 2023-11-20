@@ -6,11 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
-<meta name="generator" content="Org mode" />
+<meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">LZ</h1>
 <p>
 <a href="./index.html">home</a>
@@ -30,32 +30,32 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-orga605daa" class="outline-2">
-<h2 id="orga605daa">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-orga605daa">
+<div id="outline-container-org5c18d3a" class="outline-2">
+<h2 id="org5c18d3a">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-org5c18d3a">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
 
 
-<div class="figure">
+<div id="org4355507" class="figure">
 <p><img src="images/HC-3-iterations.png" alt="HC-3-iterations.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4c866ae" class="outline-2">
-<h2 id="org4c866ae">what is scittle?</h2>
-<div class="outline-text-2" id="text-org4c866ae">
+<div id="outline-container-org8d703f0" class="outline-2">
+<h2 id="org8d703f0">what is scittle?</h2>
+<div class="outline-text-2" id="text-org8d703f0">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-orgb568c7f" class="outline-3">
-<h3 id="orgb568c7f">Aside</h3>
-<div class="outline-text-3" id="text-orgb568c7f">
+<div id="outline-container-org0b31614" class="outline-3">
+<h3 id="org0b31614">Aside</h3>
+<div class="outline-text-3" id="text-org0b31614">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -94,9 +94,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-org9624c48" class="outline-2">
-<h2 id="org9624c48">handle user input code</h2>
-<div class="outline-text-2" id="text-org9624c48">
+<div id="outline-container-org1470284" class="outline-2">
+<h2 id="org1470284">handle user input code</h2>
+<div class="outline-text-2" id="text-org1470284">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -174,9 +174,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-orga03d5ab" class="outline-2">
-<h2 id="orga03d5ab">drawing</h2>
-<div class="outline-text-2" id="text-orga03d5ab">
+<div id="outline-container-org584552b" class="outline-2">
+<h2 id="org584552b">drawing</h2>
+<div class="outline-text-2" id="text-org584552b">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -304,9 +304,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-orgfa0da69" class="outline-2">
-<h2 id="orgfa0da69">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-orgfa0da69">
+<div id="outline-container-orgb769d8c" class="outline-2">
+<h2 id="orgb769d8c">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-orgb769d8c">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
@@ -316,14 +316,14 @@ Here's the details of that mapping:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">rules</span> {<span class="org-clojure-keyword">:A</span> {<span class="org-clojure-keyword">:path</span> [[0 0] [0 1] [1 1] [1 0]]
-                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:B</span>]}
-            <span class="org-clojure-keyword">:B</span> {<span class="org-clojure-keyword">:path</span> [[1 1] [0 1] [0 0] [1 0]]
-                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:A</span>]}
-            <span class="org-clojure-keyword">:C</span> {<span class="org-clojure-keyword">:path</span> [[1 1] [1 0] [0 0] [0 1]]
-                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:D</span>]}
-            <span class="org-clojure-keyword">:D</span> {<span class="org-clojure-keyword">:path</span> [[0 0] [1 0] [1 1] [0 1]]
-                <span class="org-clojure-keyword">:next-iteration</span> [<span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:C</span>]}})
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">rules</span> <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:A</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:B</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:B</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:A</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:C</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:D</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:D</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:C</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -336,7 +336,7 @@ Let's think about our canvas as a square split up into square cells. The number 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">def</span> <span class="org-variable-name">init</span> [{<span class="org-clojure-keyword">:cell</span> [0 0] <span class="org-clojure-keyword">:pattern</span> <span class="org-clojure-keyword">:A</span>}])
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">init</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:cell</span> <span class="org-rainbow-delimiters-depth-4">[</span>0 0<span class="org-rainbow-delimiters-depth-4">]</span> <span class="org-clojure-keyword">:pattern</span> <span class="org-clojure-keyword">:A</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -345,23 +345,23 @@ To turn this into the next iteration we need to subdivide the space into four ce
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">-&gt;subcells</span>
-  [{<span class="org-clojure-keyword">:keys</span> [cell pattern]}]
-  (<span class="org-keyword">let</span> [top-left-subcell (map (partial * 2) cell)
-        path-step-&gt;subcells (<span class="org-keyword">fn</span> [path-step]
-                              (map + top-left-subcell
-                                     path-step)) 
-        path (<span class="org-keyword">-&gt;&gt;</span> rules
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">-&gt;subcells</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:keys</span> <span class="org-rainbow-delimiters-depth-4">[</span>cell pattern<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>top-left-subcell <span class="org-rainbow-delimiters-depth-4">(</span>map <span class="org-rainbow-delimiters-depth-5">(</span>partial * 2<span class="org-rainbow-delimiters-depth-5">)</span> cell<span class="org-rainbow-delimiters-depth-4">)</span>
+        path-step-&gt;subcells <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>path-step<span class="org-rainbow-delimiters-depth-5">]</span>
+                              <span class="org-rainbow-delimiters-depth-5">(</span>map + top-left-subcell
+                                     path-step<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> 
+        path <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;&gt;</span> rules
                   pattern
                   <span class="org-clojure-keyword">:path</span>
-                  (map path-step-&gt;subcells))
-        cell-patterns (<span class="org-keyword">-&gt;</span> rules pattern <span class="org-clojure-keyword">:next-iteration</span>)]
-    (map (<span class="org-keyword">fn</span> [cell pattern]
-           {<span class="org-clojure-keyword">:cell</span> cell <span class="org-clojure-keyword">:pattern</span> pattern})
+                  <span class="org-rainbow-delimiters-depth-5">(</span>map path-step-&gt;subcells<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        cell-patterns <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;</span> rules pattern <span class="org-clojure-keyword">:next-iteration</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>map <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>cell pattern<span class="org-rainbow-delimiters-depth-5">]</span>
+           <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:cell</span> cell <span class="org-clojure-keyword">:pattern</span> pattern<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">)</span>
          path
-         cell-patterns)))
+         cell-patterns<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(map -&gt;subcells init)
+<span class="org-rainbow-delimiters-depth-1">(</span>map -&gt;subcells init<span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; (({:cell (0 0), :pattern :D}</span>
 <span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (0 1), :pattern :A}</span>
@@ -375,11 +375,11 @@ Okay, now we would like to iterate that, each time concatenating the results int
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-cells</span> [iterations]
-  (<span class="org-keyword">-&gt;</span> (iterate #(<span class="org-keyword">-&gt;&gt;</span> <span class="org-variable-name">%</span> (map -&gt;subcells) (apply concat)) init)
-      (nth iterations)))
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-cells</span> <span class="org-rainbow-delimiters-depth-2">[</span>iterations<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-3">(</span>iterate #<span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;&gt;</span> <span class="org-variable-name">%</span> <span class="org-rainbow-delimiters-depth-5">(</span>map -&gt;subcells<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>apply concat<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> init<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>nth iterations<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(hilbert-curve-cells 2)
+<span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-cells 2<span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ({:cell (0 0), :pattern :A}</span>
 <span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 0), :pattern :D}</span>
@@ -405,18 +405,18 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">(<span class="org-keyword">defn</span> <span class="org-function-name">cells-&gt;points</span> [cells iterations canvas-width]
-  (<span class="org-keyword">let</span> [width-in-cells (<span class="org-type">js</span>/Math.pow 2 iterations)
-        step-width (/ canvas-width width-in-cells)]
-    (<span class="org-keyword">-&gt;&gt;</span> cells
-         (map <span class="org-clojure-keyword">:cell</span>)
-         (map #(map * 1% 2%) (repeat [step-width step-width])))))
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">cells-&gt;points</span> <span class="org-rainbow-delimiters-depth-2">[</span>cells iterations canvas-width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>width-in-cells <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">js</span>/Math.pow 2 iterations<span class="org-rainbow-delimiters-depth-4">)</span>
+        step-width <span class="org-rainbow-delimiters-depth-4">(</span>/ canvas-width width-in-cells<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> cells
+         <span class="org-rainbow-delimiters-depth-4">(</span>map <span class="org-clojure-keyword">:cell</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>map #<span class="org-rainbow-delimiters-depth-5">(</span>map * 1% 2%<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>repeat <span class="org-rainbow-delimiters-depth-6">[</span>step-width step-width<span class="org-rainbow-delimiters-depth-6">]</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(<span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-points</span> [iterations canvas-width]
-  (<span class="org-keyword">-&gt;</span> (hilbert-curve-cells iterations)
-      (cells-&gt;points iterations canvas-width)))
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-points</span> <span class="org-rainbow-delimiters-depth-2">[</span>iterations canvas-width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-3">(</span>hilbert-curve-cells iterations<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>cells-&gt;points iterations canvas-width<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-(hilbert-curve-points 2 400)
+<span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-points 2 400<span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ((0.0 0.0)</span>
 <span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 0.0)</span>

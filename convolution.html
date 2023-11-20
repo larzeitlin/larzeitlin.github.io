@@ -6,19 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
-<meta name="generator" content="Org mode" />
+<meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">LZ</h1>
 <p>
 <a href="./index.html">home</a>
 </p>
 
-<div id="outline-container-org1233ba6" class="outline-2">
-<h2 id="org1233ba6">Convolution</h2>
-<div class="outline-text-2" id="text-org1233ba6">
+<div id="outline-container-orgbd4b643" class="outline-2">
+<h2 id="orgbd4b643">Convolution</h2>
+<div class="outline-text-2" id="text-orgbd4b643">
 <p>
 Convolution is, to me at least, a really inspirational subject. Why?
 Because it can initially seem like DSP magic, but it's really not hard
@@ -46,9 +46,9 @@ bother.
 </p>
 </div>
 
-<div id="outline-container-org75bd437" class="outline-3">
-<h3 id="org75bd437">What can convolution do for us?</h3>
-<div class="outline-text-3" id="text-org75bd437">
+<div id="outline-container-org6ca9631" class="outline-3">
+<h3 id="org6ca9631">What can convolution do for us?</h3>
+<div class="outline-text-3" id="text-org6ca9631">
 <p>
 Quite a lot actually. We can use convolution to model any <b>linear time
 invariant</b> (LTI) system. Let's explore that term:
@@ -92,13 +92,13 @@ Again, this is shown by A producing the same result as B.
 </p>
 
 
-<div class="figure">
+<div id="orge47240b" class="figure">
 <p><img src="images/linear1.jpg" alt="linear1.jpg" />
 </p>
 </div>
 
 
-<div class="figure">
+<div id="orge1e2df6" class="figure">
 <p><img src="images/3.1.png" alt="3.1.png" />
 </p>
 </div>
@@ -150,9 +150,9 @@ do so.
 </div>
 </div>
 
-<div id="outline-container-org989b431" class="outline-3">
-<h3 id="org989b431">Do LTI systems exist?</h3>
-<div class="outline-text-3" id="text-org989b431">
+<div id="outline-container-org4b865ee" class="outline-3">
+<h3 id="org4b865ee">Do LTI systems exist?</h3>
+<div class="outline-text-3" id="text-org4b865ee">
 <p>
 <i>"What what? You just told us that a whole heap of stuff is LTI!"</i>
 </p>
@@ -176,9 +176,9 @@ stealing the room's soul. Magic, right?
 </div>
 </div>
 
-<div id="outline-container-org5942f85" class="outline-3">
-<h3 id="org5942f85">OK, lets convolve!</h3>
-<div class="outline-text-3" id="text-org5942f85">
+<div id="outline-container-org216e19b" class="outline-3">
+<h3 id="org216e19b">OK, lets convolve!</h3>
+<div class="outline-text-3" id="text-org216e19b">
 <p>
 Before going any further, I should point out that the mathematical
 operator for convolution is often drawn as an asterisk: * . This is a
@@ -193,7 +193,7 @@ The definition of discrete-time convolution is as follows:
 </p>
 
 
-<div class="figure">
+<div id="org15a8b49" class="figure">
 <p><img src="images/3.2.jpeg" alt="3.2.jpeg" />
 </p>
 </div>
@@ -265,7 +265,7 @@ flipped around 0 on the y axis)</li>
 </ul>
 
 
-<div class="figure">
+<div id="org5a9dd82" class="figure">
 <p><img src="images/3.3.gif" alt="3.3.gif" />
 </p>
 </div>
@@ -319,9 +319,9 @@ together.</b>
 </div>
 </div>
 
-<div id="outline-container-org93b0208" class="outline-3">
-<h3 id="org93b0208">Why do we do the flip?</h3>
-<div class="outline-text-3" id="text-org93b0208">
+<div id="outline-container-orgec4921c" class="outline-3">
+<h3 id="orgec4921c">Why do we do the flip?</h3>
+<div class="outline-text-3" id="text-orgec4921c">
 <p>
 We need to flip g because we want the <b>beginning of g</b> to meet the
 <b>beginning of f</b> first, and the <b>end of g</b> to meet the <b>end of f</b> last,
@@ -339,7 +339,7 @@ and the other as the input.
 </div>
 </div>
 
-<div id="outline-container-orgd11e6cd" class="outline-3">
+<div id="outline-container-impulse-responses" class="outline-3">
 <h3 id="impulse-responses">Impulse Responses</h3>
 <div class="outline-text-3" id="text-impulse-responses">
 <p>
@@ -355,7 +355,7 @@ points apart from one point where it's value is 1. For example: [0, 1, 0,
 </p>
 
 
-<div class="figure">
+<div id="org74f7bba" class="figure">
 <p><img src="images/3.4.jpeg" alt="3.4.jpeg" />
 </p>
 </div>
