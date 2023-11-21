@@ -1,0 +1,22 @@
+.code-textarea {
+    font-family: monospace;
+    width: 90%; 
+    height: 10em;
+    display: block;
+}
+
+img {
+    display: block;
+    margin: auto;
+    width: 60%;
+    max-width: 60%;
+    height: auto;
+}
+
+.canvas {
+    display: block;
+    margin: auto;
+    width: 60%;
+    max-width: 60%;
+    height: auto;
+}
