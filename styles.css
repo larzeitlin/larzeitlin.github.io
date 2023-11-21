@@ -20,3 +20,8 @@ img {
     max-width: 60%;
     height: auto;
 }
+
+.title {
+    display: none;
+
+}
