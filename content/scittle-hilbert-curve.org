@@ -64,37 +64,37 @@ Then I run my regular [[file:how-this-blog-works.org][build script]] and away we
 First let's make a ~textarea~ in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 
 #+begin_src html
-<script type="application/x-scittle">
+  <script type="application/x-scittle">
 
-(defn set-output-area [v output-id]
-  (-> (js/document.getElementById output-id)
-      (.-innerHTML)
-      (set! v)))
+  (defn set-output-area [v output-id]
+    (-> (js/document.getElementById output-id)
+	(.-innerHTML)
+	(set! v)))
 
-(defn try-eval [v]
-  (try (js/scittle.core.eval_string v)
-    (catch js/Error e
-      (str "ERROR: " e))))
+  (defn try-eval [v]
+    (try (js/scittle.core.eval_string v)
+      (catch js/Error e
+	(str "ERROR: " e))))
 
-(defn read-eval-input [input-id]
-  (-> input-id
-      js/document.getElementById 
-      .-value
-      try-eval))
+  (defn read-eval-input [input-id]
+    (-> input-id
+	js/document.getElementById 
+	.-value
+	try-eval))
 
-(set! (.-read_input js/window)
-      #(set-output-area (read-eval-input "code-area")
-                        "output-area"))
- 
-</script>
-<body>
-<textarea id="code-area"
-          style="font-family:monospace;">
-(take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
-</textarea>
-<button onclick="read_input()">eval</button>
-<p id="output-area">...</p>
-</body>
+  (set! (.-read_input js/window)
+	#(set-output-area (read-eval-input "code-area")
+			  "output-area"))
+
+  </script>
+  <body>
+  <textarea id="code-area"
+            class="code-textarea">
+  (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
+  </textarea>
+  <button onclick="read_input()">eval</button>
+  <p id="output-area">...</p>
+  </body>
 #+end_src
 
 #+begin_export html
@@ -123,7 +123,8 @@ First let's make a ~textarea~ in html to get the user input. We'd like a button 
 </script>
 <body>
 <textarea id="code-area"
-          style="font-family:monospace;">
+          class="code-textarea"
+	  spellcheck="false">
 (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
 </textarea>
 <button onclick="read_input()">eval</button>
@@ -138,10 +139,10 @@ I think the easiest way to do this will be with ~canvas~.
 
 
 #+begin_src html
-<canvas id="my-canvas" width="400" height="400"></canvas>
+<canvas id="first-canvas" width="400" height="400" class="canvas"></canvas>
 
 <script type="application/x-scittle">  
-(def c (js/document.getElementById "my-canvas"))
+(def c (js/document.getElementById "first-canvas"))
 (def ctx (.getContext c "2d"))
 
 (.moveTo ctx 50 50)
@@ -155,10 +156,10 @@ I think the easiest way to do this will be with ~canvas~.
 
 
 #+begin_export html
-<canvas id="my-canvas" width="200" height="200"></canvas>
+<canvas id="first-canvas" width="200" height="200" class="canvas"></canvas>
 
 <script type="application/x-scittle">  
-(def c (js/document.getElementById "my-canvas"))
+(def c (js/document.getElementById "first-canvas"))
 (def ctx (.getContext c "2d"))
 
 (.moveTo ctx 50 50)
@@ -172,52 +173,52 @@ I think the easiest way to do this will be with ~canvas~.
 Let's have it so that the user can pass in an vector of points that the line will go through:
 
 #+begin_src html
-<canvas id="user-points-canvas" width="200" height="200"></canvas>
+  <canvas id="points-canvas" width="200" height="200" class="canvas"></canvas>
 
-<script type="application/x-scittle">
+  <script type="application/x-scittle">
 
-(def c (js/document.getElementById "user-points-canvas"))
-(def ctx (.getContext c "2d"))
+  (def c (js/document.getElementById "user-points-canvas"))
+  (def ctx (.getContext c "2d"))
 
-(defn try-eval [v]
-  (try (js/scittle.core.eval_string v)
-    (catch js/Error e
-      (str "ERROR: " e))))
+  (defn try-eval [v]
+    (try (js/scittle.core.eval_string v)
+      (catch js/Error e
+	(str "ERROR: " e))))
 
-(defn read-eval-input [input-id]
-  (-> input-id
-      js/document.getElementById 
-      .-value
-      try-eval))
+  (defn read-eval-input [input-id]
+    (-> input-id
+	js/document.getElementById 
+	.-value
+	try-eval))
 
-(defn draw-line-from-points [context points]
-  (.clearRect context 0 0 (.-width c) (.-height c))
-  (.beginPath context)
-  (.moveTo context (-> points first first) (-> points first second))
-  (doseq [[x y] (rest points)]
-    (.lineTo context x y))
-  (.stroke context))
+  (defn draw-line-from-points [context points]
+    (.clearRect context 0 0 (.-width c) (.-height c))
+    (.beginPath context)
+    (.moveTo context (-> points first first) (-> points first second))
+    (doseq [[x y] (rest points)]
+      (.lineTo context x y))
+    (.stroke context))
 
-(set! (.-read_points js/window)
-      #(->> (read-eval-input "user-points-input")
-            (draw-line-from-points ctx)))
+  (set! (.-read_points js/window)
+	#(->> (read-eval-input "points-input")
+	      (draw-line-from-points ctx)))
 
-</script>
-<body>
-<textarea id="user-points-input"
-          style="font-family:monospace;">
-[[50 50] [50 150] [150 150] [150 50]]
-</textarea>
-<button onclick="read_points()">Draw points</button>
-</body>
+  </script>
+  <body>
+  <textarea id="points-input"
+            class="code-textarea">
+  [[50 50] [50 150] [150 150] [150 50]]
+  </textarea>
+  <button onclick="read_points()">Draw points</button>
+  </body>
 #+end_src
 
 #+begin_export html
-<canvas id="user-points-canvas" width="200" height="200"></canvas>
+<canvas id="points-canvas" width="200" height="200" class="canvas"></canvas>
 
 <script type="application/x-scittle">
 
-(def c (js/document.getElementById "user-points-canvas"))
+(def c (js/document.getElementById "points-canvas"))
 (def ctx (.getContext c "2d"))
 
 (defn try-eval [v]
@@ -240,13 +241,14 @@ Let's have it so that the user can pass in an vector of points that the line wil
   (.stroke context))
 
 (set! (.-read_points js/window)
-      #(->> (read-eval-input "user-points-input")
+      #(->> (read-eval-input "points-input")
             (draw-line-from-points ctx)))
 
 </script>
 <body>
-<textarea id="user-points-input"
-          style="font-family:monospace;">
+<textarea id="points-input"
+          class="code-textarea"
+	  spellcheck="false">
 [[50 50] [50 150] [150 150] [150 50]]
 </textarea>
 <button onclick="read_points()">Draw points</button>
@@ -369,7 +371,10 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 #+end_src
 
 #+begin_export html
-<canvas id="hilbert-canvas" width="600" height="600"></canvas>
+<canvas id="hilbert-canvas"
+        width="600"
+	height="600"
+	class="canvas"></canvas>
 
 <script type="application/x-scittle">
 
@@ -403,8 +408,8 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 </script>
 <body>
 <textarea id="hilbert-input"
-          rows="20"
-          style="font-family:monospace;">
+          class="code-textarea"
+	  spellcheck="false">
 (def rules 
   {:A {:path [[0 0] [0 1] [1 1] [1 0]]
    :next-iteration [:D :A :A :B]}

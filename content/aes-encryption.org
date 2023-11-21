@@ -17,7 +17,10 @@ We're looking at AES-128 in ECB mode. 128 is the key size in bits. ECB (electron
 Each block is processed with a number of steps including 11 rounds. Something a little different happens in the first and last rounds. Each round needs its own 16-byte key, but since we only have one 16-byte key to start with, we'll use it to generate more.
 As you've probably noticed, everything is happening in chunks of 16 bytes. When it comes to encrypting blocks, we might as well think about them as being in a 4x4 grid in column-major order (ie. the grid is filled from top to bottom, left to right).
 
-[[file:images/column-major.png]]
+| 1 | 5 |  9 | 13 |
+| 2 | 6 | 10 | 14 |
+| 3 | 7 | 11 | 15 |
+| 4 | 8 | 12 | 16 |
 
 *** Processing per round (except first and last)
 1. Replace each byte with another from a fixed lookup-table

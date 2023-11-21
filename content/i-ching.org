@@ -108,7 +108,8 @@ The sole purpose of the code below is to represent a common version of the yarro
 </script>
 <body>
 <textarea id="code-area"
-          style="font-family:monospace;height:400px;">
+          class="code-textarea"
+	  spellcheck="false">
 (defn rand-normal
   []
   (let [u1 (Math/random)

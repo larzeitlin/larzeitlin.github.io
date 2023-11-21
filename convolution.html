@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
 <div id="content" class="content">
@@ -16,9 +16,9 @@
 <a href="./index.html">home</a>
 </p>
 
-<div id="outline-container-orgbd4b643" class="outline-2">
-<h2 id="orgbd4b643">Convolution</h2>
-<div class="outline-text-2" id="text-orgbd4b643">
+<div id="outline-container-orgf165b84" class="outline-2">
+<h2 id="orgf165b84">Convolution</h2>
+<div class="outline-text-2" id="text-orgf165b84">
 <p>
 Convolution is, to me at least, a really inspirational subject. Why?
 Because it can initially seem like DSP magic, but it's really not hard
@@ -46,9 +46,9 @@ bother.
 </p>
 </div>
 
-<div id="outline-container-org6ca9631" class="outline-3">
-<h3 id="org6ca9631">What can convolution do for us?</h3>
-<div class="outline-text-3" id="text-org6ca9631">
+<div id="outline-container-orga6503a0" class="outline-3">
+<h3 id="orga6503a0">What can convolution do for us?</h3>
+<div class="outline-text-3" id="text-orga6503a0">
 <p>
 Quite a lot actually. We can use convolution to model any <b>linear time
 invariant</b> (LTI) system. Let's explore that term:
@@ -92,13 +92,13 @@ Again, this is shown by A producing the same result as B.
 </p>
 
 
-<div id="orge47240b" class="figure">
+<div id="org5764cf2" class="figure">
 <p><img src="images/linear1.jpg" alt="linear1.jpg" />
 </p>
 </div>
 
 
-<div id="orge1e2df6" class="figure">
+<div id="org109589f" class="figure">
 <p><img src="images/3.1.png" alt="3.1.png" />
 </p>
 </div>
@@ -150,9 +150,9 @@ do so.
 </div>
 </div>
 
-<div id="outline-container-org4b865ee" class="outline-3">
-<h3 id="org4b865ee">Do LTI systems exist?</h3>
-<div class="outline-text-3" id="text-org4b865ee">
+<div id="outline-container-org43144b1" class="outline-3">
+<h3 id="org43144b1">Do LTI systems exist?</h3>
+<div class="outline-text-3" id="text-org43144b1">
 <p>
 <i>"What what? You just told us that a whole heap of stuff is LTI!"</i>
 </p>
@@ -176,9 +176,9 @@ stealing the room's soul. Magic, right?
 </div>
 </div>
 
-<div id="outline-container-org216e19b" class="outline-3">
-<h3 id="org216e19b">OK, lets convolve!</h3>
-<div class="outline-text-3" id="text-org216e19b">
+<div id="outline-container-orga4e3b95" class="outline-3">
+<h3 id="orga4e3b95">OK, lets convolve!</h3>
+<div class="outline-text-3" id="text-orga4e3b95">
 <p>
 Before going any further, I should point out that the mathematical
 operator for convolution is often drawn as an asterisk: * . This is a
@@ -193,7 +193,7 @@ The definition of discrete-time convolution is as follows:
 </p>
 
 
-<div id="org15a8b49" class="figure">
+<div id="org9e47b86" class="figure">
 <p><img src="images/3.2.jpeg" alt="3.2.jpeg" />
 </p>
 </div>
@@ -265,7 +265,7 @@ flipped around 0 on the y axis)</li>
 </ul>
 
 
-<div id="org5a9dd82" class="figure">
+<div id="org0408ab7" class="figure">
 <p><img src="images/3.3.gif" alt="3.3.gif" />
 </p>
 </div>
@@ -319,9 +319,9 @@ together.</b>
 </div>
 </div>
 
-<div id="outline-container-orgec4921c" class="outline-3">
-<h3 id="orgec4921c">Why do we do the flip?</h3>
-<div class="outline-text-3" id="text-orgec4921c">
+<div id="outline-container-orged2c087" class="outline-3">
+<h3 id="orged2c087">Why do we do the flip?</h3>
+<div class="outline-text-3" id="text-orged2c087">
 <p>
 We need to flip g because we want the <b>beginning of g</b> to meet the
 <b>beginning of f</b> first, and the <b>end of g</b> to meet the <b>end of f</b> last,
@@ -355,7 +355,7 @@ points apart from one point where it's value is 1. For example: [0, 1, 0,
 </p>
 
 
-<div id="org74f7bba" class="figure">
+<div id="org2c05a79" class="figure">
 <p><img src="images/3.4.jpeg" alt="3.4.jpeg" />
 </p>
 </div>

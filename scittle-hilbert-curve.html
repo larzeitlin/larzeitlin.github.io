@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
 <meta name="generator" content="Org Mode" />
-<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
 <div id="content" class="content">
@@ -30,32 +30,32 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org5c18d3a" class="outline-2">
-<h2 id="org5c18d3a">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-org5c18d3a">
+<div id="outline-container-orgeb9c392" class="outline-2">
+<h2 id="orgeb9c392">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-orgeb9c392">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
 
 
-<div id="org4355507" class="figure">
+<div id="orgf9c7075" class="figure">
 <p><img src="images/HC-3-iterations.png" alt="HC-3-iterations.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8d703f0" class="outline-2">
-<h2 id="org8d703f0">what is scittle?</h2>
-<div class="outline-text-2" id="text-org8d703f0">
+<div id="outline-container-org0a37c84" class="outline-2">
+<h2 id="org0a37c84">what is scittle?</h2>
+<div class="outline-text-2" id="text-org0a37c84">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-org0b31614" class="outline-3">
-<h3 id="org0b31614">Aside</h3>
-<div class="outline-text-3" id="text-org0b31614">
+<div id="outline-container-org918e716" class="outline-3">
+<h3 id="org918e716">Aside</h3>
+<div class="outline-text-3" id="text-org918e716">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -94,9 +94,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-org1470284" class="outline-2">
-<h2 id="org1470284">handle user input code</h2>
-<div class="outline-text-2" id="text-org1470284">
+<div id="outline-container-orgf4595f7" class="outline-2">
+<h2 id="orgf4595f7">handle user input code</h2>
+<div class="outline-text-2" id="text-orgf4595f7">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -127,7 +127,7 @@ First let's make a <code>textarea</code> in html to get the user input. We'd lik
 &lt;/<span class="org-function-name">script</span>&gt;
 &lt;<span class="org-function-name">body</span>&gt;
 &lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"code-area"</span>
-          <span class="org-variable-name">style</span>=<span class="org-string">"font-family:monospace;"</span>&gt;
+          <span class="org-variable-name">class</span>=<span class="org-string">"code-textarea"</span>&gt;
 (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
 &lt;/<span class="org-function-name">textarea</span>&gt;
 &lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_input()"</span>&gt;eval&lt;/<span class="org-function-name">button</span>&gt;
@@ -161,7 +161,8 @@ First let's make a <code>textarea</code> in html to get the user input. We'd lik
 </script>
 <body>
 <textarea id="code-area"
-          style="font-family:monospace;">
+          class="code-textarea"
+	  spellcheck="false">
 (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
 </textarea>
 <button onclick="read_input()">eval</button>
@@ -174,19 +175,19 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-org584552b" class="outline-2">
-<h2 id="org584552b">drawing</h2>
-<div class="outline-text-2" id="text-org584552b">
+<div id="outline-container-org28a713a" class="outline-2">
+<h2 id="org28a713a">drawing</h2>
+<div class="outline-text-2" id="text-org28a713a">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"my-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"400"</span> <span class="org-variable-name">height</span>=<span class="org-string">"400"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"first-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"400"</span> <span class="org-variable-name">height</span>=<span class="org-string">"400"</span> <span class="org-variable-name">class</span>=<span class="org-string">"canvas"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
 
 &lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;  
-(def c (js/document.getElementById "my-canvas"))
+(def c (js/document.getElementById "first-canvas"))
 (def ctx (.getContext c "2d"))
 
 (.moveTo ctx 50 50)
@@ -200,10 +201,10 @@ I think the easiest way to do this will be with <code>canvas</code>.
 
 
 
-<canvas id="my-canvas" width="200" height="200"></canvas>
+<canvas id="first-canvas" width="200" height="200" class="canvas"></canvas>
 
 <script type="application/x-scittle">  
-(def c (js/document.getElementById "my-canvas"))
+(def c (js/document.getElementById "first-canvas"))
 (def ctx (.getContext c "2d"))
 
 (.moveTo ctx 50 50)
@@ -218,7 +219,7 @@ Let's have it so that the user can pass in an vector of points that the line wil
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"user-points-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"200"</span> <span class="org-variable-name">height</span>=<span class="org-string">"200"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"points-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"200"</span> <span class="org-variable-name">height</span>=<span class="org-string">"200"</span> <span class="org-variable-name">class</span>=<span class="org-string">"canvas"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
 
 &lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
 
@@ -245,13 +246,13 @@ Let's have it so that the user can pass in an vector of points that the line wil
   (.stroke context))
 
 (set! (.-read_points js/window)
-      #(-&gt;&gt; (read-eval-input "user-points-input")
+      #(-&gt;&gt; (read-eval-input "points-input")
             (draw-line-from-points ctx)))
 
 &lt;/<span class="org-function-name">script</span>&gt;
 &lt;<span class="org-function-name">body</span>&gt;
-&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"user-points-input"</span>
-          <span class="org-variable-name">style</span>=<span class="org-string">"font-family:monospace;"</span>&gt;
+&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"points-input"</span>
+          <span class="org-variable-name">class</span>=<span class="org-string">"code-textarea"</span>&gt;
 [[50 50] [50 150] [150 150] [150 50]]
 &lt;/<span class="org-function-name">textarea</span>&gt;
 &lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_points()"</span>&gt;Draw points&lt;/<span class="org-function-name">button</span>&gt;
@@ -259,11 +260,11 @@ Let's have it so that the user can pass in an vector of points that the line wil
 </pre>
 </div>
 
-<canvas id="user-points-canvas" width="200" height="200"></canvas>
+<canvas id="points-canvas" width="200" height="200" class="canvas"></canvas>
 
 <script type="application/x-scittle">
 
-(def c (js/document.getElementById "user-points-canvas"))
+(def c (js/document.getElementById "points-canvas"))
 (def ctx (.getContext c "2d"))
 
 (defn try-eval [v]
@@ -286,13 +287,14 @@ Let's have it so that the user can pass in an vector of points that the line wil
   (.stroke context))
 
 (set! (.-read_points js/window)
-      #(->> (read-eval-input "user-points-input")
+      #(->> (read-eval-input "points-input")
             (draw-line-from-points ctx)))
 
 </script>
 <body>
-<textarea id="user-points-input"
-          style="font-family:monospace;">
+<textarea id="points-input"
+          class="code-textarea"
+	  spellcheck="false">
 [[50 50] [50 150] [150 150] [150 50]]
 </textarea>
 <button onclick="read_points()">Draw points</button>
@@ -304,9 +306,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-orgb769d8c" class="outline-2">
-<h2 id="orgb769d8c">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-orgb769d8c">
+<div id="outline-container-org24d7163" class="outline-2">
+<h2 id="org24d7163">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-org24d7163">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
@@ -438,7 +440,10 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 </pre>
 </div>
 
-<canvas id="hilbert-canvas" width="600" height="600"></canvas>
+<canvas id="hilbert-canvas"
+        width="600"
+	height="600"
+	class="canvas"></canvas>
 
 <script type="application/x-scittle">
 
@@ -472,8 +477,8 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 </script>
 <body>
 <textarea id="hilbert-input"
-          rows="20"
-          style="font-family:monospace;">
+          class="code-textarea"
+	  spellcheck="false">
 (def rules 
   {:A {:path [[0 0] [0 1] [1 1] [1 0]]
    :next-iteration [:D :A :A :B]}

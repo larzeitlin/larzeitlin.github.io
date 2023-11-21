@@ -6,19 +6,17 @@
 
 
 * Implementing Monads in Python
-Monads are both useful and also often over-complicated. If you understand higher-order functions then you are already well on the way to grokking monads. We are going to use Python, a language that we don't commonly think of as a functional language. These are the reasons I chose to write this post in Python:
-- To reach an audience that perhaps would not typically receive this sort of content.
-- To show that this is not the exclusive domain of obscure, academic programming languages.
+The idea of this article is to explain the intuition for monads using higher-order functions as the main building blocks. I decided to do it in Python becuase it's not a "functional" language.
 
 I'm not saying you should write Python like this, I'm just saying that you could, and if you did you would be monad-ing.
 
 ** What is a monad?
-We are doing to learn by doing rather than with upfront definitions because I think the definitions are difficult. But as a bit of colour to start with: Monads are a functional programming design pattern used to reduce boilerplate code and abstract away side-effects, among other things. It comes from a field of maths called Category Theory which has seeded many concepts found in functional programming.
+We will learn by doing rather than dry definitions, but as a bit of colour to start with: Monads are a functional programming design pattern used to reduce boilerplate code and abstract away side-effects, among other things. It comes from a field of maths called Category Theory which has seeded many concepts found in functional programming.
 
 ** The non-monadic way
 Let's start with some primitive value in Python; a number or string or whatever. Now, we could pass around that value, do things to it, pass it around some more. Great. 
 
-#+BEGIN_SRC python :session
+#+BEGIN_SRC python
 my_message = "hello"
 another_message = my_message + ", world"
 uppercase_msg = another_message.upper()
@@ -33,7 +31,7 @@ HELLO, WORLD
 ** Higher order functions
 We can make higher order functions in Python. That is to say functions that return functions. So, rather than passing around that value, we could instead wrap it up in a function that returns that value and then instead pass around that function to other custom functions that handle it. These functions can also return functions rather than the value itself. 
 
-#+BEGIN_SRC python :session
+#+BEGIN_SRC python
 def my_message_fn():
   return "hello"
 
@@ -61,7 +59,7 @@ Easy enough, but we've just created a bunch of extra faff to do the same thing. 
 A couple of things give. Firstly, our functions returned the message, but it could have done some other stuff as well. Perhaps some side-effect like logging. So maybe that's useful. Also, we could delay evaluation of some extra behavior inside ~my_message_fn~, so that it is only run once function is finally called. We could also add other extra capabilities that the primitive string doesn't have, like handling ~None~ values in some special way.
 
 ** New capabilities
-#+BEGIN_SRC python :session
+#+BEGIN_SRC python
 def my_message_fn():
   print("delayed evaluation")
   return "hello"
@@ -97,7 +95,7 @@ Still, it seems like a bit of a faff to get those benefits. It could be useful i
 
 So, let's do that such that that we get the functions logged out when they are invoked.
 
-#+BEGIN_SRC python :session
+#+BEGIN_SRC python
 def ret(s):
   def monadic_value():
     return s
@@ -248,7 +246,4 @@ Perhaps so, and this is for educational purposes only. No snakes were harmed in 
 Monads are a pretty useful design pattern, we can use them for all sorts of state, metadata, logging, side-effects. Basically anything where we want to write code as though we are just passing around and handling simple values with functions, but at the same time other stuff is going on "behind the scenes".
 
 ** Functional Python
-At this point I reiterate that the Python community does not tend to use monads for any of this, nor does this article propose that you should. Thou shalt be Pythonic, whatever that means. Nonetheless ~functools~ and ~itertools~ open up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as [[https://github.com/tobgu/pyrsistent][Pyrisistent]].
-
-** Further reading
-Do I really need to paste a Wikipedia URL here?
+~functools~ and ~itertools~ open up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as [[https://github.com/tobgu/pyrsistent][Pyrisistent]].
