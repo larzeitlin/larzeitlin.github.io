@@ -1,3 +1,4 @@
+#+Title: LZ 
 * Advanced Encryption Standard in Clojure
 
 The Advanced Encryption Standard (a.k.a Rijndael) is a widely used encryption specification. To learn how it works, and some of the motivation behind the design, I decided to build it in Clojure.

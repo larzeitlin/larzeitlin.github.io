@@ -1,3 +1,4 @@
+#+Title: LZ 
 * Implementing Monads in Python
 The idea of this article is to explain the intuition for monads using higher-order functions as the main building blocks. I decided to do it in Python becuase it's not a "functional" language.
 

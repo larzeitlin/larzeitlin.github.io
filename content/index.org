@@ -1,3 +1,4 @@
+#+Title: LZ 
 hi i'm luke - this is my blog
 
 - [[./convolution.org][convolution]]

@@ -1,3 +1,4 @@
+#+Title: LZ 
 #+MACRO: color @@html:<font color="$1">$2</font>@@
 
 * Convolution

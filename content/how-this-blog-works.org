@@ -1,3 +1,4 @@
+#+Title: LZ 
 * How this blog works
 Thought I'd share a few details about it because I've been looking for the right 
 blogging method for me, and finally I've fallen on something that I think will work 
