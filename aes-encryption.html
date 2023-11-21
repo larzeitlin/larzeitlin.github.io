@@ -5,20 +5,228 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>LZ</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<header><a href="./">home</a></header>
 <link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">LZ</h1>
-<p>
-<a href="./index.html">home</a>
-</p>
-
-<div id="outline-container-orgbb46eb5" class="outline-2">
-<h2 id="orgbb46eb5">Advanced Encryption Standard in Clojure</h2>
-<div class="outline-text-2" id="text-orgbb46eb5">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org90901d5">Advanced Encryption Standard in Clojure</a>
+<ul>
+<li><a href="#org7f92269">Overview</a>
+<ul>
+<li><a href="#orgd795aa6">Processing per round (except first and last)</a></li>
+</ul>
+</li>
+<li><a href="#org2322e11">Key Expansion</a>
+<ul>
+<li><a href="#org458c95f">s-box</a></li>
+</ul>
+</li>
+<li><a href="#org50e349f">Round Constants</a></li>
+<li><a href="#org9aedce1">Encryption Process</a></li>
+<li><a href="#org4f28a30">Shift Rows</a></li>
+<li><a href="#orgf9b6e78">Mix Columns</a></li>
+<li><a href="#orgb9b39e2">Galois Fields</a></li>
+<li><a href="#orgbc1bbe6">Polynomial addition</a></li>
+<li><a href="#org9481ea1">Mix Columns continued</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org90901d5" class="outline-2">
+<h2 id="org90901d5">Advanced Encryption Standard in Clojure</h2>
+<div class="outline-text-2" id="text-org90901d5">
 <p>
 The Advanced Encryption Standard (a.k.a Rijndael) is a widely used encryption specification. To learn how it works, and some of the motivation behind the design, I decided to build it in Clojure.
 </p>
@@ -30,9 +238,9 @@ WARNING!! Obviously don't use any of this code, or your own implementation of th
 </blockquote>
 </div>
 
-<div id="outline-container-orgcd3b920" class="outline-3">
-<h3 id="orgcd3b920">Overview</h3>
-<div class="outline-text-3" id="text-orgcd3b920">
+<div id="outline-container-org7f92269" class="outline-3">
+<h3 id="org7f92269">Overview</h3>
+<div class="outline-text-3" id="text-org7f92269">
 <p>
 We're looking at AES-128 in ECB mode. 128 is the key size in bits. ECB (electronic codebook) simply means that each block (16 bytes) of our plaintext will be encrypted statelessly and independently of each other block. It is simpler and less secure than other modes.
 Each block is processed with a number of steps including 11 rounds. Something a little different happens in the first and last rounds. Each round needs its own 16-byte key, but since we only have one 16-byte key to start with, we'll use it to generate more.
@@ -83,9 +291,9 @@ As you've probably noticed, everything is happening in chunks of 16 bytes. When 
 </table>
 </div>
 
-<div id="outline-container-org7de208b" class="outline-4">
-<h4 id="org7de208b">Processing per round (except first and last)</h4>
-<div class="outline-text-4" id="text-org7de208b">
+<div id="outline-container-orgd795aa6" class="outline-4">
+<h4 id="orgd795aa6">Processing per round (except first and last)</h4>
+<div class="outline-text-4" id="text-orgd795aa6">
 <ol class="org-ol">
 <li>Replace each byte with another from a fixed lookup-table</li>
 <li>Shift rows</li>
@@ -100,15 +308,15 @@ That’s pretty much it. We’ll deal with the details when they come. Let’s d
 </div>
 </div>
 
-<div id="outline-container-orgc7429bf" class="outline-3">
-<h3 id="orgc7429bf">Key Expansion</h3>
-<div class="outline-text-3" id="text-orgc7429bf">
+<div id="outline-container-org2322e11" class="outline-3">
+<h3 id="org2322e11">Key Expansion</h3>
+<div class="outline-text-3" id="text-org2322e11">
 <p>
 We need to make more keys. The 128-bit key is broken up into 4 32-bit words. These will be used to make a total of 44 words (4 for each of our 11 rounds). words w(0) to w(3) are just the original first 4 words. From there on each new word w(n) is made by XOR-ing w(n - 4) with w(n - 1), except every 4th word, where we use something different. Let’s call this something t.
 </p>
 
 
-<div id="org5acae09" class="figure">
+<div id="orge786518" class="figure">
 <p><img src="images/key-expansion.png" alt="key-expansion.png" />
 </p>
 </div>
@@ -119,9 +327,9 @@ We calculate t by rotating the previous word, switching the bytes with different
 </div>
 
 
-<div id="outline-container-orgf22eac1" class="outline-4">
-<h4 id="orgf22eac1">s-box</h4>
-<div class="outline-text-4" id="text-orgf22eac1">
+<div id="outline-container-org458c95f" class="outline-4">
+<h4 id="org458c95f">s-box</h4>
+<div class="outline-text-4" id="text-org458c95f">
 <div class="org-src-container">
 <pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">s-box</span> 
   <span class="org-rainbow-delimiters-depth-2">{</span>0 99 249 153 121 182 65 131 70 90 218 87 62 178 74 214 164 73 186
@@ -158,9 +366,9 @@ We calculate t by rotating the previous word, switching the bytes with different
 </div>
 </div>
 
-<div id="outline-container-org1100d97" class="outline-3">
-<h3 id="org1100d97">Round Constants</h3>
-<div class="outline-text-3" id="text-org1100d97">
+<div id="outline-container-org50e349f" class="outline-3">
+<h3 id="org50e349f">Round Constants</h3>
+<div class="outline-text-3" id="text-org50e349f">
 <p>
 The round constants are 4-byte words, the 3 least-significant-bytes are 0, and the most-significant byte comes from a list at the index determined by the round number. here is this list:
 </p>
@@ -211,15 +419,15 @@ With the above bits of data we can do the key expansion like so:
 </div>
 
 
-<div id="outline-container-org3a9027c" class="outline-3">
-<h3 id="org3a9027c">Encryption Process</h3>
-<div class="outline-text-3" id="text-org3a9027c">
+<div id="outline-container-org9aedce1" class="outline-3">
+<h3 id="org9aedce1">Encryption Process</h3>
+<div class="outline-text-3" id="text-org9aedce1">
 <p>
 Now we have 11 keys we can get on with the work of encrypting a block. round 0 uses the first key and just consists of a simple XOR. 1 to 9 are as described above, and the final round is the same as those except there is no Mix Columns stage. Why? Because the whole point of Mix Columns is to diffuse, meaning to jumble up the information. If it were used in the final round, it would be trivially reversible, so it has no value.
 </p>
 
 
-<div id="org0e2557f" class="figure">
+<div id="org0e43b71" class="figure">
 <p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
 </p>
 </div>
@@ -230,15 +438,15 @@ We’ve already looked at the S-box (yes, it’s the same one), so let’s see h
 </div>
 </div>
 
-<div id="outline-container-org66b861b" class="outline-3">
-<h3 id="org66b861b">Shift Rows</h3>
-<div class="outline-text-3" id="text-org66b861b">
+<div id="outline-container-org4f28a30" class="outline-3">
+<h3 id="org4f28a30">Shift Rows</h3>
+<div class="outline-text-3" id="text-org4f28a30">
 <p>
 Each row gets cycled to the left by a set number of steps. Easy.
 </p>
 
 
-<div id="org9d93afe" class="figure">
+<div id="org24ef532" class="figure">
 <p><img src="images/shift-rows.png" alt="shift-rows.png" />
 </p>
 </div>
@@ -263,15 +471,15 @@ Each row gets cycled to the left by a set number of steps. Easy.
 </div>
 </div>
 
-<div id="outline-container-orge453fe0" class="outline-3">
-<h3 id="orge453fe0">Mix Columns</h3>
-<div class="outline-text-3" id="text-orge453fe0">
+<div id="outline-container-orgf9b6e78" class="outline-3">
+<h3 id="orgf9b6e78">Mix Columns</h3>
+<div class="outline-text-3" id="text-orgf9b6e78">
 <p>
 Bit more tricky. The main idea is a matrix-vector multiplication, like so:
 </p>
 
 
-<div id="org7d31f89" class="figure">
+<div id="org1e121b7" class="figure">
 <p><img src="images/mix-columns.png" alt="mix-columns.png" />
 </p>
 </div>
@@ -286,9 +494,9 @@ However, there is a catch. we need to keep each element within the range of 1 by
 </div>
 </div>
 
-<div id="outline-container-orga50c10d" class="outline-3">
-<h3 id="orga50c10d">Galois Fields</h3>
-<div class="outline-text-3" id="text-orga50c10d">
+<div id="outline-container-orgb9b39e2" class="outline-3">
+<h3 id="orgb9b39e2">Galois Fields</h3>
+<div class="outline-text-3" id="text-orgb9b39e2">
 <p>
 Now I’ll make all the mathematicians wince with some loose speak. A Finite Field, also called Galois Field, is a field with a finite number of elements. A field, in casual terms, is a set of numbers with some rules that allow us to do addition, subtraction, multiplication, and division without ever leaving that set of numbers. Galois Fields exist where the number of elements equals a prime to the power of some positive integer. We are interested in GF(2<sup>8</sup>) a.k.a GF(256). In order to multiply in this field, we need to remember polynomial maths and write some code that does polynomial arithmetic.
 </p>
@@ -320,16 +528,16 @@ As a polynomial, where x = 2:
 </p>
 
 
-<div id="orgf6646d0" class="figure">
+<div id="org8a846e0" class="figure">
 <p><img src="images/binary-poly.png" alt="binary-poly.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org19a54e0" class="outline-3">
-<h3 id="org19a54e0">Polynomial addition</h3>
-<div class="outline-text-3" id="text-org19a54e0">
+<div id="outline-container-orgbc1bbe6" class="outline-3">
+<h3 id="orgbc1bbe6">Polynomial addition</h3>
+<div class="outline-text-3" id="text-orgbc1bbe6">
 <p>
 We’ll use vectors to represent polynomials just like the binary array above.
 </p>
@@ -372,7 +580,7 @@ For example:
 </pre>
 
 
-<div id="org672cd90" class="figure">
+<div id="org218a324" class="figure">
 <p><img src="images/bit-multip.png" alt="bit-multip.png" />
 </p>
 </div>
@@ -469,9 +677,9 @@ Now we have the bits we need for multiplication in GF(2<sup>8</sup>). Galois fie
 </div>
 </div>
 
-<div id="outline-container-org574bfff" class="outline-3">
-<h3 id="org574bfff">Mix Columns continued</h3>
-<div class="outline-text-3" id="text-org574bfff">
+<div id="outline-container-org9481ea1" class="outline-3">
+<h3 id="org9481ea1">Mix Columns continued</h3>
+<div class="outline-text-3" id="text-org9481ea1">
 <p>
 So we had our matrix multiplication laid out above. Now we know how to multiply.
 </p>
@@ -508,7 +716,7 @@ That’s it. We can just tie it all together with a few orchestrating functions.
 </p>
 
 
-<div id="orge6babc8" class="figure">
+<div id="org53c57b8" class="figure">
 <p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
 </p>
 </div>

@@ -1,9 +1,3 @@
-#+title: LZ
-#+options: toc:nil
-#+MACRO: color @@html:<font color="$1">$2</font>@@
-
-[[./index.org][home]]
-
 * Ring Modulation and Frequency Shifting
 
 

@@ -1,7 +1,3 @@
-#+title: LZ
-#+OPTIONS: toc:nil
-
-
 hi i'm luke - this is my blog
 
 - [[./convolution.org][convolution]]
