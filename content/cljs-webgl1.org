@@ -1,0 +1,122 @@
+#+Title: LZ 
+
+* WebGL in ClojureScript - part one
+This is a tutorial in using webGL in ClojureScript, mainly for my own reference as I go through it, but if it helps someone else then that's fab too.
+
+** What is it?
+WebGL a graphics rendering API for JavaScript. It it based on OpenGL and it is GPU accelerated. Like OpenGL, webGL code is split between the shader code, which is generally run on the GPU and written in a dialect of C called GLSL, and the orchestration code. Below is a hello world-y basic project setup.
+
+* Getting set up
+You have some CLJS project set up. I reccomend you have a running browser REPL connected to your editor so that you can have all the live coding, fast-feedback goodness of that.
+
+** Canvas
+We need a canvas element in the body of the html document. Give it an id so we can grab it. I called it ~app~ out of habit.
+
+#+BEGIN_SRC html
+<canvas id="app"></canvas>
+#+END_SRC
+
+Don't worry about the ~width~ and ~height~ for now. In clojure we are going to grab that and get a webgl context. We are just going to assume this is on a modern browser that supports it.
+
+#+BEGIN_SRC clojurescript
+(def c (js/document.getElementById "app"))
+(def gl (.getContext c "webgl"))  
+#+END_SRC
+
+** Setting the dimensions
+let's make a function to reset dimensions of both the canvas itself and the webgl context. Everything will be full window. We can call it whenever the window is resized.
+
+#+BEGIN_SRC clojurescript
+(defn reset-dimensions []
+  (let [width js/window.innerWidth
+        height js/window.innerHeight]
+    (g/set c "width" width)
+    (g/set c "height" height)
+    (.viewport gl 0 0 width height)))
+#+END_SRC
+
+Okay let's stick it in a ~-main~:
+
+#+BEGIN_SRC clojurescript
+(defn -main []
+  (reset-dimensions)
+  (.addEventListener js/window "resize" reset-dimensions))
+#+END_SRC
+
+* Shader program
+We will be making a ~vertex shader~ and a ~fragment shader~. These two will be combined together into a ~program~. We'll get into what these mean shortly.
+
+** Vertex Shader
+Our vertex shader's job is to set the the value of ~gl_position~ for each ~vertex~ that we want to draw. This one is basically just a pass-through, it doesn't do anything other than read an attribute and set ~gl_position~ with it.
+
+We will just write the GLSL in a string. Could fetch it from a local file. This feels like less faff.
+
+#+BEGIN_SRC clojurescript
+(def vert-shader-source
+  "
+attribute vec4 a_position; 
+
+void main() {
+  gl_Position = a_position;
+}
+")
+
+(defn vert-shader []
+  (create-shader (g/get gl "VERTEX_SHADER")
+                 vert-shader-source))
+#+END_SRC
+
+** Fragment Shader
+The fragment shader sets the colour at each vertex. The space on a face in between the verticies will be interpolated between the vertex colours. In our case we are just going to set it to a fixed colour (r, g, b, a).
+
+#+BEGIN_SRC clojurescript
+(def frag-shader-source
+  "
+precision mediump float;
+
+void main() {
+  gl_FragColor = vec4(1, 0, 0.5, 1);
+}
+")
+
+(defn frag-shader []
+  (create-shader
+   (g/get gl "FRAGMENT_SHADER")
+   frag-shader-source))
+#+END_SRC
+
+** Program
+Now we build a program from our shaders.
+
+#+BEGIN_SRC clojurescript
+(defn create-prog [vert frag]
+  (let [program (.createProgram gl)]
+    (.attachShader gl program vert)
+    (.attachShader gl program frag)
+    (.linkProgram gl program)
+
+    (js/console.log
+     (str "link status: "
+          (.getProgramParameter
+           gl
+           program
+           (g/get gl "LINK_STATUS"))))
+    
+    ;; return
+    program))
+#+END_SRC
+
+let's call this all from our ~-main~:
+
+#+BEGIN_SRC clojurescript
+(defn -main []
+  (.addEventListener js/window
+                     "resize"
+                     reset-dimensions)
+  (let [vs (vert-shader)
+        fs (frag-shader)
+        prog (create-prog vs fs)]
+    (reset-dimensions)))
+#+END_SRC
+
+..okay I'll be back soon to finish this...
