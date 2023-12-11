@@ -200,39 +200,39 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4acc0e8">WebGL in ClojureScript - part one</a>
+<li><a href="#orge1fe508">WebGL in ClojureScript - part one</a>
 <ul>
-<li><a href="#org0d365f9">What is it?</a></li>
+<li><a href="#orgc55c28d">What is it?</a></li>
 </ul>
 </li>
-<li><a href="#org993ceab">Getting set up</a>
+<li><a href="#org29c9fb3">Getting set up</a>
 <ul>
-<li><a href="#org7b84edb">Canvas</a></li>
-<li><a href="#orgb078197">Setting the dimensions</a></li>
+<li><a href="#org7809a9e">Canvas</a></li>
+<li><a href="#orgc31131e">Setting the dimensions</a></li>
 </ul>
 </li>
-<li><a href="#orgcee2e86">Shader program</a>
+<li><a href="#orgab2d883">Shader program</a>
 <ul>
-<li><a href="#org7385c09">Vertex Shader</a></li>
-<li><a href="#orga743a88">Fragment Shader</a></li>
-<li><a href="#org3302608">Program</a></li>
+<li><a href="#orgccdfa19">Vertex Shader</a></li>
+<li><a href="#org524b6f5">Fragment Shader</a></li>
+<li><a href="#org4942770">Program</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4acc0e8" class="outline-2">
-<h2 id="org4acc0e8">WebGL in ClojureScript - part one</h2>
-<div class="outline-text-2" id="text-org4acc0e8">
+<div id="outline-container-orge1fe508" class="outline-2">
+<h2 id="orge1fe508">WebGL in ClojureScript - part one</h2>
+<div class="outline-text-2" id="text-orge1fe508">
 <p>
 This is a tutorial in using webGL in ClojureScript, mainly for my own reference as I go through it, but if it helps someone else then that's fab too.
 </p>
 </div>
 
-<div id="outline-container-org0d365f9" class="outline-3">
-<h3 id="org0d365f9">What is it?</h3>
-<div class="outline-text-3" id="text-org0d365f9">
+<div id="outline-container-orgc55c28d" class="outline-3">
+<h3 id="orgc55c28d">What is it?</h3>
+<div class="outline-text-3" id="text-orgc55c28d">
 <p>
 WebGL a graphics rendering API for JavaScript. It it based on OpenGL and it is GPU accelerated. Like OpenGL, webGL code is split between the shader code, which is generally run on the GPU and written in a dialect of C called GLSL, and the orchestration code. Below is a hello world-y basic project setup.
 </p>
@@ -240,17 +240,17 @@ WebGL a graphics rendering API for JavaScript. It it based on OpenGL and it is G
 </div>
 </div>
 
-<div id="outline-container-org993ceab" class="outline-2">
-<h2 id="org993ceab">Getting set up</h2>
-<div class="outline-text-2" id="text-org993ceab">
+<div id="outline-container-org29c9fb3" class="outline-2">
+<h2 id="org29c9fb3">Getting set up</h2>
+<div class="outline-text-2" id="text-org29c9fb3">
 <p>
 You have some CLJS project set up. I reccomend you have a running browser REPL connected to your editor so that you can have all the live coding, fast-feedback goodness of that.
 </p>
 </div>
 
-<div id="outline-container-org7b84edb" class="outline-3">
-<h3 id="org7b84edb">Canvas</h3>
-<div class="outline-text-3" id="text-org7b84edb">
+<div id="outline-container-org7809a9e" class="outline-3">
+<h3 id="org7809a9e">Canvas</h3>
+<div class="outline-text-3" id="text-org7809a9e">
 <p>
 We need a canvas element in the body of the html document. Give it an id so we can grab it. I called it <code>app</code> out of habit.
 </p>
@@ -272,9 +272,9 @@ Don't worry about the <code>width</code> and <code>height</code> for now. In clo
 </div>
 </div>
 
-<div id="outline-container-orgb078197" class="outline-3">
-<h3 id="orgb078197">Setting the dimensions</h3>
-<div class="outline-text-3" id="text-orgb078197">
+<div id="outline-container-orgc31131e" class="outline-3">
+<h3 id="orgc31131e">Setting the dimensions</h3>
+<div class="outline-text-3" id="text-orgc31131e">
 <p>
 let's make a function to reset dimensions of both the canvas itself and the webgl context. Everything will be full window. We can call it whenever the window is resized.
 </p>
@@ -303,17 +303,30 @@ Okay let's stick it in a <code>-main</code>:
 </div>
 </div>
 
-<div id="outline-container-orgcee2e86" class="outline-2">
-<h2 id="orgcee2e86">Shader program</h2>
-<div class="outline-text-2" id="text-orgcee2e86">
+<div id="outline-container-orgab2d883" class="outline-2">
+<h2 id="orgab2d883">Shader program</h2>
+<div class="outline-text-2" id="text-orgab2d883">
 <p>
-We will be making a <code>vertex shader</code> and a <code>fragment shader</code>. These two will be combined together into a <code>program</code>. We'll get into what these mean shortly.
+We will be making a <code>vertex shader</code> and a <code>fragment shader</code>. These two will be combined together into a <code>program</code>. We'll get into what these mean shortly. First we are going to make a convenience function that we can use to compile our shaders:
 </p>
+
+<div class="org-src-container">
+<pre class="src src-clojurescript"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">create-shader</span> <span class="org-rainbow-delimiters-depth-2">[</span>shader-type source<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>shader <span class="org-rainbow-delimiters-depth-4">(</span>.createShader gl shader-type<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>.shaderSource gl shader source<span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>.compileShader gl shader<span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">js</span>/console.log
+     <span class="org-rainbow-delimiters-depth-4">(</span>str <span class="org-string">"compile shader: "</span>
+          <span class="org-rainbow-delimiters-depth-5">(</span>.getShaderParameter
+           gl shader <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-type">g</span>/get gl <span class="org-string">"COMPILE_STATUS"</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    shader<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
 </div>
 
-<div id="outline-container-org7385c09" class="outline-3">
-<h3 id="org7385c09">Vertex Shader</h3>
-<div class="outline-text-3" id="text-org7385c09">
+<div id="outline-container-orgccdfa19" class="outline-3">
+<h3 id="orgccdfa19">Vertex Shader</h3>
+<div class="outline-text-3" id="text-orgccdfa19">
 <p>
 Our vertex shader's job is to set the the value of <code>gl_position</code> for each <code>vertex</code> that we want to draw. This one is basically just a pass-through, it doesn't do anything other than read an attribute and set <code>gl_position</code> with it.
 </p>
@@ -340,9 +353,9 @@ We will just write the GLSL in a string. Could fetch it from a local file. This 
 </div>
 </div>
 
-<div id="outline-container-orga743a88" class="outline-3">
-<h3 id="orga743a88">Fragment Shader</h3>
-<div class="outline-text-3" id="text-orga743a88">
+<div id="outline-container-org524b6f5" class="outline-3">
+<h3 id="org524b6f5">Fragment Shader</h3>
+<div class="outline-text-3" id="text-org524b6f5">
 <p>
 The fragment shader sets the colour at each vertex. The space on a face in between the verticies will be interpolated between the vertex colours. In our case we are just going to set it to a fixed colour (r, g, b, a).
 </p>
@@ -366,9 +379,9 @@ The fragment shader sets the colour at each vertex. The space on a face in betwe
 </div>
 </div>
 
-<div id="outline-container-org3302608" class="outline-3">
-<h3 id="org3302608">Program</h3>
-<div class="outline-text-3" id="text-org3302608">
+<div id="outline-container-org4942770" class="outline-3">
+<h3 id="org4942770">Program</h3>
+<div class="outline-text-3" id="text-org4942770">
 <p>
 Now we build a program from our shaders.
 </p>
@@ -393,7 +406,7 @@ Now we build a program from our shaders.
 </div>
 
 <p>
-let's call this all from our <code>-main</code>:
+We can now add the program to the <code>-main</code> function:
 </p>
 
 <div class="org-src-container">
@@ -409,11 +422,103 @@ let's call this all from our <code>-main</code>:
 </div>
 
 <p>
-..okay I'll be back soon to finish this&#x2026;
+We are going to draw a triangle. To do this we need some verticies. x and y coordinates go from 1 (top and left) to -1 (bottom and right). Let's add an array of 3 verticies x and then y coordinates, like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojurescript"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">-main</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>.addEventListener <span class="org-type">js</span>/window
+                     <span class="org-string">"resize"</span>
+                     reset-dimensions<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>vs <span class="org-rainbow-delimiters-depth-4">(</span>vert-shader<span class="org-rainbow-delimiters-depth-4">)</span>
+        fs <span class="org-rainbow-delimiters-depth-4">(</span>frag-shader<span class="org-rainbow-delimiters-depth-4">)</span>
+        prog <span class="org-rainbow-delimiters-depth-4">(</span>create-prog vs fs<span class="org-rainbow-delimiters-depth-4">)</span>
+        points <span class="org-rainbow-delimiters-depth-4">[</span>0 0 0 0.5 0.7 1<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>reset-dimensions<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
+
+<p>
+We need these points to go to the <code>a_position</code> attribute that we added to the vertex shader above. To do that we need an object to store the memory, this is called a <code>buffer</code>. We then need to bind this buffer toa <code>target</code> called <code>ARRAY_BUFFER</code>, used for vertex data. Once we have bound we will buffer the data. <code>STATIC_DRAW</code> is a hint to the compiler for optimizations based on what we are trying to do. Let's add some more helper functions to take care of this. We also want a function to clear the canvas.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojurescript">
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">bind-pos-buff</span> <span class="org-rainbow-delimiters-depth-2">[</span>pos-buff<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>.bindBuffer gl
+               <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">g</span>/get gl <span class="org-string">"ARRAY_BUFFER"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+               pos-buff<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">buffer-static-draw</span> <span class="org-rainbow-delimiters-depth-2">[</span>points<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>.bufferData gl
+               <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">g</span>/get gl <span class="org-string">"ARRAY_BUFFER"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+               <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">js</span>/Float32Array. points<span class="org-rainbow-delimiters-depth-3">)</span>
+               <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">g</span>/get gl <span class="org-string">"STATIC_DRAW"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">set-vertex-attrib-pointer</span> <span class="org-rainbow-delimiters-depth-2">[</span>pos-attr-loc<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>size 2
+        dtype <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">g</span>/get gl <span class="org-string">"FLOAT"</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        normalize? <span class="org-constant">false</span>
+        stride 0
+        offset 0<span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>.vertexAttribPointer gl
+                          pos-attr-loc
+                          size
+                          dtype
+                          normalize?
+                          stride
+                          offset<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">draw-triangles</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>prim-type <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">g</span>/get gl <span class="org-string">"TRIANGLES"</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        offset 0
+        cnt 3<span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>.drawArrays gl prim-type offset cnt<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">clear</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>.clearColor gl 0 0 0 1<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>.clear gl <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-type">g</span>/get gl <span class="org-string">"COLOR_BUFFER_BIT"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
+
+<p>
+Let's call these from our -<code>main</code> fn.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojurescript"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">-main</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>.addEventListener <span class="org-type">js</span>/window
+                     <span class="org-string">"resize"</span>
+                     reset-dimensions<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>vs <span class="org-rainbow-delimiters-depth-4">(</span>vert-shader<span class="org-rainbow-delimiters-depth-4">)</span>
+        fs <span class="org-rainbow-delimiters-depth-4">(</span>frag-shader<span class="org-rainbow-delimiters-depth-4">)</span>
+        prog <span class="org-rainbow-delimiters-depth-4">(</span>create-prog vs fs<span class="org-rainbow-delimiters-depth-4">)</span>
+        pos-attr-loc <span class="org-rainbow-delimiters-depth-4">(</span>.getAttribLocation
+                      gl
+                      prog
+                      <span class="org-string">"a_position"</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        pos-buff <span class="org-rainbow-delimiters-depth-4">(</span>.createBuffer gl<span class="org-rainbow-delimiters-depth-4">)</span>
+        points <span class="org-rainbow-delimiters-depth-4">[</span>0 0 0 0.5 0.7 1.0<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">]</span>   
+    <span class="org-rainbow-delimiters-depth-3">(</span>reset-dimensions<span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>clear<span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>bind-pos-buff pos-buff<span class="org-rainbow-delimiters-depth-3">)</span>    <span class="org-comment-delimiter">;; </span><span class="org-comment">point pos-buff at ARRAY_BUFFER   </span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>buffer-static-draw points<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">buffer the data</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>.useProgram gl prog<span class="org-rainbow-delimiters-depth-3">)</span>       <span class="org-comment-delimiter">;; </span><span class="org-comment">envoke our shader program</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>.enableVertexAttribArray gl pos-attr-loc<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-comment-delimiter">;; </span><span class="org-comment">enable a_position attribute</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>set-vertex-attrib-pointer pos-attr-loc<span class="org-rainbow-delimiters-depth-3">)</span>   <span class="org-comment-delimiter">;; </span><span class="org-comment">tell webgl how to handle the points data</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>draw-triangles<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
+
+<p>
+This should give you a pink triangle.
 </p>
 </div>
 </div>
 </div>
+</div>
+<div id="postamble" class="status">
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
