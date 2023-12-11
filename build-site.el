@@ -22,6 +22,7 @@
         :base-directory "./content"
         :publishing-directory "./"
         :publishing-function 'org-html-publish-to-html
+	:html-validation-link nil
 	:with-author nil
         :section-numbers nil
 	:time-stamp-file nil)))
