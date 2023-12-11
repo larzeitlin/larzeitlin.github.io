@@ -44,7 +44,19 @@ Okay let's stick it in a ~-main~:
 #+END_SRC
 
 * Shader program
-We will be making a ~vertex shader~ and a ~fragment shader~. These two will be combined together into a ~program~. We'll get into what these mean shortly.
+We will be making a ~vertex shader~ and a ~fragment shader~. These two will be combined together into a ~program~. We'll get into what these mean shortly. First we are going to make a convenience function that we can use to compile our shaders:
+
+#+BEGIN_SRC clojurescript
+(defn create-shader [shader-type source]
+  (let [shader (.createShader gl shader-type)]
+    (.shaderSource gl shader source)
+    (.compileShader gl shader)
+    (js/console.log
+     (str "compile shader: "
+          (.getShaderParameter
+           gl shader (g/get gl "COMPILE_STATUS"))))
+    shader))
+#+END_SRC
 
 ** Vertex Shader
 Our vertex shader's job is to set the the value of ~gl_position~ for each ~vertex~ that we want to draw. This one is basically just a pass-through, it doesn't do anything other than read an attribute and set ~gl_position~ with it.
@@ -106,7 +118,7 @@ Now we build a program from our shaders.
     program))
 #+END_SRC
 
-let's call this all from our ~-main~:
+We can now add the program to the ~-main~ function:
 
 #+BEGIN_SRC clojurescript
 (defn -main []
@@ -119,4 +131,84 @@ let's call this all from our ~-main~:
     (reset-dimensions)))
 #+END_SRC
 
-..okay I'll be back soon to finish this...
+We are going to draw a triangle. To do this we need some verticies. x and y coordinates go from 1 (top and left) to -1 (bottom and right). Let's add an array of 3 verticies x and then y coordinates, like so:
+
+#+BEGIN_SRC clojurescript
+(defn -main []
+  (.addEventListener js/window
+		     "resize"
+		     reset-dimensions)
+  (let [vs (vert-shader)
+	fs (frag-shader)
+	prog (create-prog vs fs)
+	points [0 0 0 0.5 0.7 1]]
+    (reset-dimensions)))
+#+END_SRC
+
+We need these points to go to the ~a_position~ attribute that we added to the vertex shader above. To do that we need an object to store the memory, this is called a ~buffer~. We then need to bind this buffer toa ~target~ called ~ARRAY_BUFFER~, used for vertex data. Once we have bound we will buffer the data. ~STATIC_DRAW~ is a hint to the compiler for optimizations based on what we are trying to do. Let's add some more helper functions to take care of this. We also want a function to clear the canvas.
+
+#+BEGIN_SRC clojurescript
+
+(defn bind-pos-buff [pos-buff]
+  (.bindBuffer gl
+               (g/get gl "ARRAY_BUFFER")
+               pos-buff))
+
+(defn buffer-static-draw [points]
+  (.bufferData gl
+               (g/get gl "ARRAY_BUFFER")
+               (js/Float32Array. points)
+               (g/get gl "STATIC_DRAW")))
+
+(defn set-vertex-attrib-pointer [pos-attr-loc]
+  (let [size 2
+        dtype (g/get gl "FLOAT")
+        normalize? false
+        stride 0
+        offset 0]
+    (.vertexAttribPointer gl
+                          pos-attr-loc
+                          size
+                          dtype
+                          normalize?
+                          stride
+                          offset)))
+
+(defn draw-triangles []
+  (let [prim-type (g/get gl "TRIANGLES")
+        offset 0
+        cnt 3]
+    (.drawArrays gl prim-type offset cnt)))
+
+(defn clear []
+  (.clearColor gl 0 0 0 1)
+  (.clear gl (g/get gl "COLOR_BUFFER_BIT")))
+#+END_SRC
+
+Let's call these from our -~main~ fn.
+
+#+BEGIN_SRC clojurescript
+(defn -main []
+  (.addEventListener js/window
+                     "resize"
+                     reset-dimensions)
+  (let [vs (vert-shader)
+        fs (frag-shader)
+        prog (create-prog vs fs)
+        pos-attr-loc (.getAttribLocation
+                      gl
+                      prog
+                      "a_position")
+        pos-buff (.createBuffer gl)
+        points [0 0 0 0.5 0.7 1.0]]   
+    (reset-dimensions)
+    (clear)
+    (bind-pos-buff pos-buff)    ;; point pos-buff at ARRAY_BUFFER   
+    (buffer-static-draw points) ;; buffer the data
+    (.useProgram gl prog)       ;; envoke our shader program
+    (.enableVertexAttribArray gl pos-attr-loc) ;; enable a_position attribute
+    (set-vertex-attrib-pointer pos-attr-loc)   ;; tell webgl how to handle the points data
+    (draw-triangles)))
+#+END_SRC
+
+This should give you a pink triangle.
