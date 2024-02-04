@@ -14,3 +14,4 @@ hi i'm luke - this is my blog
 - [[http://www.lzeitlin.xyz/laranjas/][particle system]]
 - [[file:cljs-webgl1.org][webgl in cljs part 1]]
 - [[file:wfc.org][wave function collapse]]
+- [[http://www.lzeitlin.xyz/vortex-doodle/][scittle and three.js]]
