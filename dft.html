@@ -221,26 +221,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb15fb25">Discrete Fourier Transform</a>
+<li><a href="#org609a271">Discrete Fourier Transform</a>
 <ul>
-<li><a href="#org9973988">A Roundabout Introduction</a>
+<li><a href="#org9091665">A Roundabout Introduction</a>
 <ul>
-<li><a href="#org422db68">Sinusoids, circles and epicycles</a></li>
-<li><a href="#org7044874">Amplitude and Phase</a></li>
+<li><a href="#orgd6c3a74">Sinusoids, circles and epicycles</a></li>
+<li><a href="#org1762d48">Amplitude and Phase</a></li>
 </ul>
 </li>
-<li><a href="#org21a1c89">Imaginary and Complex Numbers</a></li>
-<li><a href="#org6345b01">Euler's Number</a>
+<li><a href="#orgcec865b">Imaginary and Complex Numbers</a></li>
+<li><a href="#org85d1687">Euler's Number</a>
 <ul>
-<li><a href="#org2e975e8">Growth</a></li>
+<li><a href="#org6dd3232">Growth</a></li>
 <li><a href="#imaginary-growth-is-anticlockwise-rotation">Imaginary Growth is Anticlockwise Rotation</a></li>
 </ul>
 </li>
-<li><a href="#org5a0d2f4">Complex sinusoid</a></li>
-<li><a href="#org3c20c48">The Discrete Fourier Transform</a>
+<li><a href="#orge6155cc">Complex sinusoid</a></li>
+<li><a href="#org8df4c83">The Discrete Fourier Transform</a>
 <ul>
-<li><a href="#orgfe3aec2">Why are we multiplying our input signal by sinusoids?</a></li>
-<li><a href="#org302cec8">Examples</a></li>
+<li><a href="#org93f6e69">Why are we multiplying our input signal by sinusoids?</a></li>
+<li><a href="#org8d9c5fe">Examples</a></li>
 </ul>
 </li>
 <li><a href="#some-properties-of-the-dft">Some Properties of the DFT</a></li>
@@ -251,9 +251,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgb15fb25" class="outline-2">
-<h2 id="orgb15fb25">Discrete Fourier Transform</h2>
-<div class="outline-text-2" id="text-orgb15fb25">
+<div id="outline-container-org609a271" class="outline-2">
+<h2 id="org609a271">Discrete Fourier Transform</h2>
+<div class="outline-text-2" id="text-org609a271">
 <p>
 This is just my understanding / intuitive explanation of what this algorithm means.
 </p>
@@ -286,9 +286,9 @@ and phase?"</i></li>
 </ul>
 </div>
 
-<div id="outline-container-org9973988" class="outline-3">
-<h3 id="org9973988">A Roundabout Introduction</h3>
-<div class="outline-text-3" id="text-org9973988">
+<div id="outline-container-org9091665" class="outline-3">
+<h3 id="org9091665">A Roundabout Introduction</h3>
+<div class="outline-text-3" id="text-org9091665">
 <p>
 <a href="https://en.wikipedia.org/wiki/Joseph_Fourier">Joseph Fourier</a>
 was a French mathematician who was doing his thing at the end of the 18th to
@@ -302,9 +302,9 @@ sinusoids.
 </p>
 </div>
 
-<div id="outline-container-org422db68" class="outline-4">
-<h4 id="org422db68">Sinusoids, circles and epicycles</h4>
-<div class="outline-text-4" id="text-org422db68">
+<div id="outline-container-orgd6c3a74" class="outline-4">
+<h4 id="orgd6c3a74">Sinusoids, circles and epicycles</h4>
+<div class="outline-text-4" id="text-orgd6c3a74">
 <p>
 Let's start by thinking of a sinusoid as an aspect of circular movement
 in relation to time. As we probably all learned in school at some stage,
@@ -315,7 +315,7 @@ in the unit circle, like this:
 </p>
 
 
-<div id="org533b5e4" class="figure">
+<div id="org1ab1d22" class="figure">
 <p><img src="images/4.1.gif" alt="4.1.gif" align="center" />
 </p>
 </div>
@@ -326,7 +326,7 @@ elaborate periodic signals, like so:
 </p>
 
 
-<div id="orgf1a33bd" class="figure">
+<div id="org576521e" class="figure">
 <p><img src="images/4.2.gif" alt="4.2.gif" align="center" />
 </p>
 </div>
@@ -372,7 +372,7 @@ a fixed deferent.
 </blockquote>
 
 
-<div id="org12ccd51" class="figure">
+<div id="org6927458" class="figure">
 <p><img src="images/4.3.jpg" alt="4.3.jpg" align="center" />
 </p>
 </div>
@@ -395,9 +395,9 @@ here, and the end result is intuitive.
 </div>
 </div>
 
-<div id="outline-container-org7044874" class="outline-4">
-<h4 id="org7044874">Amplitude and Phase</h4>
-<div class="outline-text-4" id="text-org7044874">
+<div id="outline-container-org1762d48" class="outline-4">
+<h4 id="org1762d48">Amplitude and Phase</h4>
+<div class="outline-text-4" id="text-org1762d48">
 <p>
 What we do need is a method to find out <b>which sinusoids</b> are in a given
 signal. Just the frequency of those sinusoids isn't enough information.
@@ -412,7 +412,7 @@ Here's a sinusoid with its amplitude being changed:
 
 
 
-<div id="org193f266" class="figure">
+<div id="orgc77bc61" class="figure">
 <p><img src="images/4.5.gif" alt="4.5.gif" align="center" />
 </p>
 </div>
@@ -422,7 +422,7 @@ And here's one with its phase value being changed:
 </p>
 
 
-<div id="orgfc0fbba" class="figure">
+<div id="orgd3dd369" class="figure">
 <p><img src="images/4.4.gif" alt="4.4.gif" align="center" />
 </p>
 </div>
@@ -453,9 +453,9 @@ of the article
 </div>
 </div>
 
-<div id="outline-container-org21a1c89" class="outline-3">
-<h3 id="org21a1c89">Imaginary and Complex Numbers</h3>
-<div class="outline-text-3" id="text-org21a1c89">
+<div id="outline-container-orgcec865b" class="outline-3">
+<h3 id="orgcec865b">Imaginary and Complex Numbers</h3>
+<div class="outline-text-3" id="text-orgcec865b">
 <p>
 \[i = \sqrt{−1}\]
 </p>
@@ -499,7 +499,7 @@ usually done with the x-axis as real and the y-axis as imaginary. Here's
 </p>
 
 
-<div id="org0a1fbeb" class="figure">
+<div id="org3341e52" class="figure">
 <p><img src="images/4.6.png" alt="4.6.png" />
 </p>
 </div>
@@ -511,7 +511,7 @@ and angle.
 </p>
 
 
-<div id="orge595b04" class="figure">
+<div id="orga070ed8" class="figure">
 <p><img src="images/4.7.png" alt="4.7.png" />
 </p>
 </div>
@@ -533,9 +533,9 @@ boot up some other concepts we'll need.
 </div>
 </div>
 
-<div id="outline-container-org6345b01" class="outline-3">
-<h3 id="org6345b01">Euler's Number</h3>
-<div class="outline-text-3" id="text-org6345b01">
+<div id="outline-container-org85d1687" class="outline-3">
+<h3 id="org85d1687">Euler's Number</h3>
+<div class="outline-text-3" id="text-org85d1687">
 <p>
 Usually known as simply e, Euler's number is a mathematical constant.
 It's a real,
@@ -546,9 +546,9 @@ how we get to e through an analogy to compound interest.
 </p>
 </div>
 
-<div id="outline-container-org2e975e8" class="outline-4">
-<h4 id="org2e975e8">Growth</h4>
-<div class="outline-text-4" id="text-org2e975e8">
+<div id="outline-container-org6dd3232" class="outline-4">
+<h4 id="org6dd3232">Growth</h4>
+<div class="outline-text-4" id="text-org6dd3232">
 <p>
 This section seems pretty unrelated at first, but it's actually key to
 understanding the DFT. I should add that this bank loan analogy is just
@@ -707,7 +707,7 @@ perimeter circle exactly one radian. We've rotated it by 1.
 </p>
 
 
-<div id="org98d4bc5" class="figure">
+<div id="orga68b117" class="figure">
 <p><img src="images/4.8.png" alt="4.8.png" />
 </p>
 </div>
@@ -720,9 +720,9 @@ The upshot is we can use e to make circles. This is the basis of the
 </div>
 </div>
 
-<div id="outline-container-org5a0d2f4" class="outline-3">
-<h3 id="org5a0d2f4">Complex sinusoid</h3>
-<div class="outline-text-3" id="text-org5a0d2f4">
+<div id="outline-container-orge6155cc" class="outline-3">
+<h3 id="orge6155cc">Complex sinusoid</h3>
+<div class="outline-text-3" id="text-orge6155cc">
 <p>
 The complex sinusoid is really just the sum of two sinusoids, one real
 and one imaginary. These two sinusoids are in <i>phase quadrature</i>, which
@@ -786,7 +786,7 @@ green.
 </p>
 
 
-<div id="org14cbb9d" class="figure">
+<div id="org6671db4" class="figure">
 <p><img src="images/4.9.gif" alt="4.9.gif" />
 </p>
 </div>
@@ -800,15 +800,15 @@ Using a complex sinusoid helps us keep it all compact and tidy.
 </div>
 </div>
 
-<div id="outline-container-org3c20c48" class="outline-3">
-<h3 id="org3c20c48">The Discrete Fourier Transform</h3>
-<div class="outline-text-3" id="text-org3c20c48">
+<div id="outline-container-org8df4c83" class="outline-3">
+<h3 id="org8df4c83">The Discrete Fourier Transform</h3>
+<div class="outline-text-3" id="text-org8df4c83">
 <p>
 We've got all the bits we need! We're going to just dive in:
 </p>
 
 
-<div id="orgc32859a" class="figure">
+<div id="org5d8c360" class="figure">
 <p><img src="images/4.10.png" alt="4.10.png" />
 </p>
 </div>
@@ -880,7 +880,7 @@ could just as well write in ether of these forms:
 
 
 
-<div id="orgf550bbd" class="figure">
+<div id="org58c67ed" class="figure">
 <p><img src="images/4.11.png" alt="4.11.png" />
 </p>
 </div>
@@ -898,9 +898,9 @@ You may be asking yourself&#x2026;
 </p>
 </div>
 
-<div id="outline-container-orgfe3aec2" class="outline-4">
-<h4 id="orgfe3aec2">Why are we multiplying our input signal by sinusoids?</h4>
-<div class="outline-text-4" id="text-orgfe3aec2">
+<div id="outline-container-org93f6e69" class="outline-4">
+<h4 id="org93f6e69">Why are we multiplying our input signal by sinusoids?</h4>
+<div class="outline-text-4" id="text-org93f6e69">
 <p>
 The complex sinusoid is different for each bin. It's frequency is set by
 k. This complex sinusoid hunts for a sinusoid that matches it in our
@@ -916,7 +916,7 @@ Imagine we have a sinusoid A, which is at
 </p>
 
 
-<div id="orgd8c6248" class="figure">
+<div id="orgeb2c0ff" class="figure">
 <p><img src="images/4.sheet1.jpeg" alt="4.sheet1.jpeg" />
 </p>
 </div>
@@ -935,7 +935,7 @@ sinusoid of a different frequency, for example ½ Nyquist frequency:
 </p>
 
 
-<div id="org64c1f23" class="figure">
+<div id="orge18320b" class="figure">
 <p><img src="images/4.sheet4.jpeg" alt="4.sheet4.jpeg" />
 </p>
 </div>
@@ -950,7 +950,7 @@ However, what if we multiply A by a sinusoid with the same frequency?
 </p>
 
 
-<div id="org2036d8a" class="figure">
+<div id="org168ee1b" class="figure">
 <p><img src="images/4.sheet3.jpeg" alt="4.sheet3.jpeg" />
 </p>
 </div>
@@ -972,9 +972,9 @@ through some examples:
 </div>
 </div>
 
-<div id="outline-container-org302cec8" class="outline-4">
-<h4 id="org302cec8">Examples</h4>
-<div class="outline-text-4" id="text-org302cec8">
+<div id="outline-container-org8d9c5fe" class="outline-4">
+<h4 id="org8d9c5fe">Examples</h4>
+<div class="outline-text-4" id="text-org8d9c5fe">
 <p>
 We'll start with a signal to test. Here's a signal made from two
 sinusoids. We'll use the just the real part of the DFT to find out which
@@ -982,7 +982,7 @@ sinusoids.
 </p>
 
 
-<div id="org673e327" class="figure">
+<div id="org24b8f42" class="figure">
 <p><img src="images/4.12.png" alt="4.12.png" />
 </p>
 </div>
@@ -1043,13 +1043,13 @@ above.
 </p>
 
 
-<div id="org04fcac0" class="figure">
+<div id="org83c04fb" class="figure">
 <p><img src="images/4.13.png" alt="4.13.png" />
 </p>
 </div>
 
 
-<div id="org02e7ead" class="figure">
+<div id="org984e266" class="figure">
 <p><img src="images/4.sheet5.jpeg" alt="4.sheet5.jpeg" />
 </p>
 </div>

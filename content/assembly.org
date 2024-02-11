@@ -34,17 +34,16 @@ An assembly program has the following three sections: Data, BSS, Text.
 
 *** data
 This denotes the start of the data section of an assembly program:
-#+BEGIN_SRC asm
+#+begin_src asm 
 section .data
-#+END_SRC
+#+end_src
 This section contains initialized data and constants. Here is an example of a data section:
-
-#+BEGIN_SRC asm
+#+begin_src asm
 section .data
-    myVariable    db 'Hello, World!',0    ; Declares a byte array initialized with the string "Hello, World!" followed by a null terminator
-    myInteger     dd 12345678h            ; Declares a 32-bit integer initialized with the hexadecimal value 12345678h
-    myLong        dq 0x123456789ABCDEF0   ; Declares a 64-bit
-#+END_SRC asm
+    myVariable    db 'Hello, World!',0
+    myInteger     dd 12345678h
+    myLong        dq 0x123456789ABCDEF0
+#+end_src
 
 *** bss
 BSS stands for "block starting symbol". It contains statically allocated variables that have not been assigned values yet.
