@@ -25,3 +25,9 @@ img {
     display: none;
 
 }
+
+header {
+    position: fixed;
+    right: 1em;
+    z-index: 1;
+}

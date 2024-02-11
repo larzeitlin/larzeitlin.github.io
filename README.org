@@ -7,7 +7,7 @@ Clone the repo, then copy the ~images~ directory to ~content/images~. This will 
 Add new posts to the ~content~ directory as ~.org~ files. To add the new post to the list on the homepage link it in the ~content/index.org~ file.
 
 ** Build
-run ~./build.sh~
+evaluate ~build-site.el~
 
 ** Local preview
 use [[https://www.emacswiki.org/emacs/HttpServer][httpd]] to serve the root directoy.
