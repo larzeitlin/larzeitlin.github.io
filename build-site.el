@@ -30,4 +30,6 @@
 ;; Generate the site output
 (org-publish-all t)
 
+(shell-command "cp -r content/images .")
+
 (message "Build complete!")
