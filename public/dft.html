@@ -1,0 +1,1167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header><a href="./">home</a> <a href="#top">top</a> </header>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">LZ</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org01b885d">Discrete Fourier Transform</a>
+<ul>
+<li><a href="#orgf83760b">A Roundabout Introduction</a>
+<ul>
+<li><a href="#orgab8195b">Sinusoids, circles and epicycles</a></li>
+<li><a href="#orge18c22d">Amplitude and Phase</a></li>
+</ul>
+</li>
+<li><a href="#org96beeca">Imaginary and Complex Numbers</a></li>
+<li><a href="#org5554272">Euler's Number</a>
+<ul>
+<li><a href="#orgaa07a16">Growth</a></li>
+<li><a href="#imaginary-growth-is-anticlockwise-rotation">Imaginary Growth is Anticlockwise Rotation</a></li>
+</ul>
+</li>
+<li><a href="#orgda9cc1a">Complex sinusoid</a></li>
+<li><a href="#org9d47b9f">The Discrete Fourier Transform</a>
+<ul>
+<li><a href="#org528354c">Why are we multiplying our input signal by sinusoids?</a></li>
+<li><a href="#org961dc07">Examples</a></li>
+</ul>
+</li>
+<li><a href="#some-properties-of-the-dft">Some Properties of the DFT</a></li>
+<li><a href="#where-next">Where next?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org01b885d" class="outline-2">
+<h2 id="org01b885d">Discrete Fourier Transform</h2>
+<div class="outline-text-2" id="text-org01b885d">
+<p>
+This is just my understanding / intuitive explanation of what this algorithm means.
+</p>
+
+<p>
+<b>So, what's the objective here?</b>
+</p>
+
+<p>
+Digital signals in sounds usually come to us in the time-domain form.
+That is to say a linear array of values, each relating to a sample in
+time.
+</p>
+
+<p>
+The fundamental question we are asking is this:
+</p>
+
+<ul class="org-ul">
+<li><i>"how do we make a frequency-domain representation of a signal?"</i></li>
+</ul>
+
+<p>
+What we will see is that this question is really the same question as:
+</p>
+
+<ul class="org-ul">
+<li><i>"What sinusoids are present in a signal, and what is their amplitude
+and phase?"</i></li>
+</ul>
+</div>
+
+<div id="outline-container-orgf83760b" class="outline-3">
+<h3 id="orgf83760b">A Roundabout Introduction</h3>
+<div class="outline-text-3" id="text-orgf83760b">
+<p>
+<a href="https://en.wikipedia.org/wiki/Joseph_Fourier">Joseph Fourier</a>
+was a French mathematician who was doing his thing at the end of the 18th to
+the beginning of the 19th centuries. Two things that we will discuss
+carry his name: The Fourier Transforms and Fourier Series. A Fourier
+series is a representation of a signal as a sum of a series of
+sinusoids. The Fourier Transforms are, as far as we are concerned,
+algorithms for identifying which sinusoids are in that series. So it's
+essentially a the recipe of a signal, where the raw ingredients are
+sinusoids.
+</p>
+</div>
+
+<div id="outline-container-orgab8195b" class="outline-4">
+<h4 id="orgab8195b">Sinusoids, circles and epicycles</h4>
+<div class="outline-text-4" id="text-orgab8195b">
+<p>
+Let's start by thinking of a sinusoid as an aspect of circular movement
+in relation to time. As we probably all learned in school at some stage,
+sine and cosine functions describe the ratios of various sides of a
+right-angle triangle as its angle \(\theta\) changes. You may have seen
+some sort of visual representation of this with a right-angle triangle
+in the unit circle, like this:
+</p>
+
+
+<div id="orgb4db0fc" class="figure">
+<p><img src="images/4.1.gif" alt="4.1.gif" align="center" />
+</p>
+</div>
+
+<p>
+If we add a more circles to our system we can start to make more
+elaborate periodic signals, like so:
+</p>
+
+
+<div id="orgf36fa13" class="figure">
+<p><img src="images/4.2.gif" alt="4.2.gif" align="center" />
+</p>
+</div>
+
+<p>
+So we have this idea that given enough circles, you can make all sorts
+of complicated 2D patterns.
+</p>
+
+<p>
+This idea was well understood way back into antiquity. Many scientists
+through history have been concerned with mapping out the movements of
+the stars. Since the idea that the
+<a href="https://en.wikipedia.org/wiki/Geocentric_model">earth was the center
+of the universe</a> was generally accepted for a long time, many extremely
+elaborate models of circles within circles were dreamt up to explain the
+movements of the heavenly bodies. This method of circles with circles
+was called <i>deferent and epicycle</i>. Despite being wrong, this vision of
+the universe managed to give pretty accurate predictions, and was relied
+on for millennia until Copernicus came along with
+<a href="https://en.wikipedia.org/wiki/Heliocentrism">heliocentrism</a>.
+</p>
+
+<p>
+Remember the popular toy <a href="https://en.wikipedia.org/wiki/Spirograph">Spirograph</a>? That was
+essentially based on the idea of epicycles. The image below shows the
+kind of beautiful mess that epicycles and geocentricism gave us:
+</p>
+
+
+<p>
+In the words of <a href="https://en.wikipedia.org/wiki/Norwood_Russell_Hanson">Norwood Russell Hanson</a>:
+</p>
+
+<blockquote>
+<p>
+There is no bilaterally-symmetrical, nor eccentrically-periodic curve
+used in any branch of astrophysics or observational astronomy which
+could not be smoothly plotted as the resultant motion of a point turning
+within a constellation of epicycles, finite in number, revolving around
+a fixed deferent.
+</p>
+</blockquote>
+
+
+<div id="org9236366" class="figure">
+<p><img src="images/4.3.jpg" alt="4.3.jpg" align="center" />
+</p>
+</div>
+
+<p>
+Rather than trying to work through any formal proof here, I think it's
+quite sufficient at this stage to just assume the following: Just like
+having enough circles can explain the movement of all the stars in the
+redundant geocentric model - given enough sinusoids, using
+<a href="https://larzeitlin.github.io/LPF/">destructive and constructive</a>
+interference, we could make <b>any signal we want.</b>
+</p>
+
+<p>
+We <i>could</i> demonstrate this by proving that we can make a single-sample
+impulse and then extrapolating that to show we could add those impulses
+together to make any series of samples. But I think that's a distraction
+here, and the end result is intuitive.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge18c22d" class="outline-4">
+<h4 id="orge18c22d">Amplitude and Phase</h4>
+<div class="outline-text-4" id="text-orge18c22d">
+<p>
+What we do need is a method to find out <b>which sinusoids</b> are in a given
+signal. Just the frequency of those sinusoids isn't enough information.
+We also need their amplitude and phase properties. You know what those
+are, right? Amplitude is how loud the sinusoid is, phase is its offset
+in time.
+</p>
+
+<p>
+Here's a sinusoid with its amplitude being changed:
+</p>
+
+
+
+<div id="orgfe7432c" class="figure">
+<p><img src="images/4.5.gif" alt="4.5.gif" align="center" />
+</p>
+</div>
+
+<p>
+And here's one with its phase value being changed:
+</p>
+
+
+<div id="orgf0968c6" class="figure">
+<p><img src="images/4.4.gif" alt="4.4.gif" align="center" />
+</p>
+</div>
+
+<p>
+Phase is aurally a strange property because we don't really hear it in
+the direct sense we hear frequency or amplitude, however it can affect
+sounds differently in different situations from resultant
+<a href="https://larzeitlin.github.io/LPF/">destructive and constructive
+interference.</a>
+</p>
+
+<p>
+So, as we discussed above, with enough sinusoids with various frequency,
+amplitude and phase values can make any signal we like. But how to find
+out which frequencies, amplitudes and phase values we need?
+</p>
+
+<p>
+Hold that thought. We're going to need to make sure some other
+mathematical dependencies are installed in your brain-sacks in order to
+solve this problem. If these concepts are all new to you, or you want
+more depth on these topics then further reading on them is definitely
+recommended, we'll barely scratch the surface here. Links at the bottom
+of the article
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96beeca" class="outline-3">
+<h3 id="org96beeca">Imaginary and Complex Numbers</h3>
+<div class="outline-text-3" id="text-org96beeca">
+<p>
+\[i = \sqrt{−1}\]
+</p>
+
+<p>
+This number i, sometimes called j by engineers, is the unit of imaginary
+numbers. Mathematics was having a hard time reconciling the idea of
+square roots with negative numbers, because it makes no intuitive sense
+to to find a number that multiplies with itself to make a negative. The
+solution was to just give them a new name.
+</p>
+
+<p>
+<i>Imaginary numbers</i> were first described as such by René Descartes, who
+was essentially taking the piss out of what he and many mathematicians
+saw as a bandage-job and not proper maths. However, as time passed it
+became clear that this solution opened up a whole bunch of interesting
+possibilities that so-called <i>real</i> numbers didn't offer.
+</p>
+
+<p>
+Incidentally, if you think <i>imaginary</i> is a rubbish name for them, then
+you are not alone. Gauss suggested <i>lateral numbers</i> as a better name,
+which makes a lot of sense to me.
+</p>
+
+<p>
+We can treat i in many of the same ways we would an algebraic variable,
+which is handy. So \[3\times 2i  = 6i\] or \[\frac{10i}{2} = 5i\] and so
+on.
+</p>
+
+<p>
+We can also use them alongside real numbers. The combination of
+imaginary and real numbers are what we call <b>complex numbers</b>. This is
+usually just written as an addition, for example \[10 + 5i\]. While
+these complex numbers don't really have a position on a normal 1
+dimensional number line, we can position them in two dimensions. This is
+usually done with the x-axis as real and the y-axis as imaginary. Here's
+\(4 + 3i\) in the <b>complex plane:</b>
+</p>
+
+
+<div id="org552f443" class="figure">
+<p><img src="images/4.6.png" alt="4.6.png" />
+</p>
+</div>
+
+<p>
+As with any position in a 2D space, we can use Cartesian coordinates,
+but we can also talk about it in polar coordinates, terms of a magnitude
+and angle.
+</p>
+
+
+<div id="org904f771" class="figure">
+<p><img src="images/4.7.png" alt="4.7.png" />
+</p>
+</div>
+
+<p>
+Using basic trigonometry we can work out its polar coordinates from the
+Cartesian ones. We know that the magnitude, which is just the hypotenuse
+of a right-angle triangle, and therefore equal to
+\[\sqrt{real^2 + ima^2}\], and the angle is equal to
+\[\tan^{−1}({\frac{ima}{real}})\].
+</p>
+
+<p>
+Eventually we'll use complex numbers to start talking about circular
+movements in the complex plane, and that will be very useful for
+figuring out what sinusoids are living in a signal. Before that let's
+boot up some other concepts we'll need.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5554272" class="outline-3">
+<h3 id="org5554272">Euler's Number</h3>
+<div class="outline-text-3" id="text-org5554272">
+<p>
+Usually known as simply e, Euler's number is a mathematical constant.
+It's a real,
+<a href="https://en.wikipedia.org/wiki/Irrational_number">irrational</a> number
+that's approximately equal to 2.71828. This number is important to us
+because it's intrinsically linked to continuous growth. We can imagine
+how we get to e through an analogy to compound interest.
+</p>
+</div>
+
+<div id="outline-container-orgaa07a16" class="outline-4">
+<h4 id="orgaa07a16">Growth</h4>
+<div class="outline-text-4" id="text-orgaa07a16">
+<p>
+This section seems pretty unrelated at first, but it's actually key to
+understanding the DFT. I should add that this bank loan analogy is just
+an analogy. I don't understand anything about finance or loans. Just go
+with it.
+</p>
+
+<p>
+Imagine we take out a loan from the bank in January. It's only a small
+loan, just £1.00 in fact! However, we get a really bad interest rate for
+our loan: 100% per year. Now after a year how much do we owe the bank?
+Well, it depends on when they calculate the interest. If it's at the end
+of the year, for example:
+</p>
+
+<ul class="org-ul">
+<li><i>Then we owe them the original £1 + another £1 of interest. That's
+£2.</i></li>
+</ul>
+
+<p>
+But what if they calculate it half-way through the year?
+</p>
+
+<ul class="org-ul">
+<li>/That'd be 50% in June and then 50% in January. So in June the debt
+becomes £1 + 50% of £1. So a total of £1.50. Then we get to January
+and we have £1.50 + 50% of £1.50, so a total of £2.25. That's a worse
+deal for us!/</li>
+</ul>
+
+<p>
+OK, so how about 4 times a year?
+</p>
+
+<ul class="org-ul">
+<li>/That's £1 + £0.25 = £1.25 in March, then by June we're at £1.56 ish.
+September takes us to around £1.95. Now by the New Year we're at about
+£2.44./</li>
+</ul>
+
+<p>
+We can see a pattern forming, the more we divide up the year, the more
+money we owe by the end of it. This value doesn't shoot up
+uncontrollably however, it converges around the value £2.71828&#x2026; our
+old friend e.
+</p>
+
+<p>
+So, e is the value that you get if you <b>grow 1 continuously by 100% for
+exactly 1 unit of time.</b>
+</p>
+
+<p>
+We can use e as a base of an exponent to grow 1 by amounts other than
+100%:
+</p>
+
+<ul class="org-ul">
+<li>as we've already seen, growing at 100% yields: \[e^1 \approx 2.71828\]</li>
+
+<li>Growing at 200%: \[e^2 \approx 7.368\]</li>
+
+<li>Growing at 300%: \[e^3 \approx 20.086\]</li>
+</ul>
+
+<p>
+These are the values that you'd end up with if our initial interest rate
+was 200% or 300% respectively. So, going forward, whenever we see
+something in the format \(e^n\), we can think of it as 1 being grown for
+one unit of time an \(n\times 100\%\).
+</p>
+
+<p>
+What about for longer than 1 unit of time? Well, we can break down n
+into a multiplication. What n really equals is \[rate \times duration\].
+Why? Well growing something at 100% for 3 units of time is really just
+the same result as growing it at 300% for one unit of time.
+</p>
+
+<p>
+What about if we don't want our initial loan to be £1? After all, it's a
+silly amount to be borrowing. Well we can just multiply the whole thing
+by the initial amount we want, so we end up with a sort of formula for
+continuous growth:
+</p>
+
+<p>
+\[a \times e^{rd}\]
+</p>
+
+<p>
+Where a equals our initial amount, r is the rate and d is the duration.
+</p>
+
+<p>
+For example, if we had some gray goo that grows continuously at a rate
+300%. If we start with 10 grams of gray goo on the beginning of Monday,
+by the end of Wednesday we'll have
+\[10 \times e^{3 \times 3} = 81030.8392758\], so about 81.03kg of gray
+goo!
+</p>
+
+<p>
+<i>How is all this gray goo stuff helping us with the Fourier Transforms?</i>
+</p>
+
+<p>
+This all seems pretty far away from our main agenda now, I know, but
+what we are going to see is that <b>growth</b> really translates into
+<b>rotation</b> when we start using e in the complex plane. That is going to
+help us make a tool for seeking out sinusoids in a signal.
+</p>
+</div>
+</div>
+
+<div id="outline-container-imaginary-growth-is-anticlockwise-rotation" class="outline-4">
+<h4 id="imaginary-growth-is-anticlockwise-rotation">Imaginary Growth is Anticlockwise Rotation</h4>
+<div class="outline-text-4" id="text-imaginary-growth-is-anticlockwise-rotation">
+<p>
+To turn growth into rotation, let's try growing 1 by i, so using our
+formula this is \(e^i\). If we put this into a calculator we'll get back
+something like: \(0.540302306 + 0.841470985 i\).
+</p>
+
+<p>
+What happened there? We got a complex number, both components have a
+value between 0 and 1. Maybe you would have expected at least the real
+component to get bigger since we started with 1 and grew it. Things get
+a bit clearer if we think \(e^i\) in polar coordinates.
+</p>
+
+<p>
+Remember the magnitude is \(\sqrt{real^2 + ima^2}\).
+</p>
+
+<p>
+So that's \[\sqrt{0.540302306^2 + 0.841470985^2} ~= 1 \]
+</p>
+
+<p>
+And recall the angle is equal to \[\tan^{−1}({\frac{ima}{real}})\] .
+</p>
+
+<p>
+So
+\[\tan^{−1} \left( \frac{0.841470985}{0.540302306}   \right ) = 57.29577951282339\].
+Which doesn't seem too special until you convert it from degrees to
+radians. Then you'll see the answer comes to (allowing for some rounding error) 1.
+</p>
+
+<p>
+So what's really happened is that we've grown our initial 1 but, instead
+of going further along the real axis, it has grown along the edge of a
+perimeter circle exactly one radian. We've rotated it by 1.
+</p>
+
+
+<div id="org20d0ff9" class="figure">
+<p><img src="images/4.8.png" alt="4.8.png" />
+</p>
+</div>
+
+<p>
+The upshot is we can use e to make circles. This is the basis of the
+<b>complex sinusoid.</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgda9cc1a" class="outline-3">
+<h3 id="orgda9cc1a">Complex sinusoid</h3>
+<div class="outline-text-3" id="text-orgda9cc1a">
+<p>
+The complex sinusoid is really just the sum of two sinusoids, one real
+and one imaginary. These two sinusoids are in <i>phase quadrature</i>, which
+is just a fancy way of saying exactly halfway between in phase and
+perfectly out of phase. This is also called sometimes called an
+<i>orthogonal relationship</i>, meaning they are at right-angles. This makes
+sense because their phase difference is 90 degrees.
+</p>
+
+<p>
+The most obvious example of sinusoids in phase quadrature are the sine
+and cosine functions; sine is really just a cosine that's been shifted
+forward by 90 degrees.
+</p>
+
+<p>
+Think about quadrature as when sinusoids of the same frequency are at
+<b>the most unrelated they can possibly be.</b> Which is to say, while in
+phase or close to it they match pretty well up, and while perfectly out
+of phase or close to it they are not far off being mirror images of each
+other. In quadrature they are as dissimilar as can be without becoming
+opposite.
+</p>
+
+<p>
+We can use the rotational abilities of Euler's number to generate our
+complex sinusoid. As we saw above, we can use e to rotate a point in a
+circular arc. At any stage of rotation the position of that point can be
+described by Cartesian coordinates, which are just the two sides of a
+right-angle triangle.
+</p>
+
+<p>
+Along the real axis we'll have a length (the adjacent side of a
+right-angle triangle) that will oscillate as a cosine function, and
+along the imaginary axis the length (which is same length as the
+opposite side of a right-angle triangle) will describe a sine function.
+This is how we use the magic of e to make a complex sinusoid:
+</p>
+
+<p>
+\[e^{i\omega t} = \cos(\omega t) + i\sin(\omega t)\]
+</p>
+
+<p>
+Where \(t\) is the time and \(\omega\) is frequency.
+</p>
+
+<p>
+This is an alternative form of Euler's formula. This gives rise to one
+of the most beautiful mathematical identities out there, known as
+<a href="https://en.wikipedia.org/wiki/Euler%27s_identity">Euler's identity</a>.
+It's a related but tangential topic which I encourage you to read about.
+</p>
+
+<p>
+Taking the formula above, if we keep \(\omega = 1\) and increment
+through \(t\) in time, we the situation described by the animation
+below: The imaginary component is in blue and the real component is in
+green.
+</p>
+
+
+<div id="orgfc34c54" class="figure">
+<p><img src="images/4.9.gif" alt="4.9.gif" />
+</p>
+</div>
+
+<p>
+There is no magic to having a real and an imaginary component, it's just
+a convenience. We need two sinusoids in quadrature, as we will see this
+helps us get the phase information of the sinusoids inside a signal.
+Using a complex sinusoid helps us keep it all compact and tidy.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9d47b9f" class="outline-3">
+<h3 id="org9d47b9f">The Discrete Fourier Transform</h3>
+<div class="outline-text-3" id="text-org9d47b9f">
+<p>
+We've got all the bits we need! We're going to just dive in:
+</p>
+
+
+<div id="orgbaf89bc" class="figure">
+<p><img src="images/4.10.png" alt="4.10.png" />
+</p>
+</div>
+
+<p>
+OK, there's a bunch going on here, it'll take a bit of unpicking:
+</p>
+
+<p>
+We need to know that \(x\) is the input signal and \(X\) is the output
+spectrum. \(N\) is the number of samples in our input signal. Notice the
+distinction between \(N\) and \(n\), which is really the time index of
+our input signal. Everyone else you've already met, or is defined in the
+equation. We'll go through with the colours:
+</p>
+
+<ul class="org-ul">
+<li><font color="red"> Frequency bin k in the output spectrum X</font>
+equals&#x2026;</li>
+
+<li><font color="green"> the sum</font>, of&#x2026;</li>
+
+<li><font color="purple"> The nth sample of our input signal</font></li>
+
+<li>Multiplied by</li>
+
+<li><font color="brown"> -i times a full circle's worth of radians of rotation times the k, which is the bin number, times...</font></li>
+
+<li><font color="blue"> n the present sample number, over N, the number of samples in our input signal</font></li>
+</ul>
+
+<p>
+Let's clarify things a bit. <font color="red"> Frequency bins</font> are
+essentially the frequencies that we will graph on our output spectrum.
+There are as many of them as there are samples in the input signal. They
+represent the sinusoids in the signal. So X is made up of a bunch of
+bins, which we keep track of with the variable k.
+</p>
+
+<p>
+There are two variables in this that we are looping through: k and
+n. The k is the bin frequencies and the n is the time indices. Think of
+the n loop as being <b>inside</b> the k loop. For every new k we get the full
+range of n.
+</p>
+
+<p>
+The <font color="green">sum</font> goes from 0 to N-1 (so thats N many).
+From this we can see that for every frequency bin we are summing
+together N things. That's potentially a lot of summing, which is why the
+DFT can sometimes be slow. Inside that sum is our input signal
+multiplied by a complex sinusoid. The exponent of our complex sinusoid
+has a <font color="brown">rate</font>, which is \(2 \pi\) radians (ie.
+all the way round) times <font color="red"> k</font>, which is the
+frequency. The exponent also has a <font color="blue"> time</font>, which
+is n samples out of a total of N.
+</p>
+
+<p>
+Notice the sign of the exponent is negative, because we are rotating
+here clockwise rather than an anticlockwise as we have been before.
+</p>
+
+<p>
+As we already know, the <font color="magenta"> complex sinusoid</font> is
+made up of a real cosine function and an imaginary sine function. So we
+could just as well write in ether of these forms:
+</p>
+
+
+
+<div id="org315bb67" class="figure">
+<p><img src="images/4.11.png" alt="4.11.png" />
+</p>
+</div>
+
+<p>
+So here's a broad-stroke description:
+</p>
+
+<p>
+<b>For every <font color="red">frequency</font> we make a <font color="magenta">complex sinusoid</font> of <font color="brown">the given frequency</font> and multiply that with <font color="purple">our input signal</font>. The <font color="green"> sum of all the samples of the resulting multiplication</font> will indicate the amount of <font color="red"> that frequency</font> present in the signal.</b>
+</p>
+
+<p>
+You may be asking yourself&#x2026;
+</p>
+</div>
+
+<div id="outline-container-org528354c" class="outline-4">
+<h4 id="org528354c">Why are we multiplying our input signal by sinusoids?</h4>
+<div class="outline-text-4" id="text-org528354c">
+<p>
+The complex sinusoid is different for each bin. It's frequency is set by
+k. This complex sinusoid hunts for a sinusoid that matches it in our
+input signal and, if it finds something, will give us back some numbers
+that we can then use to find the amplitude and phase of of that
+frequency.
+</p>
+
+<p>
+Imagine we have a sinusoid A, which is at
+<a href="https://en.wikipedia.org/wiki/Nyquist_frequency">Nyquist</a> frequency,
+7 samples long:
+</p>
+
+
+<div id="org22a85b2" class="figure">
+<p><img src="images/4.sheet1.jpeg" alt="4.sheet1.jpeg" />
+</p>
+</div>
+
+<p>
+If we summed all of these samples we'd get -1. The 1s mostly cancel out
+the -1s along the way, and if this was an even longer signal they'd
+continue to do so, no matter how many samples long this sinusoid was,
+the sum of all it's samples would never equal anything greater than 1 or
+less than -1.
+</p>
+
+<p>
+Say we do a point-wise multiplication this by a sinusoid of a another
+sinusoid of a different frequency, for example ½ Nyquist frequency:
+</p>
+
+
+<div id="orgbc1f599" class="figure">
+<p><img src="images/4.sheet4.jpeg" alt="4.sheet4.jpeg" />
+</p>
+</div>
+
+<p>
+The sum of AB is now 0. The positives cancel out the negatives even
+after the multiplication.
+</p>
+
+<p>
+However, what if we multiply A by a sinusoid with the same frequency?
+</p>
+
+
+<div id="org3edb72f" class="figure">
+<p><img src="images/4.sheet3.jpeg" alt="4.sheet3.jpeg" />
+</p>
+</div>
+
+<p>
+Now the sum of AB = 7 because a negative times a negative is a positive.
+This <i>in phase</i> quality of A and B yields a larger number. The size of
+this number really tells us the amount of B in A, times the number of
+samples in total. If A and B were perfectly out of phase we'd get a -7,
+telling us that A is the exact opposite of B.
+</p>
+
+<p>
+However, if it's not in phase or exactly out of phase then we are not
+going to get such a clear indication of its presence. That's why we need
+both components of the complex sinusoid. Let's see this by working
+through some examples:
+</p>
+</div>
+</div>
+
+<div id="outline-container-org961dc07" class="outline-4">
+<h4 id="org961dc07">Examples</h4>
+<div class="outline-text-4" id="text-org961dc07">
+<p>
+We'll start with a signal to test. Here's a signal made from two
+sinusoids. We'll use the just the real part of the DFT to find out which
+sinusoids.
+</p>
+
+
+<div id="orgb27eb53" class="figure">
+<p><img src="images/4.12.png" alt="4.12.png" />
+</p>
+</div>
+
+<p>
+We'll call this input signal x.
+</p>
+
+<p>
+It's 10 samples long (0 to 9). The DFT always uses the same number of
+bins as the length of the input signal. So our output spectrum will show
+10 frequencies. So we're going to make 10 sinusoids and multiply our
+input signal above with them:
+</p>
+
+<p>
+So k goes from 0 to 9. Our real sinusoids are as follows. Notice 2
+things: Firstly, these cosines are not very smooth because of the low
+sample-rate. That's OK though. Secondly, once we get past a frequency of
+\[2 \pi \times 5\] the frequencies look like they are going back down.
+Once we pass Nyquist we enter into
+<i><a href="https://en.wikipedia.org/wiki/Negative_frequency">negative frequencies</a></i>. These are just discarded if we are analyzing the real
+signal (ie. any sound signal) since they will give results symmetrical
+to the positive frequencies. With this first example we'll only look at
+the real component of our complex sinusoids.
+</p>
+
+<p>
+In this case, for example you might see the results that are all zero apart from at frequencies 2 and 3
+(and their respective negative frequencies 7 and 8). These are indeed
+the frequencies that x was made from. Here they both happened to be at 0
+phase, so we can catch it all with just the real sinusoids.
+</p>
+
+<p>
+But what happens if they don't start at the right time? We'll try
+another example and use both the real and imaginary components of our
+complex sinusoids.
+</p>
+
+<p>
+We looked at calculating phase and magnitude before when we were talking
+about points in the complex plane. This is what we'll do with our real
+and imaginary components.
+</p>
+
+<p>
+*What we need to do here is imagine the sums of our multiplications of
+the signal with our real and imaginary sinusoids as Cartesian
+coordinates, and we want to work out their polar coordinates - their
+magnitude and phase.*
+</p>
+
+<p>
+Here's a new example: it is also 10 samples long, but we'll only bother
+with the frequencies up to Nyquist because of the symmetry explained
+above.
+</p>
+
+
+<div id="orgce9591d" class="figure">
+<p><img src="images/4.13.png" alt="4.13.png" />
+</p>
+</div>
+
+
+<div id="orgf46e101" class="figure">
+<p><img src="images/4.sheet5.jpeg" alt="4.sheet5.jpeg" />
+</p>
+</div>
+
+<p>
+As we can see, the two sinusoids were matching the bin frequencies 1 and 4. 
+At 1 it was in phase, at 4 it was one radian out of phase.
+</p>
+
+<p>
+This is what the DFT does. It gives us a set of coordinates for each
+frequency, and from those we can work out the magnitude and phase. If
+you graphed the magnitude section, you'd get what you might recognise as
+a static frequency spectrum of that sound.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-some-properties-of-the-dft" class="outline-3">
+<h3 id="some-properties-of-the-dft">Some Properties of the DFT</h3>
+<div class="outline-text-3" id="text-some-properties-of-the-dft">
+<p>
+<b>The bigger the DFT, the more frequency detail</b>
+</p>
+
+<p>
+Since the number of frequency bins depends on the number of samples that
+are input, we can say that the longer the sample size, the more detail
+frequency we can get in our output spectrum.
+</p>
+
+<p>
+<b>The magnitude spectrum is symmetrical around the y-axis for any real
+signal</b>
+</p>
+
+<p>
+As we've seen, the DFT gives us magnitude and phase values for a set of
+frequencies. These frequencies are determined by the length of the input
+signal. However, in practice we are only using the first half of them
+because the second half become the negative frequencies and are
+symmetrical.
+</p>
+
+<p>
+<b>If a sinusoid in a signal doesn't exactly match a bin frequency, a peak
+will form at its closest bin frequency</b>
+</p>
+
+<p>
+We only saw what happens if the input signal is made of sinusoids that
+perfectly match one of the bin frequencies - what happens if there are
+sinusoids present that are not exactly one of those frequencies? Well,
+our input signal is inherently band-limited because it is discrete. So
+there simply can't exist any frequencies which are above Nyquist or
+below the frequency of a sinusoid that completes one oscillation across
+the entire length of N. Nonetheless we could have a frequency that is in
+between two of our bin frequencies (in fact, out in the wild most
+frequencies will be like that). In this case the DFT will give you a
+peak at the closest bin frequency and the rest of the sinusoids energy
+will be distributed around a bunch of other bins at a generally low
+level.
+</p>
+
+<p>
+<b>The magnitude is scaled by the number of samples in the input signal</b>
+</p>
+
+<p>
+Also, you may have noticed that the magnitude spectrum output is scaled
+by the number of samples in our input signal. To get the amplitude
+you'll have to divide it by N.
+</p>
+</div>
+</div>
+
+<div id="outline-container-where-next" class="outline-3">
+<h3 id="where-next">Where next?</h3>
+<div class="outline-text-3" id="text-where-next">
+<p>
+As pointed out at the top of the page, we barely scratched the surface
+here. I hope, however, it is enough to solidify some of the basic
+concepts and provide an "a-ha" or two. Some key topics we've missed here
+include the benefits of zero-padding, zero-phase windowing, windows, and
+many more. I strongly recommend
+<a href="https://ccrma.stanford.edu/~jos/mdft/">Julius Smith's website</a> for a
+very in-depth read on all the main topics. It's an awful lot more
+academic than the approach in this article.
+</p>
+
+<p>
+For a fun journey through the ideas surrounding imaginary numbers, this
+<a href="https://www.youtube.com/watch?v=T647CGsuOVU">youtube series</a> has
+great explanations and very watchable.
+</p>
+
+<p>
+BetterExplained has a
+<a href="https://betterexplained.com/articles/intuitive-understanding-of-eulers-formula/">good
+article</a> on Euler's formula. It's very clear and jargon-free.
+</p>
+
+<p>
+As ever, if you read this all then thanks for humoring me and please let
+me know of any corrections or suggestions you have. I'm not formally
+trained in any of this stuff, I just learn it for fun and I hope that
+comes through.
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,2352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ASSEMBLY NOTES</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header><a href="./">home</a> <a href="#top">top</a> </header>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">ASSEMBLY NOTES</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgefeee6b">Terminology:</a>
+<ul>
+<li><a href="#orge5571d0">What is assembly language?</a></li>
+<li><a href="#org3c03a51">What is x86-64?</a></li>
+<li><a href="#orgcb6d580">What is a register?</a></li>
+<li><a href="#orga193d3e">What is address space?</a></li>
+<li><a href="#orgd061b55">Some key features of x86-64:</a></li>
+</ul>
+</li>
+<li><a href="#org16b38bb">Assembly Language</a>
+<ul>
+<li><a href="#org3a8a2b0">Three Sections</a>
+<ul>
+<li><a href="#org4304c3c">data</a></li>
+<li><a href="#org7327104">bss</a></li>
+<li><a href="#orgc1b03d8">text</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbd27079">Comments</a></li>
+<li><a href="#org1c8a67d">Statements</a></li>
+<li><a href="#org800558c">Tool-chain</a>
+<ul>
+<li><a href="#org877376f">Assembler</a>
+<ul>
+<li><a href="#orgfe1af83">Assembling with NASM</a></li>
+</ul>
+</li>
+<li><a href="#org4c80651">Linker</a>
+<ul>
+<li><a href="#org7af3eba">Dynamic Linking</a></li>
+<li><a href="#org2f58330">Assemble/Link Script</a></li>
+</ul>
+</li>
+<li><a href="#org3704cf3">Loader</a></li>
+<li><a href="#org5aed8e9">Debugger</a>
+<ul>
+<li><a href="#orgbec15bc">GDB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd277f52">Syntax of Statements</a></li>
+<li><a href="#orgda72c01">Assembly Hello World</a></li>
+<li><a href="#org1af3567">Memory Segments</a>
+<ul>
+<li><a href="#orgb1bbaab">Segmented memory model:</a></li>
+<li><a href="#org21a0173">Data segment</a></li>
+<li><a href="#orgfed5431">Code segment</a></li>
+<li><a href="#org512aa65">Stack</a></li>
+</ul>
+</li>
+<li><a href="#org9f2fd08">Registers</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org460eb09">General Registers</a></li>
+<li><a href="#org9523d9a">Control</a></li>
+<li><a href="#org44989ec">Segment Registers</a></li>
+</ul>
+</li>
+<li><a href="#org0226f3e">Example of using registers</a></li>
+<li><a href="#org7450e39">XMM Registers</a></li>
+</ul>
+</li>
+<li><a href="#org812864e">System Calls</a></li>
+<li><a href="#orgd0055e2">Instructions</a>
+<ul>
+<li><a href="#org594a989">Move</a></li>
+<li><a href="#org6763a27">Address</a></li>
+<li><a href="#org6552ee0">Convert</a>
+<ul>
+<li><a href="#orgcc8f688">widening - unsigned</a></li>
+<li><a href="#org04345b9">widening - signed</a></li>
+</ul>
+</li>
+<li><a href="#org4628cbe">Arithmetic</a>
+<ul>
+<li><a href="#orgba321a8">Addition</a></li>
+<li><a href="#org3e74629">Subtraction</a></li>
+<li><a href="#orgaea3ce6">Multiplication</a></li>
+</ul>
+</li>
+<li><a href="#orgb0a311d">Logic</a></li>
+<li><a href="#org7df851c">Shift</a></li>
+<li><a href="#org576a9e1">Rotate</a></li>
+<li><a href="#org668a40c">Control instructions</a>
+<ul>
+<li><a href="#orgfb4928f">Labels</a></li>
+<li><a href="#org4e330b2">Unconditional control instructions.</a></li>
+<li><a href="#org7705c84">Conditional Control Instructions</a></li>
+<li><a href="#org6811c50">Jump Range</a></li>
+</ul>
+</li>
+<li><a href="#orgd7a35b3">Iteration</a></li>
+<li><a href="#org781e40e">Loop</a></li>
+<li><a href="#org7b6ee83">Example program using intructions</a></li>
+</ul>
+</li>
+<li><a href="#org4fa8138">Calling C libraries</a></li>
+<li><a href="#orgaa9fac8">Related Topics</a>
+<ul>
+<li><a href="#org56f4b20">Addressing data in memory</a></li>
+<li><a href="#org2e5056c">Memory Hierarchy</a></li>
+<li><a href="#org8c35c20">Integer representation</a></li>
+<li><a href="#org39b61ac">Two's Complement</a></li>
+</ul>
+</li>
+<li><a href="#org947f54a">Handy Links</a></li>
+</ul>
+</div>
+</div>
+<p>
+These are just personal study notes. Figured I would share them in case they are useful to someone else. I started writing this in 2019 and returned to it now in 2024 to review the content. Nothing especially origional here, this is just a amalgamation of the documents and tutorials that I read (linked at the bottom).
+</p>
+
+<div id="outline-container-orgefeee6b" class="outline-2">
+<h2 id="orgefeee6b">Terminology:</h2>
+<div class="outline-text-2" id="text-orgefeee6b">
+</div>
+<div id="outline-container-orge5571d0" class="outline-3">
+<h3 id="orge5571d0">What is assembly language?</h3>
+<div class="outline-text-3" id="text-orge5571d0">
+<p>
+Machine code is the binary representation of the instructions executed directly by the CPU. One level of abstraction above that is assembly language. Assembly language is specific to the CPU architecture. It typically uses mnemonic <code>opcodes</code> to represent operations, such as <code>MOV</code>, <code>ADD</code>, etc.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3c03a51" class="outline-3">
+<h3 id="org3c03a51">What is x86-64?</h3>
+<div class="outline-text-3" id="text-org3c03a51">
+<p>
+This refers to the 64-bit extension of the x86 instruction set developed for intel processors. x86-64 was introduced in 1999 is the most widely used assembly language for desktops, laptops and servers at time of writing (2024). It supports 64-bit registers, unlike the 32-bit registers for the preceding IA-32 architecture.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcb6d580" class="outline-3">
+<h3 id="orgcb6d580">What is a register?</h3>
+<div class="outline-text-3" id="text-orgcb6d580">
+<p>
+The CPU can temporarily store data in registers. They are the fastest storage in the computer (faster than cache or RAM for example) and they are limited in size and count. Some registers are specialised such as the <code>Instruction Pointer</code> which holds the address of the next instruction, or the <code>Stack Pointer</code> which points to the current top of the stack in memory. Others are general purpose.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga193d3e" class="outline-3">
+<h3 id="orga193d3e">What is address space?</h3>
+<div class="outline-text-3" id="text-orga193d3e">
+<p>
+Address space is the number of addresses in memory that the CPU can access in a single operation. for 64-bit CPUs this is 2<sup>64</sup> addresses.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd061b55" class="outline-3">
+<h3 id="orgd061b55">Some key features of x86-64:</h3>
+<div class="outline-text-3" id="text-orgd061b55">
+<ul class="org-ul">
+<li>64-bit registers</li>
+<li>Larger address space</li>
+<li>backwards compatibility with 32-bit x68 programs.</li>
+<li>New instructions</li>
+<li>More general purpose registers</li>
+<li>SMID extensions (single instruction, multiple data).</li>
+</ul>
+
+
+<div id="org30b44f5" class="figure">
+<p><img src="images/x86-64-arch.png" alt="x86-64-arch.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>diagram of the x86-64 from Volume 1 of the System Developers Manual</p>
+</div>
+
+<p>
+We will get into what some of these registers do below.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org16b38bb" class="outline-2">
+<h2 id="org16b38bb">Assembly Language</h2>
+<div class="outline-text-2" id="text-org16b38bb">
+</div>
+<div id="outline-container-org3a8a2b0" class="outline-3">
+<h3 id="org3a8a2b0">Three Sections</h3>
+<div class="outline-text-3" id="text-org3a8a2b0">
+<p>
+An assembly program has the following three sections: Data, BSS, Text.
+</p>
+</div>
+
+<div id="outline-container-org4304c3c" class="outline-4">
+<h4 id="org4304c3c">data</h4>
+<div class="outline-text-4" id="text-org4304c3c">
+<p>
+This denotes the start of the data section of an assembly program:
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">section</span> .data
+</pre>
+</div>
+<p>
+This section contains initialized data and constants. Here is an example of a data section:
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">section</span> .data
+    <span class="org-keyword">myVariable</span>    db 'Hello, World!',0
+    <span class="org-keyword">myInteger</span>     dd 12345678h
+    <span class="org-keyword">myLong</span>        dq 0x123456789ABCDEF0
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7327104" class="outline-4">
+<h4 id="org7327104">bss</h4>
+<div class="outline-text-4" id="text-org7327104">
+<p>
+BSS stands for "block starting symbol". It contains statically allocated variables that have not been assigned values yet.
+This denotes the beginning of the variable section: 
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">section</span> .bss
+</pre>
+</div>
+<p>
+The bss section contains variable declarations. Here is an example of a bss section of an x86-64 program.
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">section</span> .bss
+  <span class="org-keyword">buffer</span> resb 64           <span class="org-comment-delimiter">; </span><span class="org-comment">Reserve 64 bytes for 'buffer'</span>
+  <span class="org-keyword">counter</span> resd 1           <span class="org-comment-delimiter">; </span><span class="org-comment">Reserve space for a 4-byte integer (dword) 'counter'</span>
+  <span class="org-keyword">array</span> resq 10            <span class="org-comment-delimiter">; </span><span class="org-comment">Reserve space for an array of 10 quadwords (64-bit integers)</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc1b03d8" class="outline-4">
+<h4 id="orgc1b03d8">text</h4>
+<div class="outline-text-4" id="text-orgc1b03d8">
+<p>
+This section contains the actual code.
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">section</span> .text
+  <span class="org-keyword">global</span> _start
+<span class="org-function-name">_start</span>: 
+</pre>
+</div>
+<p>
+Global start lets the kernel know where the program execution begins.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbd27079" class="outline-2">
+<h2 id="orgbd27079">Comments</h2>
+<div class="outline-text-2" id="text-orgbd27079">
+<p>
+Comments are preceded with a semicolon. Comments can contain any printable character
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">this is a full line comment</span>
+<span class="org-function-name">add</span> <span class="org-keyword">eax</span>, ebx  <span class="org-comment-delimiter">; </span><span class="org-comment">this is an inline comment</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1c8a67d" class="outline-2">
+<h2 id="org1c8a67d">Statements</h2>
+<div class="outline-text-2" id="text-org1c8a67d">
+<p>
+There are three types of statements:
+</p>
+
+<ul class="org-ul">
+<li>instructions</li>
+</ul>
+<p>
+These tell the processor what to do.Each instruction has an op-code.
+</p>
+
+<ul class="org-ul">
+<li>directives or pseudo-ops</li>
+</ul>
+<p>
+These tell the assembler about the various aspects of the assembly process. These are non-executable.
+</p>
+
+<ul class="org-ul">
+<li>macros</li>
+</ul>
+<p>
+Text substitution
+</p>
+</div>
+</div>
+
+<div id="outline-container-org800558c" class="outline-2">
+<h2 id="org800558c">Tool-chain</h2>
+<div class="outline-text-2" id="text-org800558c">
+<p>
+The software tools used in creating assembly programs are as follows:
+</p>
+<ul class="org-ul">
+<li>Assembler</li>
+<li>Linker</li>
+<li>Loader</li>
+<li>Debugger</li>
+</ul>
+</div>
+<div id="outline-container-org877376f" class="outline-3">
+<h3 id="org877376f">Assembler</h3>
+<div class="outline-text-3" id="text-org877376f">
+<p>
+The assembler is a program converts assembly code into machine language (binary). The output file is known as an object file, hence the .o suffix. During this process the variable names get removed and converted into addresses.
+</p>
+</div>
+
+<div id="outline-container-orgfe1af83" class="outline-4">
+<h4 id="orgfe1af83">Assembling with NASM</h4>
+<div class="outline-text-4" id="text-orgfe1af83">
+<ul class="org-ul">
+<li>save the above as a file with extension .asm, for example: hello.asm</li>
+<li>assemble program with:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-shell">nasm -f elf hello.asm
+</pre>
+</div>
+<ul class="org-ul">
+<li>if no errors, hello.o will have been created</li>
+<li>To link the object file and create the executable file named hello:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-shell">ld -m elf_i386 -s -o hello hello.o
+</pre>
+</div>
+<ul class="org-ul">
+<li>execute with:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-shell">./hello
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4c80651" class="outline-3">
+<h3 id="org4c80651">Linker</h3>
+<div class="outline-text-3" id="text-org4c80651">
+<p>
+Also known as the linkage editor. This combines object files into a single executable. It also includes any libraries required for execution. The following is a command for the GNU Gold linker:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ld -g -o example example.o
+</pre>
+</div>
+
+<p>
+The <code>-g</code> flag tells the linker to include debugging information. The <code>-o</code> flag specifies the output file, here <code>example</code>. Multiple object files can be linked together. When using a function from another file, the function must be flagged with <code>extern</code>.
+</p>
+</div>
+
+<div id="outline-container-org7af3eba" class="outline-4">
+<h4 id="org7af3eba">Dynamic Linking</h4>
+<div class="outline-text-4" id="text-org7af3eba">
+<p>
+Linux supports dynamic linking. This allows resolution of some symbols be postponed until the execution of the program. Under Linux dynamically linked object files have the extension <code>.so</code>, shared object. The Windows equivalent is <code>.dll</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f58330" class="outline-4">
+<h4 id="org2f58330">Assemble/Link Script</h4>
+<div class="outline-text-4" id="text-org2f58330">
+<p>
+The following is an example of a bash script to automate the calls to the assembler and linker into a single call.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span>
+
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -z $<span class="org-variable-name">1</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+  <span class="org-builtin">echo</span> <span class="org-string">"Usage: ./asm64 &lt;asmMainFile&gt; (no extension)"</span>
+  <span class="org-keyword">exit</span>
+<span class="org-keyword">fi</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">verify no extent ions were entered</span>
+<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> <span class="org-negation-char">!</span> -e <span class="org-string">"$1.asm"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
+  <span class="org-builtin">echo</span> <span class="org-string">"Error, $1.asm not found."</span>
+  <span class="org-builtin">echo</span> <span class="org-string">"Note, do not enter file extensions."</span>
+  <span class="org-keyword">exit</span>
+<span class="org-keyword">fi</span>
+
+<span class="org-comment-delimiter">#  </span><span class="org-comment">Compile, assemble, and link</span>
+
+yasm -Worphan-labels -g dwarf2 -f elf64 $<span class="org-variable-name">1</span>.asm -l $<span class="org-variable-name">1</span>.lst ld -g -o $<span class="org-variable-name">1</span> $<span class="org-variable-name">1</span>.o  
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3704cf3" class="outline-3">
+<h3 id="org3704cf3">Loader</h3>
+<div class="outline-text-3" id="text-org3704cf3">
+<p>
+This is the part of the operating system that loads the program from secondary storage into memory. Under Linux this is done with the program name. For example, if the program is called <code>hello_world</code>, the command will be:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">./hello_world
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5aed8e9" class="outline-3">
+<h3 id="org5aed8e9">Debugger</h3>
+<div class="outline-text-3" id="text-org5aed8e9">
+<p>
+This is a program that can control the execution of the assembly program in order to inspect how it is (or is not) working. 
+</p>
+</div>
+<div id="outline-container-orgbec15bc" class="outline-4">
+<h4 id="orgbec15bc">GDB</h4>
+<div class="outline-text-4" id="text-orgbec15bc">
+<p>
+GDB is a debugger for assembly language as well as C/C++. It is terminal-based but also can be run in emacs. To start in emacs use <code>m-x gdb</code> or to run in the terminal use:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">$ gdb &lt;executable&gt;
+</pre>
+</div>
+<p>
+Prior to this, compile and link the asm source code so that it can be debugged. For example, in order to do this for <code>myprogram.asm</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ nasm -g -f elf64 -l myprogram.lst myprogram.asm &amp;&amp; ld -g -o myprogram myprogram.o
+</pre>
+</div>
+
+<p>
+here <code>-g</code>  causes NASM to generate debug information. <code>-f</code> specifies the file format (in this case elf64). <code>-l</code> specifies the lst file to be made. Following the call to NASM, a call is made to the GNU linker ld.  
+</p>
+
+<p>
+To simplify this process, it is recommended to have a shell script to automate assembling and linking in debug mode:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span>
+
+nasm -g -f elf64 -l $<span class="org-variable-name">1</span>.lst $<span class="org-variable-name">1</span>.asm &amp;&amp; ld -g -o $<span class="org-variable-name">1</span> $<span class="org-variable-name">1</span>.o
+</pre>
+</div>
+
+<p>
+To start the execution of a program in <code>gdb</code> use:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-rainbow-delimiters-depth-1">(</span>gdb<span class="org-rainbow-delimiters-depth-1">)</span> start
+</pre>
+</div>
+</div>
+<ul class="org-ul">
+<li><a id="org5cb62fd"></a>GDB commands<br />
+<div class="outline-text-5" id="text-org5cb62fd">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">b N</td>
+<td class="org-left">breakpoint at line N</td>
+</tr>
+
+<tr>
+<td class="org-left">b fn</td>
+<td class="org-left">breakpoint at function fn</td>
+</tr>
+
+<tr>
+<td class="org-left">d N</td>
+<td class="org-left">delete breakpoint number N</td>
+</tr>
+
+<tr>
+<td class="org-left">info break</td>
+<td class="org-left">list breakpoints</td>
+</tr>
+
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">run until breakpoint or error</td>
+</tr>
+
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">continue running until breakpoint or error</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">run next line</td>
+</tr>
+
+<tr>
+<td class="org-left">p var</td>
+<td class="org-left">print current value of variable var</td>
+</tr>
+
+<tr>
+<td class="org-left">info registers / i r</td>
+<td class="org-left">print names and values of registers</td>
+</tr>
+
+<tr>
+<td class="org-left">info registers eax / i r eax</td>
+<td class="org-left">prints register eax</td>
+</tr>
+
+<tr>
+<td class="org-left">x/&lt;data-type&gt; &amp;&lt;name&gt;</td>
+<td class="org-left">print contents of memory at name</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd277f52" class="outline-2">
+<h2 id="orgd277f52">Syntax of Statements</h2>
+<div class="outline-text-2" id="text-orgd277f52">
+<p>
+Assembly language has one statement per line
+</p>
+<pre class="example">
+[label] mnemonic [operands] [; comment]
+</pre>
+<p>
+Fields in the square brackets are optional. There are two basic parts to the instruction - the name (mnemonic) and the operands.For example: 
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">INC</span> <span class="org-keyword">COUNT</span> <span class="org-comment-delimiter">; </span><span class="org-comment">increment the variable COUNT</span>
+
+<span class="org-function-name">MOV</span> <span class="org-keyword">TOTAL</span> <span class="org-comment-delimiter">; </span><span class="org-comment">Transfer the total value 48 into memory variable TOTAL</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgda72c01" class="outline-2">
+<h2 id="orgda72c01">Assembly Hello World</h2>
+<div class="outline-text-2" id="text-orgda72c01">
+<div class="org-src-container">
+<pre class="src src-asm">
+<span class="org-function-name">section</span> .text
+  <span class="org-keyword">global</span> _start  <span class="org-comment-delimiter">; </span><span class="org-comment">must be declared for linker</span>
+<span class="org-function-name">_start</span>: 
+  <span class="org-keyword">mov</span> edx,len <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
+  <span class="org-keyword">mov</span> ecx,msg <span class="org-comment-delimiter">; </span><span class="org-comment">message to write</span>
+  <span class="org-keyword">mov</span> ebx,1   <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (stdout)</span>
+  <span class="org-keyword">mov</span> eax,4   <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
+  <span class="org-keyword">int</span> 0x80    <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+
+  <span class="org-keyword">mov</span> eax,1   <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_exit)</span>
+  <span class="org-keyword">int</span> 0x80    <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+
+<span class="org-function-name">section</span> .data
+<span class="org-function-name">msg</span> <span class="org-keyword">db</span> 'Hello, world!', 0xa <span class="org-comment-delimiter">; </span><span class="org-comment">string to be printed</span>
+<span class="org-function-name">en</span> <span class="org-keyword">equ</span> $ - msg <span class="org-comment-delimiter">; </span><span class="org-comment">length of the string</span>
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1af3567" class="outline-2">
+<h2 id="org1af3567">Memory Segments</h2>
+<div class="outline-text-2" id="text-org1af3567">
+</div>
+<div id="outline-container-orgb1bbaab" class="outline-3">
+<h3 id="orgb1bbaab">Segmented memory model:</h3>
+<div class="outline-text-3" id="text-orgb1bbaab">
+<p>
+In a segmented memory model the system memory is divided into independent segments. Segments are used to store specific types of data. One segment for instruction codes, one for data elements, etc.
+</p>
+</div>
+</div>
+<div id="outline-container-org21a0173" class="outline-3">
+<h3 id="org21a0173">Data segment</h3>
+<div class="outline-text-3" id="text-org21a0173">
+<p>
+Represented by the <code>.data</code> section and the <code>.bss</code> section. The <code>.data</code> section is holds static data that remains unchanged during the course of the program. The <code>.bss</code> section is also for static data. Data here are declared during the course of the program. The <code>.bss</code> section is zero filled prior to execution.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfed5431" class="outline-3">
+<h3 id="orgfed5431">Code segment</h3>
+<div class="outline-text-3" id="text-orgfed5431">
+<p>
+Represented by the <code>.text</code> section. Fixed data that stores instruction codes.
+</p>
+</div>
+</div>
+<div id="outline-container-org512aa65" class="outline-3">
+<h3 id="org512aa65">Stack</h3>
+<div class="outline-text-3" id="text-org512aa65">
+<p>
+This contains data passed to functions and procedures during the course of a program.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org9f2fd08" class="outline-2">
+<h2 id="org9f2fd08">Registers</h2>
+<div class="outline-text-2" id="text-org9f2fd08">
+<p>
+In order to avoid the slow process of reading and storing data in memory, the processor has temporary storage locations called <code>registers</code>. These can store data elements for processing without having to access memory.
+</p>
+</div>
+
+<div id="outline-container-org460eb09" class="outline-4">
+<h4 id="org460eb09">General Registers</h4>
+<div class="outline-text-4" id="text-org460eb09">
+</div>
+<ul class="org-ul">
+<li><a id="orgc3d7663"></a>Data<br />
+<div class="outline-text-5" id="text-orgc3d7663">
+<p>
+These are used for arithmetic, logic and other operations. They have three different modes of usage:
+</p>
+<ul class="org-ul">
+<li>As complete 32-bit registers: EAX, EBX, ECX, EDX (RAX RBX RCX RDX for 64 bit registers)</li>
+<li>The lower halves can be used as four 16 bit data registers: AX, BX, CX, DX</li>
+<li>The lower halves of the above 16 bit registers can be used as eight 8-bit registers: AH, AL, BH, BL, CH, CL, DH, DL</li>
+</ul>
+
+
+<pre class="example">
+......................+AX++Accumulator+
+EAX |----------------|---AH---|---AL---|
+
+......................+++++BX++Base++++
+EBX |----------------|---BH---|---BL---|
+
+......................+++CX++Counter+++
+ECX |----------------|---CH---|---CL---|
+
+......................++++DX++Data+++++
+EDX |----------------|---DH---|---DL---|
+</pre>
+<p>
+Although the above are most frequently used, there are in total 16 general purpose 64-bit registers.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">64-bit</th>
+<th scope="col" class="org-left">lower 32-bits</th>
+<th scope="col" class="org-left">lower 16-bits</th>
+<th scope="col" class="org-left">lower 8-bits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">rax</td>
+<td class="org-left">eax</td>
+<td class="org-left">ax</td>
+<td class="org-left">al</td>
+</tr>
+
+<tr>
+<td class="org-left">rbx</td>
+<td class="org-left">ebx</td>
+<td class="org-left">bx</td>
+<td class="org-left">bl</td>
+</tr>
+
+<tr>
+<td class="org-left">rcx</td>
+<td class="org-left">ecx</td>
+<td class="org-left">cx</td>
+<td class="org-left">cl</td>
+</tr>
+
+<tr>
+<td class="org-left">rdx</td>
+<td class="org-left">edx</td>
+<td class="org-left">dx</td>
+<td class="org-left">dl</td>
+</tr>
+
+<tr>
+<td class="org-left">rsi</td>
+<td class="org-left">esi</td>
+<td class="org-left">si</td>
+<td class="org-left">sil</td>
+</tr>
+
+<tr>
+<td class="org-left">rdi</td>
+<td class="org-left">edi</td>
+<td class="org-left">di</td>
+<td class="org-left">dil</td>
+</tr>
+
+<tr>
+<td class="org-left">dbp</td>
+<td class="org-left">ebp</td>
+<td class="org-left">bp</td>
+<td class="org-left">bpl</td>
+</tr>
+
+<tr>
+<td class="org-left">rsp</td>
+<td class="org-left">esp</td>
+<td class="org-left">sp</td>
+<td class="org-left">spl</td>
+</tr>
+
+<tr>
+<td class="org-left">r8</td>
+<td class="org-left">r8d</td>
+<td class="org-left">r8w</td>
+<td class="org-left">r8b</td>
+</tr>
+
+<tr>
+<td class="org-left">r9</td>
+<td class="org-left">r9d</td>
+<td class="org-left">r9w</td>
+<td class="org-left">r9b</td>
+</tr>
+
+<tr>
+<td class="org-left">r10</td>
+<td class="org-left">r10d</td>
+<td class="org-left">r10w</td>
+<td class="org-left">r10b</td>
+</tr>
+
+<tr>
+<td class="org-left">r11</td>
+<td class="org-left">r11d</td>
+<td class="org-left">r11w</td>
+<td class="org-left">r11b</td>
+</tr>
+
+<tr>
+<td class="org-left">r12</td>
+<td class="org-left">r12d</td>
+<td class="org-left">r12w</td>
+<td class="org-left">r12b</td>
+</tr>
+
+<tr>
+<td class="org-left">r13</td>
+<td class="org-left">r13d</td>
+<td class="org-left">r13w</td>
+<td class="org-left">r13b</td>
+</tr>
+
+<tr>
+<td class="org-left">r14</td>
+<td class="org-left">r14d</td>
+<td class="org-left">r14w</td>
+<td class="org-left">r14b</td>
+</tr>
+
+<tr>
+<td class="org-left">r15</td>
+<td class="org-left">r15d</td>
+<td class="org-left">r15w</td>
+<td class="org-left">r15b</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul class="org-ul">
+<li>AX - <code>Primary Accumulator</code></li>
+</ul>
+<p>
+I/O for most arithmetic instructions, for example multiplication. One operand is stored in other EAX, AX or AL depending on size.
+</p>
+<ul class="org-ul">
+<li>BX - <code>Base</code></li>
+</ul>
+<p>
+Sometimes used in index addressing.
+</p>
+<ul class="org-ul">
+<li>CX - <code>Count</code></li>
+</ul>
+<p>
+Stores loop counts in various iterative operations
+</p>
+<ul class="org-ul">
+<li>DX - <code>Data</code>:</li>
+</ul>
+<p>
+Also used in I/O. Notably when large numbers are involved. 
+</p>
+</div>
+</li>
+
+<li><a id="org4293c1e"></a>Pointer Registers<br />
+<div class="outline-text-5" id="text-org4293c1e">
+<p>
+Stores addresses in memory. In 32-bit these are EIP, ESP and EBP. In 16-bit these correspond to IP, SP and BP.
+</p>
+<ul class="org-ul">
+<li>IP - <code>Instruction Pointer</code></li>
+</ul>
+<p>
+Stores the <code>offset address</code> of the next instruction to be executed. In combination with the <code>CS</code> register (CS:IP) gives the full address of the current instruction in code segment.
+</p>
+<ul class="org-ul">
+<li>SP - <code>Stack Pointer</code></li>
+</ul>
+<p>
+Provides the offset value in the program stack. In combination with the <code>SS</code> register (SS:SP) gives the current position of data or address in the program stack.
+</p>
+<ul class="org-ul">
+<li>BP - <code>Base Pointer</code></li>
+</ul>
+<p>
+Helps in referencing the parameter variables passed to a subroutine. The address in <code>SS</code>
+in combination with the offset BP gives the location of a parameter. Can also be combined with DI and SI as a base register for special addressing. 
+</p>
+</div>
+</li>
+
+<li><a id="org1f4e88d"></a>Index Registers<br />
+<div class="outline-text-5" id="text-org1f4e88d">
+<p>
+ESI and EDI in 32-bit, or SI and DI in 16-bit.
+</p>
+<ul class="org-ul">
+<li>SI - <code>Source Index</code></li>
+</ul>
+<p>
+Source index for string operations
+</p>
+<ul class="org-ul">
+<li>DI - <code>Destination Index</code></li>
+</ul>
+<p>
+Destination index for string operations.
+</p>
+</div>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-org9523d9a" class="outline-4">
+<h4 id="org9523d9a">Control</h4>
+<div class="outline-text-4" id="text-org9523d9a">
+<p>
+For comparisons and conditional instructions that control flags.
+</p>
+<ul class="org-ul">
+<li>OF - <code>Overflow Flag</code></li>
+</ul>
+<p>
+Indicates overflow of leftmost bit in a signed math operation
+</p>
+<ul class="org-ul">
+<li>DF - <code>Direction Flag</code></li>
+</ul>
+<p>
+In string comparison operations, indicates left or right direction of movement. 0 for left-to-right and 1 is right-to-left
+</p>
+<ul class="org-ul">
+<li>IF - <code>Interrupt Flag</code></li>
+</ul>
+<p>
+Flags if keyboard or other interrupts are to be ignored or processed. 0 for ignored or 1 for processed.
+</p>
+<ul class="org-ul">
+<li>TF - <code>Trap Flag</code></li>
+</ul>
+<p>
+Allows the processor to work in single step mode for debug purposes. 
+</p>
+<ul class="org-ul">
+<li>SF - <code>Sign Flag</code></li>
+</ul>
+<p>
+Indicates the sign of a arithmetic result.
+</p>
+<ul class="org-ul">
+<li>ZF - <code>Zero Flag</code></li>
+</ul>
+<p>
+Indicates whether a result of an arithmetic expression is zero.
+</p>
+<ul class="org-ul">
+<li>AF - <code>Auxiliary Carry Flag</code></li>
+</ul>
+<p>
+Used for specialized arithmetic to carry from bit 3 to bit 4.
+</p>
+<ul class="org-ul">
+<li>PF - <code>Parity Flag</code></li>
+</ul>
+<p>
+Indicates the total number of 1 (on) bits in the result of an arithmetic expression. If even then 0, odd then 1.
+</p>
+<ul class="org-ul">
+<li>CF - <code>Carry Flag</code></li>
+</ul>
+<p>
+Contains the carry from the leftmost bit after an arithmetic operation. It also stores the contents of the last bit of a <code>shift</code> or <code>rotate</code> operation.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Positions of flag in the flags register</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Flag</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">O</th>
+<th scope="col" class="org-right">D</th>
+<th scope="col" class="org-right">I</th>
+<th scope="col" class="org-right">T</th>
+<th scope="col" class="org-right">S</th>
+<th scope="col" class="org-right">Z</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">A</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">P</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-right">C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Bit</td>
+<td class="org-right">15</td>
+<td class="org-right">14</td>
+<td class="org-right">13</td>
+<td class="org-right">12</td>
+<td class="org-right">11</td>
+<td class="org-right">10</td>
+<td class="org-right">9</td>
+<td class="org-right">8</td>
+<td class="org-right">7</td>
+<td class="org-right">6</td>
+<td class="org-right">5</td>
+<td class="org-right">4</td>
+<td class="org-right">3</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org44989ec" class="outline-4">
+<h4 id="org44989ec">Segment Registers</h4>
+<div class="outline-text-4" id="text-org44989ec">
+<p>
+These refer to specific areas defined for data, code and stack. 
+</p>
+<ul class="org-ul">
+<li>CS - <code>Code Segment</code></li>
+</ul>
+<p>
+Contains the starting address of the code segment.
+</p>
+<ul class="org-ul">
+<li>DS - <code>Data Segment</code></li>
+</ul>
+<p>
+Contains the starting address of the data segment.
+</p>
+<ul class="org-ul">
+<li>SS - <code>Stack Segment</code></li>
+</ul>
+<p>
+Contains the starting address of the stack segment.
+</p>
+
+<p>
+There are additional segment registers: ES, FS, GS. 
+</p>
+
+<p>
+All memory locations within a segment are relative to the starting address of the segment. Since all segments will start at an address that is evenly divisible by 16 (hex 10) there is always a zero in the rightmost hex digit. This zero is not stored in segment registers.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0226f3e" class="outline-3">
+<h3 id="org0226f3e">Example of using registers</h3>
+<div class="outline-text-3" id="text-org0226f3e">
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">section</span> .text
+  <span class="org-keyword">global</span> _start   <span class="org-comment-delimiter">; </span><span class="org-comment">must be declared for linker (gcc)</span>
+
+<span class="org-function-name">_start</span>:           <span class="org-comment-delimiter">; </span><span class="org-comment">tell linker entry point</span>
+  <span class="org-keyword">mov</span> edx,len     <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
+  <span class="org-keyword">mov</span> ecx,msg     <span class="org-comment-delimiter">; </span><span class="org-comment">message to write</span>
+  <span class="org-keyword">mov</span> ebx,1       <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (stout)</span>
+  <span class="org-keyword">mov</span> eax,4       <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
+  <span class="org-keyword">int</span> 0x80        <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+
+  <span class="org-keyword">mov</span> edx,9       <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
+  <span class="org-keyword">mov</span> ecx,s2      <span class="org-comment-delimiter">; </span><span class="org-comment">message to write</span>
+  <span class="org-keyword">mov</span> ebx,1       <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (stout)</span>
+  <span class="org-keyword">mov</span> eax,4       <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
+  <span class="org-keyword">int</span> 0x80        <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+
+  <span class="org-keyword">mov</span> eax,1       <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_exit)</span>
+  <span class="org-keyword">int</span> 0x80        <span class="org-comment-delimiter">; </span><span class="org-comment">call </span>
+
+<span class="org-function-name">section</span> .data
+<span class="org-function-name">msg</span> <span class="org-keyword">db</span> 'Displaying 9 stars',0xa  <span class="org-comment-delimiter">; </span><span class="org-comment">a message</span>
+<span class="org-function-name">len</span> <span class="org-keyword">equ</span> $ - msg <span class="org-comment-delimiter">; </span><span class="org-comment">length of message</span>
+<span class="org-function-name">s2</span> <span class="org-keyword">times</span> 9 db '*'
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7450e39" class="outline-3">
+<h3 id="org7450e39">XMM Registers</h3>
+<div class="outline-text-3" id="text-org7450e39">
+<p>
+These are used to support floating point operations and Single Instruction Multiple Data (SMID) Instructions, used in graphics and DSP calculations. These are xmm0 to xmm15.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org812864e" class="outline-2">
+<h2 id="org812864e">System Calls</h2>
+<div class="outline-text-2" id="text-org812864e">
+<p>
+API between the the <code>user space</code> and the <code>system space</code>.
+System calls are used by putting the number associated with that call into <code>EAX</code> and the arguments to that system call into other specific registers.
+</p>
+
+<p>
+For example, this is the call to exit the program. <code>sys_exit</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">mov</span>  <span class="org-keyword">eax</span>,1 <span class="org-comment-delimiter">; </span><span class="org-comment">system call number moved into eax</span>
+<span class="org-function-name">int</span>  <span class="org-keyword">0x80</span>   <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+</pre>
+</div>
+
+<p>
+Here is an example for a syscall that has arguments, <code>sys_write</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">mov</span>  <span class="org-keyword">edx</span>,4    <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">ecx</span>,msg  <span class="org-comment-delimiter">; </span><span class="org-comment">some message that has been defined in the data section</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">ebx</span>,1    <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (1 is for standard out)</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">eax</span>,4    <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
+<span class="org-function-name">int</span>  <span class="org-keyword">0x80</span>     <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+</pre>
+</div>
+
+<p>
+All syscalls are listed in  /usr/include/asm/unistd.h which can be used to look up their numbers. The following is a table of commonly used system calls with their arguments:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">EAX (number)</td>
+<td class="org-left">Name</td>
+<td class="org-left">EBX</td>
+<td class="org-left">ECX</td>
+<td class="org-left">EDX</td>
+<td class="org-left">ESX</td>
+<td class="org-left">EDI</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">sys<sub>exit</sub></td>
+<td class="org-left">int`</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">sys<sub>fork</sub></td>
+<td class="org-left">struct pt<sub>regs</sub></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">sys<sub>read</sub></td>
+<td class="org-left">unsigned`int</td>
+<td class="org-left">char</td>
+<td class="org-left">size<sub>t</sub></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">sys<sub>write</sub></td>
+<td class="org-left">unsigned int`</td>
+<td class="org-left">const char</td>
+<td class="org-left">size<sub>t</sub></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">sys<sub>open</sub></td>
+<td class="org-left">const char*</td>
+<td class="org-left">int</td>
+<td class="org-left">int</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">sys<sub>close</sub></td>
+<td class="org-left">unsigned int</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgd0055e2" class="outline-2">
+<h2 id="orgd0055e2">Instructions</h2>
+<div class="outline-text-2" id="text-orgd0055e2">
+</div>
+<div id="outline-container-org594a989" class="outline-3">
+<h3 id="org594a989">Move</h3>
+<div class="outline-text-3" id="text-org594a989">
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">mov</span> &lt;dest&gt;, &lt;src&gt;
+<span class="org-comment-delimiter">; </span><span class="org-comment">for example</span>
+
+<span class="org-function-name">mov</span> <span class="org-keyword">ax</span>, 42 <span class="org-comment-delimiter">; </span><span class="org-comment">the integer 42 is put into the 16 bit ax register</span>
+<span class="org-function-name">mov</span> <span class="org-keyword">cl</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>bvar<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">into the lower c register, a byte is copied from the address of bvar</span>
+<span class="org-function-name">mov</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>qvar<span class="org-rainbow-delimiters-depth-1">]</span>, rdx <span class="org-comment-delimiter">; </span><span class="org-comment">a quad word from the address of qvar is copied into the 64 bit d register.</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>Copies data</li>
+<li>Source and destination cannot both be in memory.</li>
+<li>when copying a double word into a 64 bit register, the upper portion of the register is set to zeros.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6763a27" class="outline-3">
+<h3 id="org6763a27">Address</h3>
+<div class="outline-text-3" id="text-org6763a27">
+<p>
+The load effective address command <code>lea</code> is used to put the address of a variable into a register.
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">lea</span> &lt;reg64&gt;, &lt;mem&gt;
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">for example</span>
+<span class="org-function-name">lea</span> <span class="org-keyword">rcx</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>bvar<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter">; </span><span class="org-comment">put the location of bvar into the rcx register</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6552ee0" class="outline-3">
+<h3 id="org6552ee0">Convert</h3>
+<div class="outline-text-3" id="text-org6552ee0">
+<p>
+Conversion instructions change a variable from one size to another. Narrowing conversions require no specific instructions since the lower portions of registers are directly accessible. 
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">mov</span> <span class="org-keyword">rax</span>, 50
+<span class="org-function-name">mov</span> <span class="org-keyword">byte</span> <span class="org-rainbow-delimiters-depth-1">[</span>bval<span class="org-rainbow-delimiters-depth-1">]</span>, al
+</pre>
+</div>
+<p>
+Widening conversions vary depending on the data types involved.
+</p>
+</div>
+<div id="outline-container-orgcc8f688" class="outline-4">
+<h4 id="orgcc8f688">widening - unsigned</h4>
+<div class="outline-text-4" id="text-orgcc8f688">
+<p>
+Unsigned numbers only take positive values, therefore when dealing with unsigned numbers the upper part of the memory location or register must be set to zero. 
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">mov</span> <span class="org-keyword">al</span>, 50
+<span class="org-function-name">mov</span> <span class="org-keyword">rbx</span>, 0
+<span class="org-function-name">mov</span> <span class="org-keyword">bl</span>, al
+</pre>
+</div>
+<p>
+There is an instruction especially for performing this: <code>movzx</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">movzx</span>  &lt;dest&gt;, &lt;src&gt;
+</pre>
+</div>
+<p>
+NB: This does not work when converting a quadword destination with a double word source operand. However, simply using mov in this situation will achieve the desired result since it will set the upper portion of the register or memory location to zeros.
+</p>
+</div>
+</div>
+<div id="outline-container-org04345b9" class="outline-4">
+<h4 id="org04345b9">widening - signed</h4>
+<div class="outline-text-4" id="text-org04345b9">
+<p>
+When the data is signed, the upper portion must be set to ether zeros or ones depending on the sign of the number. 
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">movsx</span> &lt;dest&gt;, &lt;src&gt; <span class="org-comment-delimiter">;</span><span class="org-comment">general form, used always except when converting between double and quad word.</span>
+<span class="org-function-name">movsxd</span> &lt;dest&gt;, &lt;src&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">used then converting from double to quadword </span>
+</pre>
+</div>
+<p>
+Specific registers also have their own signed widening conversion instructions:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">instruction</th>
+<th scope="col" class="org-left">use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cbw</td>
+<td class="org-left">from byte in al to word in ax</td>
+</tr>
+
+<tr>
+<td class="org-left">cwd</td>
+<td class="org-left">from word in ax to double word in dx:ax</td>
+</tr>
+
+<tr>
+<td class="org-left">cwde</td>
+<td class="org-left">from word in ax to double word in eaxy</td>
+</tr>
+
+<tr>
+<td class="org-left">cdq</td>
+<td class="org-left">from double word in eax to quadword in edx:eax</td>
+</tr>
+
+<tr>
+<td class="org-left">cdqe</td>
+<td class="org-left">from double word in eax to quadword in rax</td>
+</tr>
+
+<tr>
+<td class="org-left">cqo</td>
+<td class="org-left">from quadword in rax to double quadword in rdx:rax</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org4628cbe" class="outline-3">
+<h3 id="org4628cbe">Arithmetic</h3>
+<div class="outline-text-3" id="text-org4628cbe">
+</div>
+<div id="outline-container-orgba321a8" class="outline-4">
+<h4 id="orgba321a8">Addition</h4>
+<div class="outline-text-4" id="text-orgba321a8">
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">add</span> &lt;dest&gt;, &lt;src&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">this results in: &lt;dest&gt; = &lt;dest&gt; + &lt;src&gt;</span>
+</pre>
+</div>
+<p>
+Operands must be of the same type. Memory to memory addition cannot use the above. One of the operands must be moved into a register.
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">Num1 + Num2 (memory to memory) assuming that both are byte size.</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">al</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>Num1<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-function-name">add</span>  <span class="org-keyword">al</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>Num2<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">byte</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans<span class="org-rainbow-delimiters-depth-1">]</span>, al
+</pre>
+</div>
+<p>
+There is also a command for incriminating a value by 1.
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">inc</span> &lt;operand&gt;
+<span class="org-comment-delimiter">; </span><span class="org-comment">for example:</span>
+<span class="org-function-name">inc</span> <span class="org-keyword">rax</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">when incriminating an operand in memory, specify the size:</span>
+<span class="org-function-name">inc</span> <span class="org-keyword">byte</span> <span class="org-rainbow-delimiters-depth-1">[</span>bNum<span class="org-rainbow-delimiters-depth-1">]</span>
+</pre>
+</div>
+<p>
+When the numbers being added will result in a sum greater than the register size of the machine, it is necessary to add with a carry. In this situation the <code>Least Significant Quadword</code> is added with an <code>add</code> instruction, then the <code>Most Significant Quadword</code> is added with an <code>adc</code> (add with carry). The second addition must immediately follow the first so that the <code>carry flag</code> is not altered by anything else.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">dquad1</span>  <span class="org-keyword">ddq</span> 0x1A000000000000000
+<span class="org-function-name">dquad2</span>  <span class="org-keyword">ddq</span> 0x2C000000000000000
+<span class="org-function-name">dqsum</span>   <span class="org-keyword">ddq</span> 0
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">using the declarations above:</span>
+
+
+<span class="org-function-name">mov</span>  <span class="org-keyword">rax</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad1<span class="org-rainbow-delimiters-depth-1">]</span>    <span class="org-comment-delimiter">; </span><span class="org-comment">the first 64 bits of dquad1</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">rdx</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad1+8<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">the last 64 bits of dquad1</span>
+
+
+<span class="org-function-name">add</span>  <span class="org-keyword">rax</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad2<span class="org-rainbow-delimiters-depth-1">]</span>    <span class="org-comment-delimiter">; </span><span class="org-comment">add the first 64 bits of dquad2</span>
+<span class="org-function-name">adc</span>  <span class="org-keyword">rdx</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad2+8<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">add with carry the last 64 bits of dquad2</span>
+
+<span class="org-function-name">mov</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>dqSum<span class="org-rainbow-delimiters-depth-1">]</span>, rax      <span class="org-comment-delimiter">; </span><span class="org-comment">result is put into dqSum</span>
+<span class="org-function-name">mov</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>dqSum+8<span class="org-rainbow-delimiters-depth-1">]</span>, rdx
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3e74629" class="outline-4">
+<h4 id="org3e74629">Subtraction</h4>
+<div class="outline-text-4" id="text-org3e74629">
+<p>
+The subtraction commands are self-explanatory when taken with the above information on addition.
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">sub</span> &lt;dest&gt;, &lt;src&gt;
+<span class="org-function-name">dec</span> &lt;operand&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaea3ce6" class="outline-4">
+<h4 id="orgaea3ce6">Multiplication</h4>
+<div class="outline-text-4" id="text-orgaea3ce6">
+<p>
+There are different commands for multiplying signed or unsigned integers. Both typically produce double sized results. 
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org8d9d97e"></a>Unsigned Integer Multiplication<br />
+<div class="outline-text-5" id="text-org8d9d97e">
+<p>
+The general form is as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">mul</span>  &lt;src&gt;
+</pre>
+</div>
+<p>
+One of the operands must use an A register (al, ax, eax, rax) depending on size. The result is placed in the A (and possibly D) registers.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">size</th>
+<th scope="col" class="org-left">register</th>
+<th scope="col" class="org-left">operand</th>
+<th scope="col" class="org-left">output registers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">byte</td>
+<td class="org-left">al</td>
+<td class="org-left">op8</td>
+<td class="org-left">ah, al</td>
+</tr>
+
+<tr>
+<td class="org-left">word</td>
+<td class="org-left">ax</td>
+<td class="org-left">op16</td>
+<td class="org-left">dx, ax</td>
+</tr>
+
+<tr>
+<td class="org-left">double word</td>
+<td class="org-left">eax</td>
+<td class="org-left">op32</td>
+<td class="org-left">edx, eax</td>
+</tr>
+
+<tr>
+<td class="org-left">quad word</td>
+<td class="org-left">rax</td>
+<td class="org-left">op64</td>
+<td class="org-left">rdx, rax</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+For example, if two double words are multiplied, the result will be a quad word in dx:ax
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">dNumA</span> <span class="org-keyword">dd</span> 42000
+<span class="org-function-name">dNumB</span> <span class="org-keyword">dd</span> 73000
+<span class="org-function-name">Ans</span>   <span class="org-keyword">dq</span> 0
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">Using the above declarations</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">dNumA * dNumB</span>
+
+<span class="org-function-name">mov</span>  <span class="org-keyword">eax</span>, word <span class="org-rainbow-delimiters-depth-1">[</span>wNumA<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-function-name">mul</span>  <span class="org-keyword">dword</span> <span class="org-rainbow-delimiters-depth-1">[</span>wNumB<span class="org-rainbow-delimiters-depth-1">]</span>    <span class="org-comment-delimiter">; </span><span class="org-comment">result goes to edx:eax</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">dword</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans<span class="org-rainbow-delimiters-depth-1">]</span>, ax
+<span class="org-function-name">mov</span>  <span class="org-keyword">dword</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans+2<span class="org-rainbow-delimiters-depth-1">]</span>, bx
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org8c0cb8b"></a>Signed Integer multiplication<br />
+<div class="outline-text-5" id="text-org8c0cb8b">
+<p>
+Signed integer multiplication is more flex able with its operands / sizes. The destination must always be a register.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">imul</span> &lt;src&gt;
+<span class="org-function-name">imul</span> &lt;dest&gt;, &lt;src/imm&gt;
+<span class="org-function-name">imul</span> &lt;dest&gt;, &lt;src&gt;, &lt;imm&gt;
+</pre>
+</div>
+<ul class="org-ul">
+<li>When one operand is used then <code>imul</code> works like <code>mul</code>, but the operands are interpreted as signed.</li>
+<li>If two operands are used then the source and destination values are multiplied and the destination value is overwritten. In this case, the source may be an immediate value, a register or a location in memory. A byte size destination operand is not supported.</li>
+<li>When three operands are used, the last two are multiplied and the product is placed in the destination. The <code>src</code> must not be an immediate value. The <code>imm</code> must be an immediate value. The result is truncated to the size of the destination operand. Byte size destination is not supported.</li>
+</ul>
+</div>
+</li>
+
+<li><a id="org902c690"></a>Integer Division<br />
+<div class="outline-text-5" id="text-org902c690">
+<p>
+Division requires that the dividend is larger in data type size than the divisor. It is critical that the dividend is set correctly for division to work. For word, double word and quad word divisions the dividend requires both the <code>D</code> (for upper) and <code>A</code> (for lower) registers. The divisor can be a memory location or a register, not an intermediate. The result will be placed in the <code>A</code> register, the remainder will go into ether the <code>ah</code>, <code>dx</code>, <code>edx</code> or <code>rdx</code> registers. 
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Size</th>
+<th scope="col" class="org-left">Dividend registers</th>
+<th scope="col" class="org-left">Divisor</th>
+<th scope="col" class="org-left">result register</th>
+<th scope="col" class="org-left">remainder register</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Byte</td>
+<td class="org-left">ah, al</td>
+<td class="org-left">op8</td>
+<td class="org-left">al</td>
+<td class="org-left">ah</td>
+</tr>
+
+<tr>
+<td class="org-left">Word</td>
+<td class="org-left">dx, ax</td>
+<td class="org-left">op16</td>
+<td class="org-left">ax</td>
+<td class="org-left">dx</td>
+</tr>
+
+<tr>
+<td class="org-left">Double Word</td>
+<td class="org-left">edx, eax</td>
+<td class="org-left">op32</td>
+<td class="org-left">eax</td>
+<td class="org-left">edx</td>
+</tr>
+
+<tr>
+<td class="org-left">Quad Word</td>
+<td class="org-left">rdx, rax</td>
+<td class="org-left">op64</td>
+<td class="org-left">rax</td>
+<td class="org-left">rdx</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Signed and unsigned integer division instructions work in the same way but have different instructions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">div</span> &lt;src&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned</span>
+<span class="org-function-name">idiv</span> &lt;src&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">signed</span>
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">for example</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">ax</span>, word <span class="org-rainbow-delimiters-depth-1">[</span>NumA<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">dx</span>, 0
+<span class="org-function-name">mov</span>  <span class="org-keyword">bx</span>, 5
+<span class="org-function-name">div</span>  <span class="org-keyword">bx</span>
+<span class="org-function-name">mov</span>  <span class="org-keyword">word</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans<span class="org-rainbow-delimiters-depth-1">]</span>, ax
+</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb0a311d" class="outline-3">
+<h3 id="orgb0a311d">Logic</h3>
+<div class="outline-text-3" id="text-orgb0a311d">
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-comment-delimiter">;        </span><span class="org-comment">0101        0101         0101          </span>
+<span class="org-comment-delimiter">;        </span><span class="org-comment">0011        0011         0011         0011</span>
+<span class="org-comment-delimiter">;        </span><span class="org-comment">----        ----         ----         ----</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">and =&gt; 0001  or =&gt; 0111  xor =&gt; 0110  not =&gt; 1100</span>
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">&amp;</span>
+<span class="org-function-name">and</span> &lt;dest&gt;, &lt;src&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">both cannot be memory</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">||</span>
+<span class="org-function-name">or</span> &lt;dest&gt;, &lt;src&gt;   <span class="org-comment-delimiter">; </span><span class="org-comment">both cannot be memory</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">^</span>
+<span class="org-function-name">xor</span> &lt;dest&gt;, &lt;src&gt;   <span class="org-comment-delimiter">; </span><span class="org-comment">both cannot be memory</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">&#172;</span>
+<span class="org-function-name">not</span> &lt;op&gt;   <span class="org-comment-delimiter">; </span><span class="org-comment">op cannot be immediate</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7df851c" class="outline-3">
+<h3 id="org7df851c">Shift</h3>
+<div class="outline-text-3" id="text-org7df851c">
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">logical shifts</span>
+<span class="org-function-name">shl</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">shift left, imm or cl must between 1 and 64</span>
+<span class="org-function-name">shl</span> &lt;dest&gt;, cl
+
+<span class="org-function-name">shr</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">shift right, imm or cl must be between 1 and 64</span>
+<span class="org-function-name">shr</span> &lt;dest&gt;, cl
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">arithmetic shift</span>
+<span class="org-function-name">sal</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">left shift. Zero fills the space made:  0010 -&gt; 0100</span>
+<span class="org-function-name">sal</span> &lt;dest&gt;, cl 
+
+
+<span class="org-function-name">sar</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">right shift. Sign bit fills the space made:  1101 -&gt; 1110</span>
+<span class="org-function-name">sar</span> &lt;dest&gt;, cl
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org576a9e1" class="outline-3">
+<h3 id="org576a9e1">Rotate</h3>
+<div class="outline-text-3" id="text-org576a9e1">
+<p>
+Rotations are essentially shifts that put the bits that would be shifted off the end onto the beginning, or vica verca.
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">rol</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">rotate left</span>
+<span class="org-function-name">rol</span> &lt;dest&gt; cl
+
+
+<span class="org-function-name">ror</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">rotate right</span>
+<span class="org-function-name">ror</span> &lt;dest&gt; cl
+<span class="org-comment-delimiter">; </span><span class="org-comment">for example:</span>
+
+<span class="org-function-name">rol</span> <span class="org-keyword">rcx</span>, 32
+<span class="org-function-name">ror</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>qNum<span class="org-rainbow-delimiters-depth-1">]</span>, cl
+</pre>
+</div>
+<p>
+the <code>imm</code> or the value in the <code>cl</code> register must be between 1 and 64. The destination operand cannot be immediate.
+</p>
+</div>
+</div>
+<div id="outline-container-org668a40c" class="outline-3">
+<h3 id="org668a40c">Control instructions</h3>
+<div class="outline-text-3" id="text-org668a40c">
+<p>
+These include structures such as if statements and looping.
+</p>
+</div>
+<div id="outline-container-orgfb4928f" class="outline-4">
+<h4 id="orgfb4928f">Labels</h4>
+<div class="outline-text-4" id="text-orgfb4928f">
+<p>
+These are targets for jumps. These should start with a letter, and my include numbers, underscores, and should be followed by a colon. In <code>YASM</code> labels are case sensitive.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4e330b2" class="outline-4">
+<h4 id="org4e330b2">Unconditional control instructions.</h4>
+<div class="outline-text-4" id="text-org4e330b2">
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">jmp</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">moves execution in the program to the label.</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7705c84" class="outline-4">
+<h4 id="org7705c84">Conditional Control Instructions</h4>
+<div class="outline-text-4" id="text-org7705c84">
+<p>
+These are made up of two instructions that must happen one immediately after the other. First there has to be some sort of comparison, then the jump instruction. The comparison will compare two operands and store the result in the <code>rFlag</code> register.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">cmp</span> &lt;op1&gt;, &lt;op2&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">operands must be of the same size.</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">op1 must not be immediate, op2 may be immediate.</span>
+</pre>
+</div>
+<p>
+This should be followed by a jump instruction. 
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">je</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">if op1 == op2</span>
+<span class="org-function-name">jne</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">if op1 != op2</span>
+<span class="org-function-name">jl</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &lt; op2</span>
+<span class="org-function-name">jle</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &lt;= op2</span>
+<span class="org-function-name">jg</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &gt; op2</span>
+<span class="org-function-name">jge</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &gt;= op2</span>
+<span class="org-function-name">jb</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &lt; op2</span>
+<span class="org-function-name">jbe</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &lt;= op2</span>
+<span class="org-function-name">ja</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &gt; op2</span>
+<span class="org-function-name">jae</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &gt;= op2</span>
+</pre>
+</div>
+
+
+<p>
+For example, this is a possible implementation for an if else statement:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">using the following declerations:</span>
+
+  <span class="org-keyword">TRUE</span>    equ   1
+  <span class="org-keyword">FALSE</span>   equ   0
+  <span class="org-keyword">x</span>       dd    0
+  <span class="org-keyword">y</span>       dd    0
+  <span class="org-keyword">ans</span>     dd    0 
+  <span class="org-keyword">errFlag</span> db    FALSE
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">-------</span>
+
+  <span class="org-keyword">cmp</span>    dword <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-1">]</span>, 0    <span class="org-comment-delimiter">; </span><span class="org-comment">compare the contents of x to 0</span>
+  <span class="org-keyword">je</span>     doElse          <span class="org-comment-delimiter">; </span><span class="org-comment">if eaual go to location deElse </span>
+  <span class="org-keyword">mov</span>    eax, dword <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">... the "not equal branch". Put x in eax</span>
+  <span class="org-keyword">cdq</span>                    <span class="org-comment-delimiter">; </span><span class="org-comment">change dword into qword (prep for division)</span>
+  <span class="org-keyword">idiv</span>   dword <span class="org-rainbow-delimiters-depth-1">[</span>y<span class="org-rainbow-delimiters-depth-1">]</span>       
+  <span class="org-keyword">mov</span>    dword <span class="org-rainbow-delimiters-depth-1">[</span>ans<span class="org-rainbow-delimiters-depth-1">]</span> eax
+  <span class="org-keyword">mov</span>    byte <span class="org-rainbow-delimiters-depth-1">[</span>errFlag<span class="org-rainbow-delimiters-depth-1">]</span>
+  <span class="org-keyword">jmp</span>    skpElse
+<span class="org-function-name">doElse</span>:
+  <span class="org-keyword">mov</span>    dword <span class="org-rainbow-delimiters-depth-1">[</span>ans<span class="org-rainbow-delimiters-depth-1">]</span>, 0
+  <span class="org-keyword">mov</span>    byte <span class="org-rainbow-delimiters-depth-1">[</span>errflg<span class="org-rainbow-delimiters-depth-1">]</span>, TRUE  
+<span class="org-function-name">skpElse</span>:
+</pre>
+</div>
+<p>
+Notes for the above example:
+</p>
+<ol class="org-ol">
+<li>since using signed division <code>idiv</code>, conversion was required: <code>cdq</code>.</li>
+<li><code>ebx</code> was overwritten.</li>
+</ol>
+
+<p>
+Conditional jumps can be adjacent. for example:
+</p>
+<div class="org-src-container">
+<pre class="src src-asm">...
+   <span class="org-keyword">cmp</span> dword <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-1">]</span>, 100
+   <span class="org-keyword">je</span>  equalsJump
+   <span class="org-keyword">jl</span>  lessThanJump
+   <span class="org-keyword">jg</span>  greaterThanJump
+...
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6811c50" class="outline-4">
+<h4 id="org6811c50">Jump Range</h4>
+<div class="outline-text-4" id="text-org6811c50">
+<p>
+For the above <code>short jumps</code> the target label must be no more than 128 bytes from the jump call. However, this limit does not apply for the unconditional jump <code>jmp</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd7a35b3" class="outline-3">
+<h3 id="orgd7a35b3">Iteration</h3>
+<div class="outline-text-3" id="text-orgd7a35b3">
+<p>
+Iteration commands can be used to make simple loops. For example, the following codeblock shows a loop for summing odd integers within a range:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm">  <span class="org-keyword">lpCnt</span>  dq  15
+  <span class="org-keyword">sum</span>    dq  0
+
+<span class="org-comment-delimiter">; </span><span class="org-comment">using the above declerations:</span>
+  <span class="org-keyword">mov</span> rcx, qword <span class="org-rainbow-delimiters-depth-1">[</span>1pCnt<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">loop Counter</span>
+  <span class="org-keyword">mov</span> rax, 1              <span class="org-comment-delimiter">; </span><span class="org-comment">odd integer counter</span>
+<span class="org-function-name">sumLoop</span>:
+  <span class="org-keyword">add</span> qword <span class="org-rainbow-delimiters-depth-1">[</span>sum<span class="org-rainbow-delimiters-depth-1">]</span>, rax    <span class="org-comment-delimiter">; </span><span class="org-comment">sum current odd interger</span>
+  <span class="org-keyword">add</span> rax, 2              <span class="org-comment-delimiter">; </span><span class="org-comment">set next odd integer</span>
+  <span class="org-keyword">dec</span> rcx                 <span class="org-comment-delimiter">; </span><span class="org-comment">decrement loop cionter</span>
+  <span class="org-keyword">cmp</span> rcx, 0              <span class="org-comment-delimiter">; </span><span class="org-comment">decrement loop counter</span>
+  <span class="org-keyword">jne</span> sumLoop             
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org781e40e" class="outline-3">
+<h3 id="org781e40e">Loop</h3>
+<div class="outline-text-3" id="text-org781e40e">
+<p>
+There is a loop instruction which simplifies iteration. It will automatically decriment the <code>rcx</code> register and perform a comparison to 0, jumping when <code>rcx</code> != 0.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">summing n odd numbers</span>
+
+  <span class="org-keyword">mov</span> rcx qword <span class="org-rainbow-delimiters-depth-1">[</span>naxN<span class="org-rainbow-delimiters-depth-1">]</span>   <span class="org-comment-delimiter">; </span><span class="org-comment">loop counter</span>
+  <span class="org-keyword">mov</span> rax, 1             <span class="org-comment-delimiter">; </span><span class="org-comment">pdd int counter</span>
+<span class="org-function-name">sumLoop</span>:
+  <span class="org-keyword">add</span> qword <span class="org-rainbow-delimiters-depth-1">[</span>sum<span class="org-rainbow-delimiters-depth-1">]</span>, rax   <span class="org-comment-delimiter">; </span><span class="org-comment">sum current odd int.</span>
+  <span class="org-keyword">add</span> rax, 2             <span class="org-comment-delimiter">; </span><span class="org-comment">next odd int</span>
+  <span class="org-keyword">loop</span> sumLoop 
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7b6ee83" class="outline-3">
+<h3 id="org7b6ee83">Example program using intructions</h3>
+<div class="outline-text-3" id="text-org7b6ee83">
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">section</span> .data
+  <span class="org-keyword">SUCCESS</span>      equ  0
+  <span class="org-keyword">SYS_exit</span>     equ  60
+  <span class="org-keyword">n</span>            dd   10
+  <span class="org-keyword">sumOfSquares</span> dq   0 
+<span class="org-function-name">section</span> .text
+<span class="org-function-name">global</span> <span class="org-keyword">start</span>
+<span class="org-function-name">_start</span>:
+  <span class="org-keyword">mov</span>         rbx, 1
+  <span class="org-keyword">mov</span>         ecx, dword <span class="org-rainbow-delimiters-depth-1">[</span>n<span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-function-name">sumloop</span>:
+  <span class="org-keyword">mov</span>         rax, rbx
+  <span class="org-keyword">mul</span>         rax
+  <span class="org-keyword">add</span>         qword <span class="org-rainbow-delimiters-depth-1">[</span>sumOfSquares<span class="org-rainbow-delimiters-depth-1">]</span>, rax
+  <span class="org-keyword">inc</span>         rbx
+  <span class="org-keyword">loop</span>        sumLoop
+<span class="org-function-name">last</span>: 
+  <span class="org-keyword">mov</span>         rax, SYS_exit
+  <span class="org-keyword">mov</span>         rdi, SUCCESS
+  <span class="org-keyword">syscall</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org4fa8138" class="outline-2">
+<h2 id="org4fa8138">Calling C libraries</h2>
+<div class="outline-text-2" id="text-org4fa8138">
+<p>
+C librries can be called from assembly provided they are compiled together. For example:
+</p>
+<div class="org-src-container">
+<pre class="src src-asm"><span class="org-function-name">extern</span> <span class="org-keyword">printf</span>
+
+<span class="org-function-name">section</span> .data
+  <span class="org-keyword">msg</span>: db <span class="org-string">"Hello World"</span>, 0<span class="org-comment-delimiter">; </span><span class="org-comment">Zero is used as a null termainator</span>
+  <span class="org-keyword">fmt</span>: db <span class="org-string">"%s"</span>, 10, 0<span class="org-comment-delimiter">; </span><span class="org-comment">printf formatting followed by newline and null terminator</span>
+
+<span class="org-function-name">section</span> .text
+  <span class="org-keyword">global</span> main
+
+<span class="org-function-name">main</span>:
+  <span class="org-keyword">push</span> rbp <span class="org-comment-delimiter">; </span><span class="org-comment">push stack</span>
+<span class="org-comment-delimiter">; </span><span class="org-comment">Set up params for call to printf</span>
+  <span class="org-keyword">mov</span> rdi, fmt
+  <span class="org-keyword">mov</span> rsi, msg
+  <span class="org-keyword">mov</span> rax, 0
+  <span class="org-keyword">call</span> printf
+
+  <span class="org-keyword">pop</span> rbp <span class="org-comment-delimiter">; </span><span class="org-comment">pop stack</span>
+  <span class="org-keyword">mov</span> rax, 0 <span class="org-comment-delimiter">; </span><span class="org-comment">exit code 0</span>
+  <span class="org-keyword">ret</span> <span class="org-comment-delimiter">; </span><span class="org-comment">return</span>
+</pre>
+</div>
+
+<p>
+To compile and run the above using NASM and GCC:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ nasm calling_c.asm -f elf64 -o calling_c.o
+
+$ gcc -g -no-pie -o calling_c calling_c.o
+
+$ ./calling_c 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaa9fac8" class="outline-2">
+<h2 id="orgaa9fac8">Related Topics</h2>
+<div class="outline-text-2" id="text-orgaa9fac8">
+</div>
+<div id="outline-container-org56f4b20" class="outline-3">
+<h3 id="org56f4b20">Addressing data in memory</h3>
+<div class="outline-text-3" id="text-org56f4b20">
+<p>
+The process through which execution is controlled is called the <code>fetch-decode-execute cycle</code>. The instruction is fetched from memory. The processor can access one or more bytes of memory at a given time.
+The processor stores data in <code>reverse-byte sequence</code>.
+</p>
+
+<p>
+For example, for hex number 0725H: 
+</p>
+<pre class="example">
+In register: 
+|--07--|--25--|
+In memory: 
+|--25--|--07--|
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2e5056c" class="outline-3">
+<h3 id="org2e5056c">Memory Hierarchy</h3>
+<div class="outline-text-3" id="text-org2e5056c">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Shows access speeds for different types of storage</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Memory Unit</th>
+<th scope="col" class="org-left">Example Size</th>
+<th scope="col" class="org-left">Typical Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Processor Registers</td>
+<td class="org-left">16 to 64 bit registers</td>
+<td class="org-left">~ 1 nanosecond</td>
+</tr>
+
+<tr>
+<td class="org-left">Cache Memory</td>
+<td class="org-left">4 - 8+  Megabytes (L1 and L2)</td>
+<td class="org-left">~ 5 to 60 nanoseconds</td>
+</tr>
+
+<tr>
+<td class="org-left">Primary Storage (RAM)</td>
+<td class="org-left">2 - 32 Gigabytes</td>
+<td class="org-left">~ 100 to 150 nanoseconds</td>
+</tr>
+
+<tr>
+<td class="org-left">Secondary storage (HDD)</td>
+<td class="org-left">500 Gigabytes to 4+ Terabytes</td>
+<td class="org-left">~ 3-15 milliseconds</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org8c35c20" class="outline-3">
+<h3 id="org8c35c20">Integer representation</h3>
+<div class="outline-text-3" id="text-org8c35c20">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">size name</th>
+<th scope="col" class="org-left">size</th>
+<th scope="col" class="org-left">unsigned range</th>
+<th scope="col" class="org-left">signed range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">byte</td>
+<td class="org-left">2<sup>8</sup></td>
+<td class="org-left">0 - 255</td>
+<td class="org-left">-128 - 127</td>
+</tr>
+
+<tr>
+<td class="org-left">word</td>
+<td class="org-left">2<sup>16</sup></td>
+<td class="org-left">0 - 65535</td>
+<td class="org-left">-32,768 - 32767</td>
+</tr>
+
+<tr>
+<td class="org-left">double word</td>
+<td class="org-left">2<sup>32</sup></td>
+<td class="org-left">0 - 429497294</td>
+<td class="org-left">-2147483648 2147483647</td>
+</tr>
+
+<tr>
+<td class="org-left">quadword</td>
+<td class="org-left">2<sup>64</sup></td>
+<td class="org-left">0 - 2<sup>64</sup> -1</td>
+<td class="org-left">-(2<sup>63</sup>) - 2<sup>63</sup> -1</td>
+</tr>
+
+<tr>
+<td class="org-left">double quadword</td>
+<td class="org-left">2<sup>128</sup></td>
+<td class="org-left">0  - 2<sup>128</sup> -1</td>
+<td class="org-left">-(2<sup>127</sup>) - 2<sup>127</sup> -1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org39b61ac" class="outline-3">
+<h3 id="org39b61ac">Two's Complement</h3>
+<div class="outline-text-3" id="text-org39b61ac">
+<p>
+Signed numbers are often represented in twos complement form. A negative representation of a positive number can be made by flipping the bits and then adding 1. For example:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">9</th>
+<th scope="col" class="org-right">00001001</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-right">step 1</th>
+<th scope="col" class="org-right">11110110</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-right">step 2</th>
+<th scope="col" class="org-right">11110111</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">-9</td>
+<td class="org-right">11110111</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org947f54a" class="outline-2">
+<h2 id="org947f54a">Handy Links</h2>
+<div class="outline-text-2" id="text-org947f54a">
+<p>
+<a href="https://www.tutorialspoint.com/assembly_programming/">Link to tutorial</a>
+<a href="http://www.egr.unlv.edu/~ed/assembly64.pdf">Another good tutorial</a>
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>

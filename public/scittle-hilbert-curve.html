@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header><a href="./">home</a> <a href="#top">top</a> </header>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">LZ</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc017b66">what is a hilbert curve?</a></li>
+<li><a href="#org8226d93">what is scittle?</a>
+<ul>
+<li><a href="#org9c91714">Aside</a></li>
+</ul>
+</li>
+<li><a href="#org7318826">handle user input code</a></li>
+<li><a href="#org9cbce5b">drawing</a></li>
+<li><a href="#org83d1300">making the hilbert curve</a></li>
+</ul>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"
+        type="application/javascript"></script>
+<script type="application/x-scittle">
+  (defn my-alert []
+   (js/alert "You clicked!"))
+  ;; export function to use from JavaScript:
+  (set! (.-my_alert js/window) my-alert)
+</script>
+
+<p>
+Let's make a hilbert curve on is page in Clojure (the one 
+&#10084) and allow the reader to manipulate the code in-place.
+</p>
+
+<div id="outline-container-orgc017b66" class="outline-2">
+<h2 id="orgc017b66">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-orgc017b66">
+<p>
+A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
+</p>
+
+
+<div id="org43d1842" class="figure">
+<p><img src="images/HC-3-iterations.png" alt="HC-3-iterations.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8226d93" class="outline-2">
+<h2 id="org8226d93">what is scittle?</h2>
+<div class="outline-text-2" id="text-org8226d93">
+<p>
+<a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
+</p>
+</div>
+
+<div id="outline-container-org9c91714" class="outline-3">
+<h3 id="org9c91714">Aside</h3>
+<div class="outline-text-3" id="text-org9c91714">
+<p>
+It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">#+begin_export html
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"</span>
+        <span class="org-variable-name">type</span>=<span class="org-string">"application/javascript"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
+  (defn my-alert []
+   (js/alert "You clicked!"))
+  ;; export function to use from JavaScript:
+  (set! (.-my_alert js/window) my-alert)
+&lt;/<span class="org-function-name">script</span>&gt;
+
+&lt;<span class="org-function-name">body</span>&gt;
+  &lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"my_alert()"</span>&gt;
+    Click me!
+  &lt;/<span class="org-function-name">button</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
+#+end_export
+</pre>
+</div>
+
+<body>
+  <button onclick="my_alert()">
+    Click me!
+  </button>
+</body>
+
+
+<p>
+Then I run my regular <a href="how-this-blog-works.html">build script</a> and away we go, running Clojure in my blog post via skittle via js via org-mode-export with practically no extra configuration at all. That's wild.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7318826" class="outline-2">
+<h2 id="org7318826">handle user input code</h2>
+<div class="outline-text-2" id="text-org7318826">
+<p>
+First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
+
+(defn set-output-area [v output-id]
+  (-&gt; (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-&gt; input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(set! (.-read_input js/window)
+      #(set-output-area (read-eval-input "code-area")
+                        "output-area"))
+
+&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"code-area"</span>
+          <span class="org-variable-name">class</span>=<span class="org-string">"code-textarea"</span>&gt;
+(take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
+&lt;/<span class="org-function-name">textarea</span>&gt;
+&lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_input()"</span>&gt;eval&lt;/<span class="org-function-name">button</span>&gt;
+&lt;<span class="org-function-name">p</span> <span class="org-variable-name">id</span>=<span class="org-string">"output-area"</span>&gt;...&lt;/<span class="org-function-name">p</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
+</pre>
+</div>
+
+<script type="application/x-scittle">
+
+(defn set-output-area [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(set! (.-read_input js/window)
+      #(set-output-area (read-eval-input "code-area")
+                        "output-area"))
+ 
+</script>
+<body>
+<textarea id="code-area"
+          class="code-textarea"
+	  spellcheck="false">
+(take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
+</textarea>
+<button onclick="read_input()">eval</button>
+<p id="output-area">...</p>
+</body>
+
+<p>
+Right nice.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9cbce5b" class="outline-2">
+<h2 id="org9cbce5b">drawing</h2>
+<div class="outline-text-2" id="text-org9cbce5b">
+<p>
+I think the easiest way to do this will be with <code>canvas</code>.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"first-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"400"</span> <span class="org-variable-name">height</span>=<span class="org-string">"400"</span> <span class="org-variable-name">class</span>=<span class="org-string">"canvas"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
+
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;  
+(def c (js/document.getElementById "first-canvas"))
+(def ctx (.getContext c "2d"))
+
+(.moveTo ctx 50 50)
+(.lineTo ctx 50 150)
+(.lineTo ctx 150 150)
+(.lineTo ctx 150 50)
+(.stroke ctx)
+&lt;/<span class="org-function-name">script</span>&gt;
+</pre>
+</div>
+
+
+
+<canvas id="first-canvas" width="200" height="200" class="canvas"></canvas>
+
+<script type="application/x-scittle">  
+(def c (js/document.getElementById "first-canvas"))
+(def ctx (.getContext c "2d"))
+
+(.moveTo ctx 50 50)
+(.lineTo ctx 50 150)
+(.lineTo ctx 150 150)
+(.lineTo ctx 150 50)
+(.stroke ctx)
+</script>
+
+<p>
+Let's have it so that the user can pass in an vector of points that the line will go through:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"points-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"200"</span> <span class="org-variable-name">height</span>=<span class="org-string">"200"</span> <span class="org-variable-name">class</span>=<span class="org-string">"canvas"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
+
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
+
+(def c (js/document.getElementById "user-points-canvas"))
+(def ctx (.getContext c "2d"))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-&gt; input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn draw-line-from-points [context points]
+  (.clearRect context 0 0 (.-width c) (.-height c))
+  (.beginPath context)
+  (.moveTo context (-&gt; points first first) (-&gt; points first second))
+  (doseq [[x y] (rest points)]
+    (.lineTo context x y))
+  (.stroke context))
+
+(set! (.-read_points js/window)
+      #(-&gt;&gt; (read-eval-input "points-input")
+            (draw-line-from-points ctx)))
+
+&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"points-input"</span>
+          <span class="org-variable-name">class</span>=<span class="org-string">"code-textarea"</span>&gt;
+[[50 50] [50 150] [150 150] [150 50]]
+&lt;/<span class="org-function-name">textarea</span>&gt;
+&lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_points()"</span>&gt;Draw points&lt;/<span class="org-function-name">button</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
+</pre>
+</div>
+
+<canvas id="points-canvas" width="200" height="200" class="canvas"></canvas>
+
+<script type="application/x-scittle">
+
+(def c (js/document.getElementById "points-canvas"))
+(def ctx (.getContext c "2d"))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn draw-line-from-points [context points]
+  (.clearRect context 0 0 (.-width c) (.-height c))
+  (.beginPath context)
+  (.moveTo context (-> points first first) (-> points first second))
+  (doseq [[x y] (rest points)]
+    (.lineTo context x y))
+  (.stroke context))
+
+(set! (.-read_points js/window)
+      #(->> (read-eval-input "points-input")
+            (draw-line-from-points ctx)))
+
+</script>
+<body>
+<textarea id="points-input"
+          class="code-textarea"
+	  spellcheck="false">
+[[50 50] [50 150] [150 150] [150 50]]
+</textarea>
+<button onclick="read_points()">Draw points</button>
+</body>
+
+<p>
+Now it's just a matter of choosing the right points.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org83d1300" class="outline-2">
+<h2 id="org83d1300">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-org83d1300">
+<p>
+How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
+</p>
+
+<p>
+Here's the details of that mapping:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">rules</span> <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:A</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:B</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:B</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:A</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:C</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:D</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:D</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:C</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
+
+<p>
+So each path has four points we can think about it as tracing three sides of a square in a specific order. Let's say the origin is top-left, then the path for <code>:A</code> is from the origin, across the top, down the right side and from right to left across the bottom. The sides and the order we go through the points is all significant.
+</p>
+
+<p>
+Let's think about our canvas as a square split up into square cells. The number of cells is controlled by the number of iterations we perform (4<sup>n</sup>). Each cell contains a pattern, we need to have the right order of cells and the right pattern for each. So we'll aim for a sequence of <code>cells</code>, where a <code>cell</code> is an [x, y] vector identifying the cell, and a pattern. Here's the zero'th iteration with a single cell in it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">init</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:cell</span> <span class="org-rainbow-delimiters-depth-4">[</span>0 0<span class="org-rainbow-delimiters-depth-4">]</span> <span class="org-clojure-keyword">:pattern</span> <span class="org-clojure-keyword">:A</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
+
+<p>
+To turn this into the next iteration we need to subdivide the space into four cells, and then add a pattern for each one:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">-&gt;subcells</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:keys</span> <span class="org-rainbow-delimiters-depth-4">[</span>cell pattern<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>top-left-subcell <span class="org-rainbow-delimiters-depth-4">(</span>map <span class="org-rainbow-delimiters-depth-5">(</span>partial * 2<span class="org-rainbow-delimiters-depth-5">)</span> cell<span class="org-rainbow-delimiters-depth-4">)</span>
+        path-step-&gt;subcells <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>path-step<span class="org-rainbow-delimiters-depth-5">]</span>
+                              <span class="org-rainbow-delimiters-depth-5">(</span>map + top-left-subcell
+                                     path-step<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> 
+        path <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;&gt;</span> rules
+                  pattern
+                  <span class="org-clojure-keyword">:path</span>
+                  <span class="org-rainbow-delimiters-depth-5">(</span>map path-step-&gt;subcells<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        cell-patterns <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;</span> rules pattern <span class="org-clojure-keyword">:next-iteration</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>map <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>cell pattern<span class="org-rainbow-delimiters-depth-5">]</span>
+           <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:cell</span> cell <span class="org-clojure-keyword">:pattern</span> pattern<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         path
+         cell-patterns<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span>map -&gt;subcells init<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; (({:cell (0 0), :pattern :D}</span>
+<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (0 1), :pattern :A}</span>
+<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 1), :pattern :A}</span>
+<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 0), :pattern :B}))</span>
+</pre>
+</div>
+
+<p>
+Okay, now we would like to iterate that, each time concatenating the results into a single sequence. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-cells</span> <span class="org-rainbow-delimiters-depth-2">[</span>iterations<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-3">(</span>iterate #<span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;&gt;</span> <span class="org-variable-name">%</span> <span class="org-rainbow-delimiters-depth-5">(</span>map -&gt;subcells<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>apply concat<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> init<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>nth iterations<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-cells 2<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ({:cell (0 0), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 0), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 1), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 1), :pattern :C}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 2), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 2), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 2), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 2), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 1), :pattern :C}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 1), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 0), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 0), :pattern :A})</span>
+</pre>
+</div>
+
+<p>
+Lovely. Okay we don't care about the patterns any more once we have finished iterating, but we do want to change from cells to points on the canvas. Let's grab the ordered cells and use the canvas dimensions to turn them into points.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">cells-&gt;points</span> <span class="org-rainbow-delimiters-depth-2">[</span>cells iterations canvas-width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>width-in-cells <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">js</span>/Math.pow 2 iterations<span class="org-rainbow-delimiters-depth-4">)</span>
+        step-width <span class="org-rainbow-delimiters-depth-4">(</span>/ canvas-width width-in-cells<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> cells
+         <span class="org-rainbow-delimiters-depth-4">(</span>map <span class="org-clojure-keyword">:cell</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>map #<span class="org-rainbow-delimiters-depth-5">(</span>map * 1% 2%<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>repeat <span class="org-rainbow-delimiters-depth-6">[</span>step-width step-width<span class="org-rainbow-delimiters-depth-6">]</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-points</span> <span class="org-rainbow-delimiters-depth-2">[</span>iterations canvas-width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-3">(</span>hilbert-curve-cells iterations<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>cells-&gt;points iterations canvas-width<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-points 2 400<span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ((0.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 0.0))</span>
+
+</pre>
+</div>
+
+<canvas id="hilbert-canvas"
+        width="600"
+	height="600"
+	class="canvas"></canvas>
+
+<script type="application/x-scittle">
+
+(def hc (js/document.getElementById "hilbert-canvas"))
+(def hctx (.getContext hc "2d"))
+(set! (.-lineWidth hctx 20))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn draw-line-from-points [context points]
+  (.clearRect context 0 0 (.-width hc) (.-height hc))
+  (.beginPath context)
+  (.moveTo context (-> points first first) (-> points first second))
+  (doseq [[x y] (rest points)]
+    (.lineTo context x y))
+  (.stroke context))
+
+(set! (.-read_hilbert_points js/window)
+      #(->> (read-eval-input "hilbert-input")
+            (draw-line-from-points hctx)))
+
+</script>
+<body>
+<textarea id="hilbert-input"
+          class="code-textarea"
+	  spellcheck="false">
+(def rules 
+  {:A {:path [[0 0] [0 1] [1 1] [1 0]]
+   :next-iteration [:D :A :A :B]}
+   :B {:path [[1 1] [0 1] [0 0] [1 0]]
+   :next-iteration [:C :B :B :A]}
+   :C {:path [[1 1] [1 0] [0 0] [0 1]]
+   :next-iteration [:B :C :C :D]}
+   :D {:path [[0 0] [1 0] [1 1] [0 1]]
+   :next-iteration [:A :D :D :C]}})
+   
+(def init [{:cell [0 0] :pattern :A}])
+
+(defn ->subcells
+  [{:keys [cell pattern]}]
+  (let [top-left-subcell (map (partial * 2) cell)
+        path-step->subcells (fn [path-step]
+                              (map + top-left-subcell
+                                     path-step)) 
+        path (->> rules
+                  pattern
+                  :path
+                  (map path-step->subcells))
+        cell-patterns (-> rules pattern :next-iteration)]
+    (map (fn [cell pattern]
+           {:cell cell :pattern pattern})
+         path
+         cell-patterns)))
+
+(defn hilbert-curve-cells [iterations]
+  (-> (iterate #(->> % (map ->subcells) (apply concat)) init)
+      (nth iterations)))
+
+(defn cells->points [cells iterations canvas-width]
+  (let [width-in-cells (js/Math.pow 2 iterations)
+        step-width (/ canvas-width width-in-cells)]
+    (->> cells
+         (map :cell)
+         (map #(map * %1 %2) (repeat [step-width step-width])))))
+
+(defn hilbert-curve-points [iterations canvas-width]
+  (-> (hilbert-curve-cells iterations)
+      (cells->points iterations canvas-width)))
+
+(hilbert-curve-points 6 600)
+
+</textarea>
+<button onclick="read_hilbert_points()">Draw points</button>
+</body>
+
+<p>
+That's it. Muck about with the code and see what results you can get.
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>
