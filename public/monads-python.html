@@ -200,38 +200,38 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org006a16a">Implementing Monads in Python</a>
+<li><a href="#org384e44f">Implementing Monads in Python</a>
 <ul>
-<li><a href="#org9b899b2">What is a monad?</a></li>
-<li><a href="#orgb01dc27">The non-monadic way</a></li>
-<li><a href="#org870d672">Higher order functions</a></li>
-<li><a href="#orgd308a76">New capabilities</a></li>
-<li><a href="#orgb4f79ae">Just DRY it up a bit</a></li>
-<li><a href="#org96bae0b">monaDONE</a></li>
-<li><a href="#orgf62457f">Maybe monad</a></li>
-<li><a href="#orgce177a3">Monad laws</a>
+<li><a href="#org7b46e31">What is a monad?</a></li>
+<li><a href="#org00c0987">The non-monadic way</a></li>
+<li><a href="#org9077aca">Higher order functions</a></li>
+<li><a href="#org4fe4c3e">New capabilities</a></li>
+<li><a href="#orgc6720f4">Just DRY it up a bit</a></li>
+<li><a href="#orgb6728c9">monaDONE</a></li>
+<li><a href="#orgd8075dc">Maybe monad</a></li>
+<li><a href="#org534509b">Monad laws</a>
 <ul>
-<li><a href="#org5cb4167">ret is a left-identity for bind</a></li>
-<li><a href="#org7b02132">ret is also a right-identity for bind</a></li>
-<li><a href="#org191940f">bind is associative</a></li>
+<li><a href="#org850790d">ret is a left-identity for bind</a></li>
+<li><a href="#orgd3bdbdb">ret is also a right-identity for bind</a></li>
+<li><a href="#org6e35e2a">bind is associative</a></li>
 </ul>
 </li>
-<li><a href="#org59add7b">Objections</a>
+<li><a href="#orgd5c9d67">Objections</a>
 <ul>
-<li><a href="#org487b4a8">This is still more complicated than just adding those extra capabilities by hand</a></li>
-<li><a href="#orgb6d1f90">This is not pythonic™</a></li>
+<li><a href="#orga10690d">This is still more complicated than just adding those extra capabilities by hand</a></li>
+<li><a href="#org630670e">This is not pythonic™</a></li>
 </ul>
 </li>
-<li><a href="#org33ed6e1">What else can it do?</a></li>
-<li><a href="#orgdd4d380">Functional Python</a></li>
+<li><a href="#org91732d2">What else can it do?</a></li>
+<li><a href="#org3972390">Functional Python</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org006a16a" class="outline-2">
-<h2 id="org006a16a">Implementing Monads in Python</h2>
-<div class="outline-text-2" id="text-org006a16a">
+<div id="outline-container-org384e44f" class="outline-2">
+<h2 id="org384e44f">Implementing Monads in Python</h2>
+<div class="outline-text-2" id="text-org384e44f">
 <p>
 The idea of this article is to explain the intuition for monads using higher-order functions as the main building blocks. I decided to do it in Python becuase it's not a "functional" language.
 </p>
@@ -241,18 +241,18 @@ I'm not saying you should write Python like this, I'm just saying that you could
 </p>
 </div>
 
-<div id="outline-container-org9b899b2" class="outline-3">
-<h3 id="org9b899b2">What is a monad?</h3>
-<div class="outline-text-3" id="text-org9b899b2">
+<div id="outline-container-org7b46e31" class="outline-3">
+<h3 id="org7b46e31">What is a monad?</h3>
+<div class="outline-text-3" id="text-org7b46e31">
 <p>
 We will learn by doing rather than dry definitions, but as a bit of colour to start with: Monads are a functional programming design pattern used to reduce boilerplate code and abstract away side-effects, among other things. It comes from a field of maths called Category Theory which has seeded many concepts found in functional programming.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb01dc27" class="outline-3">
-<h3 id="orgb01dc27">The non-monadic way</h3>
-<div class="outline-text-3" id="text-orgb01dc27">
+<div id="outline-container-org00c0987" class="outline-3">
+<h3 id="org00c0987">The non-monadic way</h3>
+<div class="outline-text-3" id="text-org00c0987">
 <p>
 Let's start with some primitive value in Python; a number or string or whatever. Now, we could pass around that value, do things to it, pass it around some more. Great. 
 </p>
@@ -272,9 +272,9 @@ HELLO, WORLD
 </div>
 </div>
 
-<div id="outline-container-org870d672" class="outline-3">
-<h3 id="org870d672">Higher order functions</h3>
-<div class="outline-text-3" id="text-org870d672">
+<div id="outline-container-org9077aca" class="outline-3">
+<h3 id="org9077aca">Higher order functions</h3>
+<div class="outline-text-3" id="text-org9077aca">
 <p>
 We can make higher order functions in Python. That is to say functions that return functions. So, rather than passing around that value, we could instead wrap it up in a function that returns that value and then instead pass around that function to other custom functions that handle it. These functions can also return functions rather than the value itself. 
 </p>
@@ -313,9 +313,9 @@ A couple of things give. Firstly, our functions returned the message, but it cou
 </div>
 </div>
 
-<div id="outline-container-orgd308a76" class="outline-3">
-<h3 id="orgd308a76">New capabilities</h3>
-<div class="outline-text-3" id="text-orgd308a76">
+<div id="outline-container-org4fe4c3e" class="outline-3">
+<h3 id="org4fe4c3e">New capabilities</h3>
+<div class="outline-text-3" id="text-org4fe4c3e">
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">my_message_fn</span><span class="org-rainbow-delimiters-depth-1">()</span>:
   <span class="org-builtin">print</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"delayed evaluation"</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -348,9 +348,9 @@ HELLO, WORLD
 </div>
 </div>
 
-<div id="outline-container-orgb4f79ae" class="outline-3">
-<h3 id="orgb4f79ae">Just DRY it up a bit</h3>
-<div class="outline-text-3" id="text-orgb4f79ae">
+<div id="outline-container-orgc6720f4" class="outline-3">
+<h3 id="orgc6720f4">Just DRY it up a bit</h3>
+<div class="outline-text-3" id="text-orgc6720f4">
 <p>
 Still, it seems like a bit of a faff to get those benefits. It could be useful in some situations, but now all of our regular functions have to be rewritten to handle functions rather than strings. That is annoying and messy. Still, maybe we can avoid having to do it all over again each time with a couple of helper functions:
 </p>
@@ -400,9 +400,9 @@ HELLO, WORLD
 </div>
 </div>
 
-<div id="outline-container-org96bae0b" class="outline-3">
-<h3 id="org96bae0b">monaDONE</h3>
-<div class="outline-text-3" id="text-org96bae0b">
+<div id="outline-container-orgb6728c9" class="outline-3">
+<h3 id="orgb6728c9">monaDONE</h3>
+<div class="outline-text-3" id="text-orgb6728c9">
 <p>
 And that's it, we just did a monad. For any given monad the <code>ret</code> and <code>bind</code> functions have to work together to handle the same sort of value.
 </p>
@@ -417,9 +417,9 @@ Let's do another one.
 </div>
 </div>
 
-<div id="outline-container-orgf62457f" class="outline-3">
-<h3 id="orgf62457f">Maybe monad</h3>
-<div class="outline-text-3" id="text-orgf62457f">
+<div id="outline-container-orgd8075dc" class="outline-3">
+<h3 id="orgd8075dc">Maybe monad</h3>
+<div class="outline-text-3" id="text-orgd8075dc">
 <div class="org-src-container">
 <pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">ret</span><span class="org-rainbow-delimiters-depth-1">(</span>s<span class="org-rainbow-delimiters-depth-1">)</span>:
   <span class="org-keyword">def</span> <span class="org-function-name">monadic_value</span><span class="org-rainbow-delimiters-depth-1">()</span>:
@@ -499,16 +499,16 @@ operations = <span class="org-rainbow-delimiters-depth-1">[</span>partial<span c
 </div>
 
 
-<div id="outline-container-orgce177a3" class="outline-3">
-<h3 id="orgce177a3">Monad laws</h3>
-<div class="outline-text-3" id="text-orgce177a3">
+<div id="outline-container-org534509b" class="outline-3">
+<h3 id="org534509b">Monad laws</h3>
+<div class="outline-text-3" id="text-org534509b">
 <p>
 Monads must satisfy the monad laws. Without dwelling on the the technical language of the laws and just getting at their essence, these are satisfied by:
 </p>
 </div>
-<div id="outline-container-org5cb4167" class="outline-4">
-<h4 id="org5cb4167">ret is a left-identity for bind</h4>
-<div class="outline-text-4" id="text-org5cb4167">
+<div id="outline-container-org850790d" class="outline-4">
+<h4 id="org850790d">ret is a left-identity for bind</h4>
+<div class="outline-text-4" id="text-org850790d">
 <pre class="example">
 bind(f)(ret(x))() == f(x)
 </pre>
@@ -518,9 +518,9 @@ Binding the function f and passing it the monadic value of x, when all evaluated
 </p>
 </div>
 </div>
-<div id="outline-container-org7b02132" class="outline-4">
-<h4 id="org7b02132">ret is also a right-identity for bind</h4>
-<div class="outline-text-4" id="text-org7b02132">
+<div id="outline-container-orgd3bdbdb" class="outline-4">
+<h4 id="orgd3bdbdb">ret is also a right-identity for bind</h4>
+<div class="outline-text-4" id="text-orgd3bdbdb">
 <pre class="example">
 bind(ret(x)) == ret(x)
 </pre>
@@ -529,9 +529,9 @@ Binding the function which is the monadic value of x is the same as the monadic 
 </p>
 </div>
 </div>
-<div id="outline-container-org191940f" class="outline-4">
-<h4 id="org191940f">bind is associative</h4>
-<div class="outline-text-4" id="text-org191940f">
+<div id="outline-container-org6e35e2a" class="outline-4">
+<h4 id="org6e35e2a">bind is associative</h4>
+<div class="outline-text-4" id="text-org6e35e2a">
 <pre class="example">
 def h(x):
   return g(f(x))
@@ -546,21 +546,21 @@ It doesn't matter if we first compose g and f, and then bind, or bind and then c
 </div>
 
 
-<div id="outline-container-org59add7b" class="outline-3">
-<h3 id="org59add7b">Objections</h3>
-<div class="outline-text-3" id="text-org59add7b">
+<div id="outline-container-orgd5c9d67" class="outline-3">
+<h3 id="orgd5c9d67">Objections</h3>
+<div class="outline-text-3" id="text-orgd5c9d67">
 </div>
-<div id="outline-container-org487b4a8" class="outline-4">
-<h4 id="org487b4a8">This is still more complicated than just adding those extra capabilities by hand</h4>
-<div class="outline-text-4" id="text-org487b4a8">
+<div id="outline-container-orga10690d" class="outline-4">
+<h4 id="orga10690d">This is still more complicated than just adding those extra capabilities by hand</h4>
+<div class="outline-text-4" id="text-orga10690d">
 <p>
 Yes in this short example, but in a real world application it might end up as more concise. No silver bullet is offered.
 </p>
 </div>
 </div>
-<div id="outline-container-orgb6d1f90" class="outline-4">
-<h4 id="orgb6d1f90">This is not pythonic™</h4>
-<div class="outline-text-4" id="text-orgb6d1f90">
+<div id="outline-container-org630670e" class="outline-4">
+<h4 id="org630670e">This is not pythonic™</h4>
+<div class="outline-text-4" id="text-org630670e">
 <p>
 Perhaps so, and this is for educational purposes only. No snakes were harmed in the creation of this article. Convention has its place, but there is also benefit to cross-pollination and trying new things. In the words of Ralph Waldo Emerson:
 </p>
@@ -574,18 +574,18 @@ Perhaps so, and this is for educational purposes only. No snakes were harmed in 
 </div>
 </div>
 
-<div id="outline-container-org33ed6e1" class="outline-3">
-<h3 id="org33ed6e1">What else can it do?</h3>
-<div class="outline-text-3" id="text-org33ed6e1">
+<div id="outline-container-org91732d2" class="outline-3">
+<h3 id="org91732d2">What else can it do?</h3>
+<div class="outline-text-3" id="text-org91732d2">
 <p>
 Monads are a pretty useful design pattern, we can use them for all sorts of state, metadata, logging, side-effects. Basically anything where we want to write code as though we are just passing around and handling simple values with functions, but at the same time other stuff is going on "behind the scenes".
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgdd4d380" class="outline-3">
-<h3 id="orgdd4d380">Functional Python</h3>
-<div class="outline-text-3" id="text-orgdd4d380">
+<div id="outline-container-org3972390" class="outline-3">
+<h3 id="org3972390">Functional Python</h3>
+<div class="outline-text-3" id="text-org3972390">
 <p>
 <code>functools</code> and <code>itertools</code> open up a lot of possibilities for writing functional code in Python. Efficient, immutable data structures would also help with functional Python. are not native to Python but some attempts have been made by the community to introduce these via libraries, such as <a href="https://github.com/tobgu/pyrsistent">Pyrisistent</a>.
 </p>

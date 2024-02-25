@@ -1,0 +1,96 @@
+* Esotericism and the Ouroboros
+
+An autobiographical ramble featuring feedback-loops, cybernetics and lisp. 
+
+** the Ouroboros
+The Ouroboros is the archetype of the feedback loop, depicted as a serpent or dragon feeding on its own tail. It is found in Ancient Egyptian, Greek magic, Norse, Gnostic and academical traditions.
+
+#+CAPTION: Ouroboros depicted in an alchemical tract - 1478
+[[file:images/ouroboros.jpeg]]
+
+I've had a fascination with feedback-loops for a long time. From long before I got into programming. In some ways they are the common feature of all of my main interests.
+
+** Electronic music and psychedelia
+As a teenager my main interests were fiction and music. I was making psychedelic, electronic music from around the age of 16. It was a exciting sub-culture at the time (this was in the early 2010s, but the scene was a mutant version of something from the early 1990s, which itself was a mutant version of something else from the 1970s), and there was a whiff of esotericism about it. Learning how to make "that sound" and adding it to your box of tricks was a lot of fun, like collecting Pokemon. Creative software for music and visuals were widely available, so I ended up spending quite a lot of time with computers, learned the basics of Linux, became a bit tech-literate.
+
+I discovered fractals; being able to make generative, infinitely detailed artificial worlds made from relatively simple rules was captivating. People would attach "fractal-zoom" videos to their music and this was a good match for the style. I understood that the Mandelbrot fractal was essentially a feedback-loop. I read that you could point a webcam at a computer screen that it was outputting to, if you did this in the dark and then passed a light-source in between you could make cool fractal-ish patterns. This all made intuitive sense and I liked it.
+
+#+CAPTION: The Mandelbrot Set fractal
+[[file:images/mandlebrot.webp]]
+
+Psychedelic culture of course has a long association with hippified eastern spirituality, and the voice of people like Alan Watts would feature heavily in the music of people I was listening to and connecting with. This memeplex of fractals, music, technology and spirituality started to form in my mind.
+
+** The deadly feedback loop of introspection
+#+begin_quote
+/A person who thinks all the time has nothing to think about except thoughts. So, he loses touch with reality and lives in a world of illusions./ -- Alan Watts
+#+end_quote
+
+I went to university at the School of Oriental and African studies in London to learn Religious Studies with the idea of eventually writing fiction using ideas from various religious traditions from around the worlds. Unfortunately they were serving a doses of mediocre postmodernism and critical theory that were mostly off-putting. The scholars of religion that I liked such as Mercia Elade, James George Fraser, Carl Jung and William James were dismissed as old, white men clinging to imperialistic grand meta-narratives. The author was dead and SOAS Religious Studies was paralysed in the stultifying feedback-loop of introspection. Instead I wrote essays about cosmology, psychedelics and science-fiction that were tepidly received apart from by the lecturer of a rather eccentric class on Mysticism who seemed to like. I convinced myself that no-one else understood what I was going for.
+
+#+begin_quote
+/The alchemists, who in their own way knew more about the nature of the individuation process than we moderns do, expressed this paradox through the symbol of the Ouroboros, the snake that eats its own tail./ -- Carl Jung 
+#+end_quote
+
+** Feedback and DSP
+At the same time I was learning more about music production and started to understand a bit about the engineering principles that went into making the various sounds and effects, and discovered that feedback-loops were a fundamental building block of DSP algorithms. A delay or echo effect is obviously a feedback loop where you sum a signal with a time-delayed version of itself. What is less obvious maybe is that combs and flangers are also feedback loops with short delays which achieve their distinctive sound due to phase cancellation at various frequencies as a result of the summation. Reverbs are made with feedback loops in a configuration that varies with the type of reverb. The Karplus-Strong algorithm for synthesising plucked strings is pretty much just an impulse with a feedback-loop containing a filter. The list goes on.
+
+#+CAPTION: Karplus-Strong algorithm.
+[[file:images/Karplus-strong.png]]
+
+** Cybernetics
+A fellow music-producer told be about the ideas of Stafford Beer and at first I was entertained by digital book called "The Chronicles of Wizard Prang" which now seems to have mostly disappeared from the internet (perhaps it was deemed embarrassing to his legacy). It touched on meditation in a humorous and pragmatic way, with an engineering mindset that I found attractive. So through Beer I discovered cybernetics, in which the idea of self-regulating systems using feedback-loops is central. The classic cybernetics example of a self-regulating or negative feedback loop is a thermostat -- a thermometer which turns on a heater when under a certain temperature and off when over that temperature, thereby regulating the temperature. The name cybernetics comes from the ancient Greek for helmsman. The ideas is that steering a boat with a rudder is a self-regulating feedback loop of observing the course and adjusting left or right, thereby tolerating a changing environment. (The Cybernetic Brain by Andrew Pickering is a very readable history of cybernetics.) Cybernetics ideas were compatible with my thinking, that also seemed to have this esoteric edge. And here was Beer, this real-life wizard, who has allegedly worked on multi-disciplinary problems in management, economics, ecology and so on using it.
+
+#+begin_quote
+/The purpose of a system is what it does./ -- Stafford Beer
+#+end_quote
+
+#+CAPTION: Operations room of Cybercyn, a project by the Chilean government that Beer worked on. 
+[[file:images/Cybersyn.jpeg]]
+
+** Godel, Escher, Bach
+Several years later programming had become my main interest and I was going about building audio plugins and other tools for other people to use in their music production. To do this I had to learn C++, which was a big distraction frankly, and I had a growing sense that the complexity of object-oriented programming was causing more harm than good. I wanted to be able to just compose simple, "pure" functions (although I wouldn't have described them as such then) much in the way that I would combine audio-processors in a signal chain when designing sounds. During this time I read a book that was quite transformative: Godel, Escher, Bach by Douglas Hofstadter. Again, feedback-loops were central to the theme; discussing art, music, mathematics and most of all consciousness through this lens. It was intoxicating. It took me a long time to read that book because I poured over every detail and really immersed myself in it. I decided to become a professional programmer, and in my first programming job I used mostly Python to write scripts to perform analytics and parse resume data. I learned a bit of NLP, a bit of machine learning. Since no-one else was looking at my code, the style I adopted was quite idiosyncratic, composing pure functions in such a way that allowed me to easily run programs from a Python shell and inspect intermediate results.
+
+#+Caption: Puddle - M. C. Escher - 1952
+[[file:images/Escher_Puddle.jpg]]
+
+** Lisp, Clojure, SICP
+I was looking to learn a new language and after considering a few options (Scala, Julia, Rust, Clojure) settled on Clojure. I don't recall the exact reason why I chose to learn it, but I had first heard of "Lisp" years earlier watching an MIT opencourseware Intro to Computer Science course (not SICP), the lecturer mentioned in an off-hand way that he was a "former lisp hacker". His tone hinted at the esoteric, like this probably wasn't for you. This made me curious. Learning Clojure was a breath of fresh air because I realised that my weird style of Python was actually converging on something that other people also preferred, and it was known as Functional Programming. Spreading mutable state around the program was the source of a lot of issues which I had encountered in my DSP work and so the immutable-first mentality of Clojure made a lot of sense. Solving problems without using mutable state was a fun puzzle. I felt like I was growing as a programmer, taking the road-less-traveled, learning a different sort of magic.
+
+It's hard to be into Clojure for long without encountering Structure and Interpretation of Computer Programs by Abelson and Sussman. The famous cover signals esotericism. I have to admit I haven't read it from cover to cover but the chapters I've dived into are a pleasure.
+
+#+begin_quote
+/The programs we use to conjure processes are like a sorcerer’s spells. They are carefully composed from symbolic expressions in arcane and esoteric programming languages./ -- Ableson and Sussman
+#+end_quote
+
+#+Caption: SICP cover image
+[[file:images/sicp.png]]
+
+A feature of Lisps that the written program is, more or less, it's own abstract syntax tree, and the syntax is entirely composed of its own data primitives (lists, symbols, etc). This makes it very easy to parse, manipulate and analyse Lisp code. It is an ouroboros language. The various flavours of recursive functions is one of the first topics the SICP covers. Chapter 4 is on writing a lisp interpreter in lisp. The absence of tail call optimization (allowing recursive functions to executed in a manner that does not use up the stack) in Clojure is upsetting to some lisp programmers, who even go so far to say that Clojure isn't a real lisp. You can achieve all the same results with Clojure's ~loop~ primitive so why is this so triggering? I think this is borne of the deep attachment to the recursive nature of Lisp.
+
+** Where next, chaos theory?
+Where will I go next on this feedback-loop adventure of my life? Chaos: Making a New Science by James Gleck got me interested in the history of chaos theory and non-linear dynamics. The book discusses various contributors to the field including its founder Lorenz, the meteorologist who first developed deterministic chaos as a way to model weather patterns with a minimal set of variables. I haven't invested enough time into learning about differential equations to have a good understanding of chaos theory, but superficially I can see that feedback due to the interdependence of variables in chaotic systems like the Lorenz Attractor cause its complex behaviour. I hope one day to dive into this more deeply.
+
+#+Caption: Animated Lorenz Attractor phase space plot
+#+ATTR_HTML: :width 300px
+[[file:images/lorenz.gif]]
+
+Feedback-loops have been the thread through all these connected interests: electronic music, audio plugins and DSP, mysticism, meditation, cybernetics, lisp, chaos theory. Another common factor is the independent-mindedness of all these fields: Tinkerers and eccentrics working in their proverbial or literal garden-sheds, not entirely accepted by the wider academic community, nevertheless went off and invented or discovered worlds previously unknown. The rebel in me finds that thrilling to read about.
+
+#+begin_quote
+/In the mind's eye, a fractal is a way of seeing infinity./ ― James Gleick
+#+end_quote
+
+** mentioned / reccomended:
+- Recordings of Alan Watts [[https://alanwatts.org/][available here]]
+- [[https://sacred-texts.com/pag/frazer/][The Golden Bough]] - James George Frazer
+- [[https://gutenberg.org/ebooks/621][The Varieties of Religious Experience: A Study in Human Nature]] - William James
+- [[https://archive.org/details/eliade-mircea-myth-and-reality-harper-row-1963/mode/2up][Myth and Reality]] - Mircea Eliade
+- Pebbles to Computer - Stafford Beer and Hans Blohm
+- [[https://ccrma.stanford.edu/~jos/][The DSP website ]]of Julius Orion Smith II
+- [[https://www.youtube.com/watch?v=nyV6LUGWJlM&list=PL5i1ygt2HS-eiqWsVQxPuKsQIM5sykGIH][The Stafford Beer collection]] on Youtube
+- The Cybernetic Mind - Andrew Pickering
+- [[https://www.physixfan.com/wp-content/files/GEBen.pdf][Godel, Escher, Bach]] - Douglas Hofstadter
+- [[https://www.youtube.com/watch?v=lWZ2Bz0tS-s][GEB lectures]] on Youtube
+- [[https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html][Structure and Interpretation of Computer Programs]] - Ableson and Sussman
+- Chaos: Making a New Science - James Gleick
+- Nonlinear Dynamics and Chaos - Steven H. Strogatz (this was too heavy-going mathematically for me to get through)
