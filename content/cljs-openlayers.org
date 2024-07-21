@@ -136,7 +136,7 @@ If all is well then you should be getting a warning now in the browser console t
 #+end_src
 
 
-Link to this in the this in the ~index.html~:
+Link to this in the ~index.html~:
 
 #+begin_src html
   <html>
