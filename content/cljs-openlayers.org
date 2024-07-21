@@ -7,7 +7,7 @@ We want to make a quick and easy map based app. ClojureScript is the natural cho
 
 [[https://openlayers.org/][Openlayers]] is a javascript maps library. There are others, but OL has the benefits of being free, no signups, and pretty comprehensive. Maybe Leaflet is a little friendlier. Here we are using OL.
 
-The choice of Progressive Web App is motivated by not wanting to have to write platform specific code to get something that will run in the browser and like a "native" app on ios and android. We could build a cross-platform mobile app with [[https://github.com/Tensegritics/ClojureDart][ClojureDart]] or [[https://cljsrn.org/][React Native]], but PWA seems to be by far the simplest way to me. The trade-offs of PWAs are widely discussed so we won't cover that here.
+The choice of Progressive Web App is motivated by not wanting to have to write platform specific code to get something that will run in the browser and also feel like a native app on ios and android. We could build a cross-platform mobile app with [[https://github.com/Tensegritics/ClojureDart][ClojureDart]] or [[https://cljsrn.org/][React Native]], but PWA seems to be by far the simplest way to me. The trade-offs of PWAs are widely discussed so we won't cover that here.
 
 ** Shadow-cljs setup
 The first part of this setup is based on the shadow-cljs docs. If you encounter problems along the way then refer back to the [[https://github.com/thheller/shadow-cljs?tab=readme-ov-file#quick-start][shadow-cljs quickstart guide]]. 
@@ -88,11 +88,14 @@ Interrupt the ~shadow-cljs watch~ process in the terminal with Ctrl-D, and then 
 
 #+end_src
 
-Let's also add Reagent. Openlayers doesn't depend on React, so this is just a personal preference. If 
 
 Have a look in ~node_modules~ to see that ~ol~ has in fact been added. Then rerun the shadow-cljs watch command.
 
 We'll add a new function that builds the OL map. It targets the ~map~ div that we added to the ~index.html~. Note how we use ~$default~ to get the default export of the OL namespaces.
+
+Openlayers is oriented around layers, as the name suggests. The could be tiles or vectors or all sorts of other things. Have a look into the [[https://openlayers.org/en/latest/examples/][Openlayers Examples]] for some inspiration.
+
+Here we have a very minimal setup: just one tile layer with a basemap from OpenStreetMap. We also set the initial view.
 
 #+begin_src clojure
   (ns my-map-app.frontend.app
@@ -116,7 +119,7 @@ We'll add a new function that builds the OL map. It targets the ~map~ div that w
 
 #+end_src
 
-Here some metadata has been added to the init function to cause it to be rerun after the namespace gets loaded in a REPL. Include that if it's helpful for your workflow.
+Notice some metadata has been added to the init function to cause it to be rerun after the namespace gets loaded in a REPL. Include that if it's helpful for your workflow.
 
 If all is well then you should be getting a warning now in the browser console that says that the map container width or hight is 0. Let's create a ~styles.css~ to handle this. Inside the ~public~ directory:
 
@@ -148,17 +151,17 @@ Link to this in the this in the ~index.html~:
 #+end_src
 
 
-Now you should have an app with an interactive map
+Now you should have an app with an interactive map. Clearly the buttons and attribution are a bit skew-wiffy. Style to your heart's content.
 [[file:images/map-app-screenshot1.png]]
  
 ** Turning it into a PWA
-We want to allow the user to install this in their device such that it seems like any other app. To get this capability we need to turn it into a progressive web app. The PWA needs a few things:
+We want to allow the user to install this in their device such that it seems like any other app. To get this capability we need to turn it into a progressive web app. While essentially just a web app, a PWA typically has a few extra ingredients:
 - a ~manifest.json~ - This tells the browser how to handle the PWA
 - some icons - So that, among other things, there can be a nice button on the device to launch the app.
 - a service worker - This does the work of caching certain resources, allowing for offline usage. A service worker is actually optional so we'll skip it in this guide, but look into it.
 
 *** Icons
-Let's start with the icons. This is tedious. I recommend getting an LLM to generate a vector image so it's nice and clean (at time of writing Claude is nice for this because it will write the SVG in code and then render a preview). Screenshot that at a nice big size (tip: tell Claude to draw the logo such that it is inside a square with a black outline. That way you can screenshot an almost exact square easily)
+Let's start with the icons. Here's a lazy method: get an LLM to generate a vector image so it's nice and clean (at time of writing Claude is nice for this because it will write the SVG in code and then render a preview). Screenshot that at a reasonable resolution (tip: tell Claude to draw the logo such that it is inside a square with a black outline. That way you can select an almost exact square easily)
 
 [[file:images/claude-compass.png]]
 
