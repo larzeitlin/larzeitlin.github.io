@@ -200,39 +200,39 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org80edb30">WebGL in ClojureScript - part one</a>
+<li><a href="#org8a608d6">WebGL in ClojureScript - part one</a>
 <ul>
-<li><a href="#orgc558672">What is it?</a></li>
+<li><a href="#orgc61ab4b">What is it?</a></li>
 </ul>
 </li>
-<li><a href="#org8c64a8b">Getting set up</a>
+<li><a href="#org6eafc83">Getting set up</a>
 <ul>
-<li><a href="#orgd644a4f">Canvas</a></li>
-<li><a href="#org984a17b">Setting the dimensions</a></li>
+<li><a href="#orgcc878f3">Canvas</a></li>
+<li><a href="#org07c3b3e">Setting the dimensions</a></li>
 </ul>
 </li>
-<li><a href="#orgae62d19">Shader program</a>
+<li><a href="#org144025d">Shader program</a>
 <ul>
-<li><a href="#org1d8eeda">Vertex Shader</a></li>
-<li><a href="#org8e76744">Fragment Shader</a></li>
-<li><a href="#orgd945288">Program</a></li>
+<li><a href="#org4519315">Vertex Shader</a></li>
+<li><a href="#orge1adab2">Fragment Shader</a></li>
+<li><a href="#org1c0de06">Program</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org80edb30" class="outline-2">
-<h2 id="org80edb30">WebGL in ClojureScript - part one</h2>
-<div class="outline-text-2" id="text-org80edb30">
+<div id="outline-container-org8a608d6" class="outline-2">
+<h2 id="org8a608d6">WebGL in ClojureScript - part one</h2>
+<div class="outline-text-2" id="text-org8a608d6">
 <p>
 This is a tutorial in using webGL in ClojureScript, mainly for my own reference as I go through it, but if it helps someone else then that's fab too.
 </p>
 </div>
 
-<div id="outline-container-orgc558672" class="outline-3">
-<h3 id="orgc558672">What is it?</h3>
-<div class="outline-text-3" id="text-orgc558672">
+<div id="outline-container-orgc61ab4b" class="outline-3">
+<h3 id="orgc61ab4b">What is it?</h3>
+<div class="outline-text-3" id="text-orgc61ab4b">
 <p>
 WebGL a graphics rendering API for JavaScript. It it based on OpenGL and it is GPU accelerated. Like OpenGL, webGL code is split between the shader code, which is generally run on the GPU and written in a dialect of C called GLSL, and the orchestration code. Below is a hello world-y basic project setup.
 </p>
@@ -240,17 +240,17 @@ WebGL a graphics rendering API for JavaScript. It it based on OpenGL and it is G
 </div>
 </div>
 
-<div id="outline-container-org8c64a8b" class="outline-2">
-<h2 id="org8c64a8b">Getting set up</h2>
-<div class="outline-text-2" id="text-org8c64a8b">
+<div id="outline-container-org6eafc83" class="outline-2">
+<h2 id="org6eafc83">Getting set up</h2>
+<div class="outline-text-2" id="text-org6eafc83">
 <p>
 You have some CLJS project set up. I reccomend you have a running browser REPL connected to your editor so that you can have all the live coding, fast-feedback goodness of that.
 </p>
 </div>
 
-<div id="outline-container-orgd644a4f" class="outline-3">
-<h3 id="orgd644a4f">Canvas</h3>
-<div class="outline-text-3" id="text-orgd644a4f">
+<div id="outline-container-orgcc878f3" class="outline-3">
+<h3 id="orgcc878f3">Canvas</h3>
+<div class="outline-text-3" id="text-orgcc878f3">
 <p>
 We need a canvas element in the body of the html document. Give it an id so we can grab it. I called it <code>app</code> out of habit.
 </p>
@@ -272,9 +272,9 @@ Don't worry about the <code>width</code> and <code>height</code> for now. In clo
 </div>
 </div>
 
-<div id="outline-container-org984a17b" class="outline-3">
-<h3 id="org984a17b">Setting the dimensions</h3>
-<div class="outline-text-3" id="text-org984a17b">
+<div id="outline-container-org07c3b3e" class="outline-3">
+<h3 id="org07c3b3e">Setting the dimensions</h3>
+<div class="outline-text-3" id="text-org07c3b3e">
 <p>
 let's make a function to reset dimensions of both the canvas itself and the webgl context. Everything will be full window. We can call it whenever the window is resized.
 </p>
@@ -303,9 +303,9 @@ Okay let's stick it in a <code>-main</code>:
 </div>
 </div>
 
-<div id="outline-container-orgae62d19" class="outline-2">
-<h2 id="orgae62d19">Shader program</h2>
-<div class="outline-text-2" id="text-orgae62d19">
+<div id="outline-container-org144025d" class="outline-2">
+<h2 id="org144025d">Shader program</h2>
+<div class="outline-text-2" id="text-org144025d">
 <p>
 We will be making a <code>vertex shader</code> and a <code>fragment shader</code>. These two will be combined together into a <code>program</code>. We'll get into what these mean shortly. First we are going to make a convenience function that we can use to compile our shaders:
 </p>
@@ -324,9 +324,9 @@ We will be making a <code>vertex shader</code> and a <code>fragment shader</code
 </div>
 </div>
 
-<div id="outline-container-org1d8eeda" class="outline-3">
-<h3 id="org1d8eeda">Vertex Shader</h3>
-<div class="outline-text-3" id="text-org1d8eeda">
+<div id="outline-container-org4519315" class="outline-3">
+<h3 id="org4519315">Vertex Shader</h3>
+<div class="outline-text-3" id="text-org4519315">
 <p>
 Our vertex shader's job is to set the the value of <code>gl_position</code> for each <code>vertex</code> that we want to draw. This one is basically just a pass-through, it doesn't do anything other than read an attribute and set <code>gl_position</code> with it.
 </p>
@@ -353,9 +353,9 @@ We will just write the GLSL in a string. Could fetch it from a local file. This 
 </div>
 </div>
 
-<div id="outline-container-org8e76744" class="outline-3">
-<h3 id="org8e76744">Fragment Shader</h3>
-<div class="outline-text-3" id="text-org8e76744">
+<div id="outline-container-orge1adab2" class="outline-3">
+<h3 id="orge1adab2">Fragment Shader</h3>
+<div class="outline-text-3" id="text-orge1adab2">
 <p>
 The fragment shader sets the colour at each vertex. The space on a face in between the verticies will be interpolated between the vertex colours. In our case we are just going to set it to a fixed colour (r, g, b, a).
 </p>
@@ -379,9 +379,9 @@ The fragment shader sets the colour at each vertex. The space on a face in betwe
 </div>
 </div>
 
-<div id="outline-container-orgd945288" class="outline-3">
-<h3 id="orgd945288">Program</h3>
-<div class="outline-text-3" id="text-orgd945288">
+<div id="outline-container-org1c0de06" class="outline-3">
+<h3 id="org1c0de06">Program</h3>
+<div class="outline-text-3" id="text-org1c0de06">
 <p>
 Now we build a program from our shaders.
 </p>

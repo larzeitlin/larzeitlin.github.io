@@ -93,7 +93,7 @@ Have a look in ~node_modules~ to see that ~ol~ has in fact been added. Then reru
 
 We'll add a new function that builds the OL map. It targets the ~map~ div that we added to the ~index.html~. Note how we use ~$default~ to get the default export of the OL namespaces.
 
-Openlayers is oriented around layers, as the name suggests. The could be tiles or vectors or all sorts of other things. Have a look into the [[https://openlayers.org/en/latest/examples/][Openlayers Examples]] for some inspiration.
+Openlayers is oriented around layers, as the name suggests. Those layers could be tiles or vectors or all sorts of other things. Have a look into the [[https://openlayers.org/en/latest/examples/][Openlayers Examples]] for some inspiration.
 
 Here we have a very minimal setup: just one tile layer with a basemap from OpenStreetMap. We also set the initial view.
 
