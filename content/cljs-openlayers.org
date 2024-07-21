@@ -3,7 +3,7 @@
 * Making a geo PWA with CLJS and Openlayers
 
 ** Motivation
-We want to make a quick and easy map based app. ClojureScript is the natural choice for me. Maybe this would be a good application for [[https://github.com/squint-cljs/squint][Squint]] though, I haven't tried that yet. Another article maybe.
+We want to make a quick and easy map based app. ClojureScript is the natural choice for me. Maybe this would be a good application for [[https://github.com/squint-cljs/squint][Squint]] though, I haven't tried that yet. Another article perhaps.
 
 [[https://openlayers.org/][Openlayers]] is a javascript maps library. There are others, but OL has the benefits of being free, no signups, and pretty comprehensive. Maybe Leaflet is a little friendlier. Here we are using OL.
 
@@ -18,7 +18,7 @@ Use ~npx~ to create a new ~shadow-cljs~ project.
   npx create-cljs-project my-map-app
 #+end_src
 
-This gives us a project template. Now, add an entrypoint function in a new namespace under ~src/main~. We'll follow the longwinded-seeming filepath convention in the shadow-cljs docs.
+This gives us a project template. Now, add an entrypoint function in a new namespace under ~src/main~.
 
 #+begin_src clojure
 
