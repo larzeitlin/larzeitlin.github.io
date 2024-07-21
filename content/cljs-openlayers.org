@@ -81,7 +81,7 @@ This should trigger a build. We should have a connected app at [[http://localhos
 
 ** Adding Openlayers
 
-Interrupt the ~shadow-cljs watch~ process in the terminal with Ctrl-D, and then install Openlayers with ~npm~:
+Interrupt the ~shadow-cljs watch~ process in the terminal with Ctrl-C, and then install Openlayers with ~npm~:
 
 #+begin_src sh
   npm install ol
