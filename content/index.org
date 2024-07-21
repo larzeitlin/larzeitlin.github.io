@@ -33,5 +33,7 @@ hi i'm luke - this is my blog
   [2024-02-04]
 - [[file:resursion.org][feedback loops]]
   [2024-02-25]
+- [[file:cljs-openlayers.org][cljs / openlayers / pwa]]
+  [2024-07-21]
   
 [[mailto:luke@lzeitlin.xyz][send me an email]]

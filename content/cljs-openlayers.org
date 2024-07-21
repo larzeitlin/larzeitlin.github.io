@@ -1,0 +1,211 @@
+#+Title: LZ 
+
+* Making a geo PWA with CLJS and Openlayers
+
+** Motivation
+We want to make a quick and easy map based app. ClojureScript is the natural choice for me. Maybe this would be a good application for [[https://github.com/squint-cljs/squint][Squint]] though, I haven't tried that yet. Another article maybe.
+
+[[https://openlayers.org/][Openlayers]] is a javascript maps library. There are others, but OL has the benefits of being free, no signups, and pretty comprehensive. Maybe Leaflet is a little friendlier. Here we are using OL.
+
+The choice of Progressive Web App is motivated by not wanting to have to write platform specific code to get something that will run in the browser and like a "native" app on ios and android. We could build a cross-platform mobile app with [[https://github.com/Tensegritics/ClojureDart][ClojureDart]] or [[https://cljsrn.org/][React Native]], but PWA seems to be by far the simplest way to me. The trade-offs of PWAs are widely discussed so we won't cover that here.
+
+** Shadow-cljs setup
+The first part of this setup is based on the shadow-cljs docs. If you encounter problems along the way then refer back to the [[https://github.com/thheller/shadow-cljs?tab=readme-ov-file#quick-start][shadow-cljs quickstart guide]]. 
+
+Use ~npx~ to create a new ~shadow-cljs~ project.
+
+#+begin_src sh
+  npx create-cljs-project my-map-app
+#+end_src
+
+This gives us a project template. Now, add an entrypoint function in a new namespace under ~src/main~. We'll follow the longwinded-seeming filepath convention in the shadow-cljs docs.
+
+#+begin_src clojure
+
+  (ns my-map-app.frontend.app)
+
+  (defn init []
+    (js/alert "hi mappers"))
+#+end_src
+
+Now create a build in the ~shadow-cljs.edn~ that points to our new app.
+
+#+begin_src clojure
+
+  {:source-paths
+   ["src/dev"
+    "src/main"
+    "src/test"]
+
+   :dependencies
+   []
+
+   :builds
+   {:frontend {:target :browser
+	       :modules {:main {:init-fn my-map-app.frontend.app/init}}}}}
+#+end_src
+
+We need to create a ~public/index.html~ . Shadow will output to ~public/js/main.js~ by default.
+#+begin_src html
+
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+    </head>
+    <body>
+      <div id="map"></div>
+      <script src="/js/main.js"></script>
+    </body>
+  </html>
+#+end_src
+
+Let's use shadow-cljs's built-in dev server:
+
+#+begin_src clojure
+  
+  {...
+   :dev-http {8081 "public"}
+   :builds {:frontend ...}}
+
+#+end_src
+
+Now spin up the shadow-cljs development process
+
+#+begin_src sh
+  npx shadow-cljs watch frontend
+
+#+end_src
+
+This should trigger a build. We should have a connected app at [[http://localhost:8081][localhost:8081]] - make a change to ~my-map-app.frontend.app/init~ to check that hot-reloading is working.
+
+** Adding Openlayers
+
+Interrupt the ~shadow-cljs watch~ process in the terminal with Ctrl-D, and then install Openlayers with ~npm~:
+
+#+begin_src sh
+  npm install ol
+
+#+end_src
+
+Let's also add Reagent. Openlayers doesn't depend on React, so this is just a personal preference. If 
+
+Have a look in ~node_modules~ to see that ~ol~ has in fact been added. Then rerun the shadow-cljs watch command.
+
+We'll add a new function that builds the OL map. It targets the ~map~ div that we added to the ~index.html~. Note how we use ~$default~ to get the default export of the OL namespaces.
+
+#+begin_src clojure
+  (ns my-map-app.frontend.app
+    (:require
+     ["ol/layer/Tile$default" :as Tile]
+     ["ol/Map$default" :as Map]
+     ["ol/source/OSM$default" :as OSM]
+     ["ol/View$default" :as View]))
+
+  (defn ol-map []
+    (Map.
+     (clj->js
+      {:layers [(Tile. (clj->js {:source (OSM.)}))]
+       :target "map"
+       :view (View. (clj->js {:center [0 0]
+			      :zoom 2}))})))
+
+
+  (defn ^:dev/after-load init []
+    (ol-map))
+
+#+end_src
+
+Here some metadata has been added to the init function to cause it to be rerun after the namespace gets loaded in a REPL. Include that if it's helpful for your workflow.
+
+If all is well then you should be getting a warning now in the browser console that says that the map container width or hight is 0. Let's create a ~styles.css~ to handle this. Inside the ~public~ directory:
+
+#+begin_src css
+  body {
+    margin: 0px; /* to make map flush with the window edge */
+  }
+  
+  #map {
+    width: 100vw;
+    height: 100vh;
+  }
+
+#+end_src
+
+
+Link to this in the this in the ~index.html~:
+
+#+begin_src html
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <link rel="stylesheet"
+	    href="styles.css">
+    </head>
+  ...
+  </html>
+
+#+end_src
+
+
+Now you should have an app with an interactive map
+[[file:images/map-app-screenshot1.png]]
+ 
+** Turning it into a PWA
+We want to allow the user to install this in their device such that it seems like any other app. To get this capability we need to turn it into a progressive web app. The PWA needs a few things:
+- a ~manifest.json~ - This tells the browser how to handle the PWA
+- some icons - So that, among other things, there can be a nice button on the device to launch the app.
+- a service worker - This does the work of caching certain resources, allowing for offline usage. A service worker is actually optional so we'll skip it in this guide, but look into it.
+
+*** Icons
+Let's start with the icons. This is tedious. I recommend getting an LLM to generate a vector image so it's nice and clean (at time of writing Claude is nice for this because it will write the SVG in code and then render a preview). Screenshot that at a nice big size (tip: tell Claude to draw the logo such that it is inside a square with a black outline. That way you can screenshot an almost exact square easily)
+
+[[file:images/claude-compass.png]]
+
+I actually like the black border here so I will screenshot around the outside.
+
+Take that screenshot and load it into the [[https://www.pwabuilder.com/imageGenerator][PWA Builder icon generator]] this will spit out an archive of icons of various sizes for various platforms. It's probably more than we need but fine let's go with it.
+
+There should be three directories of icons for different platforms and an ~icons.json~ file. Put all of that into your ~public~ directory and rename the ~icons.json~ to ~manifest.json~
+
+*** Manifest
+We already have the icons in our manifest. We need to add a few other things.
+
+#+begin_src json
+{
+  "name": "My Map App",
+  "short_name": "mymap",
+  "start_url": "/",
+  "display": "standalone",
+  "id": "mymapappuniqueidbananas",
+  "icons": [...],
+}
+
+#+end_src
+
+Point to the ~manifest.json~ in our ~index.html~ by adding a link to the ~<head>~:
+
+#+begin_src html
+  <!doctype html>
+  <html>
+    <head>
+      <link rel="manifest" href="manifest.json">
+      <meta charset="utf-8" />
+      <link rel="stylesheet"
+	    href="styles.css">
+    </head>
+    <body>
+      <div id="map"></div>
+      <script src="/js/main.js"></script>
+    </body>
+  </html>
+
+#+end_src
+
+Now we should have a functioning PWA. If you are using Chrome for example you should see a little download button in the address bar:
+
+[[file:images/download-pwa.png]]
+
+Give it a go. Congratulations you are an app developer. Consult the web for how to install on android, ios, etc, how to upload things to app stores and so on.
+
+

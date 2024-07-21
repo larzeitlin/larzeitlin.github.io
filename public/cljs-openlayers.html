@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LZ</title>
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header><a href="./">home</a> <a href="#top">top</a> </header>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">LZ</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org854361e">Making a geo PWA with CLJS and Openlayers</a>
+<ul>
+<li><a href="#orga7ebaa2">Motivation</a></li>
+<li><a href="#org02d06ac">Shadow-cljs setup</a></li>
+<li><a href="#org2024a7b">Adding Openlayers</a></li>
+<li><a href="#orgd6a74d6">Turning it into a PWA</a>
+<ul>
+<li><a href="#org206faf2">Icons</a></li>
+<li><a href="#org383af8d">Manifest</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org854361e" class="outline-2">
+<h2 id="org854361e">Making a geo PWA with CLJS and Openlayers</h2>
+<div class="outline-text-2" id="text-org854361e">
+</div>
+<div id="outline-container-orga7ebaa2" class="outline-3">
+<h3 id="orga7ebaa2">Motivation</h3>
+<div class="outline-text-3" id="text-orga7ebaa2">
+<p>
+We want to make a quick and easy map based app. ClojureScript is the natural choice for me. Maybe this would be a good application for <a href="https://github.com/squint-cljs/squint">Squint</a> though, I haven't tried that yet. Another article maybe.
+</p>
+
+<p>
+<a href="https://openlayers.org/">Openlayers</a> is a javascript maps library. There are others, but OL has the benefits of being free, no signups, and pretty comprehensive. Maybe Leaflet is a little friendlier. Here we are using OL.
+</p>
+
+<p>
+The choice of Progressive Web App is motivated by not wanting to have to write platform specific code to get something that will run in the browser and like a "native" app on ios and android. We could build a cross-platform mobile app with <a href="https://github.com/Tensegritics/ClojureDart">ClojureDart</a> or <a href="https://cljsrn.org/">React Native</a>, but PWA seems to be by far the simplest way to me. The trade-offs of PWAs are widely discussed so we won't cover that here.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org02d06ac" class="outline-3">
+<h3 id="org02d06ac">Shadow-cljs setup</h3>
+<div class="outline-text-3" id="text-org02d06ac">
+<p>
+The first part of this setup is based on the shadow-cljs docs. If you encounter problems along the way then refer back to the <a href="https://github.com/thheller/shadow-cljs?tab=readme-ov-file#quick-start">shadow-cljs quickstart guide</a>. 
+</p>
+
+<p>
+Use <code>npx</code> to create a new <code>shadow-cljs</code> project.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">npx create-cljs-project my-map-app
+</pre>
+</div>
+
+<p>
+This gives us a project template. Now, add an entrypoint function in a new namespace under <code>src/main</code>. We'll follow the longwinded-seeming filepath convention in the shadow-cljs docs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">ns</span> <span class="org-type">my-map-app.frontend.app</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">init</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">js</span>/alert <span class="org-string">"hi mappers"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</pre>
+</div>
+
+<p>
+Now create a build in the <code>shadow-cljs.edn</code> that points to our new app.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">
+<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-clojure-keyword">:source-paths</span>
+ <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-string">"src/dev"</span>
+  <span class="org-string">"src/main"</span>
+  <span class="org-string">"src/test"</span><span class="org-rainbow-delimiters-depth-2">]</span>
+
+ <span class="org-clojure-keyword">:dependencies</span>
+ <span class="org-rainbow-delimiters-depth-2">[]</span>
+
+ <span class="org-clojure-keyword">:builds</span>
+ <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:frontend</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:target</span> <span class="org-clojure-keyword">:browser</span>
+             <span class="org-clojure-keyword">:modules</span> <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:main</span> <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:init-fn</span> <span class="org-type">my-map-app.frontend.app</span>/init<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>
+</pre>
+</div>
+
+<p>
+We need to create a <code>public/index.html</code> . Shadow will output to <code>public/js/main.js</code> by default.
+</p>
+<div class="org-src-container">
+<pre class="src src-html">
+&lt;<span class="org-keyword">!doctype</span> html&gt;
+&lt;<span class="org-function-name">html</span>&gt;
+  &lt;<span class="org-function-name">head</span>&gt;
+    &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
+  &lt;/<span class="org-function-name">head</span>&gt;
+  &lt;<span class="org-function-name">body</span>&gt;
+    &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"map"</span>&gt;&lt;/<span class="org-function-name">div</span>&gt;
+    &lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"/js/main.js"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+  &lt;/<span class="org-function-name">body</span>&gt;
+&lt;/<span class="org-function-name">html</span>&gt;
+</pre>
+</div>
+
+<p>
+Let's use shadow-cljs's built-in dev server:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">
+<span class="org-rainbow-delimiters-depth-1">{</span>...
+ <span class="org-clojure-keyword">:dev-http</span> <span class="org-rainbow-delimiters-depth-2">{</span>8081 <span class="org-string">"public"</span><span class="org-rainbow-delimiters-depth-2">}</span>
+ <span class="org-clojure-keyword">:builds</span> <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:frontend</span> ...<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>
+
+</pre>
+</div>
+
+<p>
+Now spin up the shadow-cljs development process
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">npx shadow-cljs watch frontend
+
+</pre>
+</div>
+
+<p>
+This should trigger a build. We should have a connected app at <a href="http://localhost:8081">localhost:8081</a> - make a change to <code>my-map-app.frontend.app/init</code> to check that hot-reloading is working.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2024a7b" class="outline-3">
+<h3 id="org2024a7b">Adding Openlayers</h3>
+<div class="outline-text-3" id="text-org2024a7b">
+<p>
+Interrupt the <code>shadow-cljs watch</code> process in the terminal with Ctrl-D, and then install Openlayers with <code>npm</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">npm install ol
+
+</pre>
+</div>
+
+<p>
+Let's also add Reagent. Openlayers doesn't depend on React, so this is just a personal preference. If 
+</p>
+
+<p>
+Have a look in <code>node_modules</code> to see that <code>ol</code> has in fact been added. Then rerun the shadow-cljs watch command.
+</p>
+
+<p>
+We'll add a new function that builds the OL map. It targets the <code>map</code> div that we added to the <code>index.html</code>. Note how we use <code>$default</code> to get the default export of the OL namespaces.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">ns</span> <span class="org-type">my-map-app.frontend.app</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-clojure-keyword">:require</span>
+   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/layer/Tile$default"</span> <span class="org-clojure-keyword">:as</span> Tile<span class="org-rainbow-delimiters-depth-3">]</span>
+   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/Map$default"</span> <span class="org-clojure-keyword">:as</span> Map<span class="org-rainbow-delimiters-depth-3">]</span>
+   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/source/OSM$default"</span> <span class="org-clojure-keyword">:as</span> OSM<span class="org-rainbow-delimiters-depth-3">]</span>
+   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/View$default"</span> <span class="org-clojure-keyword">:as</span> View<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">ol-map</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>Map.
+   <span class="org-rainbow-delimiters-depth-3">(</span>clj-&gt;js
+    <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:layers</span> <span class="org-rainbow-delimiters-depth-5">[</span><span class="org-rainbow-delimiters-depth-6">(</span>Tile. <span class="org-rainbow-delimiters-depth-7">(</span>clj-&gt;js <span class="org-rainbow-delimiters-depth-8">{</span><span class="org-clojure-keyword">:source</span> <span class="org-rainbow-delimiters-depth-9">(</span>OSM.<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">}</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">]</span>
+     <span class="org-clojure-keyword">:target</span> <span class="org-string">"map"</span>
+     <span class="org-clojure-keyword">:view</span> <span class="org-rainbow-delimiters-depth-5">(</span>View. <span class="org-rainbow-delimiters-depth-6">(</span>clj-&gt;js <span class="org-rainbow-delimiters-depth-7">{</span><span class="org-clojure-keyword">:center</span> <span class="org-rainbow-delimiters-depth-8">[</span>0 0<span class="org-rainbow-delimiters-depth-8">]</span>
+                            <span class="org-clojure-keyword">:zoom</span> 2<span class="org-rainbow-delimiters-depth-7">}</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> ^<span class="org-clojure-keyword">:</span><span class="org-type">dev</span><span class="org-default">/</span><span class="org-clojure-keyword">after-load</span> <span class="org-function-name">init</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>ol-map<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+</pre>
+</div>
+
+<p>
+Here some metadata has been added to the init function to cause it to be rerun after the namespace gets loaded in a REPL. Include that if it's helpful for your workflow.
+</p>
+
+<p>
+If all is well then you should be getting a warning now in the browser console that says that the map container width or hight is 0. Let's create a <code>styles.css</code> to handle this. Inside the <code>public</code> directory:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span class="org-css-selector">body </span><span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-css-property">margin</span>: 0px; <span class="org-comment-delimiter">/* </span><span class="org-comment">to make map flush with the window edge</span><span class="org-comment-delimiter"> */</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+<span class="org-css-selector">#map </span><span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-css-property">width</span>: 100vw;
+  <span class="org-css-property">height</span>: 100vh;
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+</pre>
+</div>
+
+
+<p>
+Link to this in the this in the <code>index.html</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span class="org-function-name">html</span>&gt;
+  &lt;<span class="org-function-name">head</span>&gt;
+    &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
+    &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"stylesheet"</span>
+          <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
+  &lt;/<span class="org-function-name">head</span>&gt;
+...
+&lt;/<span class="org-function-name">html</span>&gt;
+
+</pre>
+</div>
+
+
+<p>
+Now you should have an app with an interactive map
+<img src="images/map-app-screenshot1.png" alt="map-app-screenshot1.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd6a74d6" class="outline-3">
+<h3 id="orgd6a74d6">Turning it into a PWA</h3>
+<div class="outline-text-3" id="text-orgd6a74d6">
+<p>
+We want to allow the user to install this in their device such that it seems like any other app. To get this capability we need to turn it into a prgressive web app. The PWA needs a few things:
+</p>
+<ul class="org-ul">
+<li>a <code>mainifest.json</code></li>
+</ul>
+<p>
+This tells the browser how to handle the PWA
+</p>
+<ul class="org-ul">
+<li>some icons</li>
+</ul>
+<p>
+So that, among other things, there can be a nice button on the device to launch the app.
+</p>
+<ul class="org-ul">
+<li>a service worker</li>
+</ul>
+<p>
+This does the work of caching certain resources, allowing for offline usage. A service worker is actually optional so we'll skip it in this guide, but look into it.
+</p>
+</div>
+
+<div id="outline-container-org206faf2" class="outline-4">
+<h4 id="org206faf2">Icons</h4>
+<div class="outline-text-4" id="text-org206faf2">
+<p>
+Let's start with the icons. This is tedious. I reccomend getting an LLM to generate a vector image so it's nice and clean (at time of writing Claude is nice for this because it will write the SVG in code and then render a preview). Screenshot that at a nice big size (tip: tell Claude to draw the logo such that it is inside a square with a black outline. That way you can screenshot an almost exact square easly)
+</p>
+
+
+<div id="org4642601" class="figure">
+<p><img src="images/claude-compass.png" alt="claude-compass.png" />
+</p>
+</div>
+
+<p>
+I actually like the black border here so I will screenshot around the outside.
+</p>
+
+<p>
+Take that screenshot and load it into the <a href="https://www.pwabuilder.com/imageGenerator">PWA Builder icon generator</a> this will spit out an archive of icons of various sizes for various platforms. It's probebly more than we need but fine let's go with it.
+</p>
+
+<p>
+There should be three directories of icons for different platforms and an <code>icons.json</code> file. Put all of that into your <code>public</code> directory and rename the <code>icons.json</code> to <code>manifest.json</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org383af8d" class="outline-4">
+<h4 id="org383af8d">Manifest</h4>
+<div class="outline-text-4" id="text-org383af8d">
+<p>
+We already have the icons in our manifest. We need to add a few other things.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json"><span class="org-rainbow-delimiters-depth-1">{</span>
+  <span class="org-keyword">"name"</span>: <span class="org-string">"My Map App"</span>,
+  <span class="org-keyword">"short_name"</span>: <span class="org-string">"mymap"</span>,
+  <span class="org-keyword">"start_url"</span>: <span class="org-string">"/"</span>,
+  <span class="org-keyword">"display"</span>: <span class="org-string">"standalone"</span>,
+  <span class="org-keyword">"id"</span>: <span class="org-string">"mymapappuniqueidbananas"</span>,
+  <span class="org-keyword">"icons"</span>: <span class="org-rainbow-delimiters-depth-2">[</span>...<span class="org-rainbow-delimiters-depth-2">]</span>,
+<span class="org-rainbow-delimiters-depth-1">}</span>
+
+</pre>
+</div>
+
+<p>
+Point to the <code>manifest.json</code> in our <code>index.html</code> by adding a link to the <code>&lt;head&gt;</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span class="org-keyword">!doctype</span> html&gt;
+&lt;<span class="org-function-name">html</span>&gt;
+  &lt;<span class="org-function-name">head</span>&gt;
+    &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"manifest"</span> <span class="org-variable-name">href</span>=<span class="org-string">"manifest.json"</span>&gt;
+    &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
+    &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"stylesheet"</span>
+          <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
+  &lt;/<span class="org-function-name">head</span>&gt;
+  &lt;<span class="org-function-name">body</span>&gt;
+    &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"map"</span>&gt;&lt;/<span class="org-function-name">div</span>&gt;
+    &lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"/js/main.js"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+  &lt;/<span class="org-function-name">body</span>&gt;
+&lt;/<span class="org-function-name">html</span>&gt;
+
+</pre>
+</div>
+
+<p>
+Now we should have a functioning PWA. If you are using Chrome for example you should see a little download button in the address bar:
+</p>
+
+
+<div id="org7153d9f" class="figure">
+<p><img src="images/download-pwa.png" alt="download-pwa.png" />
+</p>
+</div>
+
+<p>
+Give it a go. Congratulations you are an app developer. Consult the web for how to install on android, ios, etc, how to upload things to app stores and so on.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
