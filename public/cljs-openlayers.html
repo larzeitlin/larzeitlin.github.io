@@ -191,7 +191,13 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header><a href="./">home</a> <a href="#top">top</a> </header>
+<link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="icon"
+       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header>
+| <a href="./">home</a>
+| <a href="#top">top</a>
+|  <a href="https://github.com/larzeitlin">github</a>
+| 👻
+</header>
 </head>
 <body>
 <div id="content" class="content">
@@ -200,15 +206,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf93731f">Making a geo PWA with CLJS and Openlayers</a>
+<li><a href="#orga184a5d">Making a geo PWA with CLJS and Openlayers</a>
 <ul>
-<li><a href="#orgc8d48d4">Motivation</a></li>
-<li><a href="#org2a527d9">Shadow-cljs setup</a></li>
-<li><a href="#org7ea6004">Adding Openlayers</a></li>
-<li><a href="#org63df26f">Turning it into a PWA</a>
+<li><a href="#org6444b42">Motivation</a></li>
+<li><a href="#orgf7e17a3">Shadow-cljs setup</a></li>
+<li><a href="#orgbbb5c54">Adding Openlayers</a></li>
+<li><a href="#org4acaa58">Turning it into a PWA</a>
 <ul>
-<li><a href="#orgdd2ded1">Icons</a></li>
-<li><a href="#org8fbac21">Manifest</a></li>
+<li><a href="#org5126d7e">Icons</a></li>
+<li><a href="#org9722ab9">Manifest</a></li>
 </ul>
 </li>
 </ul>
@@ -217,13 +223,13 @@
 </div>
 </div>
 
-<div id="outline-container-orgf93731f" class="outline-2">
-<h2 id="orgf93731f">Making a geo PWA with CLJS and Openlayers</h2>
-<div class="outline-text-2" id="text-orgf93731f">
+<div id="outline-container-orga184a5d" class="outline-2">
+<h2 id="orga184a5d">Making a geo PWA with CLJS and Openlayers</h2>
+<div class="outline-text-2" id="text-orga184a5d">
 </div>
-<div id="outline-container-orgc8d48d4" class="outline-3">
-<h3 id="orgc8d48d4">Motivation</h3>
-<div class="outline-text-3" id="text-orgc8d48d4">
+<div id="outline-container-org6444b42" class="outline-3">
+<h3 id="org6444b42">Motivation</h3>
+<div class="outline-text-3" id="text-org6444b42">
 <p>
 We want to make a quick and easy map based app. ClojureScript is the natural choice for me. Maybe this would be a good application for <a href="https://github.com/squint-cljs/squint">Squint</a> though, I haven't tried that yet. Another article perhaps.
 </p>
@@ -238,9 +244,9 @@ The choice of Progressive Web App is motivated by not wanting to have to write p
 </div>
 </div>
 
-<div id="outline-container-org2a527d9" class="outline-3">
-<h3 id="org2a527d9">Shadow-cljs setup</h3>
-<div class="outline-text-3" id="text-org2a527d9">
+<div id="outline-container-orgf7e17a3" class="outline-3">
+<h3 id="orgf7e17a3">Shadow-cljs setup</h3>
+<div class="outline-text-3" id="text-orgf7e17a3">
 <p>
 The first part of this setup is based on the shadow-cljs docs. If you encounter problems along the way then refer back to the <a href="https://github.com/thheller/shadow-cljs?tab=readme-ov-file#quick-start">shadow-cljs quickstart guide</a>. 
 </p>
@@ -260,10 +266,10 @@ This gives us a project template. Now, add an entrypoint function in a new names
 
 <div class="org-src-container">
 <pre class="src src-clojure">
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">ns</span> <span class="org-type">my-map-app.frontend.app</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">ns</span> <span style="color: #6ae4b9;">my-map-app.frontend.app</span><span style="color: #ffffff;">)</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">init</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">js</span>/alert <span class="org-string">"hi mappers"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">init</span> <span style="color: #ff62d4;">[]</span>
+  <span style="color: #ff62d4;">(</span><span style="color: #6ae4b9;">js</span>/alert <span style="color: #79a8ff;">"hi mappers"</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
 </pre>
 </div>
 
@@ -273,17 +279,17 @@ Now create a build in the <code>shadow-cljs.edn</code> that points to our new ap
 
 <div class="org-src-container">
 <pre class="src src-clojure">
-<span class="org-rainbow-delimiters-depth-1">{</span><span class="org-clojure-keyword">:source-paths</span>
- <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-string">"src/dev"</span>
-  <span class="org-string">"src/main"</span>
-  <span class="org-string">"src/test"</span><span class="org-rainbow-delimiters-depth-2">]</span>
+<span style="color: #ffffff;">{</span><span style="color: #00bcff;">:source-paths</span>
+ <span style="color: #ff62d4;">[</span><span style="color: #79a8ff;">"src/dev"</span>
+  <span style="color: #79a8ff;">"src/main"</span>
+  <span style="color: #79a8ff;">"src/test"</span><span style="color: #ff62d4;">]</span>
 
- <span class="org-clojure-keyword">:dependencies</span>
- <span class="org-rainbow-delimiters-depth-2">[]</span>
+ <span style="color: #00bcff;">:dependencies</span>
+ <span style="color: #ff62d4;">[]</span>
 
- <span class="org-clojure-keyword">:builds</span>
- <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:frontend</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:target</span> <span class="org-clojure-keyword">:browser</span>
-             <span class="org-clojure-keyword">:modules</span> <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:main</span> <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:init-fn</span> <span class="org-type">my-map-app.frontend.app</span>/init<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>
+ <span style="color: #00bcff;">:builds</span>
+ <span style="color: #ff62d4;">{</span><span style="color: #00bcff;">:frontend</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:target</span> <span style="color: #00bcff;">:browser</span>
+             <span style="color: #00bcff;">:modules</span> <span style="color: #fba849;">{</span><span style="color: #00bcff;">:main</span> <span style="color: #9f80ff;">{</span><span style="color: #00bcff;">:init-fn</span> <span style="color: #6ae4b9;">my-map-app.frontend.app</span>/init<span style="color: #9f80ff;">}</span><span style="color: #fba849;">}</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">}</span><span style="color: #ffffff;">}</span>
 </pre>
 </div>
 
@@ -292,16 +298,16 @@ We need to create a <code>public/index.html</code> . Shadow will output to <code
 </p>
 <div class="org-src-container">
 <pre class="src src-html">
-&lt;<span class="org-keyword">!doctype</span> html&gt;
-&lt;<span class="org-function-name">html</span>&gt;
-  &lt;<span class="org-function-name">head</span>&gt;
-    &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
-  &lt;/<span class="org-function-name">head</span>&gt;
-  &lt;<span class="org-function-name">body</span>&gt;
-    &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"map"</span>&gt;&lt;/<span class="org-function-name">div</span>&gt;
-    &lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"/js/main.js"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
-  &lt;/<span class="org-function-name">body</span>&gt;
-&lt;/<span class="org-function-name">html</span>&gt;
+&lt;<span style="color: #b6a0ff;">!doctype</span> html&gt;
+&lt;<span style="color: #feacd0;">html</span>&gt;
+  &lt;<span style="color: #feacd0;">head</span>&gt;
+    &lt;<span style="color: #feacd0;">meta</span> <span style="color: #00d3d0;">charset</span>=<span style="color: #79a8ff;">"utf-8"</span> /&gt;
+  &lt;/<span style="color: #feacd0;">head</span>&gt;
+  &lt;<span style="color: #feacd0;">body</span>&gt;
+    &lt;<span style="color: #feacd0;">div</span> <span style="color: #00d3d0;">id</span>=<span style="color: #79a8ff;">"map"</span>&gt;&lt;/<span style="color: #feacd0;">div</span>&gt;
+    &lt;<span style="color: #feacd0;">script</span> <span style="color: #00d3d0;">src</span>=<span style="color: #79a8ff;">"/js/main.js"</span>&gt;&lt;/<span style="color: #feacd0;">script</span>&gt;
+  &lt;/<span style="color: #feacd0;">body</span>&gt;
+&lt;/<span style="color: #feacd0;">html</span>&gt;
 </pre>
 </div>
 
@@ -311,9 +317,9 @@ Let's use shadow-cljs's built-in dev server:
 
 <div class="org-src-container">
 <pre class="src src-clojure">
-<span class="org-rainbow-delimiters-depth-1">{</span>...
- <span class="org-clojure-keyword">:dev-http</span> <span class="org-rainbow-delimiters-depth-2">{</span>8081 <span class="org-string">"public"</span><span class="org-rainbow-delimiters-depth-2">}</span>
- <span class="org-clojure-keyword">:builds</span> <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:frontend</span> ...<span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>
+<span style="color: #ffffff;">{</span>...
+ <span style="color: #00bcff;">:dev-http</span> <span style="color: #ff62d4;">{</span>8081 <span style="color: #79a8ff;">"public"</span><span style="color: #ff62d4;">}</span>
+ <span style="color: #00bcff;">:builds</span> <span style="color: #ff62d4;">{</span><span style="color: #00bcff;">:frontend</span> ...<span style="color: #ff62d4;">}</span><span style="color: #ffffff;">}</span>
 
 </pre>
 </div>
@@ -334,9 +340,9 @@ This should trigger a build. We should have a connected app at <a href="http://l
 </div>
 </div>
 
-<div id="outline-container-org7ea6004" class="outline-3">
-<h3 id="org7ea6004">Adding Openlayers</h3>
-<div class="outline-text-3" id="text-org7ea6004">
+<div id="outline-container-orgbbb5c54" class="outline-3">
+<h3 id="orgbbb5c54">Adding Openlayers</h3>
+<div class="outline-text-3" id="text-orgbbb5c54">
 <p>
 Interrupt the <code>shadow-cljs watch</code> process in the terminal with Ctrl-C, and then install Openlayers with <code>npm</code>:
 </p>
@@ -365,24 +371,24 @@ Here we have a very minimal setup: just one tile layer with a basemap from OpenS
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">ns</span> <span class="org-type">my-map-app.frontend.app</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-clojure-keyword">:require</span>
-   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/layer/Tile$default"</span> <span class="org-clojure-keyword">:as</span> Tile<span class="org-rainbow-delimiters-depth-3">]</span>
-   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/Map$default"</span> <span class="org-clojure-keyword">:as</span> Map<span class="org-rainbow-delimiters-depth-3">]</span>
-   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/source/OSM$default"</span> <span class="org-clojure-keyword">:as</span> OSM<span class="org-rainbow-delimiters-depth-3">]</span>
-   <span class="org-rainbow-delimiters-depth-3">[</span><span class="org-string">"ol/View$default"</span> <span class="org-clojure-keyword">:as</span> View<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">ns</span> <span style="color: #6ae4b9;">my-map-app.frontend.app</span>
+  <span style="color: #ff62d4;">(</span><span style="color: #00bcff;">:require</span>
+   <span style="color: #3fdfd0;">[</span><span style="color: #79a8ff;">"ol/layer/Tile$default"</span> <span style="color: #00bcff;">:as</span> Tile<span style="color: #3fdfd0;">]</span>
+   <span style="color: #3fdfd0;">[</span><span style="color: #79a8ff;">"ol/Map$default"</span> <span style="color: #00bcff;">:as</span> Map<span style="color: #3fdfd0;">]</span>
+   <span style="color: #3fdfd0;">[</span><span style="color: #79a8ff;">"ol/source/OSM$default"</span> <span style="color: #00bcff;">:as</span> OSM<span style="color: #3fdfd0;">]</span>
+   <span style="color: #3fdfd0;">[</span><span style="color: #79a8ff;">"ol/View$default"</span> <span style="color: #00bcff;">:as</span> View<span style="color: #3fdfd0;">]</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">ol-map</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>Map.
-   <span class="org-rainbow-delimiters-depth-3">(</span>clj-&gt;js
-    <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:layers</span> <span class="org-rainbow-delimiters-depth-5">[</span><span class="org-rainbow-delimiters-depth-6">(</span>Tile. <span class="org-rainbow-delimiters-depth-7">(</span>clj-&gt;js <span class="org-rainbow-delimiters-depth-8">{</span><span class="org-clojure-keyword">:source</span> <span class="org-rainbow-delimiters-depth-9">(</span>OSM.<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">}</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">]</span>
-     <span class="org-clojure-keyword">:target</span> <span class="org-string">"map"</span>
-     <span class="org-clojure-keyword">:view</span> <span class="org-rainbow-delimiters-depth-5">(</span>View. <span class="org-rainbow-delimiters-depth-6">(</span>clj-&gt;js <span class="org-rainbow-delimiters-depth-7">{</span><span class="org-clojure-keyword">:center</span> <span class="org-rainbow-delimiters-depth-8">[</span>0 0<span class="org-rainbow-delimiters-depth-8">]</span>
-                            <span class="org-clojure-keyword">:zoom</span> 2<span class="org-rainbow-delimiters-depth-7">}</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">ol-map</span> <span style="color: #ff62d4;">[]</span>
+  <span style="color: #ff62d4;">(</span>Map.
+   <span style="color: #3fdfd0;">(</span>clj-&gt;js
+    <span style="color: #fba849;">{</span><span style="color: #00bcff;">:layers</span> <span style="color: #9f80ff;">[</span><span style="color: #4fe42f;">(</span>Tile. <span style="color: #fe6060;">(</span>clj-&gt;js <span style="color: #4fafff;">{</span><span style="color: #00bcff;">:source</span> <span style="color: #f0dd60;">(</span>OSM.<span style="color: #f0dd60;">)</span><span style="color: #4fafff;">}</span><span style="color: #fe6060;">)</span><span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">]</span>
+     <span style="color: #00bcff;">:target</span> <span style="color: #79a8ff;">"map"</span>
+     <span style="color: #00bcff;">:view</span> <span style="color: #9f80ff;">(</span>View. <span style="color: #4fe42f;">(</span>clj-&gt;js <span style="color: #fe6060;">{</span><span style="color: #00bcff;">:center</span> <span style="color: #4fafff;">[</span>0 0<span style="color: #4fafff;">]</span>
+                            <span style="color: #00bcff;">:zoom</span> 2<span style="color: #fe6060;">}</span><span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">}</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
 
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> ^<span class="org-clojure-keyword">:</span><span class="org-type">dev</span><span class="org-default">/</span><span class="org-clojure-keyword">after-load</span> <span class="org-function-name">init</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>ol-map<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> ^<span style="color: #00bcff;">:</span><span style="color: #6ae4b9;">dev</span><span style="color: #ffffff; background-color: #000000;">/</span><span style="color: #00bcff;">after-load</span> <span style="color: #feacd0;">init</span> <span style="color: #ff62d4;">[]</span>
+  <span style="color: #ff62d4;">(</span>ol-map<span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
 
 </pre>
 </div>
@@ -396,14 +402,14 @@ If all is well then you should be getting a warning now in the browser console t
 </p>
 
 <div class="org-src-container">
-<pre class="src src-css"><span class="org-css-selector">body </span><span class="org-rainbow-delimiters-depth-1">{</span>
-  <span class="org-css-property">margin</span>: 0px; <span class="org-comment-delimiter">/* </span><span class="org-comment">to make map flush with the window edge</span><span class="org-comment-delimiter"> */</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
+<pre class="src src-css"><span style="color: #b6a0ff;">body</span> <span style="color: #ffffff;">{</span>
+  <span style="color: #6ae4b9;">margin</span>: 0px; <span style="color: #65737e; font-style: italic;">/* </span><span style="color: #a8a8a8; font-style: italic;">to make map flush with the window edge</span><span style="color: #65737e; font-style: italic;"> */</span>
+<span style="color: #ffffff;">}</span>
 
-<span class="org-css-selector">#map </span><span class="org-rainbow-delimiters-depth-1">{</span>
-  <span class="org-css-property">width</span>: 100vw;
-  <span class="org-css-property">height</span>: 100vh;
-<span class="org-rainbow-delimiters-depth-1">}</span>
+<span style="color: #b6a0ff;">#map</span> <span style="color: #ffffff;">{</span>
+  <span style="color: #6ae4b9;">width</span>: 100vw;
+  <span style="color: #6ae4b9;">height</span>: 100vh;
+<span style="color: #ffffff;">}</span>
 
 </pre>
 </div>
@@ -414,14 +420,14 @@ Link to this in the <code>index.html</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span class="org-function-name">html</span>&gt;
-  &lt;<span class="org-function-name">head</span>&gt;
-    &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
-    &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"stylesheet"</span>
-          <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
-  &lt;/<span class="org-function-name">head</span>&gt;
+<pre class="src src-html">&lt;<span style="color: #feacd0;">html</span>&gt;
+  &lt;<span style="color: #feacd0;">head</span>&gt;
+    &lt;<span style="color: #feacd0;">meta</span> <span style="color: #00d3d0;">charset</span>=<span style="color: #79a8ff;">"utf-8"</span> /&gt;
+    &lt;<span style="color: #feacd0;">link</span> <span style="color: #00d3d0;">rel</span>=<span style="color: #79a8ff;">"stylesheet"</span>
+          <span style="color: #00d3d0;">href</span>=<span style="color: #79a8ff;">"styles.css"</span>&gt;
+  &lt;/<span style="color: #feacd0;">head</span>&gt;
 ...
-&lt;/<span class="org-function-name">html</span>&gt;
+&lt;/<span style="color: #feacd0;">html</span>&gt;
 
 </pre>
 </div>
@@ -434,9 +440,9 @@ Now you should have an app with an interactive map. Clearly the buttons and attr
 </div>
 </div>
 
-<div id="outline-container-org63df26f" class="outline-3">
-<h3 id="org63df26f">Turning it into a PWA</h3>
-<div class="outline-text-3" id="text-org63df26f">
+<div id="outline-container-org4acaa58" class="outline-3">
+<h3 id="org4acaa58">Turning it into a PWA</h3>
+<div class="outline-text-3" id="text-org4acaa58">
 <p>
 We want to allow the user to install this in their device such that it seems like any other app. To get this capability we need to turn it into a progressive web app. While essentially just a web app, a PWA typically has a few extra ingredients:
 </p>
@@ -447,15 +453,15 @@ We want to allow the user to install this in their device such that it seems lik
 </ul>
 </div>
 
-<div id="outline-container-orgdd2ded1" class="outline-4">
-<h4 id="orgdd2ded1">Icons</h4>
-<div class="outline-text-4" id="text-orgdd2ded1">
+<div id="outline-container-org5126d7e" class="outline-4">
+<h4 id="org5126d7e">Icons</h4>
+<div class="outline-text-4" id="text-org5126d7e">
 <p>
 Let's start with the icons. Here's a lazy method: get an LLM to generate a vector image so it's nice and clean (at time of writing Claude is nice for this because it will write the SVG in code and then render a preview). Screenshot that at a reasonable resolution (tip: tell Claude to draw the logo such that it is inside a square with a black outline. That way you can select an almost exact square easily)
 </p>
 
 
-<div id="orgf286a6b" class="figure">
+<div id="org9a335bf" class="figure">
 <p><img src="images/claude-compass.png" alt="claude-compass.png" />
 </p>
 </div>
@@ -474,22 +480,22 @@ There should be three directories of icons for different platforms and an <code>
 </div>
 </div>
 
-<div id="outline-container-org8fbac21" class="outline-4">
-<h4 id="org8fbac21">Manifest</h4>
-<div class="outline-text-4" id="text-org8fbac21">
+<div id="outline-container-org9722ab9" class="outline-4">
+<h4 id="org9722ab9">Manifest</h4>
+<div class="outline-text-4" id="text-org9722ab9">
 <p>
 We already have the icons in our manifest. We need to add a few other things.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-json"><span class="org-rainbow-delimiters-depth-1">{</span>
-  <span class="org-keyword">"name"</span>: <span class="org-string">"My Map App"</span>,
-  <span class="org-keyword">"short_name"</span>: <span class="org-string">"mymap"</span>,
-  <span class="org-keyword">"start_url"</span>: <span class="org-string">"/"</span>,
-  <span class="org-keyword">"display"</span>: <span class="org-string">"standalone"</span>,
-  <span class="org-keyword">"id"</span>: <span class="org-string">"mymapappuniqueidbananas"</span>,
-  <span class="org-keyword">"icons"</span>: <span class="org-rainbow-delimiters-depth-2">[</span>...<span class="org-rainbow-delimiters-depth-2">]</span>,
-<span class="org-rainbow-delimiters-depth-1">}</span>
+<pre class="src src-json">{
+  "name": "My Map App",
+  "short_name": "mymap",
+  "start_url": "/",
+  "display": "standalone",
+  "id": "mymapappuniqueidbananas",
+  "icons": [...],
+}
 
 </pre>
 </div>
@@ -499,19 +505,19 @@ Point to the <code>manifest.json</code> in our <code>index.html</code> by adding
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span class="org-keyword">!doctype</span> html&gt;
-&lt;<span class="org-function-name">html</span>&gt;
-  &lt;<span class="org-function-name">head</span>&gt;
-    &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"manifest"</span> <span class="org-variable-name">href</span>=<span class="org-string">"manifest.json"</span>&gt;
-    &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
-    &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"stylesheet"</span>
-          <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
-  &lt;/<span class="org-function-name">head</span>&gt;
-  &lt;<span class="org-function-name">body</span>&gt;
-    &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"map"</span>&gt;&lt;/<span class="org-function-name">div</span>&gt;
-    &lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"/js/main.js"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
-  &lt;/<span class="org-function-name">body</span>&gt;
-&lt;/<span class="org-function-name">html</span>&gt;
+<pre class="src src-html">&lt;<span style="color: #b6a0ff;">!doctype</span> html&gt;
+&lt;<span style="color: #feacd0;">html</span>&gt;
+  &lt;<span style="color: #feacd0;">head</span>&gt;
+    &lt;<span style="color: #feacd0;">link</span> <span style="color: #00d3d0;">rel</span>=<span style="color: #79a8ff;">"manifest"</span> <span style="color: #00d3d0;">href</span>=<span style="color: #79a8ff;">"manifest.json"</span>&gt;
+    &lt;<span style="color: #feacd0;">meta</span> <span style="color: #00d3d0;">charset</span>=<span style="color: #79a8ff;">"utf-8"</span> /&gt;
+    &lt;<span style="color: #feacd0;">link</span> <span style="color: #00d3d0;">rel</span>=<span style="color: #79a8ff;">"stylesheet"</span>
+          <span style="color: #00d3d0;">href</span>=<span style="color: #79a8ff;">"styles.css"</span>&gt;
+  &lt;/<span style="color: #feacd0;">head</span>&gt;
+  &lt;<span style="color: #feacd0;">body</span>&gt;
+    &lt;<span style="color: #feacd0;">div</span> <span style="color: #00d3d0;">id</span>=<span style="color: #79a8ff;">"map"</span>&gt;&lt;/<span style="color: #feacd0;">div</span>&gt;
+    &lt;<span style="color: #feacd0;">script</span> <span style="color: #00d3d0;">src</span>=<span style="color: #79a8ff;">"/js/main.js"</span>&gt;&lt;/<span style="color: #feacd0;">script</span>&gt;
+  &lt;/<span style="color: #feacd0;">body</span>&gt;
+&lt;/<span style="color: #feacd0;">html</span>&gt;
 
 </pre>
 </div>
@@ -521,7 +527,7 @@ Now we should have a functioning PWA. If you are using Chrome for example you sh
 </p>
 
 
-<div id="org906d7bc" class="figure">
+<div id="org5b0f481" class="figure">
 <p><img src="images/download-pwa.png" alt="download-pwa.png" />
 </p>
 </div>

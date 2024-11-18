@@ -27,7 +27,23 @@ img {
 }
 
 header {
-    position: fixed;
+    position: sticky;
+    top: 0;
     right: 1em;
     z-index: 1;
+    background: white;
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    text-align: right;
+    padding: 2px;
+}
+
+html {
+    font-family: sans-serif;
+}
+
+body {
+    padding-left: 2em;
+    padding-right: 2em;
 }

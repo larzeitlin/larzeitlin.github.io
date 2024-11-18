@@ -191,7 +191,13 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel ="stylesheet" type= "text/css" href="./styles.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header><a href="./">home</a> <a href="#top">top</a> </header>
+<link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="icon"
+       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header>
+| <a href="./">home</a>
+| <a href="#top">top</a>
+|  <a href="https://github.com/larzeitlin">github</a>
+| 👻
+</header>
 </head>
 <body>
 <div id="content" class="content">
@@ -200,116 +206,116 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1b73e65">Terminology:</a>
+<li><a href="#org897bdbd">Terminology:</a>
 <ul>
-<li><a href="#org6702b45">What is assembly language?</a></li>
-<li><a href="#org3fc8dcc">What is x86-64?</a></li>
-<li><a href="#orga89feb1">What is a register?</a></li>
-<li><a href="#orgd2fde81">What is address space?</a></li>
-<li><a href="#org0d1c178">Some key features of x86-64:</a></li>
+<li><a href="#org650adc6">What is assembly language?</a></li>
+<li><a href="#org54d3425">What is x86-64?</a></li>
+<li><a href="#org0bb50f7">What is a register?</a></li>
+<li><a href="#orgc4b1546">What is address space?</a></li>
+<li><a href="#org598e428">Some key features of x86-64:</a></li>
 </ul>
 </li>
-<li><a href="#org7fbd331">Assembly Language</a>
+<li><a href="#org4608191">Assembly Language</a>
 <ul>
-<li><a href="#orgff1c27f">Three Sections</a>
+<li><a href="#org3452e86">Three Sections</a>
 <ul>
-<li><a href="#org99b7b3c">data</a></li>
-<li><a href="#org74799e8">bss</a></li>
-<li><a href="#org9acc434">text</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org66bbdd7">Comments</a></li>
-<li><a href="#org7e0b6d2">Statements</a></li>
-<li><a href="#orgd6983d9">Tool-chain</a>
-<ul>
-<li><a href="#org6a4aa24">Assembler</a>
-<ul>
-<li><a href="#org73eeb13">Assembling with NASM</a></li>
-</ul>
-</li>
-<li><a href="#orgc2521fc">Linker</a>
-<ul>
-<li><a href="#orgc14f729">Dynamic Linking</a></li>
-<li><a href="#orga09577a">Assemble/Link Script</a></li>
-</ul>
-</li>
-<li><a href="#org211b77a">Loader</a></li>
-<li><a href="#org907fff1">Debugger</a>
-<ul>
-<li><a href="#org8b2f20f">GDB</a></li>
+<li><a href="#org5b91665">data</a></li>
+<li><a href="#org8a6f3bc">bss</a></li>
+<li><a href="#org6487ac8">text</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgd897e69">Syntax of Statements</a></li>
-<li><a href="#orgcd2887b">Assembly Hello World</a></li>
-<li><a href="#org035ade8">Memory Segments</a>
+<li><a href="#org105b6ae">Comments</a></li>
+<li><a href="#org63ff259">Statements</a></li>
+<li><a href="#org11790cd">Tool-chain</a>
 <ul>
-<li><a href="#org4998c39">Segmented memory model:</a></li>
-<li><a href="#org1d08f9a">Data segment</a></li>
-<li><a href="#org31c7038">Code segment</a></li>
-<li><a href="#org0cdfa41">Stack</a></li>
+<li><a href="#orgf25771a">Assembler</a>
+<ul>
+<li><a href="#orgd1a2692">Assembling with NASM</a></li>
 </ul>
 </li>
-<li><a href="#org229a15e">Registers</a>
+<li><a href="#org14f426f">Linker</a>
+<ul>
+<li><a href="#orge4b6b33">Dynamic Linking</a></li>
+<li><a href="#orgea15d48">Assemble/Link Script</a></li>
+</ul>
+</li>
+<li><a href="#orga5615bc">Loader</a></li>
+<li><a href="#org1329820">Debugger</a>
+<ul>
+<li><a href="#orgd7d40f5">GDB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org45f8d20">Syntax of Statements</a></li>
+<li><a href="#orgc6fd194">Assembly Hello World</a></li>
+<li><a href="#org3edc5ec">Memory Segments</a>
+<ul>
+<li><a href="#orgf606b92">Segmented memory model:</a></li>
+<li><a href="#orga9d79b9">Data segment</a></li>
+<li><a href="#org2780d3f">Code segment</a></li>
+<li><a href="#org506c83e">Stack</a></li>
+</ul>
+</li>
+<li><a href="#org7e95bd5">Registers</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org3607ca8">General Registers</a></li>
-<li><a href="#org9fc74a3">Control</a></li>
-<li><a href="#orgffbf106">Segment Registers</a></li>
+<li><a href="#org4493047">General Registers</a></li>
+<li><a href="#org64f26b3">Control</a></li>
+<li><a href="#org7a54e47">Segment Registers</a></li>
 </ul>
 </li>
-<li><a href="#org897faaa">Example of using registers</a></li>
-<li><a href="#org5ae8297">XMM Registers</a></li>
+<li><a href="#orgc8ac778">Example of using registers</a></li>
+<li><a href="#orgafc8dd0">XMM Registers</a></li>
 </ul>
 </li>
-<li><a href="#org01c67c4">System Calls</a></li>
-<li><a href="#org997aeff">Instructions</a>
+<li><a href="#org8126486">System Calls</a></li>
+<li><a href="#orgef0fd7e">Instructions</a>
 <ul>
-<li><a href="#org9bd4ded">Move</a></li>
-<li><a href="#org24de4bd">Address</a></li>
-<li><a href="#org2151044">Convert</a>
+<li><a href="#orgbad48dc">Move</a></li>
+<li><a href="#org5213c4d">Address</a></li>
+<li><a href="#org32e8ab4">Convert</a>
 <ul>
-<li><a href="#org8b4b65d">widening - unsigned</a></li>
-<li><a href="#orgf2f5835">widening - signed</a></li>
+<li><a href="#orgf68c528">widening - unsigned</a></li>
+<li><a href="#org992288d">widening - signed</a></li>
 </ul>
 </li>
-<li><a href="#org2723ea6">Arithmetic</a>
+<li><a href="#orgc6ccc44">Arithmetic</a>
 <ul>
-<li><a href="#org55501c5">Addition</a></li>
-<li><a href="#org7174219">Subtraction</a></li>
-<li><a href="#orgc05faf4">Multiplication</a></li>
+<li><a href="#org35e4276">Addition</a></li>
+<li><a href="#orgf0a785a">Subtraction</a></li>
+<li><a href="#orgbec39e0">Multiplication</a></li>
 </ul>
 </li>
-<li><a href="#org6890782">Logic</a></li>
-<li><a href="#org52fce21">Shift</a></li>
-<li><a href="#org3501c05">Rotate</a></li>
-<li><a href="#org2930c40">Control instructions</a>
+<li><a href="#org6268439">Logic</a></li>
+<li><a href="#org8bf7e12">Shift</a></li>
+<li><a href="#org4d5510d">Rotate</a></li>
+<li><a href="#orgb02aa46">Control instructions</a>
 <ul>
-<li><a href="#orge3202a1">Labels</a></li>
-<li><a href="#org21a7c6c">Unconditional control instructions.</a></li>
-<li><a href="#org3e280f2">Conditional Control Instructions</a></li>
-<li><a href="#org6c7dcdb">Jump Range</a></li>
+<li><a href="#orgfd5bff2">Labels</a></li>
+<li><a href="#org943c12c">Unconditional control instructions.</a></li>
+<li><a href="#org498d843">Conditional Control Instructions</a></li>
+<li><a href="#org3014fab">Jump Range</a></li>
 </ul>
 </li>
-<li><a href="#orgf82aea6">Iteration</a></li>
-<li><a href="#orgd74ec00">Loop</a></li>
-<li><a href="#org361d6fb">Example program using intructions</a></li>
+<li><a href="#orgaa45208">Iteration</a></li>
+<li><a href="#org33ee4fb">Loop</a></li>
+<li><a href="#org7e12afd">Example program using intructions</a></li>
 </ul>
 </li>
-<li><a href="#orgbb80288">Calling C libraries</a></li>
-<li><a href="#org2833f0b">Related Topics</a>
+<li><a href="#org045d77a">Calling C libraries</a></li>
+<li><a href="#org65594b9">Related Topics</a>
 <ul>
-<li><a href="#orgca452fa">Addressing data in memory</a></li>
-<li><a href="#org1a5cc21">Memory Hierarchy</a></li>
-<li><a href="#org8dcdd9b">Integer representation</a></li>
-<li><a href="#org8bf0dfe">Two's Complement</a></li>
+<li><a href="#org2b49bb0">Addressing data in memory</a></li>
+<li><a href="#orgd2b27e7">Memory Hierarchy</a></li>
+<li><a href="#org2aeca4f">Integer representation</a></li>
+<li><a href="#orga02cae1">Two's Complement</a></li>
 </ul>
 </li>
-<li><a href="#org7dc5065">Handy Links</a></li>
+<li><a href="#org284cde7">Handy Links</a></li>
 </ul>
 </div>
 </div>
@@ -317,49 +323,49 @@
 These are just personal study notes. Figured I would share them in case they are useful to someone else. I started writing this in 2019 and returned to it now in 2024 to review the content. Nothing especially origional here, this is just a amalgamation of the documents and tutorials that I read (linked at the bottom).
 </p>
 
-<div id="outline-container-org1b73e65" class="outline-2">
-<h2 id="org1b73e65">Terminology:</h2>
-<div class="outline-text-2" id="text-org1b73e65">
+<div id="outline-container-org897bdbd" class="outline-2">
+<h2 id="org897bdbd">Terminology:</h2>
+<div class="outline-text-2" id="text-org897bdbd">
 </div>
-<div id="outline-container-org6702b45" class="outline-3">
-<h3 id="org6702b45">What is assembly language?</h3>
-<div class="outline-text-3" id="text-org6702b45">
+<div id="outline-container-org650adc6" class="outline-3">
+<h3 id="org650adc6">What is assembly language?</h3>
+<div class="outline-text-3" id="text-org650adc6">
 <p>
 Machine code is the binary representation of the instructions executed directly by the CPU. One level of abstraction above that is assembly language. Assembly language is specific to the CPU architecture. It typically uses mnemonic <code>opcodes</code> to represent operations, such as <code>MOV</code>, <code>ADD</code>, etc.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org3fc8dcc" class="outline-3">
-<h3 id="org3fc8dcc">What is x86-64?</h3>
-<div class="outline-text-3" id="text-org3fc8dcc">
+<div id="outline-container-org54d3425" class="outline-3">
+<h3 id="org54d3425">What is x86-64?</h3>
+<div class="outline-text-3" id="text-org54d3425">
 <p>
 This refers to the 64-bit extension of the x86 instruction set developed for intel processors. x86-64 was introduced in 1999 is the most widely used assembly language for desktops, laptops and servers at time of writing (2024). It supports 64-bit registers, unlike the 32-bit registers for the preceding IA-32 architecture.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga89feb1" class="outline-3">
-<h3 id="orga89feb1">What is a register?</h3>
-<div class="outline-text-3" id="text-orga89feb1">
+<div id="outline-container-org0bb50f7" class="outline-3">
+<h3 id="org0bb50f7">What is a register?</h3>
+<div class="outline-text-3" id="text-org0bb50f7">
 <p>
 The CPU can temporarily store data in registers. They are the fastest storage in the computer (faster than cache or RAM for example) and they are limited in size and count. Some registers are specialised such as the <code>Instruction Pointer</code> which holds the address of the next instruction, or the <code>Stack Pointer</code> which points to the current top of the stack in memory. Others are general purpose.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd2fde81" class="outline-3">
-<h3 id="orgd2fde81">What is address space?</h3>
-<div class="outline-text-3" id="text-orgd2fde81">
+<div id="outline-container-orgc4b1546" class="outline-3">
+<h3 id="orgc4b1546">What is address space?</h3>
+<div class="outline-text-3" id="text-orgc4b1546">
 <p>
 Address space is the number of addresses in memory that the CPU can access in a single operation. for 64-bit CPUs this is 2<sup>64</sup> addresses.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0d1c178" class="outline-3">
-<h3 id="org0d1c178">Some key features of x86-64:</h3>
-<div class="outline-text-3" id="text-org0d1c178">
+<div id="outline-container-org598e428" class="outline-3">
+<h3 id="org598e428">Some key features of x86-64:</h3>
+<div class="outline-text-3" id="text-org598e428">
 <ul class="org-ul">
 <li>64-bit registers</li>
 <li>Larger address space</li>
@@ -370,7 +376,7 @@ Address space is the number of addresses in memory that the CPU can access in a 
 </ul>
 
 
-<div id="orgaa0d890" class="figure">
+<div id="org0126035" class="figure">
 <p><img src="images/x86-64-arch.png" alt="x86-64-arch.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>diagram of the x86-64 from Volume 1 of the System Developers Manual</p>
@@ -383,76 +389,76 @@ We will get into what some of these registers do below.
 </div>
 </div>
 
-<div id="outline-container-org7fbd331" class="outline-2">
-<h2 id="org7fbd331">Assembly Language</h2>
-<div class="outline-text-2" id="text-org7fbd331">
+<div id="outline-container-org4608191" class="outline-2">
+<h2 id="org4608191">Assembly Language</h2>
+<div class="outline-text-2" id="text-org4608191">
 </div>
-<div id="outline-container-orgff1c27f" class="outline-3">
-<h3 id="orgff1c27f">Three Sections</h3>
-<div class="outline-text-3" id="text-orgff1c27f">
+<div id="outline-container-org3452e86" class="outline-3">
+<h3 id="org3452e86">Three Sections</h3>
+<div class="outline-text-3" id="text-org3452e86">
 <p>
 An assembly program has the following three sections: Data, BSS, Text.
 </p>
 </div>
 
-<div id="outline-container-org99b7b3c" class="outline-4">
-<h4 id="org99b7b3c">data</h4>
-<div class="outline-text-4" id="text-org99b7b3c">
+<div id="outline-container-org5b91665" class="outline-4">
+<h4 id="org5b91665">data</h4>
+<div class="outline-text-4" id="text-org5b91665">
 <p>
 This denotes the start of the data section of an assembly program:
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">section</span> .data
+<pre class="src src-asm"><span style="color: #feacd0;">section</span> .data
 </pre>
 </div>
 <p>
 This section contains initialized data and constants. Here is an example of a data section:
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">section</span> .data
-    <span class="org-keyword">myVariable</span>    db 'Hello, World!',0
-    <span class="org-keyword">myInteger</span>     dd 12345678h
-    <span class="org-keyword">myLong</span>        dq 0x123456789ABCDEF0
+<pre class="src src-asm"><span style="color: #feacd0;">section</span> .data
+    <span style="color: #b6a0ff;">myVariable</span>    db 'Hello, World!',0
+    <span style="color: #b6a0ff;">myInteger</span>     dd 12345678h
+    <span style="color: #b6a0ff;">myLong</span>        dq 0x123456789ABCDEF0
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org74799e8" class="outline-4">
-<h4 id="org74799e8">bss</h4>
-<div class="outline-text-4" id="text-org74799e8">
+<div id="outline-container-org8a6f3bc" class="outline-4">
+<h4 id="org8a6f3bc">bss</h4>
+<div class="outline-text-4" id="text-org8a6f3bc">
 <p>
 BSS stands for "block starting symbol". It contains statically allocated variables that have not been assigned values yet.
 This denotes the beginning of the variable section: 
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">section</span> .bss
+<pre class="src src-asm"><span style="color: #feacd0;">section</span> .bss
 </pre>
 </div>
 <p>
 The bss section contains variable declarations. Here is an example of a bss section of an x86-64 program.
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">section</span> .bss
-  <span class="org-keyword">buffer</span> resb 64           <span class="org-comment-delimiter">; </span><span class="org-comment">Reserve 64 bytes for 'buffer'</span>
-  <span class="org-keyword">counter</span> resd 1           <span class="org-comment-delimiter">; </span><span class="org-comment">Reserve space for a 4-byte integer (dword) 'counter'</span>
-  <span class="org-keyword">array</span> resq 10            <span class="org-comment-delimiter">; </span><span class="org-comment">Reserve space for an array of 10 quadwords (64-bit integers)</span>
+<pre class="src src-asm"><span style="color: #feacd0;">section</span> .bss
+  <span style="color: #b6a0ff;">buffer</span> resb 64           <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Reserve 64 bytes for 'buffer'</span>
+  <span style="color: #b6a0ff;">counter</span> resd 1           <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Reserve space for a 4-byte integer (dword) 'counter'</span>
+  <span style="color: #b6a0ff;">array</span> resq 10            <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Reserve space for an array of 10 quadwords (64-bit integers)</span>
 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9acc434" class="outline-4">
-<h4 id="org9acc434">text</h4>
-<div class="outline-text-4" id="text-org9acc434">
+<div id="outline-container-org6487ac8" class="outline-4">
+<h4 id="org6487ac8">text</h4>
+<div class="outline-text-4" id="text-org6487ac8">
 <p>
 This section contains the actual code.
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">section</span> .text
-  <span class="org-keyword">global</span> _start
-<span class="org-function-name">_start</span>: 
+<pre class="src src-asm"><span style="color: #feacd0;">section</span> .text
+  <span style="color: #b6a0ff;">global</span> _start
+<span style="color: #feacd0;">_start</span>: 
 </pre>
 </div>
 <p>
@@ -462,22 +468,22 @@ Global start lets the kernel know where the program execution begins.
 </div>
 </div>
 </div>
-<div id="outline-container-org66bbdd7" class="outline-2">
-<h2 id="org66bbdd7">Comments</h2>
-<div class="outline-text-2" id="text-org66bbdd7">
+<div id="outline-container-org105b6ae" class="outline-2">
+<h2 id="org105b6ae">Comments</h2>
+<div class="outline-text-2" id="text-org105b6ae">
 <p>
 Comments are preceded with a semicolon. Comments can contain any printable character
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">this is a full line comment</span>
-<span class="org-function-name">add</span> <span class="org-keyword">eax</span>, ebx  <span class="org-comment-delimiter">; </span><span class="org-comment">this is an inline comment</span>
+<pre class="src src-asm"><span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">this is a full line comment</span>
+<span style="color: #feacd0;">add</span> <span style="color: #b6a0ff;">eax</span>, ebx  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">this is an inline comment</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org7e0b6d2" class="outline-2">
-<h2 id="org7e0b6d2">Statements</h2>
-<div class="outline-text-2" id="text-org7e0b6d2">
+<div id="outline-container-org63ff259" class="outline-2">
+<h2 id="org63ff259">Statements</h2>
+<div class="outline-text-2" id="text-org63ff259">
 <p>
 There are three types of statements:
 </p>
@@ -505,9 +511,9 @@ Text substitution
 </div>
 </div>
 
-<div id="outline-container-orgd6983d9" class="outline-2">
-<h2 id="orgd6983d9">Tool-chain</h2>
-<div class="outline-text-2" id="text-orgd6983d9">
+<div id="outline-container-org11790cd" class="outline-2">
+<h2 id="org11790cd">Tool-chain</h2>
+<div class="outline-text-2" id="text-org11790cd">
 <p>
 The software tools used in creating assembly programs are as follows:
 </p>
@@ -518,17 +524,17 @@ The software tools used in creating assembly programs are as follows:
 <li>Debugger</li>
 </ul>
 </div>
-<div id="outline-container-org6a4aa24" class="outline-3">
-<h3 id="org6a4aa24">Assembler</h3>
-<div class="outline-text-3" id="text-org6a4aa24">
+<div id="outline-container-orgf25771a" class="outline-3">
+<h3 id="orgf25771a">Assembler</h3>
+<div class="outline-text-3" id="text-orgf25771a">
 <p>
 The assembler is a program converts assembly code into machine language (binary). The output file is known as an object file, hence the .o suffix. During this process the variable names get removed and converted into addresses.
 </p>
 </div>
 
-<div id="outline-container-org73eeb13" class="outline-4">
-<h4 id="org73eeb13">Assembling with NASM</h4>
-<div class="outline-text-4" id="text-org73eeb13">
+<div id="outline-container-orgd1a2692" class="outline-4">
+<h4 id="orgd1a2692">Assembling with NASM</h4>
+<div class="outline-text-4" id="text-orgd1a2692">
 <ul class="org-ul">
 <li>save the above as a file with extension .asm, for example: hello.asm</li>
 <li>assemble program with:</li>
@@ -556,9 +562,9 @@ The assembler is a program converts assembly code into machine language (binary)
 </div>
 </div>
 
-<div id="outline-container-orgc2521fc" class="outline-3">
-<h3 id="orgc2521fc">Linker</h3>
-<div class="outline-text-3" id="text-orgc2521fc">
+<div id="outline-container-org14f426f" class="outline-3">
+<h3 id="org14f426f">Linker</h3>
+<div class="outline-text-3" id="text-org14f426f">
 <p>
 Also known as the linkage editor. This combines object files into a single executable. It also includes any libraries required for execution. The following is a command for the GNU Gold linker:
 </p>
@@ -573,40 +579,40 @@ The <code>-g</code> flag tells the linker to include debugging information. The 
 </p>
 </div>
 
-<div id="outline-container-orgc14f729" class="outline-4">
-<h4 id="orgc14f729">Dynamic Linking</h4>
-<div class="outline-text-4" id="text-orgc14f729">
+<div id="outline-container-orge4b6b33" class="outline-4">
+<h4 id="orge4b6b33">Dynamic Linking</h4>
+<div class="outline-text-4" id="text-orge4b6b33">
 <p>
 Linux supports dynamic linking. This allows resolution of some symbols be postponed until the execution of the program. Under Linux dynamically linked object files have the extension <code>.so</code>, shared object. The Windows equivalent is <code>.dll</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga09577a" class="outline-4">
-<h4 id="orga09577a">Assemble/Link Script</h4>
-<div class="outline-text-4" id="text-orga09577a">
+<div id="outline-container-orgea15d48" class="outline-4">
+<h4 id="orgea15d48">Assemble/Link Script</h4>
+<div class="outline-text-4" id="text-orgea15d48">
 <p>
 The following is an example of a bash script to automate the calls to the assembler and linker into a single call.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span>
+<pre class="src src-bash"><span style="color: #65737e; font-style: italic;">#</span><span style="color: #a8a8a8; font-style: italic;">!/bin/</span><span style="color: #b6a0ff;">bash</span>
 
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> -z $<span class="org-variable-name">1</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-  <span class="org-builtin">echo</span> <span class="org-string">"Usage: ./asm64 &lt;asmMainFile&gt; (no extension)"</span>
-  <span class="org-keyword">exit</span>
-<span class="org-keyword">fi</span>
+<span style="color: #b6a0ff;">if</span> <span style="color: #ffffff;">[</span> -z $<span style="color: #00d3d0;">1</span> <span style="color: #ffffff;">]</span>; <span style="color: #b6a0ff;">then</span>
+  <span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">"Usage: ./asm64 &lt;asmMainFile&gt; (no extension)"</span>
+  <span style="color: #b6a0ff;">exit</span>
+<span style="color: #b6a0ff;">fi</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">verify no extent ions were entered</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span> <span class="org-negation-char">!</span> -e <span class="org-string">"$1.asm"</span> <span class="org-rainbow-delimiters-depth-1">]</span>; <span class="org-keyword">then</span>
-  <span class="org-builtin">echo</span> <span class="org-string">"Error, $1.asm not found."</span>
-  <span class="org-builtin">echo</span> <span class="org-string">"Note, do not enter file extensions."</span>
-  <span class="org-keyword">exit</span>
-<span class="org-keyword">fi</span>
+<span style="color: #65737e; font-style: italic;"># </span><span style="color: #a8a8a8; font-style: italic;">verify no extent ions were entered</span>
+<span style="color: #b6a0ff;">if</span> <span style="color: #ffffff;">[</span> <span style="color: #d0bc00; font-weight: bold;">!</span> -e <span style="color: #79a8ff;">"$1.asm"</span> <span style="color: #ffffff;">]</span>; <span style="color: #b6a0ff;">then</span>
+  <span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">"Error, $1.asm not found."</span>
+  <span style="color: #f78fe7;">echo</span> <span style="color: #79a8ff;">"Note, do not enter file extensions."</span>
+  <span style="color: #b6a0ff;">exit</span>
+<span style="color: #b6a0ff;">fi</span>
 
-<span class="org-comment-delimiter">#  </span><span class="org-comment">Compile, assemble, and link</span>
+<span style="color: #65737e; font-style: italic;">#  </span><span style="color: #a8a8a8; font-style: italic;">Compile, assemble, and link</span>
 
-yasm -Worphan-labels -g dwarf2 -f elf64 $<span class="org-variable-name">1</span>.asm -l $<span class="org-variable-name">1</span>.lst ld -g -o $<span class="org-variable-name">1</span> $<span class="org-variable-name">1</span>.o  
+yasm -Worphan-labels -g dwarf2 -f elf64 $<span style="color: #00d3d0;">1</span>.asm -l $<span style="color: #00d3d0;">1</span>.lst ld -g -o $<span style="color: #00d3d0;">1</span> $<span style="color: #00d3d0;">1</span>.o  
 
 </pre>
 </div>
@@ -614,9 +620,9 @@ yasm -Worphan-labels -g dwarf2 -f elf64 $<span class="org-variable-name">1</span
 </div>
 </div>
 
-<div id="outline-container-org211b77a" class="outline-3">
-<h3 id="org211b77a">Loader</h3>
-<div class="outline-text-3" id="text-org211b77a">
+<div id="outline-container-orga5615bc" class="outline-3">
+<h3 id="orga5615bc">Loader</h3>
+<div class="outline-text-3" id="text-orga5615bc">
 <p>
 This is the part of the operating system that loads the program from secondary storage into memory. Under Linux this is done with the program name. For example, if the program is called <code>hello_world</code>, the command will be:
 </p>
@@ -627,16 +633,16 @@ This is the part of the operating system that loads the program from secondary s
 </div>
 </div>
 </div>
-<div id="outline-container-org907fff1" class="outline-3">
-<h3 id="org907fff1">Debugger</h3>
-<div class="outline-text-3" id="text-org907fff1">
+<div id="outline-container-org1329820" class="outline-3">
+<h3 id="org1329820">Debugger</h3>
+<div class="outline-text-3" id="text-org1329820">
 <p>
 This is a program that can control the execution of the assembly program in order to inspect how it is (or is not) working. 
 </p>
 </div>
-<div id="outline-container-org8b2f20f" class="outline-4">
-<h4 id="org8b2f20f">GDB</h4>
-<div class="outline-text-4" id="text-org8b2f20f">
+<div id="outline-container-orgd7d40f5" class="outline-4">
+<h4 id="orgd7d40f5">GDB</h4>
+<div class="outline-text-4" id="text-orgd7d40f5">
 <p>
 GDB is a debugger for assembly language as well as C/C++. It is terminal-based but also can be run in emacs. To start in emacs use <code>m-x gdb</code> or to run in the terminal use:
 </p>
@@ -662,9 +668,9 @@ To simplify this process, it is recommended to have a shell script to automate a
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span>
+<pre class="src src-shell"><span style="color: #65737e; font-style: italic;">#</span><span style="color: #a8a8a8; font-style: italic;">!/bin/</span><span style="color: #b6a0ff;">bash</span>
 
-nasm -g -f elf64 -l $<span class="org-variable-name">1</span>.lst $<span class="org-variable-name">1</span>.asm &amp;&amp; ld -g -o $<span class="org-variable-name">1</span> $<span class="org-variable-name">1</span>.o
+nasm -g -f elf64 -l $<span style="color: #00d3d0;">1</span>.lst $<span style="color: #00d3d0;">1</span>.asm &amp;&amp; ld -g -o $<span style="color: #00d3d0;">1</span> $<span style="color: #00d3d0;">1</span>.o
 </pre>
 </div>
 
@@ -672,13 +678,13 @@ nasm -g -f elf64 -l $<span class="org-variable-name">1</span>.lst $<span class="
 To start the execution of a program in <code>gdb</code> use:
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span class="org-rainbow-delimiters-depth-1">(</span>gdb<span class="org-rainbow-delimiters-depth-1">)</span> start
+<pre class="src src-shell"><span style="color: #ffffff;">(</span>gdb<span style="color: #ffffff;">)</span> start
 </pre>
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="orgd212761"></a>GDB commands<br />
-<div class="outline-text-5" id="text-orgd212761">
+<li><a id="org619afcb"></a>GDB commands<br />
+<div class="outline-text-5" id="text-org619afcb">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -756,9 +762,9 @@ To start the execution of a program in <code>gdb</code> use:
 </div>
 </div>
 </div>
-<div id="outline-container-orgd897e69" class="outline-2">
-<h2 id="orgd897e69">Syntax of Statements</h2>
-<div class="outline-text-2" id="text-orgd897e69">
+<div id="outline-container-org45f8d20" class="outline-2">
+<h2 id="org45f8d20">Syntax of Statements</h2>
+<div class="outline-text-2" id="text-org45f8d20">
 <p>
 Assembly language has one statement per line
 </p>
@@ -769,91 +775,91 @@ Assembly language has one statement per line
 Fields in the square brackets are optional. There are two basic parts to the instruction - the name (mnemonic) and the operands.For example: 
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">INC</span> <span class="org-keyword">COUNT</span> <span class="org-comment-delimiter">; </span><span class="org-comment">increment the variable COUNT</span>
+<pre class="src src-asm"><span style="color: #feacd0;">INC</span> <span style="color: #b6a0ff;">COUNT</span> <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">increment the variable COUNT</span>
 
-<span class="org-function-name">MOV</span> <span class="org-keyword">TOTAL</span> <span class="org-comment-delimiter">; </span><span class="org-comment">Transfer the total value 48 into memory variable TOTAL</span>
+<span style="color: #feacd0;">MOV</span> <span style="color: #b6a0ff;">TOTAL</span> <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Transfer the total value 48 into memory variable TOTAL</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcd2887b" class="outline-2">
-<h2 id="orgcd2887b">Assembly Hello World</h2>
-<div class="outline-text-2" id="text-orgcd2887b">
+<div id="outline-container-orgc6fd194" class="outline-2">
+<h2 id="orgc6fd194">Assembly Hello World</h2>
+<div class="outline-text-2" id="text-orgc6fd194">
 <div class="org-src-container">
 <pre class="src src-asm">
-<span class="org-function-name">section</span> .text
-  <span class="org-keyword">global</span> _start  <span class="org-comment-delimiter">; </span><span class="org-comment">must be declared for linker</span>
-<span class="org-function-name">_start</span>: 
-  <span class="org-keyword">mov</span> edx,len <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
-  <span class="org-keyword">mov</span> ecx,msg <span class="org-comment-delimiter">; </span><span class="org-comment">message to write</span>
-  <span class="org-keyword">mov</span> ebx,1   <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (stdout)</span>
-  <span class="org-keyword">mov</span> eax,4   <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
-  <span class="org-keyword">int</span> 0x80    <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+<span style="color: #feacd0;">section</span> .text
+  <span style="color: #b6a0ff;">global</span> _start  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">must be declared for linker</span>
+<span style="color: #feacd0;">_start</span>: 
+  <span style="color: #b6a0ff;">mov</span> edx,len <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">message length</span>
+  <span style="color: #b6a0ff;">mov</span> ecx,msg <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">message to write</span>
+  <span style="color: #b6a0ff;">mov</span> ebx,1   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">file descriptor (stdout)</span>
+  <span style="color: #b6a0ff;">mov</span> eax,4   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">system call number (sys_write)</span>
+  <span style="color: #b6a0ff;">int</span> 0x80    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">call kernel</span>
 
-  <span class="org-keyword">mov</span> eax,1   <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_exit)</span>
-  <span class="org-keyword">int</span> 0x80    <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+  <span style="color: #b6a0ff;">mov</span> eax,1   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">system call number (sys_exit)</span>
+  <span style="color: #b6a0ff;">int</span> 0x80    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">call kernel</span>
 
-<span class="org-function-name">section</span> .data
-<span class="org-function-name">msg</span> <span class="org-keyword">db</span> 'Hello, world!', 0xa <span class="org-comment-delimiter">; </span><span class="org-comment">string to be printed</span>
-<span class="org-function-name">en</span> <span class="org-keyword">equ</span> $ - msg <span class="org-comment-delimiter">; </span><span class="org-comment">length of the string</span>
+<span style="color: #feacd0;">section</span> .data
+<span style="color: #feacd0;">msg</span> <span style="color: #b6a0ff;">db</span> 'Hello, world!', 0xa <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">string to be printed</span>
+<span style="color: #feacd0;">en</span> <span style="color: #b6a0ff;">equ</span> $ - msg <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">length of the string</span>
 
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org035ade8" class="outline-2">
-<h2 id="org035ade8">Memory Segments</h2>
-<div class="outline-text-2" id="text-org035ade8">
+<div id="outline-container-org3edc5ec" class="outline-2">
+<h2 id="org3edc5ec">Memory Segments</h2>
+<div class="outline-text-2" id="text-org3edc5ec">
 </div>
-<div id="outline-container-org4998c39" class="outline-3">
-<h3 id="org4998c39">Segmented memory model:</h3>
-<div class="outline-text-3" id="text-org4998c39">
+<div id="outline-container-orgf606b92" class="outline-3">
+<h3 id="orgf606b92">Segmented memory model:</h3>
+<div class="outline-text-3" id="text-orgf606b92">
 <p>
 In a segmented memory model the system memory is divided into independent segments. Segments are used to store specific types of data. One segment for instruction codes, one for data elements, etc.
 </p>
 </div>
 </div>
-<div id="outline-container-org1d08f9a" class="outline-3">
-<h3 id="org1d08f9a">Data segment</h3>
-<div class="outline-text-3" id="text-org1d08f9a">
+<div id="outline-container-orga9d79b9" class="outline-3">
+<h3 id="orga9d79b9">Data segment</h3>
+<div class="outline-text-3" id="text-orga9d79b9">
 <p>
 Represented by the <code>.data</code> section and the <code>.bss</code> section. The <code>.data</code> section is holds static data that remains unchanged during the course of the program. The <code>.bss</code> section is also for static data. Data here are declared during the course of the program. The <code>.bss</code> section is zero filled prior to execution.
 </p>
 </div>
 </div>
-<div id="outline-container-org31c7038" class="outline-3">
-<h3 id="org31c7038">Code segment</h3>
-<div class="outline-text-3" id="text-org31c7038">
+<div id="outline-container-org2780d3f" class="outline-3">
+<h3 id="org2780d3f">Code segment</h3>
+<div class="outline-text-3" id="text-org2780d3f">
 <p>
 Represented by the <code>.text</code> section. Fixed data that stores instruction codes.
 </p>
 </div>
 </div>
-<div id="outline-container-org0cdfa41" class="outline-3">
-<h3 id="org0cdfa41">Stack</h3>
-<div class="outline-text-3" id="text-org0cdfa41">
+<div id="outline-container-org506c83e" class="outline-3">
+<h3 id="org506c83e">Stack</h3>
+<div class="outline-text-3" id="text-org506c83e">
 <p>
 This contains data passed to functions and procedures during the course of a program.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org229a15e" class="outline-2">
-<h2 id="org229a15e">Registers</h2>
-<div class="outline-text-2" id="text-org229a15e">
+<div id="outline-container-org7e95bd5" class="outline-2">
+<h2 id="org7e95bd5">Registers</h2>
+<div class="outline-text-2" id="text-org7e95bd5">
 <p>
 In order to avoid the slow process of reading and storing data in memory, the processor has temporary storage locations called <code>registers</code>. These can store data elements for processing without having to access memory.
 </p>
 </div>
 
-<div id="outline-container-org3607ca8" class="outline-4">
-<h4 id="org3607ca8">General Registers</h4>
-<div class="outline-text-4" id="text-org3607ca8">
+<div id="outline-container-org4493047" class="outline-4">
+<h4 id="org4493047">General Registers</h4>
+<div class="outline-text-4" id="text-org4493047">
 </div>
 <ul class="org-ul">
-<li><a id="org3f55a80"></a>Data<br />
-<div class="outline-text-5" id="text-org3f55a80">
+<li><a id="org483c2ab"></a>Data<br />
+<div class="outline-text-5" id="text-org483c2ab">
 <p>
 These are used for arithmetic, logic and other operations. They have three different modes of usage:
 </p>
@@ -1044,8 +1050,8 @@ Also used in I/O. Notably when large numbers are involved.
 </div>
 </li>
 
-<li><a id="orgb636736"></a>Pointer Registers<br />
-<div class="outline-text-5" id="text-orgb636736">
+<li><a id="org14f328a"></a>Pointer Registers<br />
+<div class="outline-text-5" id="text-org14f328a">
 <p>
 Stores addresses in memory. In 32-bit these are EIP, ESP and EBP. In 16-bit these correspond to IP, SP and BP.
 </p>
@@ -1071,8 +1077,8 @@ in combination with the offset BP gives the location of a parameter. Can also be
 </div>
 </li>
 
-<li><a id="org36bdc08"></a>Index Registers<br />
-<div class="outline-text-5" id="text-org36bdc08">
+<li><a id="orgf7b11d1"></a>Index Registers<br />
+<div class="outline-text-5" id="text-orgf7b11d1">
 <p>
 ESI and EDI in 32-bit, or SI and DI in 16-bit.
 </p>
@@ -1093,9 +1099,9 @@ Destination index for string operations.
 </ul>
 </div>
 
-<div id="outline-container-org9fc74a3" class="outline-4">
-<h4 id="org9fc74a3">Control</h4>
-<div class="outline-text-4" id="text-org9fc74a3">
+<div id="outline-container-org64f26b3" class="outline-4">
+<h4 id="org64f26b3">Control</h4>
+<div class="outline-text-4" id="text-org64f26b3">
 <p>
 For comparisons and conditional instructions that control flags.
 </p>
@@ -1238,9 +1244,9 @@ Contains the carry from the leftmost bit after an arithmetic operation. It also 
 </div>
 </div>
 
-<div id="outline-container-orgffbf106" class="outline-4">
-<h4 id="orgffbf106">Segment Registers</h4>
-<div class="outline-text-4" id="text-orgffbf106">
+<div id="outline-container-org7a54e47" class="outline-4">
+<h4 id="org7a54e47">Segment Registers</h4>
+<div class="outline-text-4" id="text-org7a54e47">
 <p>
 These refer to specific areas defined for data, code and stack. 
 </p>
@@ -1273,40 +1279,40 @@ All memory locations within a segment are relative to the starting address of th
 </div>
 </div>
 
-<div id="outline-container-org897faaa" class="outline-3">
-<h3 id="org897faaa">Example of using registers</h3>
-<div class="outline-text-3" id="text-org897faaa">
+<div id="outline-container-orgc8ac778" class="outline-3">
+<h3 id="orgc8ac778">Example of using registers</h3>
+<div class="outline-text-3" id="text-orgc8ac778">
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">section</span> .text
-  <span class="org-keyword">global</span> _start   <span class="org-comment-delimiter">; </span><span class="org-comment">must be declared for linker (gcc)</span>
+<pre class="src src-asm"><span style="color: #feacd0;">section</span> .text
+  <span style="color: #b6a0ff;">global</span> _start   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">must be declared for linker (gcc)</span>
 
-<span class="org-function-name">_start</span>:           <span class="org-comment-delimiter">; </span><span class="org-comment">tell linker entry point</span>
-  <span class="org-keyword">mov</span> edx,len     <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
-  <span class="org-keyword">mov</span> ecx,msg     <span class="org-comment-delimiter">; </span><span class="org-comment">message to write</span>
-  <span class="org-keyword">mov</span> ebx,1       <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (stout)</span>
-  <span class="org-keyword">mov</span> eax,4       <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
-  <span class="org-keyword">int</span> 0x80        <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+<span style="color: #feacd0;">_start</span>:           <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">tell linker entry point</span>
+  <span style="color: #b6a0ff;">mov</span> edx,len     <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">message length</span>
+  <span style="color: #b6a0ff;">mov</span> ecx,msg     <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">message to write</span>
+  <span style="color: #b6a0ff;">mov</span> ebx,1       <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">file descriptor (stout)</span>
+  <span style="color: #b6a0ff;">mov</span> eax,4       <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">system call number (sys_write)</span>
+  <span style="color: #b6a0ff;">int</span> 0x80        <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">call kernel</span>
 
-  <span class="org-keyword">mov</span> edx,9       <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
-  <span class="org-keyword">mov</span> ecx,s2      <span class="org-comment-delimiter">; </span><span class="org-comment">message to write</span>
-  <span class="org-keyword">mov</span> ebx,1       <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (stout)</span>
-  <span class="org-keyword">mov</span> eax,4       <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
-  <span class="org-keyword">int</span> 0x80        <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+  <span style="color: #b6a0ff;">mov</span> edx,9       <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">message length</span>
+  <span style="color: #b6a0ff;">mov</span> ecx,s2      <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">message to write</span>
+  <span style="color: #b6a0ff;">mov</span> ebx,1       <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">file descriptor (stout)</span>
+  <span style="color: #b6a0ff;">mov</span> eax,4       <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">system call number (sys_write)</span>
+  <span style="color: #b6a0ff;">int</span> 0x80        <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">call kernel</span>
 
-  <span class="org-keyword">mov</span> eax,1       <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_exit)</span>
-  <span class="org-keyword">int</span> 0x80        <span class="org-comment-delimiter">; </span><span class="org-comment">call </span>
+  <span style="color: #b6a0ff;">mov</span> eax,1       <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">system call number (sys_exit)</span>
+  <span style="color: #b6a0ff;">int</span> 0x80        <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">call </span>
 
-<span class="org-function-name">section</span> .data
-<span class="org-function-name">msg</span> <span class="org-keyword">db</span> 'Displaying 9 stars',0xa  <span class="org-comment-delimiter">; </span><span class="org-comment">a message</span>
-<span class="org-function-name">len</span> <span class="org-keyword">equ</span> $ - msg <span class="org-comment-delimiter">; </span><span class="org-comment">length of message</span>
-<span class="org-function-name">s2</span> <span class="org-keyword">times</span> 9 db '*'
+<span style="color: #feacd0;">section</span> .data
+<span style="color: #feacd0;">msg</span> <span style="color: #b6a0ff;">db</span> 'Displaying 9 stars',0xa  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">a message</span>
+<span style="color: #feacd0;">len</span> <span style="color: #b6a0ff;">equ</span> $ - msg <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">length of message</span>
+<span style="color: #feacd0;">s2</span> <span style="color: #b6a0ff;">times</span> 9 db '*'
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org5ae8297" class="outline-3">
-<h3 id="org5ae8297">XMM Registers</h3>
-<div class="outline-text-3" id="text-org5ae8297">
+<div id="outline-container-orgafc8dd0" class="outline-3">
+<h3 id="orgafc8dd0">XMM Registers</h3>
+<div class="outline-text-3" id="text-orgafc8dd0">
 <p>
 These are used to support floating point operations and Single Instruction Multiple Data (SMID) Instructions, used in graphics and DSP calculations. These are xmm0 to xmm15.
 </p>
@@ -1314,9 +1320,9 @@ These are used to support floating point operations and Single Instruction Multi
 </div>
 </div>
 
-<div id="outline-container-org01c67c4" class="outline-2">
-<h2 id="org01c67c4">System Calls</h2>
-<div class="outline-text-2" id="text-org01c67c4">
+<div id="outline-container-org8126486" class="outline-2">
+<h2 id="org8126486">System Calls</h2>
+<div class="outline-text-2" id="text-org8126486">
 <p>
 API between the the <code>user space</code> and the <code>system space</code>.
 System calls are used by putting the number associated with that call into <code>EAX</code> and the arguments to that system call into other specific registers.
@@ -1326,8 +1332,8 @@ System calls are used by putting the number associated with that call into <code
 For example, this is the call to exit the program. <code>sys_exit</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">mov</span>  <span class="org-keyword">eax</span>,1 <span class="org-comment-delimiter">; </span><span class="org-comment">system call number moved into eax</span>
-<span class="org-function-name">int</span>  <span class="org-keyword">0x80</span>   <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+<pre class="src src-asm"><span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">eax</span>,1 <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">system call number moved into eax</span>
+<span style="color: #feacd0;">int</span>  <span style="color: #b6a0ff;">0x80</span>   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">call kernel</span>
 </pre>
 </div>
 
@@ -1335,11 +1341,11 @@ For example, this is the call to exit the program. <code>sys_exit</code>:
 Here is an example for a syscall that has arguments, <code>sys_write</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">mov</span>  <span class="org-keyword">edx</span>,4    <span class="org-comment-delimiter">; </span><span class="org-comment">message length</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">ecx</span>,msg  <span class="org-comment-delimiter">; </span><span class="org-comment">some message that has been defined in the data section</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">ebx</span>,1    <span class="org-comment-delimiter">; </span><span class="org-comment">file descriptor (1 is for standard out)</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">eax</span>,4    <span class="org-comment-delimiter">; </span><span class="org-comment">system call number (sys_write)</span>
-<span class="org-function-name">int</span>  <span class="org-keyword">0x80</span>     <span class="org-comment-delimiter">; </span><span class="org-comment">call kernel</span>
+<pre class="src src-asm"><span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">edx</span>,4    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">message length</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">ecx</span>,msg  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">some message that has been defined in the data section</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">ebx</span>,1    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">file descriptor (1 is for standard out)</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">eax</span>,4    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">system call number (sys_write)</span>
+<span style="color: #feacd0;">int</span>  <span style="color: #b6a0ff;">0x80</span>     <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">call kernel</span>
 </pre>
 </div>
 
@@ -1440,20 +1446,20 @@ All syscalls are listed in  /usr/include/asm/unistd.h which can be used to look 
 </div>
 </div>
 
-<div id="outline-container-org997aeff" class="outline-2">
-<h2 id="org997aeff">Instructions</h2>
-<div class="outline-text-2" id="text-org997aeff">
+<div id="outline-container-orgef0fd7e" class="outline-2">
+<h2 id="orgef0fd7e">Instructions</h2>
+<div class="outline-text-2" id="text-orgef0fd7e">
 </div>
-<div id="outline-container-org9bd4ded" class="outline-3">
-<h3 id="org9bd4ded">Move</h3>
-<div class="outline-text-3" id="text-org9bd4ded">
+<div id="outline-container-orgbad48dc" class="outline-3">
+<h3 id="orgbad48dc">Move</h3>
+<div class="outline-text-3" id="text-orgbad48dc">
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">mov</span> &lt;dest&gt;, &lt;src&gt;
-<span class="org-comment-delimiter">; </span><span class="org-comment">for example</span>
+<pre class="src src-asm"><span style="color: #feacd0;">mov</span> &lt;dest&gt;, &lt;src&gt;
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">for example</span>
 
-<span class="org-function-name">mov</span> <span class="org-keyword">ax</span>, 42 <span class="org-comment-delimiter">; </span><span class="org-comment">the integer 42 is put into the 16 bit ax register</span>
-<span class="org-function-name">mov</span> <span class="org-keyword">cl</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>bvar<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">into the lower c register, a byte is copied from the address of bvar</span>
-<span class="org-function-name">mov</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>qvar<span class="org-rainbow-delimiters-depth-1">]</span>, rdx <span class="org-comment-delimiter">; </span><span class="org-comment">a quad word from the address of qvar is copied into the 64 bit d register.</span>
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">ax</span>, 42 <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">the integer 42 is put into the 16 bit ax register</span>
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">cl</span>, byte <span style="color: #ffffff;">[</span>bvar<span style="color: #ffffff;">]</span>  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">into the lower c register, a byte is copied from the address of bvar</span>
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">qword</span> <span style="color: #ffffff;">[</span>qvar<span style="color: #ffffff;">]</span>, rdx <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">a quad word from the address of qvar is copied into the 64 bit d register.</span>
 </pre>
 </div>
 <ul class="org-ul">
@@ -1463,46 +1469,46 @@ All syscalls are listed in  /usr/include/asm/unistd.h which can be used to look 
 </ul>
 </div>
 </div>
-<div id="outline-container-org24de4bd" class="outline-3">
-<h3 id="org24de4bd">Address</h3>
-<div class="outline-text-3" id="text-org24de4bd">
+<div id="outline-container-org5213c4d" class="outline-3">
+<h3 id="org5213c4d">Address</h3>
+<div class="outline-text-3" id="text-org5213c4d">
 <p>
 The load effective address command <code>lea</code> is used to put the address of a variable into a register.
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">lea</span> &lt;reg64&gt;, &lt;mem&gt;
+<pre class="src src-asm"><span style="color: #feacd0;">lea</span> &lt;reg64&gt;, &lt;mem&gt;
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">for example</span>
-<span class="org-function-name">lea</span> <span class="org-keyword">rcx</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>bvar<span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter">; </span><span class="org-comment">put the location of bvar into the rcx register</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">for example</span>
+<span style="color: #feacd0;">lea</span> <span style="color: #b6a0ff;">rcx</span>, byte <span style="color: #ffffff;">[</span>bvar<span style="color: #ffffff;">]</span> <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">put the location of bvar into the rcx register</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org2151044" class="outline-3">
-<h3 id="org2151044">Convert</h3>
-<div class="outline-text-3" id="text-org2151044">
+<div id="outline-container-org32e8ab4" class="outline-3">
+<h3 id="org32e8ab4">Convert</h3>
+<div class="outline-text-3" id="text-org32e8ab4">
 <p>
 Conversion instructions change a variable from one size to another. Narrowing conversions require no specific instructions since the lower portions of registers are directly accessible. 
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">mov</span> <span class="org-keyword">rax</span>, 50
-<span class="org-function-name">mov</span> <span class="org-keyword">byte</span> <span class="org-rainbow-delimiters-depth-1">[</span>bval<span class="org-rainbow-delimiters-depth-1">]</span>, al
+<pre class="src src-asm"><span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">rax</span>, 50
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">byte</span> <span style="color: #ffffff;">[</span>bval<span style="color: #ffffff;">]</span>, al
 </pre>
 </div>
 <p>
 Widening conversions vary depending on the data types involved.
 </p>
 </div>
-<div id="outline-container-org8b4b65d" class="outline-4">
-<h4 id="org8b4b65d">widening - unsigned</h4>
-<div class="outline-text-4" id="text-org8b4b65d">
+<div id="outline-container-orgf68c528" class="outline-4">
+<h4 id="orgf68c528">widening - unsigned</h4>
+<div class="outline-text-4" id="text-orgf68c528">
 <p>
 Unsigned numbers only take positive values, therefore when dealing with unsigned numbers the upper part of the memory location or register must be set to zero. 
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">mov</span> <span class="org-keyword">al</span>, 50
-<span class="org-function-name">mov</span> <span class="org-keyword">rbx</span>, 0
-<span class="org-function-name">mov</span> <span class="org-keyword">bl</span>, al
+<pre class="src src-asm"><span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">al</span>, 50
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">rbx</span>, 0
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">bl</span>, al
 </pre>
 </div>
 <p>
@@ -1510,7 +1516,7 @@ There is an instruction especially for performing this: <code>movzx</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">movzx</span>  &lt;dest&gt;, &lt;src&gt;
+<pre class="src src-asm"><span style="color: #feacd0;">movzx</span>  &lt;dest&gt;, &lt;src&gt;
 </pre>
 </div>
 <p>
@@ -1518,15 +1524,15 @@ NB: This does not work when converting a quadword destination with a double word
 </p>
 </div>
 </div>
-<div id="outline-container-orgf2f5835" class="outline-4">
-<h4 id="orgf2f5835">widening - signed</h4>
-<div class="outline-text-4" id="text-orgf2f5835">
+<div id="outline-container-org992288d" class="outline-4">
+<h4 id="org992288d">widening - signed</h4>
+<div class="outline-text-4" id="text-org992288d">
 <p>
 When the data is signed, the upper portion must be set to ether zeros or ones depending on the sign of the number. 
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">movsx</span> &lt;dest&gt;, &lt;src&gt; <span class="org-comment-delimiter">;</span><span class="org-comment">general form, used always except when converting between double and quad word.</span>
-<span class="org-function-name">movsxd</span> &lt;dest&gt;, &lt;src&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">used then converting from double to quadword </span>
+<pre class="src src-asm"><span style="color: #feacd0;">movsx</span> &lt;dest&gt;, &lt;src&gt; <span style="color: #65737e; font-style: italic;">;</span><span style="color: #a8a8a8; font-style: italic;">general form, used always except when converting between double and quad word.</span>
+<span style="color: #feacd0;">movsxd</span> &lt;dest&gt;, &lt;src&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">used then converting from double to quadword </span>
 </pre>
 </div>
 <p>
@@ -1581,36 +1587,36 @@ Specific registers also have their own signed widening conversion instructions:
 </div>
 </div>
 </div>
-<div id="outline-container-org2723ea6" class="outline-3">
-<h3 id="org2723ea6">Arithmetic</h3>
-<div class="outline-text-3" id="text-org2723ea6">
+<div id="outline-container-orgc6ccc44" class="outline-3">
+<h3 id="orgc6ccc44">Arithmetic</h3>
+<div class="outline-text-3" id="text-orgc6ccc44">
 </div>
-<div id="outline-container-org55501c5" class="outline-4">
-<h4 id="org55501c5">Addition</h4>
-<div class="outline-text-4" id="text-org55501c5">
+<div id="outline-container-org35e4276" class="outline-4">
+<h4 id="org35e4276">Addition</h4>
+<div class="outline-text-4" id="text-org35e4276">
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">add</span> &lt;dest&gt;, &lt;src&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">this results in: &lt;dest&gt; = &lt;dest&gt; + &lt;src&gt;</span>
+<pre class="src src-asm"><span style="color: #feacd0;">add</span> &lt;dest&gt;, &lt;src&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">this results in: &lt;dest&gt; = &lt;dest&gt; + &lt;src&gt;</span>
 </pre>
 </div>
 <p>
 Operands must be of the same type. Memory to memory addition cannot use the above. One of the operands must be moved into a register.
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">Num1 + Num2 (memory to memory) assuming that both are byte size.</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">al</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>Num1<span class="org-rainbow-delimiters-depth-1">]</span>
-<span class="org-function-name">add</span>  <span class="org-keyword">al</span>, byte <span class="org-rainbow-delimiters-depth-1">[</span>Num2<span class="org-rainbow-delimiters-depth-1">]</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">byte</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans<span class="org-rainbow-delimiters-depth-1">]</span>, al
+<pre class="src src-asm"><span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Num1 + Num2 (memory to memory) assuming that both are byte size.</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">al</span>, byte <span style="color: #ffffff;">[</span>Num1<span style="color: #ffffff;">]</span>
+<span style="color: #feacd0;">add</span>  <span style="color: #b6a0ff;">al</span>, byte <span style="color: #ffffff;">[</span>Num2<span style="color: #ffffff;">]</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">byte</span> <span style="color: #ffffff;">[</span>Ans<span style="color: #ffffff;">]</span>, al
 </pre>
 </div>
 <p>
 There is also a command for incriminating a value by 1.
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">inc</span> &lt;operand&gt;
-<span class="org-comment-delimiter">; </span><span class="org-comment">for example:</span>
-<span class="org-function-name">inc</span> <span class="org-keyword">rax</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">when incriminating an operand in memory, specify the size:</span>
-<span class="org-function-name">inc</span> <span class="org-keyword">byte</span> <span class="org-rainbow-delimiters-depth-1">[</span>bNum<span class="org-rainbow-delimiters-depth-1">]</span>
+<pre class="src src-asm"><span style="color: #feacd0;">inc</span> &lt;operand&gt;
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">for example:</span>
+<span style="color: #feacd0;">inc</span> <span style="color: #b6a0ff;">rax</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">when incriminating an operand in memory, specify the size:</span>
+<span style="color: #feacd0;">inc</span> <span style="color: #b6a0ff;">byte</span> <span style="color: #ffffff;">[</span>bNum<span style="color: #ffffff;">]</span>
 </pre>
 </div>
 <p>
@@ -1618,56 +1624,56 @@ When the numbers being added will result in a sum greater than the register size
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">dquad1</span>  <span class="org-keyword">ddq</span> 0x1A000000000000000
-<span class="org-function-name">dquad2</span>  <span class="org-keyword">ddq</span> 0x2C000000000000000
-<span class="org-function-name">dqsum</span>   <span class="org-keyword">ddq</span> 0
+<pre class="src src-asm"><span style="color: #feacd0;">dquad1</span>  <span style="color: #b6a0ff;">ddq</span> 0x1A000000000000000
+<span style="color: #feacd0;">dquad2</span>  <span style="color: #b6a0ff;">ddq</span> 0x2C000000000000000
+<span style="color: #feacd0;">dqsum</span>   <span style="color: #b6a0ff;">ddq</span> 0
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">using the declarations above:</span>
-
-
-<span class="org-function-name">mov</span>  <span class="org-keyword">rax</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad1<span class="org-rainbow-delimiters-depth-1">]</span>    <span class="org-comment-delimiter">; </span><span class="org-comment">the first 64 bits of dquad1</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">rdx</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad1+8<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">the last 64 bits of dquad1</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">using the declarations above:</span>
 
 
-<span class="org-function-name">add</span>  <span class="org-keyword">rax</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad2<span class="org-rainbow-delimiters-depth-1">]</span>    <span class="org-comment-delimiter">; </span><span class="org-comment">add the first 64 bits of dquad2</span>
-<span class="org-function-name">adc</span>  <span class="org-keyword">rdx</span>, qword <span class="org-rainbow-delimiters-depth-1">[</span>dquad2+8<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">add with carry the last 64 bits of dquad2</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">rax</span>, qword <span style="color: #ffffff;">[</span>dquad1<span style="color: #ffffff;">]</span>    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">the first 64 bits of dquad1</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">rdx</span>, qword <span style="color: #ffffff;">[</span>dquad1+8<span style="color: #ffffff;">]</span>  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">the last 64 bits of dquad1</span>
 
-<span class="org-function-name">mov</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>dqSum<span class="org-rainbow-delimiters-depth-1">]</span>, rax      <span class="org-comment-delimiter">; </span><span class="org-comment">result is put into dqSum</span>
-<span class="org-function-name">mov</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>dqSum+8<span class="org-rainbow-delimiters-depth-1">]</span>, rdx
+
+<span style="color: #feacd0;">add</span>  <span style="color: #b6a0ff;">rax</span>, qword <span style="color: #ffffff;">[</span>dquad2<span style="color: #ffffff;">]</span>    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">add the first 64 bits of dquad2</span>
+<span style="color: #feacd0;">adc</span>  <span style="color: #b6a0ff;">rdx</span>, qword <span style="color: #ffffff;">[</span>dquad2+8<span style="color: #ffffff;">]</span>  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">add with carry the last 64 bits of dquad2</span>
+
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">qword</span> <span style="color: #ffffff;">[</span>dqSum<span style="color: #ffffff;">]</span>, rax      <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">result is put into dqSum</span>
+<span style="color: #feacd0;">mov</span> <span style="color: #b6a0ff;">qword</span> <span style="color: #ffffff;">[</span>dqSum+8<span style="color: #ffffff;">]</span>, rdx
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7174219" class="outline-4">
-<h4 id="org7174219">Subtraction</h4>
-<div class="outline-text-4" id="text-org7174219">
+<div id="outline-container-orgf0a785a" class="outline-4">
+<h4 id="orgf0a785a">Subtraction</h4>
+<div class="outline-text-4" id="text-orgf0a785a">
 <p>
 The subtraction commands are self-explanatory when taken with the above information on addition.
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">sub</span> &lt;dest&gt;, &lt;src&gt;
-<span class="org-function-name">dec</span> &lt;operand&gt;
+<pre class="src src-asm"><span style="color: #feacd0;">sub</span> &lt;dest&gt;, &lt;src&gt;
+<span style="color: #feacd0;">dec</span> &lt;operand&gt;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc05faf4" class="outline-4">
-<h4 id="orgc05faf4">Multiplication</h4>
-<div class="outline-text-4" id="text-orgc05faf4">
+<div id="outline-container-orgbec39e0" class="outline-4">
+<h4 id="orgbec39e0">Multiplication</h4>
+<div class="outline-text-4" id="text-orgbec39e0">
 <p>
 There are different commands for multiplying signed or unsigned integers. Both typically produce double sized results. 
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgdef3fa4"></a>Unsigned Integer Multiplication<br />
-<div class="outline-text-5" id="text-orgdef3fa4">
+<li><a id="org3d8e951"></a>Unsigned Integer Multiplication<br />
+<div class="outline-text-5" id="text-org3d8e951">
 <p>
 The general form is as follows:
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">mul</span>  &lt;src&gt;
+<pre class="src src-asm"><span style="color: #feacd0;">mul</span>  &lt;src&gt;
 </pre>
 </div>
 <p>
@@ -1729,32 +1735,32 @@ One of the operands must use an A register (al, ax, eax, rax) depending on size.
 For example, if two double words are multiplied, the result will be a quad word in dx:ax
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">dNumA</span> <span class="org-keyword">dd</span> 42000
-<span class="org-function-name">dNumB</span> <span class="org-keyword">dd</span> 73000
-<span class="org-function-name">Ans</span>   <span class="org-keyword">dq</span> 0
+<pre class="src src-asm"><span style="color: #feacd0;">dNumA</span> <span style="color: #b6a0ff;">dd</span> 42000
+<span style="color: #feacd0;">dNumB</span> <span style="color: #b6a0ff;">dd</span> 73000
+<span style="color: #feacd0;">Ans</span>   <span style="color: #b6a0ff;">dq</span> 0
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">Using the above declarations</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">dNumA * dNumB</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Using the above declarations</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">dNumA * dNumB</span>
 
-<span class="org-function-name">mov</span>  <span class="org-keyword">eax</span>, word <span class="org-rainbow-delimiters-depth-1">[</span>wNumA<span class="org-rainbow-delimiters-depth-1">]</span>
-<span class="org-function-name">mul</span>  <span class="org-keyword">dword</span> <span class="org-rainbow-delimiters-depth-1">[</span>wNumB<span class="org-rainbow-delimiters-depth-1">]</span>    <span class="org-comment-delimiter">; </span><span class="org-comment">result goes to edx:eax</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">dword</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans<span class="org-rainbow-delimiters-depth-1">]</span>, ax
-<span class="org-function-name">mov</span>  <span class="org-keyword">dword</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans+2<span class="org-rainbow-delimiters-depth-1">]</span>, bx
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">eax</span>, word <span style="color: #ffffff;">[</span>wNumA<span style="color: #ffffff;">]</span>
+<span style="color: #feacd0;">mul</span>  <span style="color: #b6a0ff;">dword</span> <span style="color: #ffffff;">[</span>wNumB<span style="color: #ffffff;">]</span>    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">result goes to edx:eax</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">dword</span> <span style="color: #ffffff;">[</span>Ans<span style="color: #ffffff;">]</span>, ax
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">dword</span> <span style="color: #ffffff;">[</span>Ans+2<span style="color: #ffffff;">]</span>, bx
 </pre>
 </div>
 </div>
 </li>
 
-<li><a id="org6009191"></a>Signed Integer multiplication<br />
-<div class="outline-text-5" id="text-org6009191">
+<li><a id="org9a7c8ef"></a>Signed Integer multiplication<br />
+<div class="outline-text-5" id="text-org9a7c8ef">
 <p>
 Signed integer multiplication is more flex able with its operands / sizes. The destination must always be a register.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">imul</span> &lt;src&gt;
-<span class="org-function-name">imul</span> &lt;dest&gt;, &lt;src/imm&gt;
-<span class="org-function-name">imul</span> &lt;dest&gt;, &lt;src&gt;, &lt;imm&gt;
+<pre class="src src-asm"><span style="color: #feacd0;">imul</span> &lt;src&gt;
+<span style="color: #feacd0;">imul</span> &lt;dest&gt;, &lt;src/imm&gt;
+<span style="color: #feacd0;">imul</span> &lt;dest&gt;, &lt;src&gt;, &lt;imm&gt;
 </pre>
 </div>
 <ul class="org-ul">
@@ -1765,8 +1771,8 @@ Signed integer multiplication is more flex able with its operands / sizes. The d
 </div>
 </li>
 
-<li><a id="orge7fb720"></a>Integer Division<br />
-<div class="outline-text-5" id="text-orge7fb720">
+<li><a id="orgfced790"></a>Integer Division<br />
+<div class="outline-text-5" id="text-orgfced790">
 <p>
 Division requires that the dividend is larger in data type size than the divisor. It is critical that the dividend is set correctly for division to work. For word, double word and quad word divisions the dividend requires both the <code>D</code> (for upper) and <code>A</code> (for lower) registers. The divisor can be a memory location or a register, not an intermediate. The result will be placed in the <code>A</code> register, the remainder will go into ether the <code>ah</code>, <code>dx</code>, <code>edx</code> or <code>rdx</code> registers. 
 </p>
@@ -1834,15 +1840,15 @@ Signed and unsigned integer division instructions work in the same way but have 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">div</span> &lt;src&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned</span>
-<span class="org-function-name">idiv</span> &lt;src&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">signed</span>
+<pre class="src src-asm"><span style="color: #feacd0;">div</span> &lt;src&gt;  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">unsigned</span>
+<span style="color: #feacd0;">idiv</span> &lt;src&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">signed</span>
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">for example</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">ax</span>, word <span class="org-rainbow-delimiters-depth-1">[</span>NumA<span class="org-rainbow-delimiters-depth-1">]</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">dx</span>, 0
-<span class="org-function-name">mov</span>  <span class="org-keyword">bx</span>, 5
-<span class="org-function-name">div</span>  <span class="org-keyword">bx</span>
-<span class="org-function-name">mov</span>  <span class="org-keyword">word</span> <span class="org-rainbow-delimiters-depth-1">[</span>Ans<span class="org-rainbow-delimiters-depth-1">]</span>, ax
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">for example</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">ax</span>, word <span style="color: #ffffff;">[</span>NumA<span style="color: #ffffff;">]</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">dx</span>, 0
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">bx</span>, 5
+<span style="color: #feacd0;">div</span>  <span style="color: #b6a0ff;">bx</span>
+<span style="color: #feacd0;">mov</span>  <span style="color: #b6a0ff;">word</span> <span style="color: #ffffff;">[</span>Ans<span style="color: #ffffff;">]</span>, ax
 </pre>
 </div>
 </div>
@@ -1851,67 +1857,67 @@ Signed and unsigned integer division instructions work in the same way but have 
 </div>
 </div>
 
-<div id="outline-container-org6890782" class="outline-3">
-<h3 id="org6890782">Logic</h3>
-<div class="outline-text-3" id="text-org6890782">
+<div id="outline-container-org6268439" class="outline-3">
+<h3 id="org6268439">Logic</h3>
+<div class="outline-text-3" id="text-org6268439">
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-comment-delimiter">;        </span><span class="org-comment">0101        0101         0101          </span>
-<span class="org-comment-delimiter">;        </span><span class="org-comment">0011        0011         0011         0011</span>
-<span class="org-comment-delimiter">;        </span><span class="org-comment">----        ----         ----         ----</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">and =&gt; 0001  or =&gt; 0111  xor =&gt; 0110  not =&gt; 1100</span>
+<pre class="src src-asm"><span style="color: #65737e; font-style: italic;">;        </span><span style="color: #a8a8a8; font-style: italic;">0101        0101         0101          </span>
+<span style="color: #65737e; font-style: italic;">;        </span><span style="color: #a8a8a8; font-style: italic;">0011        0011         0011         0011</span>
+<span style="color: #65737e; font-style: italic;">;        </span><span style="color: #a8a8a8; font-style: italic;">----        ----         ----         ----</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">and =&gt; 0001  or =&gt; 0111  xor =&gt; 0110  not =&gt; 1100</span>
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">&amp;</span>
-<span class="org-function-name">and</span> &lt;dest&gt;, &lt;src&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">both cannot be memory</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">||</span>
-<span class="org-function-name">or</span> &lt;dest&gt;, &lt;src&gt;   <span class="org-comment-delimiter">; </span><span class="org-comment">both cannot be memory</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">^</span>
-<span class="org-function-name">xor</span> &lt;dest&gt;, &lt;src&gt;   <span class="org-comment-delimiter">; </span><span class="org-comment">both cannot be memory</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">&#172;</span>
-<span class="org-function-name">not</span> &lt;op&gt;   <span class="org-comment-delimiter">; </span><span class="org-comment">op cannot be immediate</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">&amp;</span>
+<span style="color: #feacd0;">and</span> &lt;dest&gt;, &lt;src&gt;  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">both cannot be memory</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">||</span>
+<span style="color: #feacd0;">or</span> &lt;dest&gt;, &lt;src&gt;   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">both cannot be memory</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">^</span>
+<span style="color: #feacd0;">xor</span> &lt;dest&gt;, &lt;src&gt;   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">both cannot be memory</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">&#172;</span>
+<span style="color: #feacd0;">not</span> &lt;op&gt;   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">op cannot be immediate</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org52fce21" class="outline-3">
-<h3 id="org52fce21">Shift</h3>
-<div class="outline-text-3" id="text-org52fce21">
+<div id="outline-container-org8bf7e12" class="outline-3">
+<h3 id="org8bf7e12">Shift</h3>
+<div class="outline-text-3" id="text-org8bf7e12">
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">logical shifts</span>
-<span class="org-function-name">shl</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">shift left, imm or cl must between 1 and 64</span>
-<span class="org-function-name">shl</span> &lt;dest&gt;, cl
+<pre class="src src-asm"><span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">logical shifts</span>
+<span style="color: #feacd0;">shl</span> &lt;dest&gt;, &lt;imm&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">shift left, imm or cl must between 1 and 64</span>
+<span style="color: #feacd0;">shl</span> &lt;dest&gt;, cl
 
-<span class="org-function-name">shr</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">shift right, imm or cl must be between 1 and 64</span>
-<span class="org-function-name">shr</span> &lt;dest&gt;, cl
+<span style="color: #feacd0;">shr</span> &lt;dest&gt;, &lt;imm&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">shift right, imm or cl must be between 1 and 64</span>
+<span style="color: #feacd0;">shr</span> &lt;dest&gt;, cl
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">arithmetic shift</span>
-<span class="org-function-name">sal</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">left shift. Zero fills the space made:  0010 -&gt; 0100</span>
-<span class="org-function-name">sal</span> &lt;dest&gt;, cl 
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">arithmetic shift</span>
+<span style="color: #feacd0;">sal</span> &lt;dest&gt;, &lt;imm&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">left shift. Zero fills the space made:  0010 -&gt; 0100</span>
+<span style="color: #feacd0;">sal</span> &lt;dest&gt;, cl 
 
 
-<span class="org-function-name">sar</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">right shift. Sign bit fills the space made:  1101 -&gt; 1110</span>
-<span class="org-function-name">sar</span> &lt;dest&gt;, cl
+<span style="color: #feacd0;">sar</span> &lt;dest&gt;, &lt;imm&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">right shift. Sign bit fills the space made:  1101 -&gt; 1110</span>
+<span style="color: #feacd0;">sar</span> &lt;dest&gt;, cl
 
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org3501c05" class="outline-3">
-<h3 id="org3501c05">Rotate</h3>
-<div class="outline-text-3" id="text-org3501c05">
+<div id="outline-container-org4d5510d" class="outline-3">
+<h3 id="org4d5510d">Rotate</h3>
+<div class="outline-text-3" id="text-org4d5510d">
 <p>
 Rotations are essentially shifts that put the bits that would be shifted off the end onto the beginning, or vica verca.
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">rol</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">rotate left</span>
-<span class="org-function-name">rol</span> &lt;dest&gt; cl
+<pre class="src src-asm"><span style="color: #feacd0;">rol</span> &lt;dest&gt;, &lt;imm&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">rotate left</span>
+<span style="color: #feacd0;">rol</span> &lt;dest&gt; cl
 
 
-<span class="org-function-name">ror</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">rotate right</span>
-<span class="org-function-name">ror</span> &lt;dest&gt; cl
-<span class="org-comment-delimiter">; </span><span class="org-comment">for example:</span>
+<span style="color: #feacd0;">ror</span> &lt;dest&gt;, &lt;imm&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">rotate right</span>
+<span style="color: #feacd0;">ror</span> &lt;dest&gt; cl
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">for example:</span>
 
-<span class="org-function-name">rol</span> <span class="org-keyword">rcx</span>, 32
-<span class="org-function-name">ror</span> <span class="org-keyword">qword</span> <span class="org-rainbow-delimiters-depth-1">[</span>qNum<span class="org-rainbow-delimiters-depth-1">]</span>, cl
+<span style="color: #feacd0;">rol</span> <span style="color: #b6a0ff;">rcx</span>, 32
+<span style="color: #feacd0;">ror</span> <span style="color: #b6a0ff;">qword</span> <span style="color: #ffffff;">[</span>qNum<span style="color: #ffffff;">]</span>, cl
 </pre>
 </div>
 <p>
@@ -1919,58 +1925,58 @@ the <code>imm</code> or the value in the <code>cl</code> register must be betwee
 </p>
 </div>
 </div>
-<div id="outline-container-org2930c40" class="outline-3">
-<h3 id="org2930c40">Control instructions</h3>
-<div class="outline-text-3" id="text-org2930c40">
+<div id="outline-container-orgb02aa46" class="outline-3">
+<h3 id="orgb02aa46">Control instructions</h3>
+<div class="outline-text-3" id="text-orgb02aa46">
 <p>
 These include structures such as if statements and looping.
 </p>
 </div>
-<div id="outline-container-orge3202a1" class="outline-4">
-<h4 id="orge3202a1">Labels</h4>
-<div class="outline-text-4" id="text-orge3202a1">
+<div id="outline-container-orgfd5bff2" class="outline-4">
+<h4 id="orgfd5bff2">Labels</h4>
+<div class="outline-text-4" id="text-orgfd5bff2">
 <p>
 These are targets for jumps. These should start with a letter, and my include numbers, underscores, and should be followed by a colon. In <code>YASM</code> labels are case sensitive.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org21a7c6c" class="outline-4">
-<h4 id="org21a7c6c">Unconditional control instructions.</h4>
-<div class="outline-text-4" id="text-org21a7c6c">
+<div id="outline-container-org943c12c" class="outline-4">
+<h4 id="org943c12c">Unconditional control instructions.</h4>
+<div class="outline-text-4" id="text-org943c12c">
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">jmp</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">moves execution in the program to the label.</span>
+<pre class="src src-asm"><span style="color: #feacd0;">jmp</span> &lt;label&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">moves execution in the program to the label.</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3e280f2" class="outline-4">
-<h4 id="org3e280f2">Conditional Control Instructions</h4>
-<div class="outline-text-4" id="text-org3e280f2">
+<div id="outline-container-org498d843" class="outline-4">
+<h4 id="org498d843">Conditional Control Instructions</h4>
+<div class="outline-text-4" id="text-org498d843">
 <p>
 These are made up of two instructions that must happen one immediately after the other. First there has to be some sort of comparison, then the jump instruction. The comparison will compare two operands and store the result in the <code>rFlag</code> register.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">cmp</span> &lt;op1&gt;, &lt;op2&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">operands must be of the same size.</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">op1 must not be immediate, op2 may be immediate.</span>
+<pre class="src src-asm"><span style="color: #feacd0;">cmp</span> &lt;op1&gt;, &lt;op2&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">operands must be of the same size.</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">op1 must not be immediate, op2 may be immediate.</span>
 </pre>
 </div>
 <p>
 This should be followed by a jump instruction. 
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">je</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">if op1 == op2</span>
-<span class="org-function-name">jne</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">if op1 != op2</span>
-<span class="org-function-name">jl</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &lt; op2</span>
-<span class="org-function-name">jle</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &lt;= op2</span>
-<span class="org-function-name">jg</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &gt; op2</span>
-<span class="org-function-name">jge</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">signed, if op1 &gt;= op2</span>
-<span class="org-function-name">jb</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &lt; op2</span>
-<span class="org-function-name">jbe</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &lt;= op2</span>
-<span class="org-function-name">ja</span> &lt;label&gt;  <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &gt; op2</span>
-<span class="org-function-name">jae</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">unsigned, if op1 &gt;= op2</span>
+<pre class="src src-asm"><span style="color: #feacd0;">je</span> &lt;label&gt;  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">if op1 == op2</span>
+<span style="color: #feacd0;">jne</span> &lt;label&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">if op1 != op2</span>
+<span style="color: #feacd0;">jl</span> &lt;label&gt;  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">signed, if op1 &lt; op2</span>
+<span style="color: #feacd0;">jle</span> &lt;label&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">signed, if op1 &lt;= op2</span>
+<span style="color: #feacd0;">jg</span> &lt;label&gt;  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">signed, if op1 &gt; op2</span>
+<span style="color: #feacd0;">jge</span> &lt;label&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">signed, if op1 &gt;= op2</span>
+<span style="color: #feacd0;">jb</span> &lt;label&gt;  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">unsigned, if op1 &lt; op2</span>
+<span style="color: #feacd0;">jbe</span> &lt;label&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">unsigned, if op1 &lt;= op2</span>
+<span style="color: #feacd0;">ja</span> &lt;label&gt;  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">unsigned, if op1 &gt; op2</span>
+<span style="color: #feacd0;">jae</span> &lt;label&gt; <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">unsigned, if op1 &gt;= op2</span>
 </pre>
 </div>
 
@@ -1980,29 +1986,29 @@ For example, this is a possible implementation for an if else statement:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">using the following declerations:</span>
+<pre class="src src-asm"><span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">using the following declerations:</span>
 
-  <span class="org-keyword">TRUE</span>    equ   1
-  <span class="org-keyword">FALSE</span>   equ   0
-  <span class="org-keyword">x</span>       dd    0
-  <span class="org-keyword">y</span>       dd    0
-  <span class="org-keyword">ans</span>     dd    0 
-  <span class="org-keyword">errFlag</span> db    FALSE
+  <span style="color: #b6a0ff;">TRUE</span>    equ   1
+  <span style="color: #b6a0ff;">FALSE</span>   equ   0
+  <span style="color: #b6a0ff;">x</span>       dd    0
+  <span style="color: #b6a0ff;">y</span>       dd    0
+  <span style="color: #b6a0ff;">ans</span>     dd    0 
+  <span style="color: #b6a0ff;">errFlag</span> db    FALSE
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">-------</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">-------</span>
 
-  <span class="org-keyword">cmp</span>    dword <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-1">]</span>, 0    <span class="org-comment-delimiter">; </span><span class="org-comment">compare the contents of x to 0</span>
-  <span class="org-keyword">je</span>     doElse          <span class="org-comment-delimiter">; </span><span class="org-comment">if eaual go to location deElse </span>
-  <span class="org-keyword">mov</span>    eax, dword <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">... the "not equal branch". Put x in eax</span>
-  <span class="org-keyword">cdq</span>                    <span class="org-comment-delimiter">; </span><span class="org-comment">change dword into qword (prep for division)</span>
-  <span class="org-keyword">idiv</span>   dword <span class="org-rainbow-delimiters-depth-1">[</span>y<span class="org-rainbow-delimiters-depth-1">]</span>       
-  <span class="org-keyword">mov</span>    dword <span class="org-rainbow-delimiters-depth-1">[</span>ans<span class="org-rainbow-delimiters-depth-1">]</span> eax
-  <span class="org-keyword">mov</span>    byte <span class="org-rainbow-delimiters-depth-1">[</span>errFlag<span class="org-rainbow-delimiters-depth-1">]</span>
-  <span class="org-keyword">jmp</span>    skpElse
-<span class="org-function-name">doElse</span>:
-  <span class="org-keyword">mov</span>    dword <span class="org-rainbow-delimiters-depth-1">[</span>ans<span class="org-rainbow-delimiters-depth-1">]</span>, 0
-  <span class="org-keyword">mov</span>    byte <span class="org-rainbow-delimiters-depth-1">[</span>errflg<span class="org-rainbow-delimiters-depth-1">]</span>, TRUE  
-<span class="org-function-name">skpElse</span>:
+  <span style="color: #b6a0ff;">cmp</span>    dword <span style="color: #ffffff;">[</span>x<span style="color: #ffffff;">]</span>, 0    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">compare the contents of x to 0</span>
+  <span style="color: #b6a0ff;">je</span>     doElse          <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">if eaual go to location deElse </span>
+  <span style="color: #b6a0ff;">mov</span>    eax, dword <span style="color: #ffffff;">[</span>x<span style="color: #ffffff;">]</span>  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">... the "not equal branch". Put x in eax</span>
+  <span style="color: #b6a0ff;">cdq</span>                    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">change dword into qword (prep for division)</span>
+  <span style="color: #b6a0ff;">idiv</span>   dword <span style="color: #ffffff;">[</span>y<span style="color: #ffffff;">]</span>       
+  <span style="color: #b6a0ff;">mov</span>    dword <span style="color: #ffffff;">[</span>ans<span style="color: #ffffff;">]</span> eax
+  <span style="color: #b6a0ff;">mov</span>    byte <span style="color: #ffffff;">[</span>errFlag<span style="color: #ffffff;">]</span>
+  <span style="color: #b6a0ff;">jmp</span>    skpElse
+<span style="color: #feacd0;">doElse</span>:
+  <span style="color: #b6a0ff;">mov</span>    dword <span style="color: #ffffff;">[</span>ans<span style="color: #ffffff;">]</span>, 0
+  <span style="color: #b6a0ff;">mov</span>    byte <span style="color: #ffffff;">[</span>errflg<span style="color: #ffffff;">]</span>, TRUE  
+<span style="color: #feacd0;">skpElse</span>:
 </pre>
 </div>
 <p>
@@ -2018,10 +2024,10 @@ Conditional jumps can be adjacent. for example:
 </p>
 <div class="org-src-container">
 <pre class="src src-asm">...
-   <span class="org-keyword">cmp</span> dword <span class="org-rainbow-delimiters-depth-1">[</span>x<span class="org-rainbow-delimiters-depth-1">]</span>, 100
-   <span class="org-keyword">je</span>  equalsJump
-   <span class="org-keyword">jl</span>  lessThanJump
-   <span class="org-keyword">jg</span>  greaterThanJump
+   <span style="color: #b6a0ff;">cmp</span> dword <span style="color: #ffffff;">[</span>x<span style="color: #ffffff;">]</span>, 100
+   <span style="color: #b6a0ff;">je</span>  equalsJump
+   <span style="color: #b6a0ff;">jl</span>  lessThanJump
+   <span style="color: #b6a0ff;">jg</span>  greaterThanJump
 ...
 
 </pre>
@@ -2029,9 +2035,9 @@ Conditional jumps can be adjacent. for example:
 </div>
 </div>
 
-<div id="outline-container-org6c7dcdb" class="outline-4">
-<h4 id="org6c7dcdb">Jump Range</h4>
-<div class="outline-text-4" id="text-org6c7dcdb">
+<div id="outline-container-org3014fab" class="outline-4">
+<h4 id="org3014fab">Jump Range</h4>
+<div class="outline-text-4" id="text-org3014fab">
 <p>
 For the above <code>short jumps</code> the target label must be no more than 128 bytes from the jump call. However, this limit does not apply for the unconditional jump <code>jmp</code>.
 </p>
@@ -2039,108 +2045,108 @@ For the above <code>short jumps</code> the target label must be no more than 128
 </div>
 </div>
 
-<div id="outline-container-orgf82aea6" class="outline-3">
-<h3 id="orgf82aea6">Iteration</h3>
-<div class="outline-text-3" id="text-orgf82aea6">
+<div id="outline-container-orgaa45208" class="outline-3">
+<h3 id="orgaa45208">Iteration</h3>
+<div class="outline-text-3" id="text-orgaa45208">
 <p>
 Iteration commands can be used to make simple loops. For example, the following codeblock shows a loop for summing odd integers within a range:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm">  <span class="org-keyword">lpCnt</span>  dq  15
-  <span class="org-keyword">sum</span>    dq  0
+<pre class="src src-asm">  <span style="color: #b6a0ff;">lpCnt</span>  dq  15
+  <span style="color: #b6a0ff;">sum</span>    dq  0
 
-<span class="org-comment-delimiter">; </span><span class="org-comment">using the above declerations:</span>
-  <span class="org-keyword">mov</span> rcx, qword <span class="org-rainbow-delimiters-depth-1">[</span>1pCnt<span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter">; </span><span class="org-comment">loop Counter</span>
-  <span class="org-keyword">mov</span> rax, 1              <span class="org-comment-delimiter">; </span><span class="org-comment">odd integer counter</span>
-<span class="org-function-name">sumLoop</span>:
-  <span class="org-keyword">add</span> qword <span class="org-rainbow-delimiters-depth-1">[</span>sum<span class="org-rainbow-delimiters-depth-1">]</span>, rax    <span class="org-comment-delimiter">; </span><span class="org-comment">sum current odd interger</span>
-  <span class="org-keyword">add</span> rax, 2              <span class="org-comment-delimiter">; </span><span class="org-comment">set next odd integer</span>
-  <span class="org-keyword">dec</span> rcx                 <span class="org-comment-delimiter">; </span><span class="org-comment">decrement loop cionter</span>
-  <span class="org-keyword">cmp</span> rcx, 0              <span class="org-comment-delimiter">; </span><span class="org-comment">decrement loop counter</span>
-  <span class="org-keyword">jne</span> sumLoop             
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">using the above declerations:</span>
+  <span style="color: #b6a0ff;">mov</span> rcx, qword <span style="color: #ffffff;">[</span>1pCnt<span style="color: #ffffff;">]</span>  <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">loop Counter</span>
+  <span style="color: #b6a0ff;">mov</span> rax, 1              <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">odd integer counter</span>
+<span style="color: #feacd0;">sumLoop</span>:
+  <span style="color: #b6a0ff;">add</span> qword <span style="color: #ffffff;">[</span>sum<span style="color: #ffffff;">]</span>, rax    <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">sum current odd interger</span>
+  <span style="color: #b6a0ff;">add</span> rax, 2              <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">set next odd integer</span>
+  <span style="color: #b6a0ff;">dec</span> rcx                 <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">decrement loop cionter</span>
+  <span style="color: #b6a0ff;">cmp</span> rcx, 0              <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">decrement loop counter</span>
+  <span style="color: #b6a0ff;">jne</span> sumLoop             
 
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd74ec00" class="outline-3">
-<h3 id="orgd74ec00">Loop</h3>
-<div class="outline-text-3" id="text-orgd74ec00">
+<div id="outline-container-org33ee4fb" class="outline-3">
+<h3 id="org33ee4fb">Loop</h3>
+<div class="outline-text-3" id="text-org33ee4fb">
 <p>
 There is a loop instruction which simplifies iteration. It will automatically decriment the <code>rcx</code> register and perform a comparison to 0, jumping when <code>rcx</code> != 0.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">summing n odd numbers</span>
+<pre class="src src-asm"><span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">summing n odd numbers</span>
 
-  <span class="org-keyword">mov</span> rcx qword <span class="org-rainbow-delimiters-depth-1">[</span>naxN<span class="org-rainbow-delimiters-depth-1">]</span>   <span class="org-comment-delimiter">; </span><span class="org-comment">loop counter</span>
-  <span class="org-keyword">mov</span> rax, 1             <span class="org-comment-delimiter">; </span><span class="org-comment">pdd int counter</span>
-<span class="org-function-name">sumLoop</span>:
-  <span class="org-keyword">add</span> qword <span class="org-rainbow-delimiters-depth-1">[</span>sum<span class="org-rainbow-delimiters-depth-1">]</span>, rax   <span class="org-comment-delimiter">; </span><span class="org-comment">sum current odd int.</span>
-  <span class="org-keyword">add</span> rax, 2             <span class="org-comment-delimiter">; </span><span class="org-comment">next odd int</span>
-  <span class="org-keyword">loop</span> sumLoop 
+  <span style="color: #b6a0ff;">mov</span> rcx qword <span style="color: #ffffff;">[</span>naxN<span style="color: #ffffff;">]</span>   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">loop counter</span>
+  <span style="color: #b6a0ff;">mov</span> rax, 1             <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">pdd int counter</span>
+<span style="color: #feacd0;">sumLoop</span>:
+  <span style="color: #b6a0ff;">add</span> qword <span style="color: #ffffff;">[</span>sum<span style="color: #ffffff;">]</span>, rax   <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">sum current odd int.</span>
+  <span style="color: #b6a0ff;">add</span> rax, 2             <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">next odd int</span>
+  <span style="color: #b6a0ff;">loop</span> sumLoop 
 
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org361d6fb" class="outline-3">
-<h3 id="org361d6fb">Example program using intructions</h3>
-<div class="outline-text-3" id="text-org361d6fb">
+<div id="outline-container-org7e12afd" class="outline-3">
+<h3 id="org7e12afd">Example program using intructions</h3>
+<div class="outline-text-3" id="text-org7e12afd">
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">section</span> .data
-  <span class="org-keyword">SUCCESS</span>      equ  0
-  <span class="org-keyword">SYS_exit</span>     equ  60
-  <span class="org-keyword">n</span>            dd   10
-  <span class="org-keyword">sumOfSquares</span> dq   0 
-<span class="org-function-name">section</span> .text
-<span class="org-function-name">global</span> <span class="org-keyword">start</span>
-<span class="org-function-name">_start</span>:
-  <span class="org-keyword">mov</span>         rbx, 1
-  <span class="org-keyword">mov</span>         ecx, dword <span class="org-rainbow-delimiters-depth-1">[</span>n<span class="org-rainbow-delimiters-depth-1">]</span>
-<span class="org-function-name">sumloop</span>:
-  <span class="org-keyword">mov</span>         rax, rbx
-  <span class="org-keyword">mul</span>         rax
-  <span class="org-keyword">add</span>         qword <span class="org-rainbow-delimiters-depth-1">[</span>sumOfSquares<span class="org-rainbow-delimiters-depth-1">]</span>, rax
-  <span class="org-keyword">inc</span>         rbx
-  <span class="org-keyword">loop</span>        sumLoop
-<span class="org-function-name">last</span>: 
-  <span class="org-keyword">mov</span>         rax, SYS_exit
-  <span class="org-keyword">mov</span>         rdi, SUCCESS
-  <span class="org-keyword">syscall</span>
+<pre class="src src-asm"><span style="color: #feacd0;">section</span> .data
+  <span style="color: #b6a0ff;">SUCCESS</span>      equ  0
+  <span style="color: #b6a0ff;">SYS_exit</span>     equ  60
+  <span style="color: #b6a0ff;">n</span>            dd   10
+  <span style="color: #b6a0ff;">sumOfSquares</span> dq   0 
+<span style="color: #feacd0;">section</span> .text
+<span style="color: #feacd0;">global</span> <span style="color: #b6a0ff;">start</span>
+<span style="color: #feacd0;">_start</span>:
+  <span style="color: #b6a0ff;">mov</span>         rbx, 1
+  <span style="color: #b6a0ff;">mov</span>         ecx, dword <span style="color: #ffffff;">[</span>n<span style="color: #ffffff;">]</span>
+<span style="color: #feacd0;">sumloop</span>:
+  <span style="color: #b6a0ff;">mov</span>         rax, rbx
+  <span style="color: #b6a0ff;">mul</span>         rax
+  <span style="color: #b6a0ff;">add</span>         qword <span style="color: #ffffff;">[</span>sumOfSquares<span style="color: #ffffff;">]</span>, rax
+  <span style="color: #b6a0ff;">inc</span>         rbx
+  <span style="color: #b6a0ff;">loop</span>        sumLoop
+<span style="color: #feacd0;">last</span>: 
+  <span style="color: #b6a0ff;">mov</span>         rax, SYS_exit
+  <span style="color: #b6a0ff;">mov</span>         rdi, SUCCESS
+  <span style="color: #b6a0ff;">syscall</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgbb80288" class="outline-2">
-<h2 id="orgbb80288">Calling C libraries</h2>
-<div class="outline-text-2" id="text-orgbb80288">
+<div id="outline-container-org045d77a" class="outline-2">
+<h2 id="org045d77a">Calling C libraries</h2>
+<div class="outline-text-2" id="text-org045d77a">
 <p>
 C librries can be called from assembly provided they are compiled together. For example:
 </p>
 <div class="org-src-container">
-<pre class="src src-asm"><span class="org-function-name">extern</span> <span class="org-keyword">printf</span>
+<pre class="src src-asm"><span style="color: #feacd0;">extern</span> <span style="color: #b6a0ff;">printf</span>
 
-<span class="org-function-name">section</span> .data
-  <span class="org-keyword">msg</span>: db <span class="org-string">"Hello World"</span>, 0<span class="org-comment-delimiter">; </span><span class="org-comment">Zero is used as a null termainator</span>
-  <span class="org-keyword">fmt</span>: db <span class="org-string">"%s"</span>, 10, 0<span class="org-comment-delimiter">; </span><span class="org-comment">printf formatting followed by newline and null terminator</span>
+<span style="color: #feacd0;">section</span> .data
+  <span style="color: #b6a0ff;">msg</span>: db <span style="color: #79a8ff;">"Hello World"</span>, 0<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Zero is used as a null termainator</span>
+  <span style="color: #b6a0ff;">fmt</span>: db <span style="color: #79a8ff;">"%s"</span>, 10, 0<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">printf formatting followed by newline and null terminator</span>
 
-<span class="org-function-name">section</span> .text
-  <span class="org-keyword">global</span> main
+<span style="color: #feacd0;">section</span> .text
+  <span style="color: #b6a0ff;">global</span> main
 
-<span class="org-function-name">main</span>:
-  <span class="org-keyword">push</span> rbp <span class="org-comment-delimiter">; </span><span class="org-comment">push stack</span>
-<span class="org-comment-delimiter">; </span><span class="org-comment">Set up params for call to printf</span>
-  <span class="org-keyword">mov</span> rdi, fmt
-  <span class="org-keyword">mov</span> rsi, msg
-  <span class="org-keyword">mov</span> rax, 0
-  <span class="org-keyword">call</span> printf
+<span style="color: #feacd0;">main</span>:
+  <span style="color: #b6a0ff;">push</span> rbp <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">push stack</span>
+<span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">Set up params for call to printf</span>
+  <span style="color: #b6a0ff;">mov</span> rdi, fmt
+  <span style="color: #b6a0ff;">mov</span> rsi, msg
+  <span style="color: #b6a0ff;">mov</span> rax, 0
+  <span style="color: #b6a0ff;">call</span> printf
 
-  <span class="org-keyword">pop</span> rbp <span class="org-comment-delimiter">; </span><span class="org-comment">pop stack</span>
-  <span class="org-keyword">mov</span> rax, 0 <span class="org-comment-delimiter">; </span><span class="org-comment">exit code 0</span>
-  <span class="org-keyword">ret</span> <span class="org-comment-delimiter">; </span><span class="org-comment">return</span>
+  <span style="color: #b6a0ff;">pop</span> rbp <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">pop stack</span>
+  <span style="color: #b6a0ff;">mov</span> rax, 0 <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">exit code 0</span>
+  <span style="color: #b6a0ff;">ret</span> <span style="color: #65737e; font-style: italic;">; </span><span style="color: #a8a8a8; font-style: italic;">return</span>
 </pre>
 </div>
 
@@ -2159,13 +2165,13 @@ $ ./calling_c
 </div>
 </div>
 
-<div id="outline-container-org2833f0b" class="outline-2">
-<h2 id="org2833f0b">Related Topics</h2>
-<div class="outline-text-2" id="text-org2833f0b">
+<div id="outline-container-org65594b9" class="outline-2">
+<h2 id="org65594b9">Related Topics</h2>
+<div class="outline-text-2" id="text-org65594b9">
 </div>
-<div id="outline-container-orgca452fa" class="outline-3">
-<h3 id="orgca452fa">Addressing data in memory</h3>
-<div class="outline-text-3" id="text-orgca452fa">
+<div id="outline-container-org2b49bb0" class="outline-3">
+<h3 id="org2b49bb0">Addressing data in memory</h3>
+<div class="outline-text-3" id="text-org2b49bb0">
 <p>
 The process through which execution is controlled is called the <code>fetch-decode-execute cycle</code>. The instruction is fetched from memory. The processor can access one or more bytes of memory at a given time.
 The processor stores data in <code>reverse-byte sequence</code>.
@@ -2183,9 +2189,9 @@ In memory:
 </div>
 </div>
 
-<div id="outline-container-org1a5cc21" class="outline-3">
-<h3 id="org1a5cc21">Memory Hierarchy</h3>
-<div class="outline-text-3" id="text-org1a5cc21">
+<div id="outline-container-orgd2b27e7" class="outline-3">
+<h3 id="orgd2b27e7">Memory Hierarchy</h3>
+<div class="outline-text-3" id="text-orgd2b27e7">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 2:</span> Shows access speeds for different types of storage</caption>
 
@@ -2232,9 +2238,9 @@ In memory:
 </div>
 </div>
 
-<div id="outline-container-org8dcdd9b" class="outline-3">
-<h3 id="org8dcdd9b">Integer representation</h3>
-<div class="outline-text-3" id="text-org8dcdd9b">
+<div id="outline-container-org2aeca4f" class="outline-3">
+<h3 id="org2aeca4f">Integer representation</h3>
+<div class="outline-text-3" id="text-org2aeca4f">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -2295,9 +2301,9 @@ In memory:
 </div>
 </div>
 
-<div id="outline-container-org8bf0dfe" class="outline-3">
-<h3 id="org8bf0dfe">Two's Complement</h3>
-<div class="outline-text-3" id="text-org8bf0dfe">
+<div id="outline-container-orga02cae1" class="outline-3">
+<h3 id="orga02cae1">Two's Complement</h3>
+<div class="outline-text-3" id="text-orga02cae1">
 <p>
 Signed numbers are often represented in twos complement form. A negative representation of a positive number can be made by flipping the bits and then adding 1. For example:
 </p>
@@ -2338,9 +2344,9 @@ Signed numbers are often represented in twos complement form. A negative represe
 </div>
 
 
-<div id="outline-container-org7dc5065" class="outline-2">
-<h2 id="org7dc5065">Handy Links</h2>
-<div class="outline-text-2" id="text-org7dc5065">
+<div id="outline-container-org284cde7" class="outline-2">
+<h2 id="org284cde7">Handy Links</h2>
+<div class="outline-text-2" id="text-org284cde7">
 <p>
 <a href="https://www.tutorialspoint.com/assembly_programming/">Link to tutorial</a>
 <a href="http://www.egr.unlv.edu/~ed/assembly64.pdf">Another good tutorial</a>

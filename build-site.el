@@ -6,7 +6,7 @@
 
 (require 'ox-publish)
 
-(setq org-html-htmlize-output-type 'css)
+(setq org-html-htmlize-output-type 'inline-css)
 
 ;; Define the publishing project
 (setq org-publish-project-alist
@@ -14,9 +14,16 @@
        (list
 	"orgfiles"
 	:html-head (concat
-		     "<link rel =\"stylesheet\" type= \"text/css\" href=\"./styles.css\">"
-		     "<link rel=\"icon\" href=\"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>\">"
-		     "<header><a href=\"./\">home</a> <a href=\"#top\">top</a> </header>") 
+"<link rel=\"stylesheet\" type= \"text/css\" href=\"./styles.css\">"
+"<link rel=\"icon\"
+       href=\"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>\">"
+"<header>
+| <a href=\"./\">home</a>
+| <a href=\"#top\">top</a>
+|  <a href=\"https://github.com/larzeitlin\">github</a>
+| 👻
+</header>
+") 
 
 	:recursive t
 	:html-head-include-default-style t
