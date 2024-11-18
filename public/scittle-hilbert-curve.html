@@ -191,7 +191,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="icon"
+<link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="stylesheet" type= "text/css" href="./htmlize.css"><link rel="icon"
        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header>
 <img src="/images/waveforms.png"
      style=width:30px;display:inline;">
@@ -208,15 +208,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7b502e2">what is a hilbert curve?</a></li>
-<li><a href="#org49f8037">what is scittle?</a>
+<li><a href="#org7449987">what is a hilbert curve?</a></li>
+<li><a href="#orge59eecc">what is scittle?</a>
 <ul>
-<li><a href="#orgc5b1b43">Aside</a></li>
+<li><a href="#org697f1dd">Aside</a></li>
 </ul>
 </li>
-<li><a href="#orgfc3a3a0">handle user input code</a></li>
-<li><a href="#org9904a5d">drawing</a></li>
-<li><a href="#orgfbe5f61">making the hilbert curve</a></li>
+<li><a href="#orgf43dd71">handle user input code</a></li>
+<li><a href="#org00c6824">drawing</a></li>
+<li><a href="#orgc0e2d11">making the hilbert curve</a></li>
 </ul>
 </div>
 </div>
@@ -234,52 +234,52 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org7b502e2" class="outline-2">
-<h2 id="org7b502e2">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-org7b502e2">
+<div id="outline-container-org7449987" class="outline-2">
+<h2 id="org7449987">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-org7449987">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
 
 
-<div id="orgd8b2deb" class="figure">
+<div id="org58eadee" class="figure">
 <p><img src="images/HC-3-iterations.png" alt="HC-3-iterations.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org49f8037" class="outline-2">
-<h2 id="org49f8037">what is scittle?</h2>
-<div class="outline-text-2" id="text-org49f8037">
+<div id="outline-container-orge59eecc" class="outline-2">
+<h2 id="orge59eecc">what is scittle?</h2>
+<div class="outline-text-2" id="text-orge59eecc">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-orgc5b1b43" class="outline-3">
-<h3 id="orgc5b1b43">Aside</h3>
-<div class="outline-text-3" id="text-orgc5b1b43">
+<div id="outline-container-org697f1dd" class="outline-3">
+<h3 id="org697f1dd">Aside</h3>
+<div class="outline-text-3" id="text-org697f1dd">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
 
 <div class="org-src-container">
 <pre class="src src-html">#+begin_export html
-&lt;<span style="color: #feacd0;">script</span> <span style="color: #00d3d0;">src</span>=<span style="color: #79a8ff;">"https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"</span>
-        <span style="color: #00d3d0;">type</span>=<span style="color: #79a8ff;">"application/javascript"</span>&gt;&lt;/<span style="color: #feacd0;">script</span>&gt;
-&lt;<span style="color: #feacd0;">script</span> <span style="color: #00d3d0;">type</span>=<span style="color: #79a8ff;">"application/x-scittle"</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"</span>
+        <span class="org-variable-name">type</span>=<span class="org-string">"application/javascript"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
   (defn my-alert []
    (js/alert "You clicked!"))
   ;; export function to use from JavaScript:
   (set! (.-my_alert js/window) my-alert)
-&lt;/<span style="color: #feacd0;">script</span>&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
 
-&lt;<span style="color: #feacd0;">body</span>&gt;
-  &lt;<span style="color: #feacd0;">button</span> <span style="color: #00d3d0;">onclick</span>=<span style="color: #79a8ff;">"my_alert()"</span>&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+  &lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"my_alert()"</span>&gt;
     Click me!
-  &lt;/<span style="color: #feacd0;">button</span>&gt;
-&lt;/<span style="color: #feacd0;">body</span>&gt;
+  &lt;/<span class="org-function-name">button</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
 #+end_export
 </pre>
 </div>
@@ -298,15 +298,15 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-orgfc3a3a0" class="outline-2">
-<h2 id="orgfc3a3a0">handle user input code</h2>
-<div class="outline-text-2" id="text-orgfc3a3a0">
+<div id="outline-container-orgf43dd71" class="outline-2">
+<h2 id="orgf43dd71">handle user input code</h2>
+<div class="outline-text-2" id="text-orgf43dd71">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #feacd0;">script</span> <span style="color: #00d3d0;">type</span>=<span style="color: #79a8ff;">"application/x-scittle"</span>&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
 
 (defn set-output-area [v output-id]
   (-&gt; (js/document.getElementById output-id)
@@ -328,15 +328,15 @@ First let's make a <code>textarea</code> in html to get the user input. We'd lik
       #(set-output-area (read-eval-input "code-area")
                         "output-area"))
 
-&lt;/<span style="color: #feacd0;">script</span>&gt;
-&lt;<span style="color: #feacd0;">body</span>&gt;
-&lt;<span style="color: #feacd0;">textarea</span> <span style="color: #00d3d0;">id</span>=<span style="color: #79a8ff;">"code-area"</span>
-          <span style="color: #00d3d0;">class</span>=<span style="color: #79a8ff;">"code-textarea"</span>&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"code-area"</span>
+          <span class="org-variable-name">class</span>=<span class="org-string">"code-textarea"</span>&gt;
 (take 21 ((fn fib [a b] (lazy-seq (cons a (fib b (+ a b))))) 0 1))
-&lt;/<span style="color: #feacd0;">textarea</span>&gt;
-&lt;<span style="color: #feacd0;">button</span> <span style="color: #00d3d0;">onclick</span>=<span style="color: #79a8ff;">"read_input()"</span>&gt;eval&lt;/<span style="color: #feacd0;">button</span>&gt;
-&lt;<span style="color: #feacd0;">p</span> <span style="color: #00d3d0;">id</span>=<span style="color: #79a8ff;">"output-area"</span>&gt;...&lt;/<span style="color: #feacd0;">p</span>&gt;
-&lt;/<span style="color: #feacd0;">body</span>&gt;
+&lt;/<span class="org-function-name">textarea</span>&gt;
+&lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_input()"</span>&gt;eval&lt;/<span class="org-function-name">button</span>&gt;
+&lt;<span class="org-function-name">p</span> <span class="org-variable-name">id</span>=<span class="org-string">"output-area"</span>&gt;...&lt;/<span class="org-function-name">p</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
 </pre>
 </div>
 
@@ -379,18 +379,18 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-org9904a5d" class="outline-2">
-<h2 id="org9904a5d">drawing</h2>
-<div class="outline-text-2" id="text-org9904a5d">
+<div id="outline-container-org00c6824" class="outline-2">
+<h2 id="org00c6824">drawing</h2>
+<div class="outline-text-2" id="text-org00c6824">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
 
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #feacd0;">canvas</span> <span style="color: #00d3d0;">id</span>=<span style="color: #79a8ff;">"first-canvas"</span> <span style="color: #00d3d0;">width</span>=<span style="color: #79a8ff;">"400"</span> <span style="color: #00d3d0;">height</span>=<span style="color: #79a8ff;">"400"</span> <span style="color: #00d3d0;">class</span>=<span style="color: #79a8ff;">"canvas"</span>&gt;&lt;/<span style="color: #feacd0;">canvas</span>&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"first-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"400"</span> <span class="org-variable-name">height</span>=<span class="org-string">"400"</span> <span class="org-variable-name">class</span>=<span class="org-string">"canvas"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
 
-&lt;<span style="color: #feacd0;">script</span> <span style="color: #00d3d0;">type</span>=<span style="color: #79a8ff;">"application/x-scittle"</span>&gt;  
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;  
 (def c (js/document.getElementById "first-canvas"))
 (def ctx (.getContext c "2d"))
 
@@ -399,7 +399,7 @@ I think the easiest way to do this will be with <code>canvas</code>.
 (.lineTo ctx 150 150)
 (.lineTo ctx 150 50)
 (.stroke ctx)
-&lt;/<span style="color: #feacd0;">script</span>&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
 </pre>
 </div>
 
@@ -423,9 +423,9 @@ Let's have it so that the user can pass in an vector of points that the line wil
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html">&lt;<span style="color: #feacd0;">canvas</span> <span style="color: #00d3d0;">id</span>=<span style="color: #79a8ff;">"points-canvas"</span> <span style="color: #00d3d0;">width</span>=<span style="color: #79a8ff;">"200"</span> <span style="color: #00d3d0;">height</span>=<span style="color: #79a8ff;">"200"</span> <span style="color: #00d3d0;">class</span>=<span style="color: #79a8ff;">"canvas"</span>&gt;&lt;/<span style="color: #feacd0;">canvas</span>&gt;
+<pre class="src src-html">&lt;<span class="org-function-name">canvas</span> <span class="org-variable-name">id</span>=<span class="org-string">"points-canvas"</span> <span class="org-variable-name">width</span>=<span class="org-string">"200"</span> <span class="org-variable-name">height</span>=<span class="org-string">"200"</span> <span class="org-variable-name">class</span>=<span class="org-string">"canvas"</span>&gt;&lt;/<span class="org-function-name">canvas</span>&gt;
 
-&lt;<span style="color: #feacd0;">script</span> <span style="color: #00d3d0;">type</span>=<span style="color: #79a8ff;">"application/x-scittle"</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
 
 (def c (js/document.getElementById "user-points-canvas"))
 (def ctx (.getContext c "2d"))
@@ -453,14 +453,14 @@ Let's have it so that the user can pass in an vector of points that the line wil
       #(-&gt;&gt; (read-eval-input "points-input")
             (draw-line-from-points ctx)))
 
-&lt;/<span style="color: #feacd0;">script</span>&gt;
-&lt;<span style="color: #feacd0;">body</span>&gt;
-&lt;<span style="color: #feacd0;">textarea</span> <span style="color: #00d3d0;">id</span>=<span style="color: #79a8ff;">"points-input"</span>
-          <span style="color: #00d3d0;">class</span>=<span style="color: #79a8ff;">"code-textarea"</span>&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">body</span>&gt;
+&lt;<span class="org-function-name">textarea</span> <span class="org-variable-name">id</span>=<span class="org-string">"points-input"</span>
+          <span class="org-variable-name">class</span>=<span class="org-string">"code-textarea"</span>&gt;
 [[50 50] [50 150] [150 150] [150 50]]
-&lt;/<span style="color: #feacd0;">textarea</span>&gt;
-&lt;<span style="color: #feacd0;">button</span> <span style="color: #00d3d0;">onclick</span>=<span style="color: #79a8ff;">"read_points()"</span>&gt;Draw points&lt;/<span style="color: #feacd0;">button</span>&gt;
-&lt;/<span style="color: #feacd0;">body</span>&gt;
+&lt;/<span class="org-function-name">textarea</span>&gt;
+&lt;<span class="org-function-name">button</span> <span class="org-variable-name">onclick</span>=<span class="org-string">"read_points()"</span>&gt;Draw points&lt;/<span class="org-function-name">button</span>&gt;
+&lt;/<span class="org-function-name">body</span>&gt;
 </pre>
 </div>
 
@@ -510,9 +510,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-orgfbe5f61" class="outline-2">
-<h2 id="orgfbe5f61">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-orgfbe5f61">
+<div id="outline-container-orgc0e2d11" class="outline-2">
+<h2 id="orgc0e2d11">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-orgc0e2d11">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
@@ -522,14 +522,14 @@ Here's the details of that mapping:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">rules</span> <span style="color: #ff62d4;">{</span><span style="color: #00bcff;">:A</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:path</span> <span style="color: #fba849;">[</span><span style="color: #9f80ff;">[</span>0 0<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>0 1<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>1 1<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>1 0<span style="color: #9f80ff;">]</span><span style="color: #fba849;">]</span>
-                <span style="color: #00bcff;">:next-iteration</span> <span style="color: #fba849;">[</span><span style="color: #00bcff;">:D</span> <span style="color: #00bcff;">:A</span> <span style="color: #00bcff;">:A</span> <span style="color: #00bcff;">:B</span><span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span>
-            <span style="color: #00bcff;">:B</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:path</span> <span style="color: #fba849;">[</span><span style="color: #9f80ff;">[</span>1 1<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>0 1<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>0 0<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>1 0<span style="color: #9f80ff;">]</span><span style="color: #fba849;">]</span>
-                <span style="color: #00bcff;">:next-iteration</span> <span style="color: #fba849;">[</span><span style="color: #00bcff;">:C</span> <span style="color: #00bcff;">:B</span> <span style="color: #00bcff;">:B</span> <span style="color: #00bcff;">:A</span><span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span>
-            <span style="color: #00bcff;">:C</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:path</span> <span style="color: #fba849;">[</span><span style="color: #9f80ff;">[</span>1 1<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>1 0<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>0 0<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>0 1<span style="color: #9f80ff;">]</span><span style="color: #fba849;">]</span>
-                <span style="color: #00bcff;">:next-iteration</span> <span style="color: #fba849;">[</span><span style="color: #00bcff;">:B</span> <span style="color: #00bcff;">:C</span> <span style="color: #00bcff;">:C</span> <span style="color: #00bcff;">:D</span><span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span>
-            <span style="color: #00bcff;">:D</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:path</span> <span style="color: #fba849;">[</span><span style="color: #9f80ff;">[</span>0 0<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>1 0<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>1 1<span style="color: #9f80ff;">]</span> <span style="color: #9f80ff;">[</span>0 1<span style="color: #9f80ff;">]</span><span style="color: #fba849;">]</span>
-                <span style="color: #00bcff;">:next-iteration</span> <span style="color: #fba849;">[</span><span style="color: #00bcff;">:A</span> <span style="color: #00bcff;">:D</span> <span style="color: #00bcff;">:D</span> <span style="color: #00bcff;">:C</span><span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">}</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">rules</span> <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:A</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:B</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:B</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:A</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:C</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:B</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:C</span> <span class="org-clojure-keyword">:D</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+            <span class="org-clojure-keyword">:D</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:path</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-rainbow-delimiters-depth-5">[</span>0 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 0<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>1 1<span class="org-rainbow-delimiters-depth-5">]</span> <span class="org-rainbow-delimiters-depth-5">[</span>0 1<span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span>
+                <span class="org-clojure-keyword">:next-iteration</span> <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:A</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:D</span> <span class="org-clojure-keyword">:C</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -542,7 +542,7 @@ Let's think about our canvas as a square split up into square cells. The number 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">init</span> <span style="color: #ff62d4;">[</span><span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:cell</span> <span style="color: #fba849;">[</span>0 0<span style="color: #fba849;">]</span> <span style="color: #00bcff;">:pattern</span> <span style="color: #00bcff;">:A</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">]</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">init</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:cell</span> <span class="org-rainbow-delimiters-depth-4">[</span>0 0<span class="org-rainbow-delimiters-depth-4">]</span> <span class="org-clojure-keyword">:pattern</span> <span class="org-clojure-keyword">:A</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 
@@ -551,28 +551,28 @@ To turn this into the next iteration we need to subdivide the space into four ce
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">-&gt;subcells</span>
-  <span style="color: #ff62d4;">[</span><span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:keys</span> <span style="color: #fba849;">[</span>cell pattern<span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>top-left-subcell <span style="color: #fba849;">(</span>map <span style="color: #9f80ff;">(</span>partial * 2<span style="color: #9f80ff;">)</span> cell<span style="color: #fba849;">)</span>
-        path-step-&gt;subcells <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">fn</span> <span style="color: #9f80ff;">[</span>path-step<span style="color: #9f80ff;">]</span>
-                              <span style="color: #9f80ff;">(</span>map + top-left-subcell
-                                     path-step<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span> 
-        path <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span> rules
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">-&gt;subcells</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:keys</span> <span class="org-rainbow-delimiters-depth-4">[</span>cell pattern<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>top-left-subcell <span class="org-rainbow-delimiters-depth-4">(</span>map <span class="org-rainbow-delimiters-depth-5">(</span>partial * 2<span class="org-rainbow-delimiters-depth-5">)</span> cell<span class="org-rainbow-delimiters-depth-4">)</span>
+        path-step-&gt;subcells <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>path-step<span class="org-rainbow-delimiters-depth-5">]</span>
+                              <span class="org-rainbow-delimiters-depth-5">(</span>map + top-left-subcell
+                                     path-step<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> 
+        path <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;&gt;</span> rules
                   pattern
-                  <span style="color: #00bcff;">:path</span>
-                  <span style="color: #9f80ff;">(</span>map path-step-&gt;subcells<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span>
-        cell-patterns <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">-&gt;</span> rules pattern <span style="color: #00bcff;">:next-iteration</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span>map <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">fn</span> <span style="color: #9f80ff;">[</span>cell pattern<span style="color: #9f80ff;">]</span>
-           <span style="color: #9f80ff;">{</span><span style="color: #00bcff;">:cell</span> cell <span style="color: #00bcff;">:pattern</span> pattern<span style="color: #9f80ff;">}</span><span style="color: #fba849;">)</span>
+                  <span class="org-clojure-keyword">:path</span>
+                  <span class="org-rainbow-delimiters-depth-5">(</span>map path-step-&gt;subcells<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        cell-patterns <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;</span> rules pattern <span class="org-clojure-keyword">:next-iteration</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>map <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>cell pattern<span class="org-rainbow-delimiters-depth-5">]</span>
+           <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:cell</span> cell <span class="org-clojure-keyword">:pattern</span> pattern<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">)</span>
          path
-         cell-patterns<span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+         cell-patterns<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span>map -&gt;subcells init<span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>map -&gt;subcells init<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #65737e; font-style: italic;">;</span><span style="color: #a8a8a8; font-style: italic;">=&gt; (({:cell (0 0), :pattern :D}</span>
-<span style="color: #65737e; font-style: italic;">;     </span><span style="color: #a8a8a8; font-style: italic;">{:cell (0 1), :pattern :A}</span>
-<span style="color: #65737e; font-style: italic;">;     </span><span style="color: #a8a8a8; font-style: italic;">{:cell (1 1), :pattern :A}</span>
-<span style="color: #65737e; font-style: italic;">;     </span><span style="color: #a8a8a8; font-style: italic;">{:cell (1 0), :pattern :B}))</span>
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; (({:cell (0 0), :pattern :D}</span>
+<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (0 1), :pattern :A}</span>
+<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 1), :pattern :A}</span>
+<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 0), :pattern :B}))</span>
 </pre>
 </div>
 
@@ -581,28 +581,28 @@ Okay, now we would like to iterate that, each time concatenating the results int
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">hilbert-curve-cells</span> <span style="color: #ff62d4;">[</span>iterations<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">-&gt;</span> <span style="color: #3fdfd0;">(</span>iterate #<span style="color: #fba849;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span> <span style="color: #00d3d0;">%</span> <span style="color: #9f80ff;">(</span>map -&gt;subcells<span style="color: #9f80ff;">)</span> <span style="color: #9f80ff;">(</span>apply concat<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span> init<span style="color: #3fdfd0;">)</span>
-      <span style="color: #3fdfd0;">(</span>nth iterations<span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-cells</span> <span class="org-rainbow-delimiters-depth-2">[</span>iterations<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-3">(</span>iterate #<span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;&gt;</span> <span class="org-variable-name">%</span> <span class="org-rainbow-delimiters-depth-5">(</span>map -&gt;subcells<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>apply concat<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> init<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>nth iterations<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span>hilbert-curve-cells 2<span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-cells 2<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #65737e; font-style: italic;">;</span><span style="color: #a8a8a8; font-style: italic;">=&gt; ({:cell (0 0), :pattern :A}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (1 0), :pattern :D}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (1 1), :pattern :D}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (0 1), :pattern :C}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (0 2), :pattern :D}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (0 3), :pattern :A}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (1 3), :pattern :A}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (1 2), :pattern :B}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (2 2), :pattern :D}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (2 3), :pattern :A}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (3 3), :pattern :A}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (3 2), :pattern :B}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (3 1), :pattern :C}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (2 1), :pattern :B}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (2 0), :pattern :B}</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">{:cell (3 0), :pattern :A})</span>
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ({:cell (0 0), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 0), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 1), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 1), :pattern :C}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 2), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 2), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 2), :pattern :D}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 3), :pattern :A}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 2), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 1), :pattern :C}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 1), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 0), :pattern :B}</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 0), :pattern :A})</span>
 </pre>
 </div>
 
@@ -611,35 +611,35 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">cells-&gt;points</span> <span style="color: #ff62d4;">[</span>cells iterations canvas-width<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>width-in-cells <span style="color: #fba849;">(</span><span style="color: #6ae4b9;">js</span>/Math.pow 2 iterations<span style="color: #fba849;">)</span>
-        step-width <span style="color: #fba849;">(</span>/ canvas-width width-in-cells<span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span> cells
-         <span style="color: #fba849;">(</span>map <span style="color: #00bcff;">:cell</span><span style="color: #fba849;">)</span>
-         <span style="color: #fba849;">(</span>map #<span style="color: #9f80ff;">(</span>map * 1% 2%<span style="color: #9f80ff;">)</span> <span style="color: #9f80ff;">(</span>repeat <span style="color: #4fe42f;">[</span>step-width step-width<span style="color: #4fe42f;">]</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">cells-&gt;points</span> <span class="org-rainbow-delimiters-depth-2">[</span>cells iterations canvas-width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>width-in-cells <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">js</span>/Math.pow 2 iterations<span class="org-rainbow-delimiters-depth-4">)</span>
+        step-width <span class="org-rainbow-delimiters-depth-4">(</span>/ canvas-width width-in-cells<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span> cells
+         <span class="org-rainbow-delimiters-depth-4">(</span>map <span class="org-clojure-keyword">:cell</span><span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>map #<span class="org-rainbow-delimiters-depth-5">(</span>map * 1% 2%<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-rainbow-delimiters-depth-5">(</span>repeat <span class="org-rainbow-delimiters-depth-6">[</span>step-width step-width<span class="org-rainbow-delimiters-depth-6">]</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">hilbert-curve-points</span> <span style="color: #ff62d4;">[</span>iterations canvas-width<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">-&gt;</span> <span style="color: #3fdfd0;">(</span>hilbert-curve-cells iterations<span style="color: #3fdfd0;">)</span>
-      <span style="color: #3fdfd0;">(</span>cells-&gt;points iterations canvas-width<span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">hilbert-curve-points</span> <span class="org-rainbow-delimiters-depth-2">[</span>iterations canvas-width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;</span> <span class="org-rainbow-delimiters-depth-3">(</span>hilbert-curve-cells iterations<span class="org-rainbow-delimiters-depth-3">)</span>
+      <span class="org-rainbow-delimiters-depth-3">(</span>cells-&gt;points iterations canvas-width<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span>hilbert-curve-points 2 400<span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-points 2 400<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #65737e; font-style: italic;">;</span><span style="color: #a8a8a8; font-style: italic;">=&gt; ((0.0 0.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(100.0 0.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(100.0 100.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(0.0 100.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(0.0 200.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(0.0 300.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(100.0 300.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(100.0 200.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(200.0 200.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(200.0 300.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(300.0 300.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(300.0 200.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(300.0 100.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(200.0 100.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(200.0 0.0)</span>
-<span style="color: #65737e; font-style: italic;">;    </span><span style="color: #a8a8a8; font-style: italic;">(300.0 0.0))</span>
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ((0.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 300.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 200.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 100.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 0.0)</span>
+<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 0.0))</span>
 
 </pre>
 </div>

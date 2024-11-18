@@ -1,5 +1,7 @@
 #+Title: LZ 
 
+
+#+ATTR_HTML: :align center
 hi im luke this is my blog
 
 #+ATTR_HTML: :align center
@@ -25,6 +27,7 @@ hi im luke this is my blog
 [[file:images/waveforms.png]]
 
 
+#+ATTR_HTML: :align center
 [[mailto:luke@lzeitlin.xyz][send me an email]]
 
 

@@ -191,7 +191,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="icon"
+<link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="stylesheet" type= "text/css" href="./htmlize.css"><link rel="icon"
        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header>
 <img src="/images/waveforms.png"
      style=width:30px;display:inline;">
@@ -208,25 +208,25 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org0a9ad09">WaveFunctionCollapse</a></li>
-<li><a href="#org9fb1e97">Setup</a>
+<li><a href="#orgc7e3d94">WaveFunctionCollapse</a></li>
+<li><a href="#org871caa1">Setup</a>
 <ul>
-<li><a href="#org450e677">Tiles</a></li>
-<li><a href="#org5975cd2">Drawing a grid of tiles</a>
+<li><a href="#org59dc07b">Tiles</a></li>
+<li><a href="#orgc282dc2">Drawing a grid of tiles</a>
 <ul>
-<li><a href="#org2a9dafc">Pick out some tiles to use</a></li>
+<li><a href="#org79e6b6f">Pick out some tiles to use</a></li>
 </ul>
 </li>
-<li><a href="#org5820582">A random world</a></li>
+<li><a href="#orgd3787b4">A random world</a></li>
 </ul>
 </li>
-<li><a href="#org759b850">Adjacency rules</a></li>
-<li><a href="#org8eca977">Applying the rules</a>
+<li><a href="#org21026ae">Adjacency rules</a></li>
+<li><a href="#orgca42d60">Applying the rules</a>
 <ul>
-<li><a href="#org42581b1">displaying it</a></li>
+<li><a href="#orgcfa5229">displaying it</a></li>
 </ul>
 </li>
-<li><a href="#orgfed621c">What next</a></li>
+<li><a href="#org2d6769a">What next</a></li>
 </ul>
 </div>
 </div>
@@ -240,104 +240,104 @@
     <div id="app"></div>
   </body>
 
-<div id="outline-container-org0a9ad09" class="outline-2">
-<h2 id="org0a9ad09">WaveFunctionCollapse</h2>
-<div class="outline-text-2" id="text-org0a9ad09">
+<div id="outline-container-orgc7e3d94" class="outline-2">
+<h2 id="orgc7e3d94">WaveFunctionCollapse</h2>
+<div class="outline-text-2" id="text-orgc7e3d94">
 <p>
 WaveFunctionCollapse is a texture synthesis algorithm. It can be used to procedurally creating maps out of tile-sets based on adjacency rules. This post expounds a simplified version of it in CLJS. Let's make some RPG world maps using it.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9fb1e97" class="outline-2">
-<h2 id="org9fb1e97">Setup</h2>
-<div class="outline-text-2" id="text-org9fb1e97">
+<div id="outline-container-org871caa1" class="outline-2">
+<h2 id="org871caa1">Setup</h2>
+<div class="outline-text-2" id="text-org871caa1">
 </div>
-<div id="outline-container-org450e677" class="outline-3">
-<h3 id="org450e677">Tiles</h3>
-<div class="outline-text-3" id="text-org450e677">
+<div id="outline-container-org59dc07b" class="outline-3">
+<h3 id="org59dc07b">Tiles</h3>
+<div class="outline-text-3" id="text-org59dc07b">
 <p>
 Firstly I grabbed a free tile-set from <a href="https://opengameart.org/content/16x16-overworld-tiles">opengamechart.org</a>. They came as a single gif file so I converted it to a png and then had chatGPT write a script to split it into the 16x16 pixel tiles.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5975cd2" class="outline-3">
-<h3 id="org5975cd2">Drawing a grid of tiles</h3>
-<div class="outline-text-3" id="text-org5975cd2">
+<div id="outline-container-orgc282dc2" class="outline-3">
+<h3 id="orgc282dc2">Drawing a grid of tiles</h3>
+<div class="outline-text-3" id="text-orgc282dc2">
 <p>
 Let's do some setup to show a css grid of tiles:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span>require '<span style="color: #ff62d4;">[</span>reagent.core <span style="color: #00bcff;">:as</span> r<span style="color: #ff62d4;">]</span>
-         '<span style="color: #ff62d4;">[</span>reagent.dom <span style="color: #00bcff;">:as</span> rdom<span style="color: #ff62d4;">]</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span>require '<span class="org-rainbow-delimiters-depth-2">[</span>reagent.core <span class="org-clojure-keyword">:as</span> r<span class="org-rainbow-delimiters-depth-2">]</span>
+         '<span class="org-rainbow-delimiters-depth-2">[</span>reagent.dom <span class="org-clojure-keyword">:as</span> rdom<span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">tile-grid</span> <span style="color: #ff62d4;">[</span><span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:keys</span> <span style="color: #fba849;">[</span>tile-width-px n-columns<span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span>
-                tiles<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>style <span style="color: #fba849;">{</span><span style="color: #00bcff;">:display</span> <span style="color: #79a8ff;">"grid"</span>
-               <span style="color: #00bcff;">:width</span> <span style="color: #9f80ff;">(</span>str <span style="color: #4fe42f;">(</span>* tile-width-px n-columns<span style="color: #4fe42f;">)</span> <span style="color: #79a8ff;">"px"</span><span style="color: #9f80ff;">)</span>
-               <span style="color: #00bcff;">:grid-template-columns</span> <span style="color: #9f80ff;">(</span>str <span style="color: #79a8ff;">"repeat(auto-fill, "</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">tile-grid</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:keys</span> <span class="org-rainbow-delimiters-depth-4">[</span>tile-width-px n-columns<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span>
+                tiles<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>style <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:display</span> <span class="org-string">"grid"</span>
+               <span class="org-clojure-keyword">:width</span> <span class="org-rainbow-delimiters-depth-5">(</span>str <span class="org-rainbow-delimiters-depth-6">(</span>* tile-width-px n-columns<span class="org-rainbow-delimiters-depth-6">)</span> <span class="org-string">"px"</span><span class="org-rainbow-delimiters-depth-5">)</span>
+               <span class="org-clojure-keyword">:grid-template-columns</span> <span class="org-rainbow-delimiters-depth-5">(</span>str <span class="org-string">"repeat(auto-fill, "</span>
                                            tile-width-px
-                                           <span style="color: #79a8ff;">"px)"</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">}</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span>into <span style="color: #fba849;">[</span><span style="color: #00bcff;">:div</span> <span style="color: #9f80ff;">{</span><span style="color: #00bcff;">:style</span> style<span style="color: #9f80ff;">}</span><span style="color: #fba849;">]</span> tiles<span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+                                           <span class="org-string">"px)"</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>into <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:div</span> <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:style</span> style<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">]</span> tiles<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">tile-img</span> <span style="color: #ff62d4;">[</span><span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:keys</span> <span style="color: #fba849;">[</span>tile-img-path
-                        width-px<span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">[</span><span style="color: #00bcff;">:img</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:src</span> tile-img-path
-         <span style="color: #00bcff;">:style</span> <span style="color: #fba849;">{</span><span style="color: #00bcff;">:width</span> <span style="color: #9f80ff;">(</span>str width-px <span style="color: #79a8ff;">"px"</span><span style="color: #9f80ff;">)</span>
-                 <span style="color: #00bcff;">:height</span> <span style="color: #9f80ff;">(</span>str width-px <span style="color: #79a8ff;">"px"</span><span style="color: #9f80ff;">)</span>
-                 <span style="color: #00bcff;">:max-width</span> <span style="color: #79a8ff;">"100%"</span><span style="color: #fba849;">}</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">]</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">tile-img</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:keys</span> <span class="org-rainbow-delimiters-depth-4">[</span>tile-img-path
+                        width-px<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-clojure-keyword">:img</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:src</span> tile-img-path
+         <span class="org-clojure-keyword">:style</span> <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:width</span> <span class="org-rainbow-delimiters-depth-5">(</span>str width-px <span class="org-string">"px"</span><span class="org-rainbow-delimiters-depth-5">)</span>
+                 <span class="org-clojure-keyword">:height</span> <span class="org-rainbow-delimiters-depth-5">(</span>str width-px <span class="org-string">"px"</span><span class="org-rainbow-delimiters-depth-5">)</span>
+                 <span class="org-clojure-keyword">:max-width</span> <span class="org-string">"100%"</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org2a9dafc" class="outline-4">
-<h4 id="org2a9dafc">Pick out some tiles to use</h4>
-<div class="outline-text-4" id="text-org2a9dafc">
+<div id="outline-container-org79e6b6f" class="outline-4">
+<h4 id="org79e6b6f">Pick out some tiles to use</h4>
+<div class="outline-text-4" id="text-org79e6b6f">
 <p>
 I went through the tiles and picked out some water, coast and grassland tiles to start with. Let's generate a map from these:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">tile-dir</span> <span style="color: #79a8ff;">"assets/tiles/"</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">tile-dir</span> <span class="org-string">"assets/tiles/"</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">tile-paths</span>
-  <span style="color: #ff62d4;">{</span><span style="color: #00bcff;">:water</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_10_1.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_6_13.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-w</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_9_1.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-sw</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_9_2.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-s</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_10_2.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-e</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_11_1.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-se</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_11_2.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-ne</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_11_0.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-n</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_10_0.png"</span><span style="color: #3fdfd0;">)</span>
-   <span style="color: #00bcff;">:grass-coast-nw</span> <span style="color: #3fdfd0;">(</span>str tile-dir <span style="color: #79a8ff;">"tile_9_0.png"</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">}</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">tile-paths</span>
+  <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:water</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_10_1.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_6_13.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-w</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_9_1.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-sw</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_9_2.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-s</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_10_2.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-e</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_11_1.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-se</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_11_2.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-ne</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_11_0.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-n</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_10_0.png"</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-clojure-keyword">:grass-coast-nw</span> <span class="org-rainbow-delimiters-depth-3">(</span>str tile-dir <span class="org-string">"tile_9_0.png"</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">random-tile</span> <span style="color: #ff62d4;">[]</span>
-  <span style="color: #ff62d4;">[</span>tile-img
-   <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:tile-img-path</span> <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">-&gt;</span> tile-paths vals rand-nth<span style="color: #fba849;">)</span>
-    <span style="color: #00bcff;">:width-px</span> 16<span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">]</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">random-tile</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span>tile-img
+   <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:tile-img-path</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;</span> tile-paths vals rand-nth<span class="org-rainbow-delimiters-depth-4">)</span>
+    <span class="org-clojure-keyword">:width-px</span> 16<span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">world</span> <span style="color: #ff62d4;">[]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>tiles <span style="color: #fba849;">(</span>take 25 <span style="color: #9f80ff;">(</span>repeatedly random-tile<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">[</span>tile-grid
-     <span style="color: #fba849;">{</span><span style="color: #00bcff;">:tile-width-px</span> 16
-      <span style="color: #00bcff;">:n-columns</span> 5<span style="color: #fba849;">}</span>
-     tiles<span style="color: #3fdfd0;">]</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">world</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>tiles <span class="org-rainbow-delimiters-depth-4">(</span>take 25 <span class="org-rainbow-delimiters-depth-5">(</span>repeatedly random-tile<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">[</span>tile-grid
+     <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:tile-width-px</span> 16
+      <span class="org-clojure-keyword">:n-columns</span> 5<span class="org-rainbow-delimiters-depth-4">}</span>
+     tiles<span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #6ae4b9;">rdom</span>/render
- <span style="color: #ff62d4;">[</span>world<span style="color: #ff62d4;">]</span>
- <span style="color: #ff62d4;">(</span>.getElementById <span style="color: #6ae4b9;">js</span>/document <span style="color: #79a8ff;">"random-world"</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">rdom</span>/render
+ <span class="org-rainbow-delimiters-depth-2">[</span>world<span class="org-rainbow-delimiters-depth-2">]</span>
+ <span class="org-rainbow-delimiters-depth-2">(</span>.getElementById <span class="org-type">js</span>/document <span class="org-string">"random-world"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5820582" class="outline-3">
-<h3 id="org5820582">A random world</h3>
-<div class="outline-text-3" id="text-org5820582">
+<div id="outline-container-orgd3787b4" class="outline-3">
+<h3 id="orgd3787b4">A random world</h3>
+<div class="outline-text-3" id="text-orgd3787b4">
 <p>
 Here is a random 5x5 world. It will change if you refresh the page. We can see that there are no adjacency rules here so the map doesn't really make sense. 
 </p>
@@ -349,76 +349,76 @@ Here is a random 5x5 world. It will change if you refresh the page. We can see t
 </div>
 
 
-<div id="outline-container-org759b850" class="outline-2">
-<h2 id="org759b850">Adjacency rules</h2>
-<div class="outline-text-2" id="text-org759b850">
+<div id="outline-container-org21026ae" class="outline-2">
+<h2 id="org21026ae">Adjacency rules</h2>
+<div class="outline-text-2" id="text-org21026ae">
 <p>
 We need a set of rules to see which tiles are allowed to go next to which. This can become quite painstaking if you do it by hand. The original WFC project has a tool to analyse existing valid maps and extract rules from them. Here we only have a few tiles and I don't have any example maps, so I've used a "sockets" approach whereby we match up tile types based on the content at positions on the corresponding edges of the tiles.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">all-tile-edges</span>
-  <span style="color: #ff62d4;">{</span><span style="color: #00bcff;">:water</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:water</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:grass</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-n</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:grass</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-e</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:water</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-s</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:water</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-w</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:grass</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-ne-corner</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:water</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-nw-corner</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:grass</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-se-corner</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:water</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-sw-corner</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:water</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-n+e</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:grass</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-n+w</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:grass</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-s+e</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:water</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:grass-coast-s+w</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:water</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:grass</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:grass</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">}</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">all-tile-edges</span>
+  <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:water</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:water</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:grass</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-n</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:grass</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-e</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:water</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-s</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:water</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-w</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:grass</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-ne-corner</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:water</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-nw-corner</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:grass</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-se-corner</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:water</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-sw-corner</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:water</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-n+e</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:grass</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-n+w</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:grass</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-s+e</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:water</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:grass-coast-s+w</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:water</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:grass</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:grass</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">edge-&gt;sockets</span>
-  <span style="color: #ff62d4;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:se</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:s</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:ne</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:e</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:nw</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:w</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:ne</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:ne</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:sw</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:sw</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:ne</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:nw</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:se</span><span style="color: #3fdfd0;">}</span>
-   <span style="color: #00bcff;">:se</span> <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:nw</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">}</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">edge-&gt;sockets</span>
+  <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:n</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:se</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:s</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:ne</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:e</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:nw</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:w</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:ne</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:ne</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:sw</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:sw</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:ne</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:nw</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:se</span><span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-clojure-keyword">:se</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:nw</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">invert-direction</span>
-  <span style="color: #ff62d4;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #00bcff;">:s</span>
-   <span style="color: #00bcff;">:s</span> <span style="color: #00bcff;">:n</span>
-   <span style="color: #00bcff;">:e</span> <span style="color: #00bcff;">:w</span>
-   <span style="color: #00bcff;">:w</span> <span style="color: #00bcff;">:e</span>
-   <span style="color: #00bcff;">:ne</span> <span style="color: #00bcff;">:sw</span>
-   <span style="color: #00bcff;">:sw</span> <span style="color: #00bcff;">:ne</span>
-   <span style="color: #00bcff;">:se</span> <span style="color: #00bcff;">:nw</span>
-   <span style="color: #00bcff;">:nw</span> <span style="color: #00bcff;">:se</span><span style="color: #ff62d4;">}</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">invert-direction</span>
+  <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:n</span> <span class="org-clojure-keyword">:s</span>
+   <span class="org-clojure-keyword">:s</span> <span class="org-clojure-keyword">:n</span>
+   <span class="org-clojure-keyword">:e</span> <span class="org-clojure-keyword">:w</span>
+   <span class="org-clojure-keyword">:w</span> <span class="org-clojure-keyword">:e</span>
+   <span class="org-clojure-keyword">:ne</span> <span class="org-clojure-keyword">:sw</span>
+   <span class="org-clojure-keyword">:sw</span> <span class="org-clojure-keyword">:ne</span>
+   <span class="org-clojure-keyword">:se</span> <span class="org-clojure-keyword">:nw</span>
+   <span class="org-clojure-keyword">:nw</span> <span class="org-clojure-keyword">:se</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">adjacent-tile-valid-sockets</span> <span style="color: #ff62d4;">[</span>input-tile-edges edge<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>required-sockets <span style="color: #fba849;">(</span>edge-&gt;sockets edge<span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span>
-     <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">for</span> <span style="color: #9f80ff;">[</span><span style="color: #4fe42f;">[</span>from-edge to-edge<span style="color: #4fe42f;">]</span> required-sockets<span style="color: #9f80ff;">]</span>
-       <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #4fe42f;">[</span>tile-edge-type <span style="color: #fe6060;">(</span>from-edge input-tile-edges<span style="color: #fe6060;">)</span><span style="color: #4fe42f;">]</span>
-         <span style="color: #4fe42f;">[</span>to-edge tile-edge-type<span style="color: #4fe42f;">]</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span>
-     <span style="color: #fba849;">(</span>into <span style="color: #9f80ff;">{}</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">adjacent-tile-valid-sockets</span> <span class="org-rainbow-delimiters-depth-2">[</span>input-tile-edges edge<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>required-sockets <span class="org-rainbow-delimiters-depth-4">(</span>edge-&gt;sockets edge<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span>
+     <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-5">[</span><span class="org-rainbow-delimiters-depth-6">[</span>from-edge to-edge<span class="org-rainbow-delimiters-depth-6">]</span> required-sockets<span class="org-rainbow-delimiters-depth-5">]</span>
+       <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-6">[</span>tile-edge-type <span class="org-rainbow-delimiters-depth-7">(</span>from-edge input-tile-edges<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">]</span>
+         <span class="org-rainbow-delimiters-depth-6">[</span>to-edge tile-edge-type<span class="org-rainbow-delimiters-depth-6">]</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+     <span class="org-rainbow-delimiters-depth-4">(</span>into <span class="org-rainbow-delimiters-depth-5">{}</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">valid-tiles</span> <span style="color: #ff62d4;">[</span>valid-sockets tile-edges<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span> tile-edges
-       <span style="color: #3fdfd0;">(</span>filter
-        <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">fn</span> <span style="color: #9f80ff;">[</span><span style="color: #4fe42f;">[</span>_ edges<span style="color: #4fe42f;">]</span><span style="color: #9f80ff;">]</span>
-          <span style="color: #9f80ff;">(</span><span style="color: #6ae4b9;">set</span>/subset? <span style="color: #4fe42f;">(</span>set valid-sockets<span style="color: #4fe42f;">)</span>
-                       <span style="color: #4fe42f;">(</span>set edges<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span>
-       <span style="color: #3fdfd0;">(</span>map first<span style="color: #3fdfd0;">)</span>
-       set<span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">valid-tiles</span> <span class="org-rainbow-delimiters-depth-2">[</span>valid-sockets tile-edges<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span> tile-edges
+       <span class="org-rainbow-delimiters-depth-3">(</span>filter
+        <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span><span class="org-rainbow-delimiters-depth-6">[</span>_ edges<span class="org-rainbow-delimiters-depth-6">]</span><span class="org-rainbow-delimiters-depth-5">]</span>
+          <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-type">set</span>/subset? <span class="org-rainbow-delimiters-depth-6">(</span>set valid-sockets<span class="org-rainbow-delimiters-depth-6">)</span>
+                       <span class="org-rainbow-delimiters-depth-6">(</span>set edges<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>map first<span class="org-rainbow-delimiters-depth-3">)</span>
+       set<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">def</span> <span style="color: #00d3d0;">all-tile-types</span> <span style="color: #ff62d4;">(</span>keys tile-paths<span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">all-tile-types</span> <span class="org-rainbow-delimiters-depth-2">(</span>keys tile-paths<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8eca977" class="outline-2">
-<h2 id="org8eca977">Applying the rules</h2>
-<div class="outline-text-2" id="text-org8eca977">
+<div id="outline-container-orgca42d60" class="outline-2">
+<h2 id="orgca42d60">Applying the rules</h2>
+<div class="outline-text-2" id="text-orgca42d60">
 <p>
 Each cell will start with a complete set of possible tile types. For each iteration we will resolve one of the tiles with the lowest number of possible types. Then we need to update its neighbours since it will have an impact on what values are still possible for the neighbours.
 </p>
@@ -433,152 +433,152 @@ All of the below has been written with a flagrant disregard for performance.
 
 <div class="org-src-container">
 <pre class="src src-clojure">
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">init-grid</span> <span style="color: #ff62d4;">[</span>width<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span>vec
-   <span style="color: #3fdfd0;">(</span>take <span style="color: #fba849;">(</span>* width width<span style="color: #fba849;">)</span>
-         <span style="color: #fba849;">(</span>repeat <span style="color: #9f80ff;">(</span>set all-tile-types<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">init-grid</span> <span class="org-rainbow-delimiters-depth-2">[</span>width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>vec
+   <span class="org-rainbow-delimiters-depth-3">(</span>take <span class="org-rainbow-delimiters-depth-4">(</span>* width width<span class="org-rainbow-delimiters-depth-4">)</span>
+         <span class="org-rainbow-delimiters-depth-4">(</span>repeat <span class="org-rainbow-delimiters-depth-5">(</span>set all-tile-types<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">find-lowest-entropy-idx</span> <span style="color: #ff62d4;">[</span>grid<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">some-&gt;&gt;</span> grid
-           <span style="color: #3fdfd0;">(</span>map-indexed <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">fn</span> <span style="color: #9f80ff;">[</span>idx poss-vals<span style="color: #9f80ff;">]</span>
-                          <span style="color: #9f80ff;">[</span>idx <span style="color: #4fe42f;">(</span>count poss-vals<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">]</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">find-lowest-entropy-idx</span> <span class="org-rainbow-delimiters-depth-2">[</span>grid<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">some-&gt;&gt;</span> grid
+           <span class="org-rainbow-delimiters-depth-3">(</span>map-indexed <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>idx poss-vals<span class="org-rainbow-delimiters-depth-5">]</span>
+                          <span class="org-rainbow-delimiters-depth-5">[</span>idx <span class="org-rainbow-delimiters-depth-6">(</span>count poss-vals<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
            shuffle
-           <span style="color: #3fdfd0;">(</span>sort-by second<span style="color: #3fdfd0;">)</span>
-           <span style="color: #3fdfd0;">(</span>drop-while #<span style="color: #fba849;">(</span>&lt; <span style="color: #9f80ff;">(</span>second <span style="color: #00d3d0;">%</span><span style="color: #9f80ff;">)</span> 2<span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span>
+           <span class="org-rainbow-delimiters-depth-3">(</span>sort-by second<span class="org-rainbow-delimiters-depth-3">)</span>
+           <span class="org-rainbow-delimiters-depth-3">(</span>drop-while #<span class="org-rainbow-delimiters-depth-4">(</span>&lt; <span class="org-rainbow-delimiters-depth-5">(</span>second <span class="org-variable-name">%</span><span class="org-rainbow-delimiters-depth-5">)</span> 2<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
            first
-           first<span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+           first<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">find-neighbours</span> <span style="color: #ff62d4;">[</span>grid-width idx<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>first-row? <span style="color: #fba849;">(</span>&lt; idx grid-width<span style="color: #fba849;">)</span>
-        first-in-row? <span style="color: #fba849;">(</span>zero? <span style="color: #9f80ff;">(</span>mod idx grid-width<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span>
-        last-in-row? <span style="color: #fba849;">(</span>= <span style="color: #9f80ff;">(</span>dec grid-width<span style="color: #9f80ff;">)</span>
-                        <span style="color: #9f80ff;">(</span>mod idx grid-width<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span>
-        last-row? <span style="color: #fba849;">(</span>&gt;= idx <span style="color: #9f80ff;">(</span>* grid-width
-                             <span style="color: #4fe42f;">(</span>dec grid-width<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span>
-     <span style="color: #fba849;">{</span><span style="color: #00bcff;">:n</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span> first-row?
-           <span style="color: #4fe42f;">(</span>- idx grid-width<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-      <span style="color: #00bcff;">:ne</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span>
-           <span style="color: #4fe42f;">(</span><span style="color: #b6a0ff;">or</span> first-row? last-in-row?<span style="color: #4fe42f;">)</span>
-            <span style="color: #4fe42f;">(</span>- idx <span style="color: #fe6060;">(</span>dec grid-width<span style="color: #fe6060;">)</span><span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-      <span style="color: #00bcff;">:e</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span> last-in-row? <span style="color: #4fe42f;">(</span>inc idx<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-      <span style="color: #00bcff;">:se</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span> <span style="color: #4fe42f;">(</span><span style="color: #b6a0ff;">or</span> last-in-row? last-row?<span style="color: #4fe42f;">)</span>
-            <span style="color: #4fe42f;">(</span>+ idx grid-width 1<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-      <span style="color: #00bcff;">:s</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span> last-row?
-           <span style="color: #4fe42f;">(</span>+ idx grid-width<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-      <span style="color: #00bcff;">:sw</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span> <span style="color: #4fe42f;">(</span><span style="color: #b6a0ff;">or</span> first-in-row? last-row?<span style="color: #4fe42f;">)</span>
-            <span style="color: #4fe42f;">(</span>+ idx grid-width -1<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-      <span style="color: #00bcff;">:w</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span> first-in-row?
-           <span style="color: #4fe42f;">(</span>dec idx<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-      <span style="color: #00bcff;">:nw</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">when-not</span> <span style="color: #4fe42f;">(</span><span style="color: #b6a0ff;">or</span> first-row? first-in-row?<span style="color: #4fe42f;">)</span>
-            <span style="color: #4fe42f;">(</span>- idx <span style="color: #fe6060;">(</span>inc grid-width<span style="color: #fe6060;">)</span><span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">}</span>
-     <span style="color: #fba849;">(</span>filter val<span style="color: #fba849;">)</span>
-     <span style="color: #fba849;">(</span>into <span style="color: #9f80ff;">{}</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">find-neighbours</span> <span class="org-rainbow-delimiters-depth-2">[</span>grid-width idx<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>first-row? <span class="org-rainbow-delimiters-depth-4">(</span>&lt; idx grid-width<span class="org-rainbow-delimiters-depth-4">)</span>
+        first-in-row? <span class="org-rainbow-delimiters-depth-4">(</span>zero? <span class="org-rainbow-delimiters-depth-5">(</span>mod idx grid-width<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        last-in-row? <span class="org-rainbow-delimiters-depth-4">(</span>= <span class="org-rainbow-delimiters-depth-5">(</span>dec grid-width<span class="org-rainbow-delimiters-depth-5">)</span>
+                        <span class="org-rainbow-delimiters-depth-5">(</span>mod idx grid-width<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        last-row? <span class="org-rainbow-delimiters-depth-4">(</span>&gt;= idx <span class="org-rainbow-delimiters-depth-5">(</span>* grid-width
+                             <span class="org-rainbow-delimiters-depth-6">(</span>dec grid-width<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">-&gt;&gt;</span>
+     <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:n</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span> first-row?
+           <span class="org-rainbow-delimiters-depth-6">(</span>- idx grid-width<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-clojure-keyword">:ne</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span>
+           <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">or</span> first-row? last-in-row?<span class="org-rainbow-delimiters-depth-6">)</span>
+            <span class="org-rainbow-delimiters-depth-6">(</span>- idx <span class="org-rainbow-delimiters-depth-7">(</span>dec grid-width<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-clojure-keyword">:e</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span> last-in-row? <span class="org-rainbow-delimiters-depth-6">(</span>inc idx<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-clojure-keyword">:se</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span> <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">or</span> last-in-row? last-row?<span class="org-rainbow-delimiters-depth-6">)</span>
+            <span class="org-rainbow-delimiters-depth-6">(</span>+ idx grid-width 1<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-clojure-keyword">:s</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span> last-row?
+           <span class="org-rainbow-delimiters-depth-6">(</span>+ idx grid-width<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-clojure-keyword">:sw</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span> <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">or</span> first-in-row? last-row?<span class="org-rainbow-delimiters-depth-6">)</span>
+            <span class="org-rainbow-delimiters-depth-6">(</span>+ idx grid-width -1<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-clojure-keyword">:w</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span> first-in-row?
+           <span class="org-rainbow-delimiters-depth-6">(</span>dec idx<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+      <span class="org-clojure-keyword">:nw</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when-not</span> <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">or</span> first-row? first-in-row?<span class="org-rainbow-delimiters-depth-6">)</span>
+            <span class="org-rainbow-delimiters-depth-6">(</span>- idx <span class="org-rainbow-delimiters-depth-7">(</span>inc grid-width<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">}</span>
+     <span class="org-rainbow-delimiters-depth-4">(</span>filter val<span class="org-rainbow-delimiters-depth-4">)</span>
+     <span class="org-rainbow-delimiters-depth-4">(</span>into <span class="org-rainbow-delimiters-depth-5">{}</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">remaining-possibilities</span>
-  <span style="color: #ff62d4;">[</span>grid-width grid idx<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>neighbours <span style="color: #fba849;">(</span>find-neighbours grid-width idx<span style="color: #fba849;">)</span>
-        prev-possibilities <span style="color: #fba849;">(</span>nth grid idx<span style="color: #fba849;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">remaining-possibilities</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span>grid-width grid idx<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>neighbours <span class="org-rainbow-delimiters-depth-4">(</span>find-neighbours grid-width idx<span class="org-rainbow-delimiters-depth-4">)</span>
+        prev-possibilities <span class="org-rainbow-delimiters-depth-4">(</span>nth grid idx<span class="org-rainbow-delimiters-depth-4">)</span>
         possibilities-from-resolved-neighbours
-        <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span>
-         <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">for</span> <span style="color: #4fe42f;">[</span><span style="color: #fe6060;">[</span>direction nei-idx<span style="color: #fe6060;">]</span> neighbours
-               <span style="color: #00bcff;">:let</span> <span style="color: #fe6060;">[</span>nei <span style="color: #4fafff;">(</span>nth grid nei-idx<span style="color: #4fafff;">)</span><span style="color: #fe6060;">]</span>
-               <span style="color: #00bcff;">:when</span> <span style="color: #fe6060;">(</span>= <span style="color: #4fafff;">(</span>count nei<span style="color: #4fafff;">)</span> 1<span style="color: #fe6060;">)</span>
-               <span style="color: #00bcff;">:let</span> <span style="color: #fe6060;">[</span>nei-type <span style="color: #4fafff;">(</span><span style="color: #b6a0ff;">-&gt;</span> nei vec first<span style="color: #4fafff;">)</span>
-                     nei-tile-edges <span style="color: #4fafff;">(</span>all-tile-edges nei-type<span style="color: #4fafff;">)</span>
-                     valid-sockets <span style="color: #4fafff;">(</span>adjacent-tile-valid-sockets
+        <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">-&gt;&gt;</span>
+         <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">for</span> <span class="org-rainbow-delimiters-depth-6">[</span><span class="org-rainbow-delimiters-depth-7">[</span>direction nei-idx<span class="org-rainbow-delimiters-depth-7">]</span> neighbours
+               <span class="org-clojure-keyword">:let</span> <span class="org-rainbow-delimiters-depth-7">[</span>nei <span class="org-rainbow-delimiters-depth-8">(</span>nth grid nei-idx<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">]</span>
+               <span class="org-clojure-keyword">:when</span> <span class="org-rainbow-delimiters-depth-7">(</span>= <span class="org-rainbow-delimiters-depth-8">(</span>count nei<span class="org-rainbow-delimiters-depth-8">)</span> 1<span class="org-rainbow-delimiters-depth-7">)</span>
+               <span class="org-clojure-keyword">:let</span> <span class="org-rainbow-delimiters-depth-7">[</span>nei-type <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">-&gt;</span> nei vec first<span class="org-rainbow-delimiters-depth-8">)</span>
+                     nei-tile-edges <span class="org-rainbow-delimiters-depth-8">(</span>all-tile-edges nei-type<span class="org-rainbow-delimiters-depth-8">)</span>
+                     valid-sockets <span class="org-rainbow-delimiters-depth-8">(</span>adjacent-tile-valid-sockets
                                     nei-tile-edges
-                                    <span style="color: #f0dd60;">(</span>invert-direction direction<span style="color: #f0dd60;">)</span><span style="color: #4fafff;">)</span><span style="color: #fe6060;">]</span><span style="color: #4fe42f;">]</span>
-           <span style="color: #4fe42f;">(</span>valid-tiles valid-sockets all-tile-edges<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
-         <span style="color: #9f80ff;">(</span>apply <span style="color: #6ae4b9;">set</span>/intersection<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span><span style="color: #b6a0ff;">or</span> possibilities-from-resolved-neighbours
-        prev-possibilities<span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+                                    <span class="org-rainbow-delimiters-depth-9">(</span>invert-direction direction<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">]</span><span class="org-rainbow-delimiters-depth-6">]</span>
+           <span class="org-rainbow-delimiters-depth-6">(</span>valid-tiles valid-sockets all-tile-edges<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+         <span class="org-rainbow-delimiters-depth-5">(</span>apply <span class="org-type">set</span>/intersection<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">or</span> possibilities-from-resolved-neighbours
+        prev-possibilities<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">update-cell-reducer-fn</span> <span style="color: #ff62d4;">[</span>grid-width<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">fn</span> <span style="color: #3fdfd0;">[</span>grid idx<span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #fba849;">[</span>prev-types <span style="color: #9f80ff;">(</span>nth grid idx<span style="color: #9f80ff;">)</span><span style="color: #fba849;">]</span>
-      <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">if</span> <span style="color: #9f80ff;">(</span>= 1 <span style="color: #4fe42f;">(</span>count prev-types<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">update-cell-reducer-fn</span> <span class="org-rainbow-delimiters-depth-2">[</span>grid-width<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-3">[</span>grid idx<span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-4">[</span>prev-types <span class="org-rainbow-delimiters-depth-5">(</span>nth grid idx<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">]</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-5">(</span>= 1 <span class="org-rainbow-delimiters-depth-6">(</span>count prev-types<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
         grid
-        <span style="color: #9f80ff;">(</span>assoc grid idx
-               <span style="color: #4fe42f;">(</span>remaining-possibilities grid-width grid idx<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+        <span class="org-rainbow-delimiters-depth-5">(</span>assoc grid idx
+               <span class="org-rainbow-delimiters-depth-6">(</span>remaining-possibilities grid-width grid idx<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">update-neighbours</span> <span style="color: #ff62d4;">[</span>grid grid-width idx<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>neighbours <span style="color: #fba849;">(</span>find-neighbours grid-width idx<span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span>reduce <span style="color: #fba849;">(</span>update-cell-reducer-fn grid-width<span style="color: #fba849;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">update-neighbours</span> <span class="org-rainbow-delimiters-depth-2">[</span>grid grid-width idx<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>neighbours <span class="org-rainbow-delimiters-depth-4">(</span>find-neighbours grid-width idx<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>reduce <span class="org-rainbow-delimiters-depth-4">(</span>update-cell-reducer-fn grid-width<span class="org-rainbow-delimiters-depth-4">)</span>
             grid
-            <span style="color: #fba849;">(</span>vals neighbours<span style="color: #fba849;">)</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+            <span class="org-rainbow-delimiters-depth-4">(</span>vals neighbours<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">resolve-tile</span> <span style="color: #ff62d4;">[</span>possible-values<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">-&gt;&gt;</span> possible-values
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">resolve-tile</span> <span class="org-rainbow-delimiters-depth-2">[</span>possible-values<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">-&gt;&gt;</span> possible-values
        vec
        shuffle
-       <span style="color: #3fdfd0;">(</span>take 1<span style="color: #3fdfd0;">)</span>
-       set<span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+       <span class="org-rainbow-delimiters-depth-3">(</span>take 1<span class="org-rainbow-delimiters-depth-3">)</span>
+       set<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">iterate-grid</span> <span style="color: #ff62d4;">[</span>grid-width <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:keys</span> <span style="color: #fba849;">[</span>grid finished?<span style="color: #fba849;">]</span><span style="color: #3fdfd0;">}</span><span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>lowest-entropy-idx <span style="color: #fba849;">(</span>find-lowest-entropy-idx grid<span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span><span style="color: #b6a0ff;">if</span> <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">or</span> finished? <span style="color: #9f80ff;">(</span>not lowest-entropy-idx<span style="color: #9f80ff;">)</span><span style="color: #fba849;">)</span>
-      <span style="color: #fba849;">{</span><span style="color: #00bcff;">:finished?</span> <span style="color: #00bcff;">true</span>
-       <span style="color: #00bcff;">:grid</span> grid<span style="color: #fba849;">}</span>
-      <span style="color: #fba849;">{</span><span style="color: #00bcff;">:finished?</span> <span style="color: #00bcff;">false</span>
-       <span style="color: #00bcff;">:grid</span> <span style="color: #9f80ff;">(</span><span style="color: #b6a0ff;">-&gt;</span> grid
-                 <span style="color: #4fe42f;">(</span>assoc lowest-entropy-idx
-                        <span style="color: #fe6060;">(</span>resolve-tile
-                         <span style="color: #4fafff;">(</span>remaining-possibilities grid-width
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">iterate-grid</span> <span class="org-rainbow-delimiters-depth-2">[</span>grid-width <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:keys</span> <span class="org-rainbow-delimiters-depth-4">[</span>grid finished?<span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>lowest-entropy-idx <span class="org-rainbow-delimiters-depth-4">(</span>find-lowest-entropy-idx grid<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">or</span> finished? <span class="org-rainbow-delimiters-depth-5">(</span>not lowest-entropy-idx<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:finished?</span> <span class="org-constant">true</span>
+       <span class="org-clojure-keyword">:grid</span> grid<span class="org-rainbow-delimiters-depth-4">}</span>
+      <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:finished?</span> <span class="org-constant">false</span>
+       <span class="org-clojure-keyword">:grid</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">-&gt;</span> grid
+                 <span class="org-rainbow-delimiters-depth-6">(</span>assoc lowest-entropy-idx
+                        <span class="org-rainbow-delimiters-depth-7">(</span>resolve-tile
+                         <span class="org-rainbow-delimiters-depth-8">(</span>remaining-possibilities grid-width
                                                   grid
-                                                  lowest-entropy-idx<span style="color: #4fafff;">)</span><span style="color: #fe6060;">)</span><span style="color: #4fe42f;">)</span>
-                 <span style="color: #4fe42f;">(</span>update-neighbours grid-width lowest-entropy-idx<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">)</span><span style="color: #fba849;">}</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span> 
+                                                  lowest-entropy-idx<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+                 <span class="org-rainbow-delimiters-depth-6">(</span>update-neighbours grid-width lowest-entropy-idx<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> 
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org42581b1" class="outline-3">
-<h3 id="org42581b1">displaying it</h3>
-<div class="outline-text-3" id="text-org42581b1">
+<div id="outline-container-orgcfa5229" class="outline-3">
+<h3 id="orgcfa5229">displaying it</h3>
+<div class="outline-text-3" id="text-orgcfa5229">
 <p>
 Here's the plumbing used to render it here.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure"><span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">wfc-grid</span> <span style="color: #ff62d4;">[</span>n-columns grid<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">[</span>tile-grid <span style="color: #3fdfd0;">{</span><span style="color: #00bcff;">:tile-width-px</span> 16
-              <span style="color: #00bcff;">:n-columns</span> n-columns<span style="color: #3fdfd0;">}</span>
-   <span style="color: #3fdfd0;">(</span>map-indexed
-    <span style="color: #fba849;">(</span><span style="color: #b6a0ff;">fn</span> <span style="color: #9f80ff;">[</span>idx cell-possible-values<span style="color: #9f80ff;">]</span>
-      <span style="color: #9f80ff;">[</span>tile-img
-       <span style="color: #4fe42f;">{</span><span style="color: #00bcff;">:idx</span> idx
-        <span style="color: #00bcff;">:tile-img-path</span>
-        <span style="color: #fe6060;">(</span><span style="color: #b6a0ff;">if</span> <span style="color: #4fafff;">(</span>= <span style="color: #f0dd60;">(</span>count cell-possible-values<span style="color: #f0dd60;">)</span> 1<span style="color: #4fafff;">)</span>
-          <span style="color: #4fafff;">(</span>tile-paths <span style="color: #f0dd60;">(</span><span style="color: #b6a0ff;">-&gt;</span> cell-possible-values vec first<span style="color: #f0dd60;">)</span><span style="color: #4fafff;">)</span>
-          empty-tile<span style="color: #fe6060;">)</span>
-        <span style="color: #00bcff;">:width-px</span> 16<span style="color: #4fe42f;">}</span><span style="color: #9f80ff;">]</span><span style="color: #fba849;">)</span>
-    grid<span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">]</span><span style="color: #ffffff;">)</span>
+<pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">wfc-grid</span> <span class="org-rainbow-delimiters-depth-2">[</span>n-columns grid<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">[</span>tile-grid <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:tile-width-px</span> 16
+              <span class="org-clojure-keyword">:n-columns</span> n-columns<span class="org-rainbow-delimiters-depth-3">}</span>
+   <span class="org-rainbow-delimiters-depth-3">(</span>map-indexed
+    <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-5">[</span>idx cell-possible-values<span class="org-rainbow-delimiters-depth-5">]</span>
+      <span class="org-rainbow-delimiters-depth-5">[</span>tile-img
+       <span class="org-rainbow-delimiters-depth-6">{</span><span class="org-clojure-keyword">:idx</span> idx
+        <span class="org-clojure-keyword">:tile-img-path</span>
+        <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-8">(</span>= <span class="org-rainbow-delimiters-depth-9">(</span>count cell-possible-values<span class="org-rainbow-delimiters-depth-9">)</span> 1<span class="org-rainbow-delimiters-depth-8">)</span>
+          <span class="org-rainbow-delimiters-depth-8">(</span>tile-paths <span class="org-rainbow-delimiters-depth-9">(</span><span class="org-keyword">-&gt;</span> cell-possible-values vec first<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span>
+          empty-tile<span class="org-rainbow-delimiters-depth-7">)</span>
+        <span class="org-clojure-keyword">:width-px</span> 16<span class="org-rainbow-delimiters-depth-6">}</span><span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">)</span>
+    grid<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #b6a0ff;">defn</span> <span style="color: #feacd0;">interactive-map</span> <span style="color: #ff62d4;">[</span>n-columns<span style="color: #ff62d4;">]</span>
-  <span style="color: #ff62d4;">(</span><span style="color: #b6a0ff;">let</span> <span style="color: #3fdfd0;">[</span>state <span style="color: #fba849;">(</span><span style="color: #6ae4b9;">r</span>/atom <span style="color: #9f80ff;">{</span><span style="color: #00bcff;">:grid</span> <span style="color: #4fe42f;">(</span>init-grid n-columns<span style="color: #4fe42f;">)</span>
-                       <span style="color: #00bcff;">:finished?</span> <span style="color: #00bcff;">false</span><span style="color: #9f80ff;">}</span><span style="color: #fba849;">)</span><span style="color: #3fdfd0;">]</span>
-    <span style="color: #3fdfd0;">(</span><span style="color: #b6a0ff;">fn</span> <span style="color: #fba849;">[</span>_<span style="color: #fba849;">]</span>
-      <span style="color: #fba849;">[</span><span style="color: #00bcff;">:div</span>
-       <span style="color: #9f80ff;">[</span>wfc-grid n-columns <span style="color: #4fe42f;">(</span><span style="color: #00bcff;">:grid</span> @state<span style="color: #4fe42f;">)</span><span style="color: #9f80ff;">]</span>
-       <span style="color: #9f80ff;">[</span><span style="color: #00bcff;">:div</span> <span style="color: #4fe42f;">{</span><span style="color: #00bcff;">:style</span> <span style="color: #fe6060;">{</span><span style="color: #00bcff;">:display</span> <span style="color: #79a8ff;">"flex"</span><span style="color: #fe6060;">}</span><span style="color: #4fe42f;">}</span>
-        <span style="color: #4fe42f;">[</span><span style="color: #00bcff;">:p</span> <span style="color: #fe6060;">[</span><span style="color: #00bcff;">:button</span>
-             <span style="color: #4fafff;">{</span><span style="color: #00bcff;">:on-click</span> #<span style="color: #f0dd60;">(</span>swap! state
-                                <span style="color: #ffffff;">(</span>partial iterate-grid n-columns<span style="color: #ffffff;">)</span><span style="color: #f0dd60;">)</span><span style="color: #4fafff;">}</span>
-             <span style="color: #79a8ff;">"iterate"</span><span style="color: #fe6060;">]</span><span style="color: #4fe42f;">]</span>
-        <span style="color: #4fe42f;">[</span><span style="color: #00bcff;">:p</span> <span style="color: #fe6060;">[</span><span style="color: #00bcff;">:button</span>
-             <span style="color: #4fafff;">{</span><span style="color: #00bcff;">:on-click</span> #<span style="color: #f0dd60;">(</span><span style="color: #b6a0ff;">while</span> <span style="color: #ffffff;">(</span>not <span style="color: #ff62d4;">(</span><span style="color: #00bcff;">:finished?</span> @state<span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
-                           <span style="color: #ffffff;">(</span>swap! state
-                                  <span style="color: #ff62d4;">(</span>partial iterate-grid n-columns<span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span><span style="color: #f0dd60;">)</span><span style="color: #4fafff;">}</span>
-             <span style="color: #79a8ff;">"finish"</span><span style="color: #fe6060;">]</span><span style="color: #4fe42f;">]</span>
-        <span style="color: #4fe42f;">[</span><span style="color: #00bcff;">:p</span> <span style="color: #fe6060;">[</span><span style="color: #00bcff;">:button</span>
-             <span style="color: #4fafff;">{</span><span style="color: #00bcff;">:on-click</span> #<span style="color: #f0dd60;">(</span>reset! state
-                                 <span style="color: #ffffff;">{</span><span style="color: #00bcff;">:grid</span> <span style="color: #ff62d4;">(</span>init-grid n-columns<span style="color: #ff62d4;">)</span>
-                                  <span style="color: #00bcff;">:finished?</span> <span style="color: #00bcff;">false</span><span style="color: #ffffff;">}</span><span style="color: #f0dd60;">)</span><span style="color: #4fafff;">}</span>
-             <span style="color: #79a8ff;">"reset"</span><span style="color: #fe6060;">]</span><span style="color: #4fe42f;">]</span><span style="color: #9f80ff;">]</span><span style="color: #fba849;">]</span><span style="color: #3fdfd0;">)</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> <span class="org-function-name">interactive-map</span> <span class="org-rainbow-delimiters-depth-2">[</span>n-columns<span class="org-rainbow-delimiters-depth-2">]</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">[</span>state <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-type">r</span>/atom <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:grid</span> <span class="org-rainbow-delimiters-depth-6">(</span>init-grid n-columns<span class="org-rainbow-delimiters-depth-6">)</span>
+                       <span class="org-clojure-keyword">:finished?</span> <span class="org-constant">false</span><span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">]</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">fn</span> <span class="org-rainbow-delimiters-depth-4">[</span>_<span class="org-rainbow-delimiters-depth-4">]</span>
+      <span class="org-rainbow-delimiters-depth-4">[</span><span class="org-clojure-keyword">:div</span>
+       <span class="org-rainbow-delimiters-depth-5">[</span>wfc-grid n-columns <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-clojure-keyword">:grid</span> @state<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">]</span>
+       <span class="org-rainbow-delimiters-depth-5">[</span><span class="org-clojure-keyword">:div</span> <span class="org-rainbow-delimiters-depth-6">{</span><span class="org-clojure-keyword">:style</span> <span class="org-rainbow-delimiters-depth-7">{</span><span class="org-clojure-keyword">:display</span> <span class="org-string">"flex"</span><span class="org-rainbow-delimiters-depth-7">}</span><span class="org-rainbow-delimiters-depth-6">}</span>
+        <span class="org-rainbow-delimiters-depth-6">[</span><span class="org-clojure-keyword">:p</span> <span class="org-rainbow-delimiters-depth-7">[</span><span class="org-clojure-keyword">:button</span>
+             <span class="org-rainbow-delimiters-depth-8">{</span><span class="org-clojure-keyword">:on-click</span> #<span class="org-rainbow-delimiters-depth-9">(</span>swap! state
+                                <span class="org-rainbow-delimiters-depth-1">(</span>partial iterate-grid n-columns<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">}</span>
+             <span class="org-string">"iterate"</span><span class="org-rainbow-delimiters-depth-7">]</span><span class="org-rainbow-delimiters-depth-6">]</span>
+        <span class="org-rainbow-delimiters-depth-6">[</span><span class="org-clojure-keyword">:p</span> <span class="org-rainbow-delimiters-depth-7">[</span><span class="org-clojure-keyword">:button</span>
+             <span class="org-rainbow-delimiters-depth-8">{</span><span class="org-clojure-keyword">:on-click</span> #<span class="org-rainbow-delimiters-depth-9">(</span><span class="org-keyword">while</span> <span class="org-rainbow-delimiters-depth-1">(</span>not <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-clojure-keyword">:finished?</span> @state<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+                           <span class="org-rainbow-delimiters-depth-1">(</span>swap! state
+                                  <span class="org-rainbow-delimiters-depth-2">(</span>partial iterate-grid n-columns<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">}</span>
+             <span class="org-string">"finish"</span><span class="org-rainbow-delimiters-depth-7">]</span><span class="org-rainbow-delimiters-depth-6">]</span>
+        <span class="org-rainbow-delimiters-depth-6">[</span><span class="org-clojure-keyword">:p</span> <span class="org-rainbow-delimiters-depth-7">[</span><span class="org-clojure-keyword">:button</span>
+             <span class="org-rainbow-delimiters-depth-8">{</span><span class="org-clojure-keyword">:on-click</span> #<span class="org-rainbow-delimiters-depth-9">(</span>reset! state
+                                 <span class="org-rainbow-delimiters-depth-1">{</span><span class="org-clojure-keyword">:grid</span> <span class="org-rainbow-delimiters-depth-2">(</span>init-grid n-columns<span class="org-rainbow-delimiters-depth-2">)</span>
+                                  <span class="org-clojure-keyword">:finished?</span> <span class="org-constant">false</span><span class="org-rainbow-delimiters-depth-1">}</span><span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">}</span>
+             <span class="org-string">"reset"</span><span class="org-rainbow-delimiters-depth-7">]</span><span class="org-rainbow-delimiters-depth-6">]</span><span class="org-rainbow-delimiters-depth-5">]</span><span class="org-rainbow-delimiters-depth-4">]</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span style="color: #ffffff;">(</span><span style="color: #6ae4b9;">rdom</span>/render
- <span style="color: #ff62d4;">[</span>interactive-map 20<span style="color: #ff62d4;">]</span>
- <span style="color: #ff62d4;">(</span>.getElementById <span style="color: #6ae4b9;">js</span>/document <span style="color: #79a8ff;">"interactive-map"</span><span style="color: #ff62d4;">)</span><span style="color: #ffffff;">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-type">rdom</span>/render
+ <span class="org-rainbow-delimiters-depth-2">[</span>interactive-map 20<span class="org-rainbow-delimiters-depth-2">]</span>
+ <span class="org-rainbow-delimiters-depth-2">(</span>.getElementById <span class="org-type">js</span>/document <span class="org-string">"interactive-map"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 </pre>
 </div>
@@ -590,9 +590,9 @@ Here's the plumbing used to render it here.
 </div>
 </div>
 
-<div id="outline-container-orgfed621c" class="outline-2">
-<h2 id="orgfed621c">What next</h2>
-<div class="outline-text-2" id="text-orgfed621c">
+<div id="outline-container-org2d6769a" class="outline-2">
+<h2 id="org2d6769a">What next</h2>
+<div class="outline-text-2" id="text-org2d6769a">
 <p>
 The above would be improved by having weightings for the tile types, maybe making land tiles more likely. Adding more different tiles would also be fun.
 </p>
