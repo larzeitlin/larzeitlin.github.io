@@ -1,14 +1,18 @@
 .code-textarea {
+    width: 100%;
     font-family: monospace;
-    width: 90%; 
     height: 10em;
     display: block;
+}
+
+.org-src-container {
+    width: 100%;
+    justify-self: center;
 }
 
 img {
     display: block;
     margin: auto;
-    width: 60%;
     max-width: 60%;
     height: auto;
 }
@@ -26,17 +30,22 @@ img {
 
 }
 
+table {
+    margin: 1em;
+}
+
 header {
     position: sticky;
+    padding: 10px;
+    margin: 0px;
     top: 0;
-    right: 1em;
+    right: 0;
     z-index: 1;
     background: white;
     border-bottom-color: black;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    text-align: right;
-    padding: 2px;
+    text-align-last: justify;
 }
 
 html {
@@ -44,6 +53,17 @@ html {
 }
 
 body {
+    margin: 0;
+}
+
+#content {
+    max-width: 60vw;
     padding-left: 2em;
     padding-right: 2em;
+    text-align: justify;
+}
+
+#table-of-contents {
+    justify-self: left;
+    font-size: small;
 }

@@ -1,6 +1,6 @@
 #+Title: LZ 
-hi i'm luke - this is my blog
 
+hi im luke this is my blog
 
 #+ATTR_HTML: :align center
 | post                                   | tags                                            | date         |
@@ -21,5 +21,11 @@ hi i'm luke - this is my blog
 | [[http://www.lzeitlin.xyz/vortex-doodle/][scittle and three.js]]                   | clojure, scittle, demo, graphics                | [2024-02-04] |
 | [[file:cljs-openlayers.org][cljs / openlayers / pwa]]                | clojure, gis                                    | [2024-07-21] |
 
+#+ATTR_HTML: :width 150
+[[file:images/waveforms.png]]
+
 
 [[mailto:luke@lzeitlin.xyz][send me an email]]
+
+
+

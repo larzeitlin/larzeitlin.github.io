@@ -193,10 +193,12 @@
 </style>
 <link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="icon"
        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header>
+<img src="/images/waveforms.png"
+     style=width:30px;display:inline;">
 | <a href="./">home</a>
 | <a href="#top">top</a>
-|  <a href="https://github.com/larzeitlin">github</a>
-| 👻
+| <a href="https://github.com/larzeitlin">github</a>
+|
 </header>
 </head>
 <body>
@@ -206,12 +208,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf59af11">Convolution</a>
+<li><a href="#orgae9c2ff">Convolution</a>
 <ul>
-<li><a href="#orgbc178b3">What can convolution do for us?</a></li>
-<li><a href="#org54ee51a">Do LTI systems exist?</a></li>
-<li><a href="#org54c396e">OK, lets convolve!</a></li>
-<li><a href="#orgeaa5136">Why do we do the flip?</a></li>
+<li><a href="#org5db4259">What can convolution do for us?</a></li>
+<li><a href="#org9e3483e">Do LTI systems exist?</a></li>
+<li><a href="#orga67aa17">OK, lets convolve!</a></li>
+<li><a href="#org75811ce">Why do we do the flip?</a></li>
 <li><a href="#impulse-responses">Impulse Responses</a></li>
 </ul>
 </li>
@@ -219,9 +221,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgf59af11" class="outline-2">
-<h2 id="orgf59af11">Convolution</h2>
-<div class="outline-text-2" id="text-orgf59af11">
+<div id="outline-container-orgae9c2ff" class="outline-2">
+<h2 id="orgae9c2ff">Convolution</h2>
+<div class="outline-text-2" id="text-orgae9c2ff">
 <p>
 Convolution is, to me at least, a really inspirational subject. Why?
 Because it can initially seem like DSP magic, but it's really not hard
@@ -249,9 +251,9 @@ bother.
 </p>
 </div>
 
-<div id="outline-container-orgbc178b3" class="outline-3">
-<h3 id="orgbc178b3">What can convolution do for us?</h3>
-<div class="outline-text-3" id="text-orgbc178b3">
+<div id="outline-container-org5db4259" class="outline-3">
+<h3 id="org5db4259">What can convolution do for us?</h3>
+<div class="outline-text-3" id="text-org5db4259">
 <p>
 Quite a lot actually. We can use convolution to model any <b>linear time
 invariant</b> (LTI) system. Let's explore that term:
@@ -295,13 +297,13 @@ Again, this is shown by A producing the same result as B.
 </p>
 
 
-<div id="orga588e17" class="figure">
+<div id="org0b7938f" class="figure">
 <p><img src="images/linear1.jpg" alt="linear1.jpg" />
 </p>
 </div>
 
 
-<div id="orga73215e" class="figure">
+<div id="orgfefea88" class="figure">
 <p><img src="images/3.1.png" alt="3.1.png" />
 </p>
 </div>
@@ -353,9 +355,9 @@ do so.
 </div>
 </div>
 
-<div id="outline-container-org54ee51a" class="outline-3">
-<h3 id="org54ee51a">Do LTI systems exist?</h3>
-<div class="outline-text-3" id="text-org54ee51a">
+<div id="outline-container-org9e3483e" class="outline-3">
+<h3 id="org9e3483e">Do LTI systems exist?</h3>
+<div class="outline-text-3" id="text-org9e3483e">
 <p>
 <i>"What what? You just told us that a whole heap of stuff is LTI!"</i>
 </p>
@@ -379,9 +381,9 @@ stealing the room's soul. Magic, right?
 </div>
 </div>
 
-<div id="outline-container-org54c396e" class="outline-3">
-<h3 id="org54c396e">OK, lets convolve!</h3>
-<div class="outline-text-3" id="text-org54c396e">
+<div id="outline-container-orga67aa17" class="outline-3">
+<h3 id="orga67aa17">OK, lets convolve!</h3>
+<div class="outline-text-3" id="text-orga67aa17">
 <p>
 Before going any further, I should point out that the mathematical
 operator for convolution is often drawn as an asterisk: * . This is a
@@ -396,7 +398,7 @@ The definition of discrete-time convolution is as follows:
 </p>
 
 
-<div id="orgb05de12" class="figure">
+<div id="org10307da" class="figure">
 <p><img src="images/3.2.jpeg" alt="3.2.jpeg" />
 </p>
 </div>
@@ -468,7 +470,7 @@ flipped around 0 on the y axis)</li>
 </ul>
 
 
-<div id="org66392ae" class="figure">
+<div id="orgbb263f4" class="figure">
 <p><img src="images/3.3.gif" alt="3.3.gif" />
 </p>
 </div>
@@ -522,9 +524,9 @@ together.</b>
 </div>
 </div>
 
-<div id="outline-container-orgeaa5136" class="outline-3">
-<h3 id="orgeaa5136">Why do we do the flip?</h3>
-<div class="outline-text-3" id="text-orgeaa5136">
+<div id="outline-container-org75811ce" class="outline-3">
+<h3 id="org75811ce">Why do we do the flip?</h3>
+<div class="outline-text-3" id="text-org75811ce">
 <p>
 We need to flip g because we want the <b>beginning of g</b> to meet the
 <b>beginning of f</b> first, and the <b>end of g</b> to meet the <b>end of f</b> last,
@@ -558,7 +560,7 @@ points apart from one point where it's value is 1. For example: [0, 1, 0,
 </p>
 
 
-<div id="org720b610" class="figure">
+<div id="org956ae37" class="figure">
 <p><img src="images/3.4.jpeg" alt="3.4.jpeg" />
 </p>
 </div>
