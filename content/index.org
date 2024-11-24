@@ -1,14 +1,17 @@
-#+ATTR_HTML: :justify-self center
 #+Title: LZ 
 
 #+ATTR_HTML: :align center
-hi im luke this is my blog
+hi im luke this is my blog and stuff i made
 
 #+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
+| [[file:chord.org][chord]]                                  | software, music, ui, geometry                   | [2016-06-14] |
+| [[file:atman_construct_eps.org][atman construct eps]]                    | music                                           | [2016-10-23] |
+| [[file:into_this_wired_abyss.org][into this wired abyss compilations]]     | music                                           | [2016-10-23] |
 | [[./convolution.org][convolution]]                            | dsp, maths                                      | [2017-07-23] |
-| [[file:dft.org][discrete fourier transform]]             | dsp, maths                                      | [2017-07-23] |
+| [[file:dft.org][discrete fourier transform]]             | dsp, maths                                      | [2017-08-30] |
+| [[https://www.youtube.com/watch?v=uIMGZNsmiQ8][the comb over]]                          | plugin, software, audio, dsp, video, demo       | [2017-08-30] |
 | [[file:ring-modulation.org][ring modulation and frequency shifting]] | dsp, maths                                      | [2017-11-08] |
 | [[file:assembly.org][x86-64 assembly]]                        | programming                                     | [2019-05-12] |
 | [[https://larzeitlin.github.io/simple-flashcards][simple flashcards]]                      | clojure, demo                                   | [2020-10-22] |
@@ -19,8 +22,9 @@ hi im luke this is my blog
 | [[http://www.lzeitlin.xyz/octohabit/][habit tracker]]                          | clojure, scittle, demo                          | [2023-08-02] |
 | [[http://www.lzeitlin.xyz/laranjas/][particle system]]                        | clojure, demo                                   | [2023-11-19] |
 | [[file:cljs-webgl1.org][webgl in cljs part 1]]                   | clojure, graphics                               | [2023-11-21] |
-| [[file:wfc.org][wave function collapse]]                 | clojure, computer sciene, interactive           | [2024-01-15] |
+| [[file:wfc.org][wave function collapse]]                 | clojure, computer science, interactive          | [2024-01-15] |
 | [[http://www.lzeitlin.xyz/vortex-doodle/][scittle and three.js]]                   | clojure, scittle, demo, graphics                | [2024-02-04] |
+| [[https://www.youtube.com/watch?v=VD90BpPGpEo&t=75s][process]]                                | art, music, video                               | [2024-07-19] |
 | [[file:cljs-openlayers.org][cljs / openlayers / pwa]]                | clojure, gis                                    | [2024-07-21] |
 | [[file:guile-http.org][guile: http request with sockets]]       | scheme, networking                              | [2024-11-24] |
 |                                        |                                                 |              |

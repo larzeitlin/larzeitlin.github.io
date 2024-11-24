@@ -206,15 +206,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6d40de6">what is a hilbert curve?</a></li>
-<li><a href="#org5233d3a">what is scittle?</a>
+<li><a href="#org9314dfc">what is a hilbert curve?</a></li>
+<li><a href="#orga799ea6">what is scittle?</a>
 <ul>
-<li><a href="#org84094aa">Aside</a></li>
+<li><a href="#org7ca619d">Aside</a></li>
 </ul>
 </li>
-<li><a href="#org582df93">handle user input code</a></li>
-<li><a href="#orgeb0e217">drawing</a></li>
-<li><a href="#orgb837d59">making the hilbert curve</a></li>
+<li><a href="#org398aec7">handle user input code</a></li>
+<li><a href="#org67a8968">drawing</a></li>
+<li><a href="#org61135df">making the hilbert curve</a></li>
 </ul>
 </div>
 </div>
@@ -232,32 +232,32 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org6d40de6" class="outline-2">
-<h2 id="org6d40de6">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-org6d40de6">
+<div id="outline-container-org9314dfc" class="outline-2">
+<h2 id="org9314dfc">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-org9314dfc">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
 
 
-<div id="org1b89426" class="figure">
+<div id="orgfdc2ff9" class="figure">
 <p><img src="images/HC-3-iterations.png" alt="HC-3-iterations.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5233d3a" class="outline-2">
-<h2 id="org5233d3a">what is scittle?</h2>
-<div class="outline-text-2" id="text-org5233d3a">
+<div id="outline-container-orga799ea6" class="outline-2">
+<h2 id="orga799ea6">what is scittle?</h2>
+<div class="outline-text-2" id="text-orga799ea6">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-org84094aa" class="outline-3">
-<h3 id="org84094aa">Aside</h3>
-<div class="outline-text-3" id="text-org84094aa">
+<div id="outline-container-org7ca619d" class="outline-3">
+<h3 id="org7ca619d">Aside</h3>
+<div class="outline-text-3" id="text-org7ca619d">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -296,9 +296,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-org582df93" class="outline-2">
-<h2 id="org582df93">handle user input code</h2>
-<div class="outline-text-2" id="text-org582df93">
+<div id="outline-container-org398aec7" class="outline-2">
+<h2 id="org398aec7">handle user input code</h2>
+<div class="outline-text-2" id="text-org398aec7">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -377,9 +377,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-orgeb0e217" class="outline-2">
-<h2 id="orgeb0e217">drawing</h2>
-<div class="outline-text-2" id="text-orgeb0e217">
+<div id="outline-container-org67a8968" class="outline-2">
+<h2 id="org67a8968">drawing</h2>
+<div class="outline-text-2" id="text-org67a8968">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -508,9 +508,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-orgb837d59" class="outline-2">
-<h2 id="orgb837d59">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-orgb837d59">
+<div id="outline-container-org61135df" class="outline-2">
+<h2 id="org61135df">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-org61135df">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
