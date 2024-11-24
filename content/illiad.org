@@ -1,0 +1,93 @@
+#+Title: LZ 
+
+#+BEGIN_EXPORT html
+    <script src="https://cdn.jsdelivr.net/npm/scittle@0.6.15/dist/scittle.js" type="application/javascript"></script>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scittle@0.6.15/dist/scittle.reagent.js" type="application/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.2.0/index.min.js"></script>
+#+END_EXPORT
+
+
+* A random passage from the illiad
+We've got the book in an asset file on the server. Let's use scittle to randomly choose a sturring quote.
+
+#+BEGIN_EXPORT html
+<body>
+<textarea id="code-area"
+          class="code-textarea"
+	  spellcheck="false">
+(require '[reagent.core :as r]
+         '[reagent.dom :as rdom]
+	 '[clojure.string :as str])
+
+(def passage-atom (r/atom ""))
+
+(defn split-sentences [text]
+ (->> (.split (js/String text) #"[.!?]")
+      (map str/trim)
+      (remove #(or 
+                 (re-find #"[\d\[\]]" %)
+                 (re-find #"\b[A-Z]{3,}\b" %)))))
+
+(defn choose-quote [text]
+  (->> text
+       split-sentences
+       rand-nth))
+    
+(defn fetch-text []
+    (-> (js/fetch "assets/illiad.txt")
+        (.then (fn [response] (.text response)))
+        (.then (fn [text]
+	         (->> text choose-quote (reset! passage-atom))))
+        (.catch (fn [err] (js/console.error err)))))
+	
+(defn my-component []
+  [:div
+    [:button {:on-click #(fetch-text)} "tell me something heroic"]
+    [:p {:style {:font-family "fantasy"
+                 :font-size 30
+                 :padding "2em"
+                 :background-color "#c9986840"
+                 :text-align "center"}}
+        (choose-quote @passage-atom)]])
+
+(rdom/render [my-component] (.getElementById js/document "app"))</textarea>
+<button onclick="read_input()">eval code</button>
+<div id="app"></div>
+</body>
+<script type="application/x-scittle">
+
+(defn set-output-area [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+(defn set-image-src [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-src)
+      (set! v)))
+
+(defn try-eval [v]
+  (try (js/scittle.core.eval_string v)
+    (catch js/Error e
+      (str "ERROR: " e))))
+
+(defn read-eval-input [input-id]
+  (-> input-id
+      js/document.getElementById 
+      .-value
+      try-eval))
+
+(defn run! [] 
+  (read-eval-input "code-area"))
+
+(set! (.-read_input js/window)
+      run!)
+
+(run!)		
+
+</script>
+
+#+END_EXPORT
+
