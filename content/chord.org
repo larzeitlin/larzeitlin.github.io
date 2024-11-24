@@ -1,0 +1,6 @@
+#+Title: LZ 
+
+* Chord
+In 2016, when I was learning Python, I designed this UI for a MIDI generating tool using [[https://py.processing.org/][processing mode for python]]. The code is rather hacky but the diagram is interesting so I share it here. It is based on the circle of 5ths but illustrates some other interesting symmetries and patterns.
+
+[[file:images/chord.png]]

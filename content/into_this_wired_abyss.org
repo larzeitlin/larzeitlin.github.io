@@ -1,0 +1,12 @@
+#+Title: LZ 
+
+* Into This Wired Abyss
+A series of compilations that I curated, showcasing various friends, collaborators and talented noise makers from the alternative electronic music world from 2012 to 2015
+
+#+ATTR_HTML: :align center :id index-table
+| title    | date         |
+|----------+--------------|
+| [[https://ektoplazm.com/free-music/into-this-wired-abyss][volume 1]] | [2012-11-25] |
+| [[https://ektoplazm.com/free-music/into-this-wired-abyss-vol-2][volume 2]] | [2013-07-30] |
+| [[https://ektoplazm.com/free-music/into-this-wired-abyss-vol-3][volume 3]] | [2014-03-01] |
+| [[https://ektoplazm.com/free-music/into-this-wired-abyss-vol-4][volume 4]] | [2015-02-15] |

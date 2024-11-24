@@ -1,0 +1,14 @@
+#+Title: LZ 
+
+* Atman Construct EPs
+Links to my music made between 2012 and 1016
+
+#+ATTR_HTML: :align center :id index-table
+| title                           | date         |
+|---------------------------------+--------------|
+| [[https://ektoplazm.com/free-music/atman-construct-elysian-terraform][elysian terraform]]               | [2012-12-11] |
+| [[https://ektoplazm.com/free-music/atman-construct-deconstructionism][deconstructionism]]               | [2014-04-11] |
+| [[https://ektoplazm.com/free-music/atman-construct-weavers-dreams][weaver's dreams]]                 | [2015-03-06] |
+| [[https://luminusmusic.bandcamp.com/album/a-beginners-guide-to-holophony][a beginner's guide to holophony]] | [2015-10-23] |
+| [[https://drive.proton.me/urls/M3HXFK65V0#cZ8nUXNA9YYi][divided by time]]                 | [2016-10-23] |
+
