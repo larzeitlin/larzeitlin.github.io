@@ -1,0 +1,162 @@
+#+Title: LZ
+
+* Guile Scheme - Making HTTP requests with sockets
+** Introduction
+In this tutorial we are going to make an HTTP request without using the existing web HTTP modules in Guile Scheme using Emacs and geiser mode. This is something I like to do when picking up a new language as it forces me to use modules, learn concepts around strings and sequences, and generally start getting familiar with a language.
+
+** Requirements
+To follow along you will need to [[https://www.gnu.org/software/guile/][install guile]]. I recommend using Emacs with [[https://github.com/emacsmirror/geiser-guile][geiser-guile]] installed (although you can use a worse editor if you wish).
+
+** Setup
+Make a new directory to contain your tutorial project. Add a ~main.scm~ file. Copy and paste the code blocks below as we go. Or just do it directly in the REPL. I personally prefer to have a text buffer open with a REPL connected.
+
+** Test the REPL
+Start geiser mode. Test that is is connected by running ~geiser-eval-region~ on the form below
+#+begin_src scheme
+(display "Hey there")
+#+end_src
+
+** Sockets
+*** What are sockets?
+Sockets are endpoints for communication between programs inside UNIX systems.
+
+*** Making a socket
+Sockets are built into guile's core, so we can go ahead and make one with no additional modules. To demonstrate this, evaluate the form below to make a socket:
+
+#+begin_src scheme
+(socket PF_INET SOCK_STREAM 0)
+;;      ^family ^sock_type  ^protocol_number
+#+end_src
+
+If Geiser is working you should be able to put the cursor over socket and see its signature.
+
+Let's look at the details of the example above:
+By placing the cursor on ether ~PF_INET~ or ~SOCK_STREAM~ we can see that they refer to integers.
+~PF_INET~ is for Protocol Family IPv4, so we sill use IPv4 format addresses. ~SOCK_STREAM~ is the type of socket we want. ~SOCK_STREAM~ is used for TCP.
+The final argument here is 0 for protocol number. This just means default.
+
+*** Why do we want a TCP stream?
+HTTP is built on top of TCP (Transfer Control Protocol). TCP provides a reliable, ordered, connection based protocol, making it useful for communication where you want to ensure that a message is received by a specific recipient. If you have seen diagrams titled something like "TCP/IP Model" before you may recall that TCP is in the Transport layer and HTTP is in the Application layer.
+
+*** How does Guile interact with sockets?
+The Scheme code above just calls the C function ~socket()~ which is part of the [[https://en.wikipedia.org/wiki/Berkeley_sockets][Berkeley Sockets API]] which is implemented by the OS.
+
+We are going to reuse the same socket, so let's allocate it to a variable:
+
+#+begin_src scheme
+(define my-sock (socket PF_INET SOCK_STREAM 0))
+#+end_src
+
+** Who do we want to talk to? 
+Next we need someone to make a request to. We can use ~getaddrinfo~  (again, in Guile's core) to get host and service info. Since it can return multiple results, we take the first with ~car~:
+
+#+begin_src scheme
+(define server-addr (car (getaddrinfo "www.gnu.org" "http")))
+#+end_src
+
+We can inspect some attributes of our address like so:
+
+#+begin_src scheme
+(addrinfo:protocol server-addr)
+(addrinfo:addr server-addr)
+#+end_src
+
+See more attributes here in the [[https://www.gnu.org/software/guile/manual/html_node/Network-Databases.html][Guile docs]]. 
+
+** Connect the socket
+Now let's connect our socket to the address:
+
+#+begin_src scheme 
+(connect my-sock (addrinfo:addr server-addr))
+#+end_src
+
+This should return ~#t~ if successful. Let's send a basic TCP message so see it's working.
+
+** A test message
+#+begin_src scheme 
+(send my-sock "test/n")
+#+end_src
+
+It fails because the socket is expecting a ~bytevector~. Let's use a module to help us convert strings to bytevectors:
+
+#+begin_src scheme
+(use-modules (rnrs bytevectors))
+
+(define test-tcp-msg (string->utf8 "test/n"))
+
+(send my-sock test-tcp-msg)
+#+end_src
+
+This responds with the number of characters send (+ the null terminator).
+
+** Reading responses
+Now let's try to receive some data back. In UNIX, pretty much everything is just a file, including sockets. So to read from a socket we will use the file associated with it. We open a file of ~my-sock~ and then read a line from it.
+
+Aside: 
+
+#+begin_src scheme
+(use-modules (ice-9 ports))
+
+(define response-port
+  (fdopen (fileno my-sock) "r"))
+
+(use-modules (ice-9 rdelim))
+;; ~ice-9~ is Guile's standard library for functionality
+;; beyond the Scheme specification. Here we will use ~ports~,
+;; which are not a network ports (eg: port 80)
+;; but a Guile abstraction for I/O.
+
+(read-line response-port)
+#+end_src
+
+We should find that the ~connection is reset by peer~, this is because the server is expecting an HTTP message but we just send ~'test'~.
+
+** HTTP Messages
+Let's try with an HTTP request, which can have a basic format as follows:
+
+#+begin_src 
+{http_method} {path protocol}\r\nHOST:{hostname} {instructions after response}\r\n
+#+end_src
+
+...where ~\r\n~ are carrage returns as required by the HTTP protocol.
+
+
+#+begin_src scheme
+(define my-first-http-request
+  (string->utf8 "GET / HTTP/1.1\r\nHOST: gnu.org\r\nConnection: close\r\n\r\n")
+
+
+(send my-sock my-first-http-request)
+#+end_src
+
+If this succeeds then we should be able to read a line from the file:
+
+#+begin_src scheme
+(read-line response-port)
+#+end_src
+
+** Read all of the response
+Instead we would like to take from the response until we hit the End Of File. We will use ~unfold~ to walk through the lines until we get to an EOF.
+
+
+#+begin_src scheme
+(use-modules (srfi srfi-1))
+;; `srfi` is Scheme Requests for Implementation.
+;; They are numbered (which seem rather un-ergonomic).
+;; `srfi-1` is for list operations.
+
+(define (read-all-lines port)
+  (unfold eof-object? ;; end condition
+	  values      ;; mapper (in this case do nothing)
+	  (lambda (_) (read-line port)) ;; successor
+	  (read-line port))) ;; init value
+#+end_src
+
+We start by reading a line, check if it's an ~eof~, if not then apply the mapper [so here (values x) = x], and pass it to the successor lambda, which ignores its argument and just reads the next line. Then keeps looping until ~eof~.
+
+#+begin_src scheme
+(read-all-lines response-port)
+#+end_src
+
+** Outroduction
+Thanks for following along, I hope it's helpful for you to get up and running en Guile Scheme. ✌️
