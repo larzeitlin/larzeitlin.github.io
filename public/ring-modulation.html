@@ -193,8 +193,6 @@
 </style>
 <link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="stylesheet" type= "text/css" href="./htmlize.css"><link rel="icon"
        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header>
-<img src="/images/waveforms.png"
-     style=width:30px;display:inline;">
 | <a href="./">home</a>
 | <a href="#top">top</a>
 | <a href="https://github.com/larzeitlin">github</a>
@@ -240,32 +238,32 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1673dcf">Ring Modulation and Frequency Shifting</a>
+<li><a href="#org29e87f8">Ring Modulation and Frequency Shifting</a>
 <ul>
-<li><a href="#orgab70a67">Rethinking basic operations</a>
+<li><a href="#org3f764b1">Rethinking basic operations</a>
 <ul>
-<li><a href="#orgd1c5615">Addition and Subtraction</a></li>
-<li><a href="#org6a64192">Multiplication shows similarity</a></li>
+<li><a href="#org744d0c3">Addition and Subtraction</a></li>
+<li><a href="#org6ca1359">Multiplication shows similarity</a></li>
 </ul>
 </li>
-<li><a href="#orgff73380">Adding and Multiplying signals</a></li>
-<li><a href="#org04f8a81">Let's get Triggy with it&#x2026;</a></li>
-<li><a href="#org06f4afe">SSB Modulation</a></li>
-<li><a href="#org20069b3">Hilbert Transform</a>
+<li><a href="#org0f8de19">Adding and Multiplying signals</a></li>
+<li><a href="#orgb20569f">Let's get Triggy with it&#x2026;</a></li>
+<li><a href="#org1295faa">SSB Modulation</a></li>
+<li><a href="#orga336ae8">Hilbert Transform</a>
 <ul>
-<li><a href="#orgf1cf944">Phase shifting with All-Pass Filters</a></li>
+<li><a href="#org9e28008">Phase shifting with All-Pass Filters</a></li>
 </ul>
 </li>
-<li><a href="#org37902e0">Aliasing</a></li>
-<li><a href="#orgd5e311f">Gotchas and stuff</a></li>
+<li><a href="#org4bd70f2">Aliasing</a></li>
+<li><a href="#org2251161">Gotchas and stuff</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1673dcf" class="outline-2">
-<h2 id="org1673dcf">Ring Modulation and Frequency Shifting</h2>
-<div class="outline-text-2" id="text-org1673dcf">
+<div id="outline-container-org29e87f8" class="outline-2">
+<h2 id="org29e87f8">Ring Modulation and Frequency Shifting</h2>
+<div class="outline-text-2" id="text-org29e87f8">
 <p>
 I started reading about this topic when looking for a computationally
 cheap way of doing frequency shifting. This is distinct from pitch
@@ -299,9 +297,9 @@ to it all&#x2026;
 </p>
 </div>
 
-<div id="outline-container-orgab70a67" class="outline-3">
-<h3 id="orgab70a67">Rethinking basic operations</h3>
-<div class="outline-text-3" id="text-orgab70a67">
+<div id="outline-container-org3f764b1" class="outline-3">
+<h3 id="org3f764b1">Rethinking basic operations</h3>
+<div class="outline-text-3" id="text-org3f764b1">
 <p>
 When we think about basic mathematical operations (addition,
 subtraction, multiplication, division), our instincts are based in
@@ -321,9 +319,9 @@ basic operations.
 </p>
 </div>
 
-<div id="outline-container-orgd1c5615" class="outline-4">
-<h4 id="orgd1c5615">Addition and Subtraction</h4>
-<div class="outline-text-4" id="text-orgd1c5615">
+<div id="outline-container-org744d0c3" class="outline-4">
+<h4 id="org744d0c3">Addition and Subtraction</h4>
+<div class="outline-text-4" id="text-org744d0c3">
 <p>
 Thinking about the boxes of apples and anti-apples, subtraction and
 addition are not really looking so opposite any more, in fact they are
@@ -336,9 +334,9 @@ inversed, but the auditory result is pretty similar to the addition.
 </div>
 </div>
 
-<div id="outline-container-org6a64192" class="outline-4">
-<h4 id="org6a64192">Multiplication shows similarity</h4>
-<div class="outline-text-4" id="text-org6a64192">
+<div id="outline-container-org6ca1359" class="outline-4">
+<h4 id="org6ca1359">Multiplication shows similarity</h4>
+<div class="outline-text-4" id="text-org6ca1359">
 <p>
 Rather than thinking of multiplication as an increaser, I like to
 visualise it as a <i>test of similarity</i>. It seems like a strange way to
@@ -370,9 +368,9 @@ having a similar sign)</li>
 </div>
 </div>
 
-<div id="outline-container-orgff73380" class="outline-3">
-<h3 id="orgff73380">Adding and Multiplying signals</h3>
-<div class="outline-text-3" id="text-orgff73380">
+<div id="outline-container-org0f8de19" class="outline-3">
+<h3 id="org0f8de19">Adding and Multiplying signals</h3>
+<div class="outline-text-3" id="text-org0f8de19">
 <p>
 So, how about we multiply some signals together? This is effectively
 ring modulation. Ring modulation gets its name from the circular
@@ -423,7 +421,7 @@ added together:
 </p>
 
 
-<div id="org6d11837" class="figure">
+<div id="org20a11bd" class="figure">
 <p><img src="images/5.1.gif" alt="5.1.gif" />
 </p>
 </div>
@@ -445,7 +443,7 @@ everything up above the horizontal axis, like so:
 </p>
 
 
-<div id="orgfe7e17e" class="figure">
+<div id="orgd5e05ad" class="figure">
 <p><img src="images/5.2.gif" alt="5.2.gif" />
 </p>
 </div>
@@ -464,7 +462,7 @@ Let's have a look:
 </p>
 
 
-<div id="org795de36" class="figure">
+<div id="org7a15e4a" class="figure">
 <p><img src="images/5.3.gif" alt="5.3.gif" />
 </p>
 </div>
@@ -487,7 +485,7 @@ the sum and the difference of the signals above&#x2026;
 </p>
 
 
-<div id="org106d10a" class="figure">
+<div id="org336b899" class="figure">
 <p><img src="images/5.4.gif" alt="5.4.gif" />
 </p>
 </div>
@@ -503,7 +501,7 @@ if we scale it down by a half they look very similar indeed:
 </p>
 
 
-<div id="org82f0827" class="figure">
+<div id="org1e32a8f" class="figure">
 <p><img src="images/5.5.gif" alt="5.5.gif" />
 </p>
 </div>
@@ -527,9 +525,9 @@ from 0 at their own speed.
 </div>
 </div>
 
-<div id="outline-container-org04f8a81" class="outline-3">
-<h3 id="org04f8a81">Let's get Triggy with it&#x2026;</h3>
-<div class="outline-text-3" id="text-org04f8a81">
+<div id="outline-container-orgb20569f" class="outline-3">
+<h3 id="orgb20569f">Let's get Triggy with it&#x2026;</h3>
+<div class="outline-text-3" id="text-orgb20569f">
 <p>
 We can see the concept from above taking place in these trig identities.
 </p>
@@ -605,9 +603,9 @@ shifter.
 </div>
 </div>
 
-<div id="outline-container-org06f4afe" class="outline-3">
-<h3 id="org06f4afe">SSB Modulation</h3>
-<div class="outline-text-3" id="text-org06f4afe">
+<div id="outline-container-org1295faa" class="outline-3">
+<h3 id="org1295faa">SSB Modulation</h3>
+<div class="outline-text-3" id="text-org1295faa">
 <p>
 Here we shift gears and start looking at this all in the frequency
 domain.
@@ -627,7 +625,7 @@ want to isolate the upper sideband.
 </p>
 
 
-<div id="org8f7e3b2" class="figure">
+<div id="org30c8f0a" class="figure">
 <p><img src="images/5.6.png" alt="5.6.png" />
 </p>
 </div>
@@ -654,7 +652,7 @@ multiplied by the carrier but in phase quadrature, so \[\sin(\omega)\].
 </p>
 
 
-<div id="org95bf8eb" class="figure">
+<div id="org7552b0a" class="figure">
 <p><img src="images/5.7.png" alt="5.7.png" />
 </p>
 </div>
@@ -672,9 +670,9 @@ what we are after is a Hilbert Transform of our input signal.
 </div>
 </div>
 
-<div id="outline-container-org20069b3" class="outline-3">
-<h3 id="org20069b3">Hilbert Transform</h3>
-<div class="outline-text-3" id="text-org20069b3">
+<div id="outline-container-orga336ae8" class="outline-3">
+<h3 id="orga336ae8">Hilbert Transform</h3>
+<div class="outline-text-3" id="text-orga336ae8">
 <p>
 The <a href="https://en.wikipedia.org/wiki/Hilbert_transform">Hilbert
 Transform</a> takes a time domain signal and returns a time domain signal
@@ -688,9 +686,9 @@ network of all-pass filters.
 </p>
 </div>
 
-<div id="outline-container-orgf1cf944" class="outline-4">
-<h4 id="orgf1cf944">Phase shifting with All-Pass Filters</h4>
-<div class="outline-text-4" id="text-orgf1cf944">
+<div id="outline-container-org9e28008" class="outline-4">
+<h4 id="org9e28008">Phase shifting with All-Pass Filters</h4>
+<div class="outline-text-4" id="text-org9e28008">
 <p>
 All-pass filters affect the phase spectrum of a signal without changing
 the overall energy at each frequency. The result by itself is barely
@@ -706,7 +704,7 @@ for a large part of the spectrum.
 </p>
 
 
-<div id="org34ad864" class="figure">
+<div id="orgdf7d273" class="figure">
 <p><img src="images/5.8.png" alt="5.8.png" />
 </p>
 </div>
@@ -733,9 +731,9 @@ why to see why
 </div>
 </div>
 
-<div id="outline-container-org37902e0" class="outline-3">
-<h3 id="org37902e0">Aliasing</h3>
-<div class="outline-text-3" id="text-org37902e0">
+<div id="outline-container-org4bd70f2" class="outline-3">
+<h3 id="org4bd70f2">Aliasing</h3>
+<div class="outline-text-3" id="text-org4bd70f2">
 <p>
 If you've taken all the info above, put it together and build a
 frequency shifter then well done! You may be annoyed to hear some nasty
@@ -751,9 +749,9 @@ possible.
 </div>
 </div>
 
-<div id="outline-container-orgd5e311f" class="outline-3">
-<h3 id="orgd5e311f">Gotchas and stuff</h3>
-<div class="outline-text-3" id="text-orgd5e311f">
+<div id="outline-container-org2251161" class="outline-3">
+<h3 id="org2251161">Gotchas and stuff</h3>
+<div class="outline-text-3" id="text-org2251161">
 <p>
 Some weird concepts in this one. I spent a long time being concerned
 about the two sidebands overlapping, and how could you possibly isolate

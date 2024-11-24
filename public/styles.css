@@ -57,13 +57,12 @@ body {
 }
 
 #content {
-    max-width: 60vw;
-    padding-left: 2em;
-    padding-right: 2em;
     text-align: justify;
+    margin: 3em;
 }
 
 #table-of-contents {
     justify-self: left;
     font-size: small;
 }
+

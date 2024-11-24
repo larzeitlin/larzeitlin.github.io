@@ -193,8 +193,6 @@
 </style>
 <link rel="stylesheet" type= "text/css" href="./styles.css"><link rel="stylesheet" type= "text/css" href="./htmlize.css"><link rel="icon"
        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>"><header>
-<img src="/images/waveforms.png"
-     style=width:30px;display:inline;">
 | <a href="./">home</a>
 | <a href="#top">top</a>
 | <a href="https://github.com/larzeitlin">github</a>
@@ -208,15 +206,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org7449987">what is a hilbert curve?</a></li>
-<li><a href="#orge59eecc">what is scittle?</a>
+<li><a href="#orgd607d15">what is a hilbert curve?</a></li>
+<li><a href="#org63f1cb5">what is scittle?</a>
 <ul>
-<li><a href="#org697f1dd">Aside</a></li>
+<li><a href="#orgd516ba5">Aside</a></li>
 </ul>
 </li>
-<li><a href="#orgf43dd71">handle user input code</a></li>
-<li><a href="#org00c6824">drawing</a></li>
-<li><a href="#orgc0e2d11">making the hilbert curve</a></li>
+<li><a href="#org9168c56">handle user input code</a></li>
+<li><a href="#org9f6f65e">drawing</a></li>
+<li><a href="#orgc8651eb">making the hilbert curve</a></li>
 </ul>
 </div>
 </div>
@@ -234,32 +232,32 @@ Let's make a hilbert curve on is page in Clojure (the one
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
 
-<div id="outline-container-org7449987" class="outline-2">
-<h2 id="org7449987">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-org7449987">
+<div id="outline-container-orgd607d15" class="outline-2">
+<h2 id="orgd607d15">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-orgd607d15">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
 
 
-<div id="org58eadee" class="figure">
+<div id="org236e70b" class="figure">
 <p><img src="images/HC-3-iterations.png" alt="HC-3-iterations.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge59eecc" class="outline-2">
-<h2 id="orge59eecc">what is scittle?</h2>
-<div class="outline-text-2" id="text-orge59eecc">
+<div id="outline-container-org63f1cb5" class="outline-2">
+<h2 id="org63f1cb5">what is scittle?</h2>
+<div class="outline-text-2" id="text-org63f1cb5">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
 
-<div id="outline-container-org697f1dd" class="outline-3">
-<h3 id="org697f1dd">Aside</h3>
-<div class="outline-text-3" id="text-org697f1dd">
+<div id="outline-container-orgd516ba5" class="outline-3">
+<h3 id="orgd516ba5">Aside</h3>
+<div class="outline-text-3" id="text-orgd516ba5">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -298,9 +296,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 
-<div id="outline-container-orgf43dd71" class="outline-2">
-<h2 id="orgf43dd71">handle user input code</h2>
-<div class="outline-text-2" id="text-orgf43dd71">
+<div id="outline-container-org9168c56" class="outline-2">
+<h2 id="org9168c56">handle user input code</h2>
+<div class="outline-text-2" id="text-org9168c56">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -379,9 +377,9 @@ Right nice.
 </div>
 </div>
 
-<div id="outline-container-org00c6824" class="outline-2">
-<h2 id="org00c6824">drawing</h2>
-<div class="outline-text-2" id="text-org00c6824">
+<div id="outline-container-org9f6f65e" class="outline-2">
+<h2 id="org9f6f65e">drawing</h2>
+<div class="outline-text-2" id="text-org9f6f65e">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -510,9 +508,9 @@ Now it's just a matter of choosing the right points.
 </div>
 </div>
 
-<div id="outline-container-orgc0e2d11" class="outline-2">
-<h2 id="orgc0e2d11">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-orgc0e2d11">
+<div id="outline-container-orgc8651eb" class="outline-2">
+<h2 id="orgc8651eb">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-orgc8651eb">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>

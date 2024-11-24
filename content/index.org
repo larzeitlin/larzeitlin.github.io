@@ -1,6 +1,6 @@
 #+Title: LZ 
 
-
+** 
 #+ATTR_HTML: :align center
 hi im luke this is my blog
 
@@ -22,6 +22,8 @@ hi im luke this is my blog
 | [[file:wfc.org][wave function collapse]]                 | clojure, computer sciene, interactive           | [2024-01-15] |
 | [[http://www.lzeitlin.xyz/vortex-doodle/][scittle and three.js]]                   | clojure, scittle, demo, graphics                | [2024-02-04] |
 | [[file:cljs-openlayers.org][cljs / openlayers / pwa]]                | clojure, gis                                    | [2024-07-21] |
+| [[file:guile-http.org][guile: http request with sockets]]       | scheme, networking                              | [2024-11-24] |
+|                                        |                                                 |              |
 
 #+ATTR_HTML: :width 150
 [[file:images/waveforms.png]]
