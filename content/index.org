@@ -1,10 +1,10 @@
+#+ATTR_HTML: :justify-self center
 #+Title: LZ 
 
-** 
 #+ATTR_HTML: :align center
 hi im luke this is my blog
 
-#+ATTR_HTML: :align center
+#+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
 | [[./convolution.org][convolution]]                            | dsp, maths                                      | [2017-07-23] |

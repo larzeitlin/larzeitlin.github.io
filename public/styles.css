@@ -1,3 +1,5 @@
+
+
 .code-textarea {
     width: 100%;
     font-family: monospace;
@@ -30,6 +32,17 @@ img {
 
 }
 
+#index-table {
+    text-align-last: center; 
+}
+
+#index-table td,
+#index-table th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 table {
     margin: 1em;
 }
@@ -42,6 +55,7 @@ header {
     right: 0;
     z-index: 1;
     background: white;
+    color: white;
     border-bottom-color: black;
     border-bottom-width: 1px;
     border-bottom-style: solid;
@@ -49,7 +63,7 @@ header {
 }
 
 html {
-    font-family: sans-serif;
+    font-family: tahoma;
 }
 
 body {
@@ -58,6 +72,7 @@ body {
 
 #content {
     text-align: justify;
+    justify-self: center;
     margin: 3em;
 }
 
