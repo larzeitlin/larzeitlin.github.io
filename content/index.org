@@ -27,6 +27,7 @@ hi im luke this is my blog and stuff i made
 | [[https://www.youtube.com/watch?v=VD90BpPGpEo&t=75s][process]]                                | art, music, video                               | [2024-07-19] |
 | [[file:cljs-openlayers.org][cljs / openlayers / pwa]]                | clojure, gis                                    | [2024-07-21] |
 | [[file:guile-http.org][guile: http request with sockets]]       | scheme, networking                              | [2024-11-24] |
+| [[file:illiad.org][illiad]]                                 | scittle, clojure, classics                      | [2024-11-24] |
 |                                        |                                                 |              |
 
 #+ATTR_HTML: :width 150
