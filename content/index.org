@@ -6,11 +6,11 @@ hi im luke this is my blog and stuff i made
 #+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
-| [[file:twarves.org][the ultimate charm]]                     | writing, fiction                                | [2024-12-30] |
+| [[file:dwarves.org][the ultimate charm]]                     | writing, fiction                                | [2024-12-30] |
 | [[file:illiad.org][illiad]]                                 | scittle, clojure, classics                      | [2024-11-24] |
 | [[file:guile-http.org][guile: http request with sockets]]       | scheme, networking                              | [2024-11-24] |
 | [[file:cljs-openlayers.org][cljs / openlayers / pwa]]                | clojure, gis                                    | [2024-07-21] |
-| [[https://www.youtube.com/watch?v=VD90BpPGpEo][process]]                               | art, music, video                               | [2024-07-19] |
+| [[https://www.youtube.com/watch?v=VD90BpPGpEo][process]]                                | art, music, video                               | [2024-07-19] |
 | [[http://www.lzeitlin.xyz/vortex-doodle/][scittle and three.js]]                   | clojure, scittle, demo, graphics                | [2024-02-04] |
 | [[file:wfc.org][wave function collapse]]                 | clojure, computer science, interactive          | [2024-01-15] |
 | [[file:cljs-webgl1.org][webgl in cljs part 1]]                   | clojure, graphics                               | [2023-11-21] |

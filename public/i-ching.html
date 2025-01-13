@@ -206,17 +206,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4186523">I Ching</a></li>
-<li><a href="#org69ab413">Hexagrams</a></li>
-<li><a href="#orgfa591e0">Hexagram selection</a></li>
-<li><a href="#orgbcca82b">Yarrow stalks algorithm</a>
+<li><a href="#org115d052">I Ching</a></li>
+<li><a href="#orgdf2a826">Hexagrams</a></li>
+<li><a href="#org4133da8">Hexagram selection</a></li>
+<li><a href="#orgdbce6b1">Yarrow stalks algorithm</a>
 <ul>
-<li><a href="#org662be8c">Process</a></li>
-<li><a href="#orgeaf8057">To generate a hexagram:</a></li>
-<li><a href="#org7017ead">Implementation Notes</a></li>
+<li><a href="#org8ccb147">Process</a></li>
+<li><a href="#orgb84e2e6">To generate a hexagram:</a></li>
+<li><a href="#orgafd4523">Implementation Notes</a></li>
 </ul>
 </li>
-<li><a href="#orgd25752b">Meanings</a></li>
+<li><a href="#orgc60b881">Meanings</a></li>
 </ul>
 </div>
 </div>
@@ -226,9 +226,9 @@
 </script>
 
 
-<div id="outline-container-org4186523" class="outline-2">
-<h2 id="org4186523">I Ching</h2>
-<div class="outline-text-2" id="text-org4186523">
+<div id="outline-container-org115d052" class="outline-2">
+<h2 id="org115d052">I Ching</h2>
+<div class="outline-text-2" id="text-org115d052">
 <p>
 The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
 </p>
@@ -239,9 +239,9 @@ Let's make an I Ching simulation step-by-step.
 </div>
 </div>
 
-<div id="outline-container-org69ab413" class="outline-2">
-<h2 id="org69ab413">Hexagrams</h2>
-<div class="outline-text-2" id="text-org69ab413">
+<div id="outline-container-orgdf2a826" class="outline-2">
+<h2 id="orgdf2a826">Hexagrams</h2>
+<div class="outline-text-2" id="text-orgdf2a826">
 <p>
 Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
 </p>
@@ -256,26 +256,26 @@ These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/Ki
 </div>
 </div>
 
-<div id="outline-container-orgfa591e0" class="outline-2">
-<h2 id="orgfa591e0">Hexagram selection</h2>
-<div class="outline-text-2" id="text-orgfa591e0">
+<div id="outline-container-org4133da8" class="outline-2">
+<h2 id="org4133da8">Hexagram selection</h2>
+<div class="outline-text-2" id="text-org4133da8">
 <p>
 To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbcca82b" class="outline-2">
-<h2 id="orgbcca82b">Yarrow stalks algorithm</h2>
-<div class="outline-text-2" id="text-orgbcca82b">
+<div id="outline-container-orgdbce6b1" class="outline-2">
+<h2 id="orgdbce6b1">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-orgdbce6b1">
 <p>
 There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
 </p>
 </div>
 
-<div id="outline-container-org662be8c" class="outline-3">
-<h3 id="org662be8c">Process</h3>
-<div class="outline-text-3" id="text-org662be8c">
+<div id="outline-container-org8ccb147" class="outline-3">
+<h3 id="org8ccb147">Process</h3>
+<div class="outline-text-3" id="text-org8ccb147">
 <p>
 We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
 </p>
@@ -296,9 +296,9 @@ There are multiple versions of this method. I've chosen what appeared to be the 
 </div>
 </div>
 
-<div id="outline-container-orgeaf8057" class="outline-3">
-<h3 id="orgeaf8057">To generate a hexagram:</h3>
-<div class="outline-text-3" id="text-orgeaf8057">
+<div id="outline-container-orgb84e2e6" class="outline-3">
+<h3 id="orgb84e2e6">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-orgb84e2e6">
 <p>
 We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 </p>
@@ -323,9 +323,9 @@ We are going to make various piles of stalks. I will refer to these with single 
 </div>
 </div>
 
-<div id="outline-container-org7017ead" class="outline-3">
-<h3 id="org7017ead">Implementation Notes</h3>
-<div class="outline-text-3" id="text-org7017ead">
+<div id="outline-container-orgafd4523" class="outline-3">
+<h3 id="orgafd4523">Implementation Notes</h3>
+<div class="outline-text-3" id="text-orgafd4523">
 <p>
 The algorithm explained above is implemented here in ClojureScript using Scittle to run it in the browser. The code is editable do feel free to tweak it and play around with it. Pseudo-randomness is added at the approx half splitting point in step 3. To make this somewhat realistic we sample from a normal distribution using a Box-Muller transform, and then round to the nearest integer to create an offset to the split.
 </p>
@@ -466,9 +466,9 @@ The sole purpose of the code below is to represent a common version of the yarro
 </div>
 
 
-<div id="outline-container-orgd25752b" class="outline-2">
-<h2 id="orgd25752b">Meanings</h2>
-<div class="outline-text-2" id="text-orgd25752b">
+<div id="outline-container-orgc60b881" class="outline-2">
+<h2 id="orgc60b881">Meanings</h2>
+<div class="outline-text-2" id="text-orgc60b881">
 <p>
 The general idea seems to be the transition from the first to the second hexagram. (Book of Changes, remember) You can look up the symbols and contemplate their interpretations here:
 </p>
