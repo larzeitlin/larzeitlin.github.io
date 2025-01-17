@@ -6,6 +6,7 @@ hi im luke this is my blog and stuff i made
 #+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
+| [[file:fish.org][the sea]]                                | writing, poetry                                 | [2025-01-17] |
 | [[file:dwarves.org][the ultimate charm]]                     | writing, fiction                                | [2024-12-30] |
 | [[file:illiad.org][illiad]]                                 | scittle, clojure, classics                      | [2024-11-24] |
 | [[file:guile-http.org][guile: http request with sockets]]       | scheme, networking                              | [2024-11-24] |
