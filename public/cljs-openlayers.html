@@ -206,15 +206,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgbdf56f0">Making a geo PWA with CLJS and Openlayers</a>
+<li><a href="#org9c9bd5a">Making a geo PWA with CLJS and Openlayers</a>
 <ul>
-<li><a href="#org94a26a7">Motivation</a></li>
-<li><a href="#org38bd27d">Shadow-cljs setup</a></li>
-<li><a href="#orgfc5ca23">Adding Openlayers</a></li>
-<li><a href="#org059b20d">Turning it into a PWA</a>
+<li><a href="#org174ce47">Motivation</a></li>
+<li><a href="#org169a4aa">Shadow-cljs setup</a></li>
+<li><a href="#org366de34">Adding Openlayers</a></li>
+<li><a href="#org0e4e9f0">Turning it into a PWA</a>
 <ul>
-<li><a href="#org0daa37f">Icons</a></li>
-<li><a href="#orga08adcc">Manifest</a></li>
+<li><a href="#orgafe686f">Icons</a></li>
+<li><a href="#org41f0299">Manifest</a></li>
 </ul>
 </li>
 </ul>
@@ -223,13 +223,13 @@
 </div>
 </div>
 
-<div id="outline-container-orgbdf56f0" class="outline-2">
-<h2 id="orgbdf56f0">Making a geo PWA with CLJS and Openlayers</h2>
-<div class="outline-text-2" id="text-orgbdf56f0">
+<div id="outline-container-org9c9bd5a" class="outline-2">
+<h2 id="org9c9bd5a">Making a geo PWA with CLJS and Openlayers</h2>
+<div class="outline-text-2" id="text-org9c9bd5a">
 </div>
-<div id="outline-container-org94a26a7" class="outline-3">
-<h3 id="org94a26a7">Motivation</h3>
-<div class="outline-text-3" id="text-org94a26a7">
+<div id="outline-container-org174ce47" class="outline-3">
+<h3 id="org174ce47">Motivation</h3>
+<div class="outline-text-3" id="text-org174ce47">
 <p>
 We want to make a quick and easy map based app. ClojureScript is the natural choice for me. Maybe this would be a good application for <a href="https://github.com/squint-cljs/squint">Squint</a> though, I haven't tried that yet. Another article perhaps.
 </p>
@@ -244,9 +244,9 @@ The choice of Progressive Web App is motivated by not wanting to have to write p
 </div>
 </div>
 
-<div id="outline-container-org38bd27d" class="outline-3">
-<h3 id="org38bd27d">Shadow-cljs setup</h3>
-<div class="outline-text-3" id="text-org38bd27d">
+<div id="outline-container-org169a4aa" class="outline-3">
+<h3 id="org169a4aa">Shadow-cljs setup</h3>
+<div class="outline-text-3" id="text-org169a4aa">
 <p>
 The first part of this setup is based on the shadow-cljs docs. If you encounter problems along the way then refer back to the <a href="https://github.com/thheller/shadow-cljs?tab=readme-ov-file#quick-start">shadow-cljs quickstart guide</a>. 
 </p>
@@ -340,9 +340,9 @@ This should trigger a build. We should have a connected app at <a href="http://l
 </div>
 </div>
 
-<div id="outline-container-orgfc5ca23" class="outline-3">
-<h3 id="orgfc5ca23">Adding Openlayers</h3>
-<div class="outline-text-3" id="text-orgfc5ca23">
+<div id="outline-container-org366de34" class="outline-3">
+<h3 id="org366de34">Adding Openlayers</h3>
+<div class="outline-text-3" id="text-org366de34">
 <p>
 Interrupt the <code>shadow-cljs watch</code> process in the terminal with Ctrl-C, and then install Openlayers with <code>npm</code>:
 </p>
@@ -440,9 +440,9 @@ Now you should have an app with an interactive map. Clearly the buttons and attr
 </div>
 </div>
 
-<div id="outline-container-org059b20d" class="outline-3">
-<h3 id="org059b20d">Turning it into a PWA</h3>
-<div class="outline-text-3" id="text-org059b20d">
+<div id="outline-container-org0e4e9f0" class="outline-3">
+<h3 id="org0e4e9f0">Turning it into a PWA</h3>
+<div class="outline-text-3" id="text-org0e4e9f0">
 <p>
 We want to allow the user to install this in their device such that it seems like any other app. To get this capability we need to turn it into a progressive web app. While essentially just a web app, a PWA typically has a few extra ingredients:
 </p>
@@ -453,15 +453,15 @@ We want to allow the user to install this in their device such that it seems lik
 </ul>
 </div>
 
-<div id="outline-container-org0daa37f" class="outline-4">
-<h4 id="org0daa37f">Icons</h4>
-<div class="outline-text-4" id="text-org0daa37f">
+<div id="outline-container-orgafe686f" class="outline-4">
+<h4 id="orgafe686f">Icons</h4>
+<div class="outline-text-4" id="text-orgafe686f">
 <p>
 Let's start with the icons. Here's a lazy method: get an LLM to generate a vector image so it's nice and clean (at time of writing Claude is nice for this because it will write the SVG in code and then render a preview). Screenshot that at a reasonable resolution (tip: tell Claude to draw the logo such that it is inside a square with a black outline. That way you can select an almost exact square easily)
 </p>
 
 
-<div id="org5f7073f" class="figure">
+<div id="org1aee1f7" class="figure">
 <p><img src="images/claude-compass.png" alt="claude-compass.png" />
 </p>
 </div>
@@ -480,9 +480,9 @@ There should be three directories of icons for different platforms and an <code>
 </div>
 </div>
 
-<div id="outline-container-orga08adcc" class="outline-4">
-<h4 id="orga08adcc">Manifest</h4>
-<div class="outline-text-4" id="text-orga08adcc">
+<div id="outline-container-org41f0299" class="outline-4">
+<h4 id="org41f0299">Manifest</h4>
+<div class="outline-text-4" id="text-org41f0299">
 <p>
 We already have the icons in our manifest. We need to add a few other things.
 </p>
@@ -527,7 +527,7 @@ Now we should have a functioning PWA. If you are using Chrome for example you sh
 </p>
 
 
-<div id="orgbd48c62" class="figure">
+<div id="org934f040" class="figure">
 <p><img src="images/download-pwa.png" alt="download-pwa.png" />
 </p>
 </div>
