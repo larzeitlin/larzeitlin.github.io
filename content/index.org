@@ -6,6 +6,7 @@ hi im luke this is my blog and stuff i made
 #+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
+| [[file:augustiner_braugasthof.org][augustiner braugasthof]]                 | writing, poetry                                 | [2025-03-15] |
 | [[file:fish.org][the sea]]                                | writing, poetry                                 | [2025-01-17] |
 | [[file:dwarves.org][the ultimate charm]]                     | writing, fiction                                | [2024-12-30] |
 | [[file:illiad.org][illiad]]                                 | scittle, clojure, classics                      | [2024-11-24] |
