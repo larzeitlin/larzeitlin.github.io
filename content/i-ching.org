@@ -89,14 +89,9 @@ The sole purpose of the code below is to represent a common version of the yarro
   (str "&#" (+ hex-n 19903) ";"))
 
 (set! (.-read_input js/window)
-      (fn [] 
-        (let [result (read-eval-input "code-area")]
-           (set-output-area result 
-                        "output-area")
-	   (set-output-area (->> result :hexagrams first hex-unicode)
-                        "hex1")
-	   (set-output-area (->> result :hexagrams second hex-unicode)
-                        "hex2"))))
+      (fn []
+        (read-eval-input "code-area")
+        ))
 		
 
 </script>
@@ -168,30 +163,61 @@ The sole purpose of the code below is to represent a common version of the yarro
     (->> [(mapv h1-map lines)
           (mapv h2-map lines)]
          (map array->bin)
-         (map bin->king-wen))))
+         (map bin->king-wen)
+         )))
 
-(defn generate-hexagrams []
+(defn get-wilhelm-data-for-hex [whd num]
+  (first (filter #(= num (:number %)) whd)))
+
+(defn generate-hexagrams [wilhelm-data]
   (let [stalks (->> (repeat :stalk) (take 50))
         stalks (rest stalks) ;; yep...
-        lines (take 6 (repeatedly #(generate-line stalks)))]
-    {:lines lines
-     :hexagrams (lines->hexagrams lines)}))
+        lines (take 6 (repeatedly #(generate-line stalks)))
+        hex-nums (lines->hexagrams lines)
+        whd (map (partial get-wilhelm-data-for-hex wilhelm-data) hex-nums)]
+     whd))
 
-(generate-hexagrams)
+(defn set-output-area [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+
+(defn go []
+    (-> (js/fetch "assets/wilhelm_data.edn")
+        (.then (fn [response] (.text response)))
+        (.then (fn [text]
+	         (generate-hexagrams (clojure.edn/read-string text))))
+        (.then (fn [whd]
+                 (set-output-area (->> whd first :unicode) "hex1")
+                 (set-output-area (->> whd second :unicode) "hex2")
+                 (set-output-area (->> whd first :english-name) "hex1-title")
+                 (set-output-area (->> whd second :english-name) "hex2-title")
+                 (set-output-area (->> whd first :judgment) "hex1-desc")
+                 (set-output-area (->> whd second :judgment) "hex2-desc")
+                 (set-output-area (str (->> whd first :english-name)
+                                       " changing to "
+                                       (->> whd second :english-name)
+                                       ) "combined-title")))
+        (.catch (fn [err] (js/console.error err)))))
+
+(go)
+
 </textarea>
 <button onclick="read_input()">divinate!</button>
 <p style="font-size:100px;text-align:center">
 <span id="hex1"></span>
 <span id="hex2"></span>
-<p id="output-area">...</p>
+<h2 id="combined-title"></h2>
+<h3 id="hex1-title"></h3>
+<p id="hex1-desc"></p>
+<h3 id="hex2-title"></h3>
+<p id="hex2-desc"></p>
 </p>
 </body>
 #+end_export
 
-
-* Meanings
-The general idea seems to be the transition from the first to the second hexagram. (Book of Changes, remember) You can look up the symbols and contemplate their interpretations here:
+descriptions are from the:
 
 [[http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html][Wilhelm Translation]]
 
-cba to scrape the symbol names / interpretations to put inline here right now. Maybe will come back and do that later... xx 

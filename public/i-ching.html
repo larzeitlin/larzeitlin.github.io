@@ -206,17 +206,16 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge6956fd">I Ching</a></li>
-<li><a href="#org312f9c5">Hexagrams</a></li>
-<li><a href="#orgec35653">Hexagram selection</a></li>
-<li><a href="#org6322426">Yarrow stalks algorithm</a>
+<li><a href="#orgcac3d1e">I Ching</a></li>
+<li><a href="#org005bf56">Hexagrams</a></li>
+<li><a href="#org0160a1c">Hexagram selection</a></li>
+<li><a href="#org9e23585">Yarrow stalks algorithm</a>
 <ul>
-<li><a href="#org236e85a">Process</a></li>
-<li><a href="#org406e357">To generate a hexagram:</a></li>
-<li><a href="#org6e6984a">Implementation Notes</a></li>
+<li><a href="#org0a003b7">Process</a></li>
+<li><a href="#org6fc366d">To generate a hexagram:</a></li>
+<li><a href="#org3c37fbd">Implementation Notes</a></li>
 </ul>
 </li>
-<li><a href="#org63f274b">Meanings</a></li>
 </ul>
 </div>
 </div>
@@ -226,9 +225,9 @@
 </script>
 
 
-<div id="outline-container-orge6956fd" class="outline-2">
-<h2 id="orge6956fd">I Ching</h2>
-<div class="outline-text-2" id="text-orge6956fd">
+<div id="outline-container-orgcac3d1e" class="outline-2">
+<h2 id="orgcac3d1e">I Ching</h2>
+<div class="outline-text-2" id="text-orgcac3d1e">
 <p>
 The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
 </p>
@@ -239,9 +238,9 @@ Let's make an I Ching simulation step-by-step.
 </div>
 </div>
 
-<div id="outline-container-org312f9c5" class="outline-2">
-<h2 id="org312f9c5">Hexagrams</h2>
-<div class="outline-text-2" id="text-org312f9c5">
+<div id="outline-container-org005bf56" class="outline-2">
+<h2 id="org005bf56">Hexagrams</h2>
+<div class="outline-text-2" id="text-org005bf56">
 <p>
 Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
 </p>
@@ -256,26 +255,26 @@ These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/Ki
 </div>
 </div>
 
-<div id="outline-container-orgec35653" class="outline-2">
-<h2 id="orgec35653">Hexagram selection</h2>
-<div class="outline-text-2" id="text-orgec35653">
+<div id="outline-container-org0160a1c" class="outline-2">
+<h2 id="org0160a1c">Hexagram selection</h2>
+<div class="outline-text-2" id="text-org0160a1c">
 <p>
 To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6322426" class="outline-2">
-<h2 id="org6322426">Yarrow stalks algorithm</h2>
-<div class="outline-text-2" id="text-org6322426">
+<div id="outline-container-org9e23585" class="outline-2">
+<h2 id="org9e23585">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-org9e23585">
 <p>
 There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
 </p>
 </div>
 
-<div id="outline-container-org236e85a" class="outline-3">
-<h3 id="org236e85a">Process</h3>
-<div class="outline-text-3" id="text-org236e85a">
+<div id="outline-container-org0a003b7" class="outline-3">
+<h3 id="org0a003b7">Process</h3>
+<div class="outline-text-3" id="text-org0a003b7">
 <p>
 We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
 </p>
@@ -296,9 +295,9 @@ There are multiple versions of this method. I've chosen what appeared to be the 
 </div>
 </div>
 
-<div id="outline-container-org406e357" class="outline-3">
-<h3 id="org406e357">To generate a hexagram:</h3>
-<div class="outline-text-3" id="text-org406e357">
+<div id="outline-container-org6fc366d" class="outline-3">
+<h3 id="org6fc366d">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-org6fc366d">
 <p>
 We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 </p>
@@ -323,9 +322,9 @@ We are going to make various piles of stalks. I will refer to these with single 
 </div>
 </div>
 
-<div id="outline-container-org6e6984a" class="outline-3">
-<h3 id="org6e6984a">Implementation Notes</h3>
-<div class="outline-text-3" id="text-org6e6984a">
+<div id="outline-container-org3c37fbd" class="outline-3">
+<h3 id="org3c37fbd">Implementation Notes</h3>
+<div class="outline-text-3" id="text-org3c37fbd">
 <p>
 The algorithm explained above is implemented here in ClojureScript using Scittle to run it in the browser. The code is editable do feel free to tweak it and play around with it. Pseudo-randomness is added at the approx half splitting point in step 3. To make this somewhat realistic we sample from a normal distribution using a Box-Muller transform, and then round to the nearest integer to create an offset to the split.
 </p>
@@ -364,14 +363,9 @@ The sole purpose of the code below is to represent a common version of the yarro
   (str "&#" (+ hex-n 19903) ";"))
 
 (set! (.-read_input js/window)
-      (fn [] 
-        (let [result (read-eval-input "code-area")]
-           (set-output-area result 
-                        "output-area")
-	   (set-output-area (->> result :hexagrams first hex-unicode)
-                        "hex1")
-	   (set-output-area (->> result :hexagrams second hex-unicode)
-                        "hex2"))))
+      (fn []
+        (read-eval-input "code-area")
+        ))
 		
 
 </script>
@@ -443,43 +437,67 @@ The sole purpose of the code below is to represent a common version of the yarro
     (->> [(mapv h1-map lines)
           (mapv h2-map lines)]
          (map array->bin)
-         (map bin->king-wen))))
+         (map bin->king-wen)
+         )))
 
-(defn generate-hexagrams []
+(defn get-wilhelm-data-for-hex [whd num]
+  (first (filter #(= num (:number %)) whd)))
+
+(defn generate-hexagrams [wilhelm-data]
   (let [stalks (->> (repeat :stalk) (take 50))
         stalks (rest stalks) ;; yep...
-        lines (take 6 (repeatedly #(generate-line stalks)))]
-    {:lines lines
-     :hexagrams (lines->hexagrams lines)}))
+        lines (take 6 (repeatedly #(generate-line stalks)))
+        hex-nums (lines->hexagrams lines)
+        whd (map (partial get-wilhelm-data-for-hex wilhelm-data) hex-nums)]
+     whd))
 
-(generate-hexagrams)
+(defn set-output-area [v output-id]
+  (-> (js/document.getElementById output-id)
+      (.-innerHTML)
+      (set! v)))
+
+
+(defn go []
+    (-> (js/fetch "assets/wilhelm_data.edn")
+        (.then (fn [response] (.text response)))
+        (.then (fn [text]
+	         (generate-hexagrams (clojure.edn/read-string text))))
+        (.then (fn [whd]
+                 (set-output-area (->> whd first :unicode) "hex1")
+                 (set-output-area (->> whd second :unicode) "hex2")
+                 (set-output-area (->> whd first :english-name) "hex1-title")
+                 (set-output-area (->> whd second :english-name) "hex2-title")
+                 (set-output-area (->> whd first :judgment) "hex1-desc")
+                 (set-output-area (->> whd second :judgment) "hex2-desc")
+                 (set-output-area (str (->> whd first :english-name)
+                                       " changing to "
+                                       (->> whd second :english-name)
+                                       ) "combined-title")))
+        (.catch (fn [err] (js/console.error err)))))
+
+(go)
+
 </textarea>
 <button onclick="read_input()">divinate!</button>
 <p style="font-size:100px;text-align:center">
 <span id="hex1"></span>
 <span id="hex2"></span>
-<p id="output-area">...</p>
+<h2 id="combined-title"></h2>
+<h3 id="hex1-title"></h3>
+<p id="hex1-desc"></p>
+<h3 id="hex2-title"></h3>
+<p id="hex2-desc"></p>
 </p>
 </body>
-</div>
-</div>
-</div>
 
-
-<div id="outline-container-org63f274b" class="outline-2">
-<h2 id="org63f274b">Meanings</h2>
-<div class="outline-text-2" id="text-org63f274b">
 <p>
-The general idea seems to be the transition from the first to the second hexagram. (Book of Changes, remember) You can look up the symbols and contemplate their interpretations here:
+descriptions are from the:
 </p>
 
 <p>
 <a href="http://www2.unipr.it/~deyoung/I_Ching_Wilhelm_Translation.html">Wilhelm Translation</a>
 </p>
-
-<p>
-cba to scrape the symbol names / interpretations to put inline here right now. Maybe will come back and do that later&#x2026; xx 
-</p>
+</div>
 </div>
 </div>
 </div>
