@@ -206,116 +206,116 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8e8af81">Terminology:</a>
+<li><a href="#org06b3e5b">Terminology:</a>
 <ul>
-<li><a href="#org51422c4">What is assembly language?</a></li>
-<li><a href="#org2a268dd">What is x86-64?</a></li>
-<li><a href="#org5a55cd2">What is a register?</a></li>
-<li><a href="#org732d3ad">What is address space?</a></li>
-<li><a href="#org40a029a">Some key features of x86-64:</a></li>
+<li><a href="#orgfdd9f30">What is assembly language?</a></li>
+<li><a href="#org8b5e37d">What is x86-64?</a></li>
+<li><a href="#orgb022a35">What is a register?</a></li>
+<li><a href="#orgd0268bc">What is address space?</a></li>
+<li><a href="#orgf0a17ea">Some key features of x86-64:</a></li>
 </ul>
 </li>
-<li><a href="#orgc111ced">Assembly Language</a>
+<li><a href="#orgcf312fc">Assembly Language</a>
 <ul>
-<li><a href="#orga8ba8e4">Three Sections</a>
+<li><a href="#org3845151">Three Sections</a>
 <ul>
-<li><a href="#org86ae82e">data</a></li>
-<li><a href="#org93f6793">bss</a></li>
-<li><a href="#orgf64fbf5">text</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org5757983">Comments</a></li>
-<li><a href="#orgcba3fef">Statements</a></li>
-<li><a href="#orga4412fd">Tool-chain</a>
-<ul>
-<li><a href="#orgdd17da8">Assembler</a>
-<ul>
-<li><a href="#org11a879b">Assembling with NASM</a></li>
-</ul>
-</li>
-<li><a href="#orgdb016f6">Linker</a>
-<ul>
-<li><a href="#org55af32d">Dynamic Linking</a></li>
-<li><a href="#org9c6d629">Assemble/Link Script</a></li>
-</ul>
-</li>
-<li><a href="#orgfc67a32">Loader</a></li>
-<li><a href="#orgf17ba46">Debugger</a>
-<ul>
-<li><a href="#org9764d4f">GDB</a></li>
+<li><a href="#org2d0c656">data</a></li>
+<li><a href="#org96c9a4d">bss</a></li>
+<li><a href="#org632b1ba">text</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org9e5b68a">Syntax of Statements</a></li>
-<li><a href="#orgfe9e6f8">Assembly Hello World</a></li>
-<li><a href="#org4c4e32b">Memory Segments</a>
+<li><a href="#org4b77625">Comments</a></li>
+<li><a href="#org3989b31">Statements</a></li>
+<li><a href="#org779097f">Tool-chain</a>
 <ul>
-<li><a href="#orgbf53eca">Segmented memory model:</a></li>
-<li><a href="#orgcc57390">Data segment</a></li>
-<li><a href="#orgfdb84d5">Code segment</a></li>
-<li><a href="#org78ef566">Stack</a></li>
+<li><a href="#org3ccf64d">Assembler</a>
+<ul>
+<li><a href="#orgcbcb3e3">Assembling with NASM</a></li>
 </ul>
 </li>
-<li><a href="#org8988fc3">Registers</a>
+<li><a href="#orgf20521b">Linker</a>
+<ul>
+<li><a href="#orgd1ead80">Dynamic Linking</a></li>
+<li><a href="#org1f2b42d">Assemble/Link Script</a></li>
+</ul>
+</li>
+<li><a href="#org17c282b">Loader</a></li>
+<li><a href="#org717c1d8">Debugger</a>
+<ul>
+<li><a href="#orgb9d6d3c">GDB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5f04bad">Syntax of Statements</a></li>
+<li><a href="#org3c82bd5">Assembly Hello World</a></li>
+<li><a href="#org0603650">Memory Segments</a>
+<ul>
+<li><a href="#orge90e357">Segmented memory model:</a></li>
+<li><a href="#org34984dc">Data segment</a></li>
+<li><a href="#orgccd6fc6">Code segment</a></li>
+<li><a href="#org1e6a406">Stack</a></li>
+</ul>
+</li>
+<li><a href="#org2cc94bd">Registers</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org6dbaa5c">General Registers</a></li>
-<li><a href="#orgfd0a3d5">Control</a></li>
-<li><a href="#org8b769a5">Segment Registers</a></li>
+<li><a href="#org0d5b8ee">General Registers</a></li>
+<li><a href="#orge58b3ab">Control</a></li>
+<li><a href="#orgaae7d9c">Segment Registers</a></li>
 </ul>
 </li>
-<li><a href="#org9a5bba4">Example of using registers</a></li>
-<li><a href="#org529a9e0">XMM Registers</a></li>
+<li><a href="#orgbb3688c">Example of using registers</a></li>
+<li><a href="#orgd1a6912">XMM Registers</a></li>
 </ul>
 </li>
-<li><a href="#org4b9d500">System Calls</a></li>
-<li><a href="#org7226e0f">Instructions</a>
+<li><a href="#orgafc6472">System Calls</a></li>
+<li><a href="#orgb07a0a3">Instructions</a>
 <ul>
-<li><a href="#orgb640bf9">Move</a></li>
-<li><a href="#org7c4041c">Address</a></li>
-<li><a href="#org9c107ff">Convert</a>
+<li><a href="#orgc0e6cfd">Move</a></li>
+<li><a href="#orgde7de1e">Address</a></li>
+<li><a href="#org4c582fe">Convert</a>
 <ul>
-<li><a href="#org39ee334">widening - unsigned</a></li>
-<li><a href="#org58ece45">widening - signed</a></li>
+<li><a href="#org8dcde7f">widening - unsigned</a></li>
+<li><a href="#org279c1d5">widening - signed</a></li>
 </ul>
 </li>
-<li><a href="#org029d7ff">Arithmetic</a>
+<li><a href="#orgab2a520">Arithmetic</a>
 <ul>
-<li><a href="#orga6da479">Addition</a></li>
-<li><a href="#org40c7140">Subtraction</a></li>
-<li><a href="#orga965269">Multiplication</a></li>
+<li><a href="#org9b397f2">Addition</a></li>
+<li><a href="#org8d41842">Subtraction</a></li>
+<li><a href="#org2c95e8f">Multiplication</a></li>
 </ul>
 </li>
-<li><a href="#org9ffa392">Logic</a></li>
-<li><a href="#org9f233fd">Shift</a></li>
-<li><a href="#org5581f75">Rotate</a></li>
-<li><a href="#orga00dec7">Control instructions</a>
+<li><a href="#orga0c4d59">Logic</a></li>
+<li><a href="#org44ffd53">Shift</a></li>
+<li><a href="#orgcd4e614">Rotate</a></li>
+<li><a href="#orgcf1a5bd">Control instructions</a>
 <ul>
-<li><a href="#org41d91e8">Labels</a></li>
-<li><a href="#org5ec08be">Unconditional control instructions.</a></li>
-<li><a href="#org34f457b">Conditional Control Instructions</a></li>
-<li><a href="#orgeb5dfa4">Jump Range</a></li>
+<li><a href="#org46458b6">Labels</a></li>
+<li><a href="#org445972c">Unconditional control instructions.</a></li>
+<li><a href="#orgfe9f28a">Conditional Control Instructions</a></li>
+<li><a href="#org990d1af">Jump Range</a></li>
 </ul>
 </li>
-<li><a href="#org3840808">Iteration</a></li>
-<li><a href="#org8786589">Loop</a></li>
-<li><a href="#orga88fe97">Example program using intructions</a></li>
+<li><a href="#org1e4f1e2">Iteration</a></li>
+<li><a href="#org6f4f138">Loop</a></li>
+<li><a href="#org13df3da">Example program using intructions</a></li>
 </ul>
 </li>
-<li><a href="#org1e1f6d4">Calling C libraries</a></li>
-<li><a href="#orgb3f6881">Related Topics</a>
+<li><a href="#org74668d1">Calling C libraries</a></li>
+<li><a href="#orge5d8f62">Related Topics</a>
 <ul>
-<li><a href="#orgf4853ae">Addressing data in memory</a></li>
-<li><a href="#orgec66703">Memory Hierarchy</a></li>
-<li><a href="#orgd5da4af">Integer representation</a></li>
-<li><a href="#org12f4796">Two's Complement</a></li>
+<li><a href="#org394e200">Addressing data in memory</a></li>
+<li><a href="#org35d48b7">Memory Hierarchy</a></li>
+<li><a href="#org2592274">Integer representation</a></li>
+<li><a href="#orgedbc638">Two's Complement</a></li>
 </ul>
 </li>
-<li><a href="#org92da593">Handy Links</a></li>
+<li><a href="#org9749839">Handy Links</a></li>
 </ul>
 </div>
 </div>
@@ -323,49 +323,49 @@
 These are just personal study notes. Figured I would share them in case they are useful to someone else. I started writing this in 2019 and returned to it now in 2024 to review the content. Nothing especially origional here, this is just a amalgamation of the documents and tutorials that I read (linked at the bottom).
 </p>
 
-<div id="outline-container-org8e8af81" class="outline-2">
-<h2 id="org8e8af81">Terminology:</h2>
-<div class="outline-text-2" id="text-org8e8af81">
+<div id="outline-container-org06b3e5b" class="outline-2">
+<h2 id="org06b3e5b">Terminology:</h2>
+<div class="outline-text-2" id="text-org06b3e5b">
 </div>
-<div id="outline-container-org51422c4" class="outline-3">
-<h3 id="org51422c4">What is assembly language?</h3>
-<div class="outline-text-3" id="text-org51422c4">
+<div id="outline-container-orgfdd9f30" class="outline-3">
+<h3 id="orgfdd9f30">What is assembly language?</h3>
+<div class="outline-text-3" id="text-orgfdd9f30">
 <p>
 Machine code is the binary representation of the instructions executed directly by the CPU. One level of abstraction above that is assembly language. Assembly language is specific to the CPU architecture. It typically uses mnemonic <code>opcodes</code> to represent operations, such as <code>MOV</code>, <code>ADD</code>, etc.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2a268dd" class="outline-3">
-<h3 id="org2a268dd">What is x86-64?</h3>
-<div class="outline-text-3" id="text-org2a268dd">
+<div id="outline-container-org8b5e37d" class="outline-3">
+<h3 id="org8b5e37d">What is x86-64?</h3>
+<div class="outline-text-3" id="text-org8b5e37d">
 <p>
 This refers to the 64-bit extension of the x86 instruction set developed for intel processors. x86-64 was introduced in 1999 is the most widely used assembly language for desktops, laptops and servers at time of writing (2024). It supports 64-bit registers, unlike the 32-bit registers for the preceding IA-32 architecture.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5a55cd2" class="outline-3">
-<h3 id="org5a55cd2">What is a register?</h3>
-<div class="outline-text-3" id="text-org5a55cd2">
+<div id="outline-container-orgb022a35" class="outline-3">
+<h3 id="orgb022a35">What is a register?</h3>
+<div class="outline-text-3" id="text-orgb022a35">
 <p>
 The CPU can temporarily store data in registers. They are the fastest storage in the computer (faster than cache or RAM for example) and they are limited in size and count. Some registers are specialised such as the <code>Instruction Pointer</code> which holds the address of the next instruction, or the <code>Stack Pointer</code> which points to the current top of the stack in memory. Others are general purpose.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org732d3ad" class="outline-3">
-<h3 id="org732d3ad">What is address space?</h3>
-<div class="outline-text-3" id="text-org732d3ad">
+<div id="outline-container-orgd0268bc" class="outline-3">
+<h3 id="orgd0268bc">What is address space?</h3>
+<div class="outline-text-3" id="text-orgd0268bc">
 <p>
 Address space is the number of addresses in memory that the CPU can access in a single operation. for 64-bit CPUs this is 2<sup>64</sup> addresses.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org40a029a" class="outline-3">
-<h3 id="org40a029a">Some key features of x86-64:</h3>
-<div class="outline-text-3" id="text-org40a029a">
+<div id="outline-container-orgf0a17ea" class="outline-3">
+<h3 id="orgf0a17ea">Some key features of x86-64:</h3>
+<div class="outline-text-3" id="text-orgf0a17ea">
 <ul class="org-ul">
 <li>64-bit registers</li>
 <li>Larger address space</li>
@@ -376,7 +376,7 @@ Address space is the number of addresses in memory that the CPU can access in a 
 </ul>
 
 
-<div id="org4f79750" class="figure">
+<div id="org9bf11c4" class="figure">
 <p><img src="images/x86-64-arch.png" alt="x86-64-arch.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>diagram of the x86-64 from Volume 1 of the System Developers Manual</p>
@@ -389,21 +389,21 @@ We will get into what some of these registers do below.
 </div>
 </div>
 
-<div id="outline-container-orgc111ced" class="outline-2">
-<h2 id="orgc111ced">Assembly Language</h2>
-<div class="outline-text-2" id="text-orgc111ced">
+<div id="outline-container-orgcf312fc" class="outline-2">
+<h2 id="orgcf312fc">Assembly Language</h2>
+<div class="outline-text-2" id="text-orgcf312fc">
 </div>
-<div id="outline-container-orga8ba8e4" class="outline-3">
-<h3 id="orga8ba8e4">Three Sections</h3>
-<div class="outline-text-3" id="text-orga8ba8e4">
+<div id="outline-container-org3845151" class="outline-3">
+<h3 id="org3845151">Three Sections</h3>
+<div class="outline-text-3" id="text-org3845151">
 <p>
 An assembly program has the following three sections: Data, BSS, Text.
 </p>
 </div>
 
-<div id="outline-container-org86ae82e" class="outline-4">
-<h4 id="org86ae82e">data</h4>
-<div class="outline-text-4" id="text-org86ae82e">
+<div id="outline-container-org2d0c656" class="outline-4">
+<h4 id="org2d0c656">data</h4>
+<div class="outline-text-4" id="text-org2d0c656">
 <p>
 This denotes the start of the data section of an assembly program:
 </p>
@@ -424,9 +424,9 @@ This section contains initialized data and constants. Here is an example of a da
 </div>
 </div>
 
-<div id="outline-container-org93f6793" class="outline-4">
-<h4 id="org93f6793">bss</h4>
-<div class="outline-text-4" id="text-org93f6793">
+<div id="outline-container-org96c9a4d" class="outline-4">
+<h4 id="org96c9a4d">bss</h4>
+<div class="outline-text-4" id="text-org96c9a4d">
 <p>
 BSS stands for "block starting symbol". It contains statically allocated variables that have not been assigned values yet.
 This denotes the beginning of the variable section: 
@@ -449,9 +449,9 @@ The bss section contains variable declarations. Here is an example of a bss sect
 </div>
 </div>
 
-<div id="outline-container-orgf64fbf5" class="outline-4">
-<h4 id="orgf64fbf5">text</h4>
-<div class="outline-text-4" id="text-orgf64fbf5">
+<div id="outline-container-org632b1ba" class="outline-4">
+<h4 id="org632b1ba">text</h4>
+<div class="outline-text-4" id="text-org632b1ba">
 <p>
 This section contains the actual code.
 </p>
@@ -468,9 +468,9 @@ Global start lets the kernel know where the program execution begins.
 </div>
 </div>
 </div>
-<div id="outline-container-org5757983" class="outline-2">
-<h2 id="org5757983">Comments</h2>
-<div class="outline-text-2" id="text-org5757983">
+<div id="outline-container-org4b77625" class="outline-2">
+<h2 id="org4b77625">Comments</h2>
+<div class="outline-text-2" id="text-org4b77625">
 <p>
 Comments are preceded with a semicolon. Comments can contain any printable character
 </p>
@@ -481,9 +481,9 @@ Comments are preceded with a semicolon. Comments can contain any printable chara
 </div>
 </div>
 </div>
-<div id="outline-container-orgcba3fef" class="outline-2">
-<h2 id="orgcba3fef">Statements</h2>
-<div class="outline-text-2" id="text-orgcba3fef">
+<div id="outline-container-org3989b31" class="outline-2">
+<h2 id="org3989b31">Statements</h2>
+<div class="outline-text-2" id="text-org3989b31">
 <p>
 There are three types of statements:
 </p>
@@ -511,9 +511,9 @@ Text substitution
 </div>
 </div>
 
-<div id="outline-container-orga4412fd" class="outline-2">
-<h2 id="orga4412fd">Tool-chain</h2>
-<div class="outline-text-2" id="text-orga4412fd">
+<div id="outline-container-org779097f" class="outline-2">
+<h2 id="org779097f">Tool-chain</h2>
+<div class="outline-text-2" id="text-org779097f">
 <p>
 The software tools used in creating assembly programs are as follows:
 </p>
@@ -524,17 +524,17 @@ The software tools used in creating assembly programs are as follows:
 <li>Debugger</li>
 </ul>
 </div>
-<div id="outline-container-orgdd17da8" class="outline-3">
-<h3 id="orgdd17da8">Assembler</h3>
-<div class="outline-text-3" id="text-orgdd17da8">
+<div id="outline-container-org3ccf64d" class="outline-3">
+<h3 id="org3ccf64d">Assembler</h3>
+<div class="outline-text-3" id="text-org3ccf64d">
 <p>
 The assembler is a program converts assembly code into machine language (binary). The output file is known as an object file, hence the .o suffix. During this process the variable names get removed and converted into addresses.
 </p>
 </div>
 
-<div id="outline-container-org11a879b" class="outline-4">
-<h4 id="org11a879b">Assembling with NASM</h4>
-<div class="outline-text-4" id="text-org11a879b">
+<div id="outline-container-orgcbcb3e3" class="outline-4">
+<h4 id="orgcbcb3e3">Assembling with NASM</h4>
+<div class="outline-text-4" id="text-orgcbcb3e3">
 <ul class="org-ul">
 <li>save the above as a file with extension .asm, for example: hello.asm</li>
 <li>assemble program with:</li>
@@ -562,9 +562,9 @@ The assembler is a program converts assembly code into machine language (binary)
 </div>
 </div>
 
-<div id="outline-container-orgdb016f6" class="outline-3">
-<h3 id="orgdb016f6">Linker</h3>
-<div class="outline-text-3" id="text-orgdb016f6">
+<div id="outline-container-orgf20521b" class="outline-3">
+<h3 id="orgf20521b">Linker</h3>
+<div class="outline-text-3" id="text-orgf20521b">
 <p>
 Also known as the linkage editor. This combines object files into a single executable. It also includes any libraries required for execution. The following is a command for the GNU Gold linker:
 </p>
@@ -579,18 +579,18 @@ The <code>-g</code> flag tells the linker to include debugging information. The 
 </p>
 </div>
 
-<div id="outline-container-org55af32d" class="outline-4">
-<h4 id="org55af32d">Dynamic Linking</h4>
-<div class="outline-text-4" id="text-org55af32d">
+<div id="outline-container-orgd1ead80" class="outline-4">
+<h4 id="orgd1ead80">Dynamic Linking</h4>
+<div class="outline-text-4" id="text-orgd1ead80">
 <p>
 Linux supports dynamic linking. This allows resolution of some symbols be postponed until the execution of the program. Under Linux dynamically linked object files have the extension <code>.so</code>, shared object. The Windows equivalent is <code>.dll</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9c6d629" class="outline-4">
-<h4 id="org9c6d629">Assemble/Link Script</h4>
-<div class="outline-text-4" id="text-org9c6d629">
+<div id="outline-container-org1f2b42d" class="outline-4">
+<h4 id="org1f2b42d">Assemble/Link Script</h4>
+<div class="outline-text-4" id="text-org1f2b42d">
 <p>
 The following is an example of a bash script to automate the calls to the assembler and linker into a single call.
 </p>
@@ -620,9 +620,9 @@ yasm -Worphan-labels -g dwarf2 -f elf64 $<span class="org-variable-name">1</span
 </div>
 </div>
 
-<div id="outline-container-orgfc67a32" class="outline-3">
-<h3 id="orgfc67a32">Loader</h3>
-<div class="outline-text-3" id="text-orgfc67a32">
+<div id="outline-container-org17c282b" class="outline-3">
+<h3 id="org17c282b">Loader</h3>
+<div class="outline-text-3" id="text-org17c282b">
 <p>
 This is the part of the operating system that loads the program from secondary storage into memory. Under Linux this is done with the program name. For example, if the program is called <code>hello_world</code>, the command will be:
 </p>
@@ -633,16 +633,16 @@ This is the part of the operating system that loads the program from secondary s
 </div>
 </div>
 </div>
-<div id="outline-container-orgf17ba46" class="outline-3">
-<h3 id="orgf17ba46">Debugger</h3>
-<div class="outline-text-3" id="text-orgf17ba46">
+<div id="outline-container-org717c1d8" class="outline-3">
+<h3 id="org717c1d8">Debugger</h3>
+<div class="outline-text-3" id="text-org717c1d8">
 <p>
 This is a program that can control the execution of the assembly program in order to inspect how it is (or is not) working. 
 </p>
 </div>
-<div id="outline-container-org9764d4f" class="outline-4">
-<h4 id="org9764d4f">GDB</h4>
-<div class="outline-text-4" id="text-org9764d4f">
+<div id="outline-container-orgb9d6d3c" class="outline-4">
+<h4 id="orgb9d6d3c">GDB</h4>
+<div class="outline-text-4" id="text-orgb9d6d3c">
 <p>
 GDB is a debugger for assembly language as well as C/C++. It is terminal-based but also can be run in emacs. To start in emacs use <code>m-x gdb</code> or to run in the terminal use:
 </p>
@@ -683,8 +683,8 @@ To start the execution of a program in <code>gdb</code> use:
 </div>
 </div>
 <ul class="org-ul">
-<li><a id="orgf233b63"></a>GDB commands<br />
-<div class="outline-text-5" id="text-orgf233b63">
+<li><a id="orgd9a989f"></a>GDB commands<br />
+<div class="outline-text-5" id="text-orgd9a989f">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -762,9 +762,9 @@ To start the execution of a program in <code>gdb</code> use:
 </div>
 </div>
 </div>
-<div id="outline-container-org9e5b68a" class="outline-2">
-<h2 id="org9e5b68a">Syntax of Statements</h2>
-<div class="outline-text-2" id="text-org9e5b68a">
+<div id="outline-container-org5f04bad" class="outline-2">
+<h2 id="org5f04bad">Syntax of Statements</h2>
+<div class="outline-text-2" id="text-org5f04bad">
 <p>
 Assembly language has one statement per line
 </p>
@@ -782,9 +782,9 @@ Fields in the square brackets are optional. There are two basic parts to the ins
 </div>
 </div>
 </div>
-<div id="outline-container-orgfe9e6f8" class="outline-2">
-<h2 id="orgfe9e6f8">Assembly Hello World</h2>
-<div class="outline-text-2" id="text-orgfe9e6f8">
+<div id="outline-container-org3c82bd5" class="outline-2">
+<h2 id="org3c82bd5">Assembly Hello World</h2>
+<div class="outline-text-2" id="text-org3c82bd5">
 <div class="org-src-container">
 <pre class="src src-asm">
 <span class="org-function-name">section</span> .text
@@ -808,58 +808,58 @@ Fields in the square brackets are optional. There are two basic parts to the ins
 </div>
 </div>
 
-<div id="outline-container-org4c4e32b" class="outline-2">
-<h2 id="org4c4e32b">Memory Segments</h2>
-<div class="outline-text-2" id="text-org4c4e32b">
+<div id="outline-container-org0603650" class="outline-2">
+<h2 id="org0603650">Memory Segments</h2>
+<div class="outline-text-2" id="text-org0603650">
 </div>
-<div id="outline-container-orgbf53eca" class="outline-3">
-<h3 id="orgbf53eca">Segmented memory model:</h3>
-<div class="outline-text-3" id="text-orgbf53eca">
+<div id="outline-container-orge90e357" class="outline-3">
+<h3 id="orge90e357">Segmented memory model:</h3>
+<div class="outline-text-3" id="text-orge90e357">
 <p>
 In a segmented memory model the system memory is divided into independent segments. Segments are used to store specific types of data. One segment for instruction codes, one for data elements, etc.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcc57390" class="outline-3">
-<h3 id="orgcc57390">Data segment</h3>
-<div class="outline-text-3" id="text-orgcc57390">
+<div id="outline-container-org34984dc" class="outline-3">
+<h3 id="org34984dc">Data segment</h3>
+<div class="outline-text-3" id="text-org34984dc">
 <p>
 Represented by the <code>.data</code> section and the <code>.bss</code> section. The <code>.data</code> section is holds static data that remains unchanged during the course of the program. The <code>.bss</code> section is also for static data. Data here are declared during the course of the program. The <code>.bss</code> section is zero filled prior to execution.
 </p>
 </div>
 </div>
-<div id="outline-container-orgfdb84d5" class="outline-3">
-<h3 id="orgfdb84d5">Code segment</h3>
-<div class="outline-text-3" id="text-orgfdb84d5">
+<div id="outline-container-orgccd6fc6" class="outline-3">
+<h3 id="orgccd6fc6">Code segment</h3>
+<div class="outline-text-3" id="text-orgccd6fc6">
 <p>
 Represented by the <code>.text</code> section. Fixed data that stores instruction codes.
 </p>
 </div>
 </div>
-<div id="outline-container-org78ef566" class="outline-3">
-<h3 id="org78ef566">Stack</h3>
-<div class="outline-text-3" id="text-org78ef566">
+<div id="outline-container-org1e6a406" class="outline-3">
+<h3 id="org1e6a406">Stack</h3>
+<div class="outline-text-3" id="text-org1e6a406">
 <p>
 This contains data passed to functions and procedures during the course of a program.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org8988fc3" class="outline-2">
-<h2 id="org8988fc3">Registers</h2>
-<div class="outline-text-2" id="text-org8988fc3">
+<div id="outline-container-org2cc94bd" class="outline-2">
+<h2 id="org2cc94bd">Registers</h2>
+<div class="outline-text-2" id="text-org2cc94bd">
 <p>
 In order to avoid the slow process of reading and storing data in memory, the processor has temporary storage locations called <code>registers</code>. These can store data elements for processing without having to access memory.
 </p>
 </div>
 
-<div id="outline-container-org6dbaa5c" class="outline-4">
-<h4 id="org6dbaa5c">General Registers</h4>
-<div class="outline-text-4" id="text-org6dbaa5c">
+<div id="outline-container-org0d5b8ee" class="outline-4">
+<h4 id="org0d5b8ee">General Registers</h4>
+<div class="outline-text-4" id="text-org0d5b8ee">
 </div>
 <ul class="org-ul">
-<li><a id="orgb714047"></a>Data<br />
-<div class="outline-text-5" id="text-orgb714047">
+<li><a id="org20aafc5"></a>Data<br />
+<div class="outline-text-5" id="text-org20aafc5">
 <p>
 These are used for arithmetic, logic and other operations. They have three different modes of usage:
 </p>
@@ -1050,8 +1050,8 @@ Also used in I/O. Notably when large numbers are involved.
 </div>
 </li>
 
-<li><a id="orgdf80bd2"></a>Pointer Registers<br />
-<div class="outline-text-5" id="text-orgdf80bd2">
+<li><a id="org9c23e1b"></a>Pointer Registers<br />
+<div class="outline-text-5" id="text-org9c23e1b">
 <p>
 Stores addresses in memory. In 32-bit these are EIP, ESP and EBP. In 16-bit these correspond to IP, SP and BP.
 </p>
@@ -1077,8 +1077,8 @@ in combination with the offset BP gives the location of a parameter. Can also be
 </div>
 </li>
 
-<li><a id="org9ba3258"></a>Index Registers<br />
-<div class="outline-text-5" id="text-org9ba3258">
+<li><a id="orgc70176b"></a>Index Registers<br />
+<div class="outline-text-5" id="text-orgc70176b">
 <p>
 ESI and EDI in 32-bit, or SI and DI in 16-bit.
 </p>
@@ -1099,9 +1099,9 @@ Destination index for string operations.
 </ul>
 </div>
 
-<div id="outline-container-orgfd0a3d5" class="outline-4">
-<h4 id="orgfd0a3d5">Control</h4>
-<div class="outline-text-4" id="text-orgfd0a3d5">
+<div id="outline-container-orge58b3ab" class="outline-4">
+<h4 id="orge58b3ab">Control</h4>
+<div class="outline-text-4" id="text-orge58b3ab">
 <p>
 For comparisons and conditional instructions that control flags.
 </p>
@@ -1244,9 +1244,9 @@ Contains the carry from the leftmost bit after an arithmetic operation. It also 
 </div>
 </div>
 
-<div id="outline-container-org8b769a5" class="outline-4">
-<h4 id="org8b769a5">Segment Registers</h4>
-<div class="outline-text-4" id="text-org8b769a5">
+<div id="outline-container-orgaae7d9c" class="outline-4">
+<h4 id="orgaae7d9c">Segment Registers</h4>
+<div class="outline-text-4" id="text-orgaae7d9c">
 <p>
 These refer to specific areas defined for data, code and stack. 
 </p>
@@ -1279,9 +1279,9 @@ All memory locations within a segment are relative to the starting address of th
 </div>
 </div>
 
-<div id="outline-container-org9a5bba4" class="outline-3">
-<h3 id="org9a5bba4">Example of using registers</h3>
-<div class="outline-text-3" id="text-org9a5bba4">
+<div id="outline-container-orgbb3688c" class="outline-3">
+<h3 id="orgbb3688c">Example of using registers</h3>
+<div class="outline-text-3" id="text-orgbb3688c">
 <div class="org-src-container">
 <pre class="src src-asm"><span class="org-function-name">section</span> .text
   <span class="org-keyword">global</span> _start   <span class="org-comment-delimiter">; </span><span class="org-comment">must be declared for linker (gcc)</span>
@@ -1310,9 +1310,9 @@ All memory locations within a segment are relative to the starting address of th
 </div>
 </div>
 </div>
-<div id="outline-container-org529a9e0" class="outline-3">
-<h3 id="org529a9e0">XMM Registers</h3>
-<div class="outline-text-3" id="text-org529a9e0">
+<div id="outline-container-orgd1a6912" class="outline-3">
+<h3 id="orgd1a6912">XMM Registers</h3>
+<div class="outline-text-3" id="text-orgd1a6912">
 <p>
 These are used to support floating point operations and Single Instruction Multiple Data (SMID) Instructions, used in graphics and DSP calculations. These are xmm0 to xmm15.
 </p>
@@ -1320,9 +1320,9 @@ These are used to support floating point operations and Single Instruction Multi
 </div>
 </div>
 
-<div id="outline-container-org4b9d500" class="outline-2">
-<h2 id="org4b9d500">System Calls</h2>
-<div class="outline-text-2" id="text-org4b9d500">
+<div id="outline-container-orgafc6472" class="outline-2">
+<h2 id="orgafc6472">System Calls</h2>
+<div class="outline-text-2" id="text-orgafc6472">
 <p>
 API between the the <code>user space</code> and the <code>system space</code>.
 System calls are used by putting the number associated with that call into <code>EAX</code> and the arguments to that system call into other specific registers.
@@ -1446,13 +1446,13 @@ All syscalls are listed in  /usr/include/asm/unistd.h which can be used to look 
 </div>
 </div>
 
-<div id="outline-container-org7226e0f" class="outline-2">
-<h2 id="org7226e0f">Instructions</h2>
-<div class="outline-text-2" id="text-org7226e0f">
+<div id="outline-container-orgb07a0a3" class="outline-2">
+<h2 id="orgb07a0a3">Instructions</h2>
+<div class="outline-text-2" id="text-orgb07a0a3">
 </div>
-<div id="outline-container-orgb640bf9" class="outline-3">
-<h3 id="orgb640bf9">Move</h3>
-<div class="outline-text-3" id="text-orgb640bf9">
+<div id="outline-container-orgc0e6cfd" class="outline-3">
+<h3 id="orgc0e6cfd">Move</h3>
+<div class="outline-text-3" id="text-orgc0e6cfd">
 <div class="org-src-container">
 <pre class="src src-asm"><span class="org-function-name">mov</span> &lt;dest&gt;, &lt;src&gt;
 <span class="org-comment-delimiter">; </span><span class="org-comment">for example</span>
@@ -1469,9 +1469,9 @@ All syscalls are listed in  /usr/include/asm/unistd.h which can be used to look 
 </ul>
 </div>
 </div>
-<div id="outline-container-org7c4041c" class="outline-3">
-<h3 id="org7c4041c">Address</h3>
-<div class="outline-text-3" id="text-org7c4041c">
+<div id="outline-container-orgde7de1e" class="outline-3">
+<h3 id="orgde7de1e">Address</h3>
+<div class="outline-text-3" id="text-orgde7de1e">
 <p>
 The load effective address command <code>lea</code> is used to put the address of a variable into a register.
 </p>
@@ -1484,9 +1484,9 @@ The load effective address command <code>lea</code> is used to put the address o
 </div>
 </div>
 </div>
-<div id="outline-container-org9c107ff" class="outline-3">
-<h3 id="org9c107ff">Convert</h3>
-<div class="outline-text-3" id="text-org9c107ff">
+<div id="outline-container-org4c582fe" class="outline-3">
+<h3 id="org4c582fe">Convert</h3>
+<div class="outline-text-3" id="text-org4c582fe">
 <p>
 Conversion instructions change a variable from one size to another. Narrowing conversions require no specific instructions since the lower portions of registers are directly accessible. 
 </p>
@@ -1499,9 +1499,9 @@ Conversion instructions change a variable from one size to another. Narrowing co
 Widening conversions vary depending on the data types involved.
 </p>
 </div>
-<div id="outline-container-org39ee334" class="outline-4">
-<h4 id="org39ee334">widening - unsigned</h4>
-<div class="outline-text-4" id="text-org39ee334">
+<div id="outline-container-org8dcde7f" class="outline-4">
+<h4 id="org8dcde7f">widening - unsigned</h4>
+<div class="outline-text-4" id="text-org8dcde7f">
 <p>
 Unsigned numbers only take positive values, therefore when dealing with unsigned numbers the upper part of the memory location or register must be set to zero. 
 </p>
@@ -1524,9 +1524,9 @@ NB: This does not work when converting a quadword destination with a double word
 </p>
 </div>
 </div>
-<div id="outline-container-org58ece45" class="outline-4">
-<h4 id="org58ece45">widening - signed</h4>
-<div class="outline-text-4" id="text-org58ece45">
+<div id="outline-container-org279c1d5" class="outline-4">
+<h4 id="org279c1d5">widening - signed</h4>
+<div class="outline-text-4" id="text-org279c1d5">
 <p>
 When the data is signed, the upper portion must be set to ether zeros or ones depending on the sign of the number. 
 </p>
@@ -1587,13 +1587,13 @@ Specific registers also have their own signed widening conversion instructions:
 </div>
 </div>
 </div>
-<div id="outline-container-org029d7ff" class="outline-3">
-<h3 id="org029d7ff">Arithmetic</h3>
-<div class="outline-text-3" id="text-org029d7ff">
+<div id="outline-container-orgab2a520" class="outline-3">
+<h3 id="orgab2a520">Arithmetic</h3>
+<div class="outline-text-3" id="text-orgab2a520">
 </div>
-<div id="outline-container-orga6da479" class="outline-4">
-<h4 id="orga6da479">Addition</h4>
-<div class="outline-text-4" id="text-orga6da479">
+<div id="outline-container-org9b397f2" class="outline-4">
+<h4 id="org9b397f2">Addition</h4>
+<div class="outline-text-4" id="text-org9b397f2">
 <div class="org-src-container">
 <pre class="src src-asm"><span class="org-function-name">add</span> &lt;dest&gt;, &lt;src&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">this results in: &lt;dest&gt; = &lt;dest&gt; + &lt;src&gt;</span>
 </pre>
@@ -1645,9 +1645,9 @@ When the numbers being added will result in a sum greater than the register size
 </div>
 </div>
 
-<div id="outline-container-org40c7140" class="outline-4">
-<h4 id="org40c7140">Subtraction</h4>
-<div class="outline-text-4" id="text-org40c7140">
+<div id="outline-container-org8d41842" class="outline-4">
+<h4 id="org8d41842">Subtraction</h4>
+<div class="outline-text-4" id="text-org8d41842">
 <p>
 The subtraction commands are self-explanatory when taken with the above information on addition.
 </p>
@@ -1659,16 +1659,16 @@ The subtraction commands are self-explanatory when taken with the above informat
 </div>
 </div>
 
-<div id="outline-container-orga965269" class="outline-4">
-<h4 id="orga965269">Multiplication</h4>
-<div class="outline-text-4" id="text-orga965269">
+<div id="outline-container-org2c95e8f" class="outline-4">
+<h4 id="org2c95e8f">Multiplication</h4>
+<div class="outline-text-4" id="text-org2c95e8f">
 <p>
 There are different commands for multiplying signed or unsigned integers. Both typically produce double sized results. 
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org3d7785e"></a>Unsigned Integer Multiplication<br />
-<div class="outline-text-5" id="text-org3d7785e">
+<li><a id="org19a6530"></a>Unsigned Integer Multiplication<br />
+<div class="outline-text-5" id="text-org19a6530">
 <p>
 The general form is as follows:
 </p>
@@ -1751,8 +1751,8 @@ For example, if two double words are multiplied, the result will be a quad word 
 </div>
 </li>
 
-<li><a id="org3c473b5"></a>Signed Integer multiplication<br />
-<div class="outline-text-5" id="text-org3c473b5">
+<li><a id="org9e36039"></a>Signed Integer multiplication<br />
+<div class="outline-text-5" id="text-org9e36039">
 <p>
 Signed integer multiplication is more flex able with its operands / sizes. The destination must always be a register.
 </p>
@@ -1771,8 +1771,8 @@ Signed integer multiplication is more flex able with its operands / sizes. The d
 </div>
 </li>
 
-<li><a id="orge52547c"></a>Integer Division<br />
-<div class="outline-text-5" id="text-orge52547c">
+<li><a id="orgcc6de50"></a>Integer Division<br />
+<div class="outline-text-5" id="text-orgcc6de50">
 <p>
 Division requires that the dividend is larger in data type size than the divisor. It is critical that the dividend is set correctly for division to work. For word, double word and quad word divisions the dividend requires both the <code>D</code> (for upper) and <code>A</code> (for lower) registers. The divisor can be a memory location or a register, not an intermediate. The result will be placed in the <code>A</code> register, the remainder will go into ether the <code>ah</code>, <code>dx</code>, <code>edx</code> or <code>rdx</code> registers. 
 </p>
@@ -1857,9 +1857,9 @@ Signed and unsigned integer division instructions work in the same way but have 
 </div>
 </div>
 
-<div id="outline-container-org9ffa392" class="outline-3">
-<h3 id="org9ffa392">Logic</h3>
-<div class="outline-text-3" id="text-org9ffa392">
+<div id="outline-container-orga0c4d59" class="outline-3">
+<h3 id="orga0c4d59">Logic</h3>
+<div class="outline-text-3" id="text-orga0c4d59">
 <div class="org-src-container">
 <pre class="src src-asm"><span class="org-comment-delimiter">;        </span><span class="org-comment">0101        0101         0101          </span>
 <span class="org-comment-delimiter">;        </span><span class="org-comment">0011        0011         0011         0011</span>
@@ -1878,9 +1878,9 @@ Signed and unsigned integer division instructions work in the same way but have 
 </div>
 </div>
 </div>
-<div id="outline-container-org9f233fd" class="outline-3">
-<h3 id="org9f233fd">Shift</h3>
-<div class="outline-text-3" id="text-org9f233fd">
+<div id="outline-container-org44ffd53" class="outline-3">
+<h3 id="org44ffd53">Shift</h3>
+<div class="outline-text-3" id="text-org44ffd53">
 <div class="org-src-container">
 <pre class="src src-asm"><span class="org-comment-delimiter">; </span><span class="org-comment">logical shifts</span>
 <span class="org-function-name">shl</span> &lt;dest&gt;, &lt;imm&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">shift left, imm or cl must between 1 and 64</span>
@@ -1901,9 +1901,9 @@ Signed and unsigned integer division instructions work in the same way but have 
 </div>
 </div>
 </div>
-<div id="outline-container-org5581f75" class="outline-3">
-<h3 id="org5581f75">Rotate</h3>
-<div class="outline-text-3" id="text-org5581f75">
+<div id="outline-container-orgcd4e614" class="outline-3">
+<h3 id="orgcd4e614">Rotate</h3>
+<div class="outline-text-3" id="text-orgcd4e614">
 <p>
 Rotations are essentially shifts that put the bits that would be shifted off the end onto the beginning, or vica verca.
 </p>
@@ -1925,25 +1925,25 @@ the <code>imm</code> or the value in the <code>cl</code> register must be betwee
 </p>
 </div>
 </div>
-<div id="outline-container-orga00dec7" class="outline-3">
-<h3 id="orga00dec7">Control instructions</h3>
-<div class="outline-text-3" id="text-orga00dec7">
+<div id="outline-container-orgcf1a5bd" class="outline-3">
+<h3 id="orgcf1a5bd">Control instructions</h3>
+<div class="outline-text-3" id="text-orgcf1a5bd">
 <p>
 These include structures such as if statements and looping.
 </p>
 </div>
-<div id="outline-container-org41d91e8" class="outline-4">
-<h4 id="org41d91e8">Labels</h4>
-<div class="outline-text-4" id="text-org41d91e8">
+<div id="outline-container-org46458b6" class="outline-4">
+<h4 id="org46458b6">Labels</h4>
+<div class="outline-text-4" id="text-org46458b6">
 <p>
 These are targets for jumps. These should start with a letter, and my include numbers, underscores, and should be followed by a colon. In <code>YASM</code> labels are case sensitive.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5ec08be" class="outline-4">
-<h4 id="org5ec08be">Unconditional control instructions.</h4>
-<div class="outline-text-4" id="text-org5ec08be">
+<div id="outline-container-org445972c" class="outline-4">
+<h4 id="org445972c">Unconditional control instructions.</h4>
+<div class="outline-text-4" id="text-org445972c">
 <div class="org-src-container">
 <pre class="src src-asm"><span class="org-function-name">jmp</span> &lt;label&gt; <span class="org-comment-delimiter">; </span><span class="org-comment">moves execution in the program to the label.</span>
 </pre>
@@ -1951,9 +1951,9 @@ These are targets for jumps. These should start with a letter, and my include nu
 </div>
 </div>
 
-<div id="outline-container-org34f457b" class="outline-4">
-<h4 id="org34f457b">Conditional Control Instructions</h4>
-<div class="outline-text-4" id="text-org34f457b">
+<div id="outline-container-orgfe9f28a" class="outline-4">
+<h4 id="orgfe9f28a">Conditional Control Instructions</h4>
+<div class="outline-text-4" id="text-orgfe9f28a">
 <p>
 These are made up of two instructions that must happen one immediately after the other. First there has to be some sort of comparison, then the jump instruction. The comparison will compare two operands and store the result in the <code>rFlag</code> register.
 </p>
@@ -2035,9 +2035,9 @@ Conditional jumps can be adjacent. for example:
 </div>
 </div>
 
-<div id="outline-container-orgeb5dfa4" class="outline-4">
-<h4 id="orgeb5dfa4">Jump Range</h4>
-<div class="outline-text-4" id="text-orgeb5dfa4">
+<div id="outline-container-org990d1af" class="outline-4">
+<h4 id="org990d1af">Jump Range</h4>
+<div class="outline-text-4" id="text-org990d1af">
 <p>
 For the above <code>short jumps</code> the target label must be no more than 128 bytes from the jump call. However, this limit does not apply for the unconditional jump <code>jmp</code>.
 </p>
@@ -2045,9 +2045,9 @@ For the above <code>short jumps</code> the target label must be no more than 128
 </div>
 </div>
 
-<div id="outline-container-org3840808" class="outline-3">
-<h3 id="org3840808">Iteration</h3>
-<div class="outline-text-3" id="text-org3840808">
+<div id="outline-container-org1e4f1e2" class="outline-3">
+<h3 id="org1e4f1e2">Iteration</h3>
+<div class="outline-text-3" id="text-org1e4f1e2">
 <p>
 Iteration commands can be used to make simple loops. For example, the following codeblock shows a loop for summing odd integers within a range:
 </p>
@@ -2070,9 +2070,9 @@ Iteration commands can be used to make simple loops. For example, the following 
 </div>
 </div>
 </div>
-<div id="outline-container-org8786589" class="outline-3">
-<h3 id="org8786589">Loop</h3>
-<div class="outline-text-3" id="text-org8786589">
+<div id="outline-container-org6f4f138" class="outline-3">
+<h3 id="org6f4f138">Loop</h3>
+<div class="outline-text-3" id="text-org6f4f138">
 <p>
 There is a loop instruction which simplifies iteration. It will automatically decriment the <code>rcx</code> register and perform a comparison to 0, jumping when <code>rcx</code> != 0.
 </p>
@@ -2091,9 +2091,9 @@ There is a loop instruction which simplifies iteration. It will automatically de
 </div>
 </div>
 </div>
-<div id="outline-container-orga88fe97" class="outline-3">
-<h3 id="orga88fe97">Example program using intructions</h3>
-<div class="outline-text-3" id="text-orga88fe97">
+<div id="outline-container-org13df3da" class="outline-3">
+<h3 id="org13df3da">Example program using intructions</h3>
+<div class="outline-text-3" id="text-org13df3da">
 <div class="org-src-container">
 <pre class="src src-asm"><span class="org-function-name">section</span> .data
   <span class="org-keyword">SUCCESS</span>      equ  0
@@ -2120,9 +2120,9 @@ There is a loop instruction which simplifies iteration. It will automatically de
 </div>
 </div>
 </div>
-<div id="outline-container-org1e1f6d4" class="outline-2">
-<h2 id="org1e1f6d4">Calling C libraries</h2>
-<div class="outline-text-2" id="text-org1e1f6d4">
+<div id="outline-container-org74668d1" class="outline-2">
+<h2 id="org74668d1">Calling C libraries</h2>
+<div class="outline-text-2" id="text-org74668d1">
 <p>
 C librries can be called from assembly provided they are compiled together. For example:
 </p>
@@ -2165,13 +2165,13 @@ $ ./calling_c
 </div>
 </div>
 
-<div id="outline-container-orgb3f6881" class="outline-2">
-<h2 id="orgb3f6881">Related Topics</h2>
-<div class="outline-text-2" id="text-orgb3f6881">
+<div id="outline-container-orge5d8f62" class="outline-2">
+<h2 id="orge5d8f62">Related Topics</h2>
+<div class="outline-text-2" id="text-orge5d8f62">
 </div>
-<div id="outline-container-orgf4853ae" class="outline-3">
-<h3 id="orgf4853ae">Addressing data in memory</h3>
-<div class="outline-text-3" id="text-orgf4853ae">
+<div id="outline-container-org394e200" class="outline-3">
+<h3 id="org394e200">Addressing data in memory</h3>
+<div class="outline-text-3" id="text-org394e200">
 <p>
 The process through which execution is controlled is called the <code>fetch-decode-execute cycle</code>. The instruction is fetched from memory. The processor can access one or more bytes of memory at a given time.
 The processor stores data in <code>reverse-byte sequence</code>.
@@ -2189,9 +2189,9 @@ In memory:
 </div>
 </div>
 
-<div id="outline-container-orgec66703" class="outline-3">
-<h3 id="orgec66703">Memory Hierarchy</h3>
-<div class="outline-text-3" id="text-orgec66703">
+<div id="outline-container-org35d48b7" class="outline-3">
+<h3 id="org35d48b7">Memory Hierarchy</h3>
+<div class="outline-text-3" id="text-org35d48b7">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 2:</span> Shows access speeds for different types of storage</caption>
 
@@ -2238,9 +2238,9 @@ In memory:
 </div>
 </div>
 
-<div id="outline-container-orgd5da4af" class="outline-3">
-<h3 id="orgd5da4af">Integer representation</h3>
-<div class="outline-text-3" id="text-orgd5da4af">
+<div id="outline-container-org2592274" class="outline-3">
+<h3 id="org2592274">Integer representation</h3>
+<div class="outline-text-3" id="text-org2592274">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
@@ -2301,9 +2301,9 @@ In memory:
 </div>
 </div>
 
-<div id="outline-container-org12f4796" class="outline-3">
-<h3 id="org12f4796">Two's Complement</h3>
-<div class="outline-text-3" id="text-org12f4796">
+<div id="outline-container-orgedbc638" class="outline-3">
+<h3 id="orgedbc638">Two's Complement</h3>
+<div class="outline-text-3" id="text-orgedbc638">
 <p>
 Signed numbers are often represented in twos complement form. A negative representation of a positive number can be made by flipping the bits and then adding 1. For example:
 </p>
@@ -2344,9 +2344,9 @@ Signed numbers are often represented in twos complement form. A negative represe
 </div>
 
 
-<div id="outline-container-org92da593" class="outline-2">
-<h2 id="org92da593">Handy Links</h2>
-<div class="outline-text-2" id="text-org92da593">
+<div id="outline-container-org9749839" class="outline-2">
+<h2 id="org9749839">Handy Links</h2>
+<div class="outline-text-2" id="text-org9749839">
 <p>
 <a href="https://www.tutorialspoint.com/assembly_programming/">Link to tutorial</a>
 <a href="http://www.egr.unlv.edu/~ed/assembly64.pdf">Another good tutorial</a>
