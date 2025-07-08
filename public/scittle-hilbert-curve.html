@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -206,15 +206,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org66540ba">what is a hilbert curve?</a></li>
-<li><a href="#org698272c">what is scittle?</a>
+<li><a href="#org3d2eb19">what is a hilbert curve?</a></li>
+<li><a href="#org2a4b810">what is scittle?</a>
 <ul>
-<li><a href="#orgb8a33fa">Aside</a></li>
+<li><a href="#orgb0e2214">Aside</a></li>
 </ul>
 </li>
-<li><a href="#orge6d08fa">handle user input code</a></li>
-<li><a href="#org0d7796f">drawing</a></li>
-<li><a href="#orgb310dbd">making the hilbert curve</a></li>
+<li><a href="#org15f2dd0">handle user input code</a></li>
+<li><a href="#org0328132">drawing</a></li>
+<li><a href="#orga65a7ea">making the hilbert curve</a></li>
 </ul>
 </div>
 </div>
@@ -231,33 +231,30 @@
 Let's make a hilbert curve on is page in Clojure (the one 
 &#10084) and allow the reader to manipulate the code in-place.
 </p>
-
-<div id="outline-container-org66540ba" class="outline-2">
-<h2 id="org66540ba">what is a hilbert curve?</h2>
-<div class="outline-text-2" id="text-org66540ba">
+<div id="outline-container-org3d2eb19" class="outline-2">
+<h2 id="org3d2eb19">what is a hilbert curve?</h2>
+<div class="outline-text-2" id="text-org3d2eb19">
 <p>
 A <a href="http://en.wikipedia.org/wiki/Hilbert_curve">Hibert Curve</a> is a space-filling fractal. it's useful for mapping 2 dimensional space stuff onto 1 dimension. I like it because it looks good.
 </p>
 
 
-<div id="org6df8087" class="figure">
+<div id="org1175968" class="figure">
 <p><img src="images/HC-3-iterations.png" alt="HC-3-iterations.png" />
 </p>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org698272c" class="outline-2">
-<h2 id="org698272c">what is scittle?</h2>
-<div class="outline-text-2" id="text-org698272c">
+<div id="outline-container-org2a4b810" class="outline-2">
+<h2 id="org2a4b810">what is scittle?</h2>
+<div class="outline-text-2" id="text-org2a4b810">
 <p>
 <a href="https://github.com/babashka/scittle">Scittle</a> is is a small Clojure interpreter designed to be embedded inside web pages using html <code>&lt;script&gt;</code> tags. For example to evaluate code input by the user.
 </p>
 </div>
-
-<div id="outline-container-orgb8a33fa" class="outline-3">
-<h3 id="orgb8a33fa">Aside</h3>
-<div class="outline-text-3" id="text-orgb8a33fa">
+<div id="outline-container-orgb0e2214" class="outline-3">
+<h3 id="orgb0e2214">Aside</h3>
+<div class="outline-text-3" id="text-orgb0e2214">
 <p>
 It's great how simple Scittle is to use inside this blog. I'm writing in an <a href="https://orgmode.org">org file</a> in Emacs. I embed some script tags in a <a href="https://orgmode.org/manual/Quoting-HTML-tags.html">export block</a>. Like so:
 </p>
@@ -265,7 +262,7 @@ It's great how simple Scittle is to use inside this blog. I'm writing in an <a h
 <div class="org-src-container">
 <pre class="src src-html">#+begin_export html
 &lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"https://cdn.jsdelivr.net/npm/scittle@0.5.14/dist/scittle.js"</span>
-        <span class="org-variable-name">type</span>=<span class="org-string">"application/javascript"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+          <span class="org-variable-name">type</span>=<span class="org-string">"application/javascript"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
 &lt;<span class="org-function-name">script</span> <span class="org-variable-name">type</span>=<span class="org-string">"application/x-scittle"</span>&gt;
   (defn my-alert []
    (js/alert "You clicked!"))
@@ -295,10 +292,9 @@ Then I run my regular <a href="how-this-blog-works.html">build script</a> and aw
 </div>
 </div>
 </div>
-
-<div id="outline-container-orge6d08fa" class="outline-2">
-<h2 id="orge6d08fa">handle user input code</h2>
-<div class="outline-text-2" id="text-orge6d08fa">
+<div id="outline-container-org15f2dd0" class="outline-2">
+<h2 id="org15f2dd0">handle user input code</h2>
+<div class="outline-text-2" id="text-org15f2dd0">
 <p>
 First let's make a <code>textarea</code> in html to get the user input. We'd like a button to click evaluate what the user enters. Then output the result beneath.
 </p>
@@ -308,23 +304,23 @@ First let's make a <code>textarea</code> in html to get the user input. We'd lik
 
 (defn set-output-area [v output-id]
   (-&gt; (js/document.getElementById output-id)
-      (.-innerHTML)
-      (set! v)))
+        (.-innerHTML)
+        (set! v)))
 
 (defn try-eval [v]
   (try (js/scittle.core.eval_string v)
     (catch js/Error e
-      (str "ERROR: " e))))
+        (str "ERROR: " e))))
 
 (defn read-eval-input [input-id]
   (-&gt; input-id
-      js/document.getElementById 
-      .-value
-      try-eval))
+        js/document.getElementById 
+        .-value
+        try-eval))
 
 (set! (.-read_input js/window)
-      #(set-output-area (read-eval-input "code-area")
-                        "output-area"))
+        #(set-output-area (read-eval-input "code-area")
+                          "output-area"))
 
 &lt;/<span class="org-function-name">script</span>&gt;
 &lt;<span class="org-function-name">body</span>&gt;
@@ -376,10 +372,9 @@ Right nice.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org0d7796f" class="outline-2">
-<h2 id="org0d7796f">drawing</h2>
-<div class="outline-text-2" id="text-org0d7796f">
+<div id="outline-container-org0328132" class="outline-2">
+<h2 id="org0328132">drawing</h2>
+<div class="outline-text-2" id="text-org0328132">
 <p>
 I think the easiest way to do this will be with <code>canvas</code>.
 </p>
@@ -431,13 +426,13 @@ Let's have it so that the user can pass in an vector of points that the line wil
 (defn try-eval [v]
   (try (js/scittle.core.eval_string v)
     (catch js/Error e
-      (str "ERROR: " e))))
+        (str "ERROR: " e))))
 
 (defn read-eval-input [input-id]
   (-&gt; input-id
-      js/document.getElementById 
-      .-value
-      try-eval))
+        js/document.getElementById 
+        .-value
+        try-eval))
 
 (defn draw-line-from-points [context points]
   (.clearRect context 0 0 (.-width c) (.-height c))
@@ -448,8 +443,8 @@ Let's have it so that the user can pass in an vector of points that the line wil
   (.stroke context))
 
 (set! (.-read_points js/window)
-      #(-&gt;&gt; (read-eval-input "points-input")
-            (draw-line-from-points ctx)))
+        #(-&gt;&gt; (read-eval-input "points-input")
+              (draw-line-from-points ctx)))
 
 &lt;/<span class="org-function-name">script</span>&gt;
 &lt;<span class="org-function-name">body</span>&gt;
@@ -507,10 +502,9 @@ Now it's just a matter of choosing the right points.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgb310dbd" class="outline-2">
-<h2 id="orgb310dbd">making the hilbert curve</h2>
-<div class="outline-text-2" id="text-orgb310dbd">
+<div id="outline-container-orga65a7ea" class="outline-2">
+<h2 id="orga65a7ea">making the hilbert curve</h2>
+<div class="outline-text-2" id="text-orga65a7ea">
 <p>
 How this fractal works is that there are four patterns, and each one of these four pattern can be split up into quarters, and each one of those quarters can be swapped for one of the original four patterns. Recursion.
 </p>
@@ -567,10 +561,10 @@ To turn this into the next iteration we need to subdivide the space into four ce
 
 <span class="org-rainbow-delimiters-depth-1">(</span>map -&gt;subcells init<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; (({:cell (0 0), :pattern :D}</span>
-<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (0 1), :pattern :A}</span>
-<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 1), :pattern :A}</span>
-<span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 0), :pattern :B}))</span>
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; (({:cell (0 0), :pattern :D}
+</span><span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (0 1), :pattern :A}
+</span><span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 1), :pattern :A}
+</span><span class="org-comment-delimiter">;     </span><span class="org-comment">{:cell (1 0), :pattern :B}))</span>
 </pre>
 </div>
 
@@ -585,22 +579,22 @@ Okay, now we would like to iterate that, each time concatenating the results int
 
 <span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-cells 2<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ({:cell (0 0), :pattern :A}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 0), :pattern :D}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 1), :pattern :D}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 1), :pattern :C}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 2), :pattern :D}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 3), :pattern :A}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 3), :pattern :A}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 2), :pattern :B}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 2), :pattern :D}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 3), :pattern :A}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 3), :pattern :A}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 2), :pattern :B}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 1), :pattern :C}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 1), :pattern :B}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 0), :pattern :B}</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 0), :pattern :A})</span>
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ({:cell (0 0), :pattern :A}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 0), :pattern :D}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 1), :pattern :D}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 1), :pattern :C}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 2), :pattern :D}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (0 3), :pattern :A}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 3), :pattern :A}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (1 2), :pattern :B}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 2), :pattern :D}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 3), :pattern :A}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 3), :pattern :A}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 2), :pattern :B}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 1), :pattern :C}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 1), :pattern :B}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (2 0), :pattern :B}
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">{:cell (3 0), :pattern :A})</span>
 </pre>
 </div>
 
@@ -622,23 +616,23 @@ Lovely. Okay we don't care about the patterns any more once we have finished ite
 
 <span class="org-rainbow-delimiters-depth-1">(</span>hilbert-curve-points 2 400<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ((0.0 0.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 0.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 100.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 100.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 200.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 300.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 300.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 200.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 200.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 300.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 300.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 200.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 100.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 100.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 0.0)</span>
-<span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 0.0))</span>
-
+<span class="org-comment-delimiter">;</span><span class="org-comment">=&gt; ((0.0 0.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 0.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 100.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 100.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 200.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(0.0 300.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 300.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(100.0 200.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 200.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 300.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 300.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 200.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 100.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 100.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(200.0 0.0)
+</span><span class="org-comment-delimiter">;    </span><span class="org-comment">(300.0 0.0))
+</span>
 </pre>
 </div>
 

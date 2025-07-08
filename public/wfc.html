@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -206,25 +206,25 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org49609f0">WaveFunctionCollapse</a></li>
-<li><a href="#org39feb29">Setup</a>
+<li><a href="#org6d0c34d">WaveFunctionCollapse</a></li>
+<li><a href="#org5445a3c">Setup</a>
 <ul>
-<li><a href="#org9a71916">Tiles</a></li>
-<li><a href="#org7006ab2">Drawing a grid of tiles</a>
+<li><a href="#orgd1141fb">Tiles</a></li>
+<li><a href="#org6202ea2">Drawing a grid of tiles</a>
 <ul>
-<li><a href="#orgb452fe3">Pick out some tiles to use</a></li>
+<li><a href="#orgc9f73e9">Pick out some tiles to use</a></li>
 </ul>
 </li>
-<li><a href="#org5ac8581">A random world</a></li>
+<li><a href="#orgfeed829">A random world</a></li>
 </ul>
 </li>
-<li><a href="#org770bf73">Adjacency rules</a></li>
-<li><a href="#org1554d47">Applying the rules</a>
+<li><a href="#orgdd815e5">Adjacency rules</a></li>
+<li><a href="#org07568da">Applying the rules</a>
 <ul>
-<li><a href="#orgfef8e4e">displaying it</a></li>
+<li><a href="#orgeea50f0">displaying it</a></li>
 </ul>
 </li>
-<li><a href="#org49ce408">What next</a></li>
+<li><a href="#orgcb1d5d2">What next</a></li>
 </ul>
 </div>
 </div>
@@ -237,32 +237,29 @@
   <body>
     <div id="app"></div>
   </body>
-
-<div id="outline-container-org49609f0" class="outline-2">
-<h2 id="org49609f0">WaveFunctionCollapse</h2>
-<div class="outline-text-2" id="text-org49609f0">
+<div id="outline-container-org6d0c34d" class="outline-2">
+<h2 id="org6d0c34d">WaveFunctionCollapse</h2>
+<div class="outline-text-2" id="text-org6d0c34d">
 <p>
 WaveFunctionCollapse is a texture synthesis algorithm. It can be used to procedurally creating maps out of tile-sets based on adjacency rules. This post expounds a simplified version of it in CLJS. Let's make some RPG world maps using it.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org39feb29" class="outline-2">
-<h2 id="org39feb29">Setup</h2>
-<div class="outline-text-2" id="text-org39feb29">
+<div id="outline-container-org5445a3c" class="outline-2">
+<h2 id="org5445a3c">Setup</h2>
+<div class="outline-text-2" id="text-org5445a3c">
 </div>
-<div id="outline-container-org9a71916" class="outline-3">
-<h3 id="org9a71916">Tiles</h3>
-<div class="outline-text-3" id="text-org9a71916">
+<div id="outline-container-orgd1141fb" class="outline-3">
+<h3 id="orgd1141fb">Tiles</h3>
+<div class="outline-text-3" id="text-orgd1141fb">
 <p>
 Firstly I grabbed a free tile-set from <a href="https://opengameart.org/content/16x16-overworld-tiles">opengamechart.org</a>. They came as a single gif file so I converted it to a png and then had chatGPT write a script to split it into the 16x16 pixel tiles.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org7006ab2" class="outline-3">
-<h3 id="org7006ab2">Drawing a grid of tiles</h3>
-<div class="outline-text-3" id="text-org7006ab2">
+<div id="outline-container-org6202ea2" class="outline-3">
+<h3 id="org6202ea2">Drawing a grid of tiles</h3>
+<div class="outline-text-3" id="text-org6202ea2">
 <p>
 Let's do some setup to show a css grid of tiles:
 </p>
@@ -289,10 +286,9 @@ Let's do some setup to show a css grid of tiles:
 </pre>
 </div>
 </div>
-
-<div id="outline-container-orgb452fe3" class="outline-4">
-<h4 id="orgb452fe3">Pick out some tiles to use</h4>
-<div class="outline-text-4" id="text-orgb452fe3">
+<div id="outline-container-orgc9f73e9" class="outline-4">
+<h4 id="orgc9f73e9">Pick out some tiles to use</h4>
+<div class="outline-text-4" id="text-orgc9f73e9">
 <p>
 I went through the tiles and picked out some water, coast and grassland tiles to start with. Let's generate a map from these:
 </p>
@@ -332,10 +328,9 @@ I went through the tiles and picked out some water, coast and grassland tiles to
 </div>
 </div>
 </div>
-
-<div id="outline-container-org5ac8581" class="outline-3">
-<h3 id="org5ac8581">A random world</h3>
-<div class="outline-text-3" id="text-org5ac8581">
+<div id="outline-container-orgfeed829" class="outline-3">
+<h3 id="orgfeed829">A random world</h3>
+<div class="outline-text-3" id="text-orgfeed829">
 <p>
 Here is a random 5x5 world. It will change if you refresh the page. We can see that there are no adjacency rules here so the map doesn't really make sense. 
 </p>
@@ -345,11 +340,9 @@ Here is a random 5x5 world. It will change if you refresh the page. We can see t
 </div>
 </div>
 </div>
-
-
-<div id="outline-container-org770bf73" class="outline-2">
-<h2 id="org770bf73">Adjacency rules</h2>
-<div class="outline-text-2" id="text-org770bf73">
+<div id="outline-container-orgdd815e5" class="outline-2">
+<h2 id="orgdd815e5">Adjacency rules</h2>
+<div class="outline-text-2" id="text-orgdd815e5">
 <p>
 We need a set of rules to see which tiles are allowed to go next to which. This can become quite painstaking if you do it by hand. The original WFC project has a tool to analyse existing valid maps and extract rules from them. Here we only have a few tiles and I don't have any example maps, so I've used a "sockets" approach whereby we match up tile types based on the content at positions on the corresponding edges of the tiles.
 </p>
@@ -413,10 +406,9 @@ We need a set of rules to see which tiles are allowed to go next to which. This 
 </div>
 </div>
 </div>
-
-<div id="outline-container-org1554d47" class="outline-2">
-<h2 id="org1554d47">Applying the rules</h2>
-<div class="outline-text-2" id="text-org1554d47">
+<div id="outline-container-org07568da" class="outline-2">
+<h2 id="org07568da">Applying the rules</h2>
+<div class="outline-text-2" id="text-org07568da">
 <p>
 Each cell will start with a complete set of possible tile types. For each iteration we will resolve one of the tiles with the lowest number of possible types. Then we need to update its neighbours since it will have an impact on what values are still possible for the neighbours.
 </p>
@@ -529,10 +521,9 @@ All of the below has been written with a flagrant disregard for performance.
 </pre>
 </div>
 </div>
-
-<div id="outline-container-orgfef8e4e" class="outline-3">
-<h3 id="orgfef8e4e">displaying it</h3>
-<div class="outline-text-3" id="text-orgfef8e4e">
+<div id="outline-container-orgeea50f0" class="outline-3">
+<h3 id="orgeea50f0">displaying it</h3>
+<div class="outline-text-3" id="text-orgeea50f0">
 <p>
 Here's the plumbing used to render it here.
 </p>
@@ -587,10 +578,9 @@ Here's the plumbing used to render it here.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org49ce408" class="outline-2">
-<h2 id="org49ce408">What next</h2>
-<div class="outline-text-2" id="text-org49ce408">
+<div id="outline-container-orgcb1d5d2" class="outline-2">
+<h2 id="orgcb1d5d2">What next</h2>
+<div class="outline-text-2" id="text-orgcb1d5d2">
 <p>
 The above would be improved by having weightings for the tile types, maybe making land tiles more likely. Adding more different tiles would also be fun.
 </p>

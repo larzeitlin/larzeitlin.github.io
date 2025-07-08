@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -206,15 +206,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgad782c8">Making a geo PWA with CLJS and Openlayers</a>
+<li><a href="#orgf24df78">Making a geo PWA with CLJS and Openlayers</a>
 <ul>
-<li><a href="#org7439477">Motivation</a></li>
-<li><a href="#org6e5edd3">Shadow-cljs setup</a></li>
-<li><a href="#org4c49ad9">Adding Openlayers</a></li>
-<li><a href="#org72edd58">Turning it into a PWA</a>
+<li><a href="#org22e1573">Motivation</a></li>
+<li><a href="#org3564ef1">Shadow-cljs setup</a></li>
+<li><a href="#orgd638633">Adding Openlayers</a></li>
+<li><a href="#orgdec6553">Turning it into a PWA</a>
 <ul>
-<li><a href="#org70d29e2">Icons</a></li>
-<li><a href="#org83af3e8">Manifest</a></li>
+<li><a href="#org3e50c17">Icons</a></li>
+<li><a href="#org0fe7a21">Manifest</a></li>
 </ul>
 </li>
 </ul>
@@ -222,14 +222,13 @@
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orgad782c8" class="outline-2">
-<h2 id="orgad782c8">Making a geo PWA with CLJS and Openlayers</h2>
-<div class="outline-text-2" id="text-orgad782c8">
+<div id="outline-container-orgf24df78" class="outline-2">
+<h2 id="orgf24df78">Making a geo PWA with CLJS and Openlayers</h2>
+<div class="outline-text-2" id="text-orgf24df78">
 </div>
-<div id="outline-container-org7439477" class="outline-3">
-<h3 id="org7439477">Motivation</h3>
-<div class="outline-text-3" id="text-org7439477">
+<div id="outline-container-org22e1573" class="outline-3">
+<h3 id="org22e1573">Motivation</h3>
+<div class="outline-text-3" id="text-org22e1573">
 <p>
 We want to make a quick and easy map based app. ClojureScript is the natural choice for me. Maybe this would be a good application for <a href="https://github.com/squint-cljs/squint">Squint</a> though, I haven't tried that yet. Another article perhaps.
 </p>
@@ -243,10 +242,9 @@ The choice of Progressive Web App is motivated by not wanting to have to write p
 </p>
 </div>
 </div>
-
-<div id="outline-container-org6e5edd3" class="outline-3">
-<h3 id="org6e5edd3">Shadow-cljs setup</h3>
-<div class="outline-text-3" id="text-org6e5edd3">
+<div id="outline-container-org3564ef1" class="outline-3">
+<h3 id="org3564ef1">Shadow-cljs setup</h3>
+<div class="outline-text-3" id="text-org3564ef1">
 <p>
 The first part of this setup is based on the shadow-cljs docs. If you encounter problems along the way then refer back to the <a href="https://github.com/thheller/shadow-cljs?tab=readme-ov-file#quick-start">shadow-cljs quickstart guide</a>. 
 </p>
@@ -289,7 +287,7 @@ Now create a build in the <code>shadow-cljs.edn</code> that points to our new ap
 
  <span class="org-clojure-keyword">:builds</span>
  <span class="org-rainbow-delimiters-depth-2">{</span><span class="org-clojure-keyword">:frontend</span> <span class="org-rainbow-delimiters-depth-3">{</span><span class="org-clojure-keyword">:target</span> <span class="org-clojure-keyword">:browser</span>
-             <span class="org-clojure-keyword">:modules</span> <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:main</span> <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:init-fn</span> <span class="org-type">my-map-app.frontend.app</span>/init<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>
+               <span class="org-clojure-keyword">:modules</span> <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:main</span> <span class="org-rainbow-delimiters-depth-5">{</span><span class="org-clojure-keyword">:init-fn</span> <span class="org-type">my-map-app.frontend.app</span>/init<span class="org-rainbow-delimiters-depth-5">}</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">}</span><span class="org-rainbow-delimiters-depth-2">}</span><span class="org-rainbow-delimiters-depth-1">}</span>
 </pre>
 </div>
 
@@ -339,10 +337,9 @@ This should trigger a build. We should have a connected app at <a href="http://l
 </p>
 </div>
 </div>
-
-<div id="outline-container-org4c49ad9" class="outline-3">
-<h3 id="org4c49ad9">Adding Openlayers</h3>
-<div class="outline-text-3" id="text-org4c49ad9">
+<div id="outline-container-orgd638633" class="outline-3">
+<h3 id="orgd638633">Adding Openlayers</h3>
+<div class="outline-text-3" id="text-orgd638633">
 <p>
 Interrupt the <code>shadow-cljs watch</code> process in the terminal with Ctrl-C, and then install Openlayers with <code>npm</code>:
 </p>
@@ -384,7 +381,7 @@ Here we have a very minimal setup: just one tile layer with a basemap from OpenS
     <span class="org-rainbow-delimiters-depth-4">{</span><span class="org-clojure-keyword">:layers</span> <span class="org-rainbow-delimiters-depth-5">[</span><span class="org-rainbow-delimiters-depth-6">(</span>Tile. <span class="org-rainbow-delimiters-depth-7">(</span>clj-&gt;js <span class="org-rainbow-delimiters-depth-8">{</span><span class="org-clojure-keyword">:source</span> <span class="org-rainbow-delimiters-depth-9">(</span>OSM.<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">}</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">]</span>
      <span class="org-clojure-keyword">:target</span> <span class="org-string">"map"</span>
      <span class="org-clojure-keyword">:view</span> <span class="org-rainbow-delimiters-depth-5">(</span>View. <span class="org-rainbow-delimiters-depth-6">(</span>clj-&gt;js <span class="org-rainbow-delimiters-depth-7">{</span><span class="org-clojure-keyword">:center</span> <span class="org-rainbow-delimiters-depth-8">[</span>0 0<span class="org-rainbow-delimiters-depth-8">]</span>
-                            <span class="org-clojure-keyword">:zoom</span> 2<span class="org-rainbow-delimiters-depth-7">}</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+                              <span class="org-clojure-keyword">:zoom</span> 2<span class="org-rainbow-delimiters-depth-7">}</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">}</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 
 <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defn</span> ^<span class="org-clojure-keyword">:</span><span class="org-type">dev</span><span class="org-default">/</span><span class="org-clojure-keyword">after-load</span> <span class="org-function-name">init</span> <span class="org-rainbow-delimiters-depth-2">[]</span>
@@ -424,7 +421,7 @@ Link to this in the <code>index.html</code>:
   &lt;<span class="org-function-name">head</span>&gt;
     &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
     &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"stylesheet"</span>
-          <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
+            <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
   &lt;/<span class="org-function-name">head</span>&gt;
 ...
 &lt;/<span class="org-function-name">html</span>&gt;
@@ -439,10 +436,9 @@ Now you should have an app with an interactive map. Clearly the buttons and attr
 </p>
 </div>
 </div>
-
-<div id="outline-container-org72edd58" class="outline-3">
-<h3 id="org72edd58">Turning it into a PWA</h3>
-<div class="outline-text-3" id="text-org72edd58">
+<div id="outline-container-orgdec6553" class="outline-3">
+<h3 id="orgdec6553">Turning it into a PWA</h3>
+<div class="outline-text-3" id="text-orgdec6553">
 <p>
 We want to allow the user to install this in their device such that it seems like any other app. To get this capability we need to turn it into a progressive web app. While essentially just a web app, a PWA typically has a few extra ingredients:
 </p>
@@ -452,16 +448,15 @@ We want to allow the user to install this in their device such that it seems lik
 <li>a service worker - This does the work of caching certain resources, allowing for offline usage. A service worker is actually optional so we'll skip it in this guide, but look into it.</li>
 </ul>
 </div>
-
-<div id="outline-container-org70d29e2" class="outline-4">
-<h4 id="org70d29e2">Icons</h4>
-<div class="outline-text-4" id="text-org70d29e2">
+<div id="outline-container-org3e50c17" class="outline-4">
+<h4 id="org3e50c17">Icons</h4>
+<div class="outline-text-4" id="text-org3e50c17">
 <p>
 Let's start with the icons. Here's a lazy method: get an LLM to generate a vector image so it's nice and clean (at time of writing Claude is nice for this because it will write the SVG in code and then render a preview). Screenshot that at a reasonable resolution (tip: tell Claude to draw the logo such that it is inside a square with a black outline. That way you can select an almost exact square easily)
 </p>
 
 
-<div id="orgfd0427d" class="figure">
+<div id="orgd4c842e" class="figure">
 <p><img src="images/claude-compass.png" alt="claude-compass.png" />
 </p>
 </div>
@@ -479,10 +474,9 @@ There should be three directories of icons for different platforms and an <code>
 </p>
 </div>
 </div>
-
-<div id="outline-container-org83af3e8" class="outline-4">
-<h4 id="org83af3e8">Manifest</h4>
-<div class="outline-text-4" id="text-org83af3e8">
+<div id="outline-container-org0fe7a21" class="outline-4">
+<h4 id="org0fe7a21">Manifest</h4>
+<div class="outline-text-4" id="text-org0fe7a21">
 <p>
 We already have the icons in our manifest. We need to add a few other things.
 </p>
@@ -511,7 +505,7 @@ Point to the <code>manifest.json</code> in our <code>index.html</code> by adding
     &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"manifest"</span> <span class="org-variable-name">href</span>=<span class="org-string">"manifest.json"</span>&gt;
     &lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
     &lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"stylesheet"</span>
-          <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
+            <span class="org-variable-name">href</span>=<span class="org-string">"styles.css"</span>&gt;
   &lt;/<span class="org-function-name">head</span>&gt;
   &lt;<span class="org-function-name">body</span>&gt;
     &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"map"</span>&gt;&lt;/<span class="org-function-name">div</span>&gt;
@@ -527,7 +521,7 @@ Now we should have a functioning PWA. If you are using Chrome for example you sh
 </p>
 
 
-<div id="orge096047" class="figure">
+<div id="orgd0edaa4" class="figure">
 <p><img src="images/download-pwa.png" alt="download-pwa.png" />
 </p>
 </div>

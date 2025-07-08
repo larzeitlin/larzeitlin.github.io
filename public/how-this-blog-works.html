@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -206,30 +206,29 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgabf6d52">How this blog works</a>
+<li><a href="#org36c367f">How this blog works</a>
 <ul>
-<li><a href="#org6e40599">Org mode</a></li>
+<li><a href="#orge1562b2">Org mode</a></li>
 </ul>
 </li>
-<li><a href="#org6704ced">Github pages</a></li>
-<li><a href="#org2b98c2a">Why I like this</a></li>
-<li><a href="#orgdae4f5a">Thanks</a></li>
+<li><a href="#org8d04086">Github pages</a></li>
+<li><a href="#org03bd969">Why I like this</a></li>
+<li><a href="#org69e8263">Thanks</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgabf6d52" class="outline-2">
-<h2 id="orgabf6d52">How this blog works</h2>
-<div class="outline-text-2" id="text-orgabf6d52">
+<div id="outline-container-org36c367f" class="outline-2">
+<h2 id="org36c367f">How this blog works</h2>
+<div class="outline-text-2" id="text-org36c367f">
 <p>
 Thought I'd share a few details about it because I've been looking for the right 
 blogging method for me, and finally I've fallen on something that I think will work 
 nicely.
 </p>
 </div>
-
-<div id="outline-container-org6e40599" class="outline-3">
-<h3 id="org6e40599">Org mode</h3>
-<div class="outline-text-3" id="text-org6e40599">
+<div id="outline-container-orge1562b2" class="outline-3">
+<h3 id="orge1562b2">Org mode</h3>
+<div class="outline-text-3" id="text-orge1562b2">
 <p>
 <a href="https://orgmode.org/">org</a> is a markup format that is associated with Emacs. The plaintext is very readable and there are some nice features for it built into Emacs. One such feature is the capability to render it to HTML.
 </p>
@@ -256,8 +255,8 @@ I have a directory called <code>content</code> which I keep all the <code>.org</
 
 <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-html-htmlize-output-type 'css<span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Define the publishing project</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-publish-project-alist
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Define the publishing project
+</span><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-publish-project-alist
       <span class="org-rainbow-delimiters-depth-2">(</span>list
        <span class="org-rainbow-delimiters-depth-3">(</span>list
         <span class="org-string">"orgfiles"</span>
@@ -270,8 +269,8 @@ I have a directory called <code>content</code> which I keep all the <code>.org</
         <span class="org-builtin">:section-numbers</span> nil
         <span class="org-builtin">:time-stamp-file</span> nil<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Generate the site output</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>org-publish-all t<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Generate the site output
+</span><span class="org-rainbow-delimiters-depth-1">(</span>org-publish-all t<span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-rainbow-delimiters-depth-1">(</span>message <span class="org-string">"Build complete!"</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
@@ -279,28 +278,25 @@ I have a directory called <code>content</code> which I keep all the <code>.org</
 </div>
 </div>
 </div>
-
-<div id="outline-container-org6704ced" class="outline-2">
-<h2 id="org6704ced">Github pages</h2>
-<div class="outline-text-2" id="text-org6704ced">
+<div id="outline-container-org8d04086" class="outline-2">
+<h2 id="org8d04086">Github pages</h2>
+<div class="outline-text-2" id="text-org8d04086">
 <p>
 With a few click <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">Github Pages</a> can be set up to serve static content in a repo. It detects the <code>index.html</code>, which is made from the <code>index.org</code> file, which then links to the other files. You can <a href="https://github.com/larzeitlin/blog">see the repo here</a>.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org2b98c2a" class="outline-2">
-<h2 id="org2b98c2a">Why I like this</h2>
-<div class="outline-text-2" id="text-org2b98c2a">
+<div id="outline-container-org03bd969" class="outline-2">
+<h2 id="org03bd969">Why I like this</h2>
+<div class="outline-text-2" id="text-org03bd969">
 <p>
 I've tried various platforms and static site blog generators (Jekyll, Hugo), as well as building more complicated things from scratch in ClojureScript. These all felt they had too much unnecessary complexity. I considered going fully the other way - just writing it directly into HTML. That's tempting but it's just a bit too unpleasant to read while writing, and a little bit less portable if I want to change to another system in the future. This a happy compromise where it's pretty transparent and flexible while staying really simple.
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgdae4f5a" class="outline-2">
-<h2 id="orgdae4f5a">Thanks</h2>
-<div class="outline-text-2" id="text-orgdae4f5a">
+<div id="outline-container-org69e8263" class="outline-2">
+<h2 id="org69e8263">Thanks</h2>
+<div class="outline-text-2" id="text-org69e8263">
 <p>
 This was pretty much copied from the <a href="https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/">System Crafters</a> website. So thanks to David over there for that and all his great content about Emacs.
 </p>

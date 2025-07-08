@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LZ</title>
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -206,22 +206,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org683e6be">Convolution</a>
+<li><a href="#orgd6f8168">Convolution</a>
 <ul>
-<li><a href="#org74f4a1d">What can convolution do for us?</a></li>
-<li><a href="#org2c6f101">Do LTI systems exist?</a></li>
-<li><a href="#orgfbaf12e">OK, lets convolve!</a></li>
-<li><a href="#org882995c">Why do we do the flip?</a></li>
+<li><a href="#orgbbd32b9">What can convolution do for us?</a></li>
+<li><a href="#org322f8ec">Do LTI systems exist?</a></li>
+<li><a href="#orgabd5e9e">OK, lets convolve!</a></li>
+<li><a href="#org939d936">Why do we do the flip?</a></li>
 <li><a href="#impulse-responses">Impulse Responses</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-org683e6be" class="outline-2">
-<h2 id="org683e6be">Convolution</h2>
-<div class="outline-text-2" id="text-org683e6be">
+<div id="outline-container-orgd6f8168" class="outline-2">
+<h2 id="orgd6f8168">Convolution</h2>
+<div class="outline-text-2" id="text-orgd6f8168">
 <p>
 Convolution is, to me at least, a really inspirational subject. Why?
 Because it can initially seem like DSP magic, but it's really not hard
@@ -248,10 +247,9 @@ Now, before we get onto how it works, let's first establish why we'd
 bother.
 </p>
 </div>
-
-<div id="outline-container-org74f4a1d" class="outline-3">
-<h3 id="org74f4a1d">What can convolution do for us?</h3>
-<div class="outline-text-3" id="text-org74f4a1d">
+<div id="outline-container-orgbbd32b9" class="outline-3">
+<h3 id="orgbbd32b9">What can convolution do for us?</h3>
+<div class="outline-text-3" id="text-orgbbd32b9">
 <p>
 Quite a lot actually. We can use convolution to model any <b>linear time
 invariant</b> (LTI) system. Let's explore that term:
@@ -295,13 +293,13 @@ Again, this is shown by A producing the same result as B.
 </p>
 
 
-<div id="org40d9e9f" class="figure">
+<div id="org02a8ab1" class="figure">
 <p><img src="images/linear1.jpg" alt="linear1.jpg" />
 </p>
 </div>
 
 
-<div id="org3e9d55e" class="figure">
+<div id="orgc023bbb" class="figure">
 <p><img src="images/3.1.png" alt="3.1.png" />
 </p>
 </div>
@@ -352,10 +350,9 @@ do so.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org2c6f101" class="outline-3">
-<h3 id="org2c6f101">Do LTI systems exist?</h3>
-<div class="outline-text-3" id="text-org2c6f101">
+<div id="outline-container-org322f8ec" class="outline-3">
+<h3 id="org322f8ec">Do LTI systems exist?</h3>
+<div class="outline-text-3" id="text-org322f8ec">
 <p>
 <i>"What what? You just told us that a whole heap of stuff is LTI!"</i>
 </p>
@@ -378,10 +375,9 @@ stealing the room's soul. Magic, right?
 </p>
 </div>
 </div>
-
-<div id="outline-container-orgfbaf12e" class="outline-3">
-<h3 id="orgfbaf12e">OK, lets convolve!</h3>
-<div class="outline-text-3" id="text-orgfbaf12e">
+<div id="outline-container-orgabd5e9e" class="outline-3">
+<h3 id="orgabd5e9e">OK, lets convolve!</h3>
+<div class="outline-text-3" id="text-orgabd5e9e">
 <p>
 Before going any further, I should point out that the mathematical
 operator for convolution is often drawn as an asterisk: * . This is a
@@ -396,7 +392,7 @@ The definition of discrete-time convolution is as follows:
 </p>
 
 
-<div id="org9447fc4" class="figure">
+<div id="org1e6b7c9" class="figure">
 <p><img src="images/3.2.jpeg" alt="3.2.jpeg" />
 </p>
 </div>
@@ -447,9 +443,10 @@ We keep f where it is, flip g around the y axis, bump it along n steps,
 and then multiply them together point-for-point:
 </p>
 
-<pre class="example">
-(... g[-2]f[-2], g[-1]f[-1], g[0]f[0], g[1]f[1], g[2]f[2] ... etc )
+<div class="org-src-container">
+<pre class="src src-nil">(... g[-2]f[-2], g[-1]f[-1], g[0]f[0], g[1]f[1], g[2]f[2] ... etc )
 </pre>
+</div>
 
 <p>
 and then add together all of those multiplications. That sum gives us
@@ -468,7 +465,7 @@ flipped around 0 on the y axis)</li>
 </ul>
 
 
-<div id="org93d50fa" class="figure">
+<div id="orgfcd3847" class="figure">
 <p><img src="images/3.3.gif" alt="3.3.gif" />
 </p>
 </div>
@@ -486,17 +483,19 @@ For example:
 <p>
 if g was: 
 </p>
-<pre class="example">
-[2, 3, 4]
+<div class="org-src-container">
+<pre class="src src-nil">[2, 3, 4]
 </pre>
+</div>
 
 <p>
 then a infinitely zero-padded g would look like: 
 </p>
 
-<pre class="example">
-[...0, 0, 0, 0, 2, 3, 4, 0, 0, 0, 0, ...]
+<div class="org-src-container">
+<pre class="src src-nil">[...0, 0, 0, 0, 2, 3, 4, 0, 0, 0, 0, ...]
 </pre>
+</div>
 
 <p>
 &#x2026;with ether side stretching off to infinity.
@@ -521,10 +520,9 @@ together.</b>
 </p>
 </div>
 </div>
-
-<div id="outline-container-org882995c" class="outline-3">
-<h3 id="org882995c">Why do we do the flip?</h3>
-<div class="outline-text-3" id="text-org882995c">
+<div id="outline-container-org939d936" class="outline-3">
+<h3 id="org939d936">Why do we do the flip?</h3>
+<div class="outline-text-3" id="text-org939d936">
 <p>
 We need to flip g because we want the <b>beginning of g</b> to meet the
 <b>beginning of f</b> first, and the <b>end of g</b> to meet the <b>end of f</b> last,
@@ -541,7 +539,6 @@ and the other as the input.
 </p>
 </div>
 </div>
-
 <div id="outline-container-impulse-responses" class="outline-3">
 <h3 id="impulse-responses">Impulse Responses</h3>
 <div class="outline-text-3" id="text-impulse-responses">
@@ -558,7 +555,7 @@ points apart from one point where it's value is 1. For example: [0, 1, 0,
 </p>
 
 
-<div id="org81eb1dc" class="figure">
+<div id="org03b1a21" class="figure">
 <p><img src="images/3.4.jpeg" alt="3.4.jpeg" />
 </p>
 </div>
