@@ -206,33 +206,33 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgff6c4e9">Advanced Encryption Standard in Clojure</a>
+<li><a href="#orge4455b1">Advanced Encryption Standard in Clojure</a>
 <ul>
-<li><a href="#org897eb50">Overview</a>
+<li><a href="#orgeabca97">Overview</a>
 <ul>
-<li><a href="#org1bd59b0">Processing per round (except first and last)</a></li>
+<li><a href="#orgcc3b0f6">Processing per round (except first and last)</a></li>
 </ul>
 </li>
-<li><a href="#org6c72d58">Key Expansion</a>
+<li><a href="#orgba8beda">Key Expansion</a>
 <ul>
-<li><a href="#orgd41afa8">s-box</a></li>
+<li><a href="#orgd588a00">s-box</a></li>
 </ul>
 </li>
-<li><a href="#org77dc3f3">Round Constants</a></li>
-<li><a href="#org9bfb37c">Encryption Process</a></li>
-<li><a href="#org59fa53a">Shift Rows</a></li>
-<li><a href="#org721f259">Mix Columns</a></li>
-<li><a href="#orgd9a8224">Galois Fields</a></li>
-<li><a href="#orgd785e4c">Polynomial addition</a></li>
-<li><a href="#org1f8a040">Mix Columns continued</a></li>
+<li><a href="#orgdac9d54">Round Constants</a></li>
+<li><a href="#org228caf4">Encryption Process</a></li>
+<li><a href="#org93a6866">Shift Rows</a></li>
+<li><a href="#org1a7df29">Mix Columns</a></li>
+<li><a href="#orgad0f99c">Galois Fields</a></li>
+<li><a href="#orge4ed40a">Polynomial addition</a></li>
+<li><a href="#org44c7da5">Mix Columns continued</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgff6c4e9" class="outline-2">
-<h2 id="orgff6c4e9">Advanced Encryption Standard in Clojure</h2>
-<div class="outline-text-2" id="text-orgff6c4e9">
+<div id="outline-container-orge4455b1" class="outline-2">
+<h2 id="orge4455b1">Advanced Encryption Standard in Clojure</h2>
+<div class="outline-text-2" id="text-orge4455b1">
 <p>
 The Advanced Encryption Standard (a.k.a Rijndael) is a widely used encryption specification. To learn how it works, and some of the motivation behind the design, I decided to build it in Clojure.
 </p>
@@ -243,9 +243,9 @@ WARNING!! Obviously don't use any of this code, or your own implementation of th
 </p>
 </blockquote>
 </div>
-<div id="outline-container-org897eb50" class="outline-3">
-<h3 id="org897eb50">Overview</h3>
-<div class="outline-text-3" id="text-org897eb50">
+<div id="outline-container-orgeabca97" class="outline-3">
+<h3 id="orgeabca97">Overview</h3>
+<div class="outline-text-3" id="text-orgeabca97">
 <p>
 We're looking at AES-128 in ECB mode. 128 is the key size in bits. ECB (electronic codebook) simply means that each block (16 bytes) of our plaintext will be encrypted statelessly and independently of each other block. It is simpler and less secure than other modes.
 Each block is processed with a number of steps including 11 rounds. Something a little different happens in the first and last rounds. Each round needs its own 16-byte key, but since we only have one 16-byte key to start with, we'll use it to generate more.
@@ -295,9 +295,9 @@ As you've probably noticed, everything is happening in chunks of 16 bytes. When 
 </tbody>
 </table>
 </div>
-<div id="outline-container-org1bd59b0" class="outline-4">
-<h4 id="org1bd59b0">Processing per round (except first and last)</h4>
-<div class="outline-text-4" id="text-org1bd59b0">
+<div id="outline-container-orgcc3b0f6" class="outline-4">
+<h4 id="orgcc3b0f6">Processing per round (except first and last)</h4>
+<div class="outline-text-4" id="text-orgcc3b0f6">
 <ol class="org-ol">
 <li>Replace each byte with another from a fixed lookup-table</li>
 <li>Shift rows</li>
@@ -311,15 +311,15 @@ That’s pretty much it. We’ll deal with the details when they come. Let’s d
 </div>
 </div>
 </div>
-<div id="outline-container-org6c72d58" class="outline-3">
-<h3 id="org6c72d58">Key Expansion</h3>
-<div class="outline-text-3" id="text-org6c72d58">
+<div id="outline-container-orgba8beda" class="outline-3">
+<h3 id="orgba8beda">Key Expansion</h3>
+<div class="outline-text-3" id="text-orgba8beda">
 <p>
 We need to make more keys. The 128-bit key is broken up into 4 32-bit words. These will be used to make a total of 44 words (4 for each of our 11 rounds). words w(0) to w(3) are just the original first 4 words. From there on each new word w(n) is made by XOR-ing w(n - 4) with w(n - 1), except every 4th word, where we use something different. Let’s call this something t.
 </p>
 
 
-<div id="orgd1acc90" class="figure">
+<div id="orgf4da4f4" class="figure">
 <p><img src="images/key-expansion.png" alt="key-expansion.png" />
 </p>
 </div>
@@ -328,9 +328,9 @@ We need to make more keys. The 128-bit key is broken up into 4 32-bit words. The
 We calculate t by rotating the previous word, switching the bytes with different bytes from a lookup table which we’ll call s-box, and then XOR-ing this with a round-constant, which is a set value depending on the round. There is some mathematics behind the s-box, and we’ll also use it again in a later part of this journey, but for now all that matters is that each possible byte can be looked up and will return a different byte, so we can just do this with a Clojure map. We’ll just use integers to represent them. Here you go:
 </p>
 </div>
-<div id="outline-container-orgd41afa8" class="outline-4">
-<h4 id="orgd41afa8">s-box</h4>
-<div class="outline-text-4" id="text-orgd41afa8">
+<div id="outline-container-orgd588a00" class="outline-4">
+<h4 id="orgd588a00">s-box</h4>
+<div class="outline-text-4" id="text-orgd588a00">
 <div class="org-src-container">
 <pre class="src src-clojure"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">def</span> <span class="org-variable-name">s-box</span> 
   <span class="org-rainbow-delimiters-depth-2">{</span>0 99 249 153 121 182 65 131 70 90 218 87 62 178 74 214 164 73 186
@@ -366,9 +366,9 @@ We calculate t by rotating the previous word, switching the bytes with different
 </div>
 </div>
 </div>
-<div id="outline-container-org77dc3f3" class="outline-3">
-<h3 id="org77dc3f3">Round Constants</h3>
-<div class="outline-text-3" id="text-org77dc3f3">
+<div id="outline-container-orgdac9d54" class="outline-3">
+<h3 id="orgdac9d54">Round Constants</h3>
+<div class="outline-text-3" id="text-orgdac9d54">
 <p>
 The round constants are 4-byte words, the 3 least-significant-bytes are 0, and the most-significant byte comes from a list at the index determined by the round number. here is this list:
 </p>
@@ -417,15 +417,15 @@ With the above bits of data we can do the key expansion like so:
 </div>
 </div>
 </div>
-<div id="outline-container-org9bfb37c" class="outline-3">
-<h3 id="org9bfb37c">Encryption Process</h3>
-<div class="outline-text-3" id="text-org9bfb37c">
+<div id="outline-container-org228caf4" class="outline-3">
+<h3 id="org228caf4">Encryption Process</h3>
+<div class="outline-text-3" id="text-org228caf4">
 <p>
 Now we have 11 keys we can get on with the work of encrypting a block. round 0 uses the first key and just consists of a simple XOR. 1 to 9 are as described above, and the final round is the same as those except there is no Mix Columns stage. Why? Because the whole point of Mix Columns is to diffuse, meaning to jumble up the information. If it were used in the final round, it would be trivially reversible, so it has no value.
 </p>
 
 
-<div id="org4f4df70" class="figure">
+<div id="org6beb6c7" class="figure">
 <p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
 </p>
 </div>
@@ -435,15 +435,15 @@ We’ve already looked at the S-box (yes, it’s the same one), so let’s see h
 </p>
 </div>
 </div>
-<div id="outline-container-org59fa53a" class="outline-3">
-<h3 id="org59fa53a">Shift Rows</h3>
-<div class="outline-text-3" id="text-org59fa53a">
+<div id="outline-container-org93a6866" class="outline-3">
+<h3 id="org93a6866">Shift Rows</h3>
+<div class="outline-text-3" id="text-org93a6866">
 <p>
 Each row gets cycled to the left by a set number of steps. Easy.
 </p>
 
 
-<div id="org6c65eb9" class="figure">
+<div id="org7cf559b" class="figure">
 <p><img src="images/shift-rows.png" alt="shift-rows.png" />
 </p>
 </div>
@@ -467,15 +467,15 @@ Each row gets cycled to the left by a set number of steps. Easy.
 </div>
 </div>
 </div>
-<div id="outline-container-org721f259" class="outline-3">
-<h3 id="org721f259">Mix Columns</h3>
-<div class="outline-text-3" id="text-org721f259">
+<div id="outline-container-org1a7df29" class="outline-3">
+<h3 id="org1a7df29">Mix Columns</h3>
+<div class="outline-text-3" id="text-org1a7df29">
 <p>
 Bit more tricky. The main idea is a matrix-vector multiplication, like so:
 </p>
 
 
-<div id="org241338b" class="figure">
+<div id="orgf231462" class="figure">
 <p><img src="images/mix-columns.png" alt="mix-columns.png" />
 </p>
 </div>
@@ -489,9 +489,9 @@ However, there is a catch. we need to keep each element within the range of 1 by
 </p>
 </div>
 </div>
-<div id="outline-container-orgd9a8224" class="outline-3">
-<h3 id="orgd9a8224">Galois Fields</h3>
-<div class="outline-text-3" id="text-orgd9a8224">
+<div id="outline-container-orgad0f99c" class="outline-3">
+<h3 id="orgad0f99c">Galois Fields</h3>
+<div class="outline-text-3" id="text-orgad0f99c">
 <p>
 Now I’ll make all the mathematicians wince with some loose speak. A Finite Field, also called Galois Field, is a field with a finite number of elements. A field, in casual terms, is a set of numbers with some rules that allow us to do addition, subtraction, multiplication, and division without ever leaving that set of numbers. Galois Fields exist where the number of elements equals a prime to the power of some positive integer. We are interested in GF(2<sup>8</sup>) a.k.a GF(256). In order to multiply in this field, we need to remember polynomial maths and write some code that does polynomial arithmetic.
 </p>
@@ -524,15 +524,15 @@ As a polynomial, where x = 2:
 </p>
 
 
-<div id="orgfe7c587" class="figure">
+<div id="org81aa5b9" class="figure">
 <p><img src="images/binary-poly.png" alt="binary-poly.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd785e4c" class="outline-3">
-<h3 id="orgd785e4c">Polynomial addition</h3>
-<div class="outline-text-3" id="text-orgd785e4c">
+<div id="outline-container-orge4ed40a" class="outline-3">
+<h3 id="orge4ed40a">Polynomial addition</h3>
+<div class="outline-text-3" id="text-orge4ed40a">
 <p>
 We’ll use vectors to represent polynomials just like the binary array above.
 </p>
@@ -576,7 +576,7 @@ For example:
 </div>
 
 
-<div id="org1148386" class="figure">
+<div id="org6976ef7" class="figure">
 <p><img src="images/bit-multip.png" alt="bit-multip.png" />
 </p>
 </div>
@@ -672,9 +672,9 @@ Now we have the bits we need for multiplication in GF(2<sup>8</sup>). Galois fie
 </p>
 </div>
 </div>
-<div id="outline-container-org1f8a040" class="outline-3">
-<h3 id="org1f8a040">Mix Columns continued</h3>
-<div class="outline-text-3" id="text-org1f8a040">
+<div id="outline-container-org44c7da5" class="outline-3">
+<h3 id="org44c7da5">Mix Columns continued</h3>
+<div class="outline-text-3" id="text-org44c7da5">
 <p>
 So we had our matrix multiplication laid out above. Now we know how to multiply.
 </p>
@@ -711,7 +711,7 @@ That’s it. We can just tie it all together with a few orchestrating functions.
 </p>
 
 
-<div id="org06a9b5c" class="figure">
+<div id="orgc6bae8a" class="figure">
 <p><img src="images/encrypt-flow.png" alt="encrypt-flow.png" />
 </p>
 </div>

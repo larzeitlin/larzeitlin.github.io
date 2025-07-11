@@ -1,50 +1,17 @@
-/* Root variables for consistent theming */
-:root {
-    --primary-color: #2c3e50;
-    --text-color: #333;
-    --accent-color: #3498db;
-    --max-content-width: 900px;
-    --side-margin: clamp(1rem, 5vw, 3rem);
-    --font-main: Tahoma, system-ui, -apple-system, sans-serif;
-}
-
-html {
-    font-family: var(--font-main);
-    overflow-x: hidden;
-    box-sizing: border-box;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
-}
-
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
 img {
     max-width: 70vw;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
-/* Header styles */
 header {
     position: sticky;
-    padding: 1rem var(--side-margin);
-    margin: 0;
+    padding: 1rem;
+    margin: 5px;
     top: 0;
     right: 0;
     z-index: 1;
     background: white;
-    color: var(--primary-color);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
 }
 
-/* Content area with max-width and centered */
 #content {
     max-width: var(--max-content-width);
     margin: 2rem auto;
@@ -53,68 +20,10 @@ header {
     background: white;
 }
 
-/* Table styles */
-#index-table {
-    width: 100%;
-    margin: 1.5rem 0;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.1);
-    table-layout: fixed;
-}
-
-#index-table th,
-#index-table td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    width: 33.33%;
-}
-
-#index-table th {
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: 600;
-}
-
-#index-table tr:last-child td {
-    border-bottom: none;
-}
-
-#index-table tr:hover {
-    background-color: var(--bg-color);
-}
-
-/* Table of contents */
-#table-of-contents {
-    font-size: 0.9rem;
-    margin: 1.5rem 0;
-    padding: 1.5rem;
-    background: var(--bg-color);
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.1);
-}
-
-/* Hide the contents but keep the heading visible */
-#table-of-contents > *:not(h2) {
-    display: none;
-}
-
-#table-of-contents h2 {
-    margin-top: 0;
-    color: var(--primary-color);
-}
-
-/* Show contents when table of contents is hovered */
-#table-of-contents:hover > * {
-    display: block;
-}
-
-/* Code elements */
 .code-textarea {
     width: 100%;
     font-family: 'Fira Code', monospace;
+    font-size: 0.7em;
     height: 10em;
     padding: 1rem;
     border: 1px solid rgba(0,0,0,0.1);
@@ -128,7 +37,6 @@ header {
     margin: 1.5rem 0;
 }
 
-/* Images */
 .canvas {
     display: block;
     margin: 2rem auto;
@@ -136,69 +44,4 @@ header {
     height: auto;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* Hide title */
-.title {
-    display: none;
-}
-
-/* Links */
-a {
-    color: var(--accent-color);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-a:hover {
-    color: var(--primary-color);
-}
-
-/* Typography enhancements */
-h1, h2, h3, h4, h5, h6 {
-    color: var(--primary-color);
-    line-height: 1.3;
-    margin: 2rem 0 1rem;
-}
-
-p {
-    margin: 1.5rem 0;
-}
-
-/* Media queries */
-@media screen and (max-width: 768px) {
-    :root {
-        --side-margin: 1rem;
-    }
-
-    #content {
-        margin: 1rem auto;
-        border-radius: 0;
-    }
-    
-    #index-table {
-        display: block;
-        overflow-x: auto;
-    }
-
-    #index-table th,
-    #index-table td {
-        padding: 0.75rem;
-        min-width: 120px;
-        width: auto;
-    }
-}
-
-/* Table scroll indicator for mobile */
-@media screen and (max-width: 1024px) {
-    #index-table::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 5px;
-        background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
-        pointer-events: none;
-    }
 }
