@@ -6,19 +6,19 @@ hi im luke this is my blog and stuff i made
 #+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
-| [[https://www.lzeitlin.xyz/astrosystem/][astrosystem]]                            | music, tools                                    | [2025-06-11] |
-| [[https://www.lzeitlin.xyz/awbit/][awbit gallary]]                          | concept, web design                             | [2025-06-08] |
+| [[https://www.lzeitlin.com/astrosystem/][astrosystem]]                            | music, tools                                    | [2025-06-11] |
+| [[https://www.lzeitlin.com/awbit/][awbit gallary]]                          | concept, web design                             | [2025-06-08] |
 | [[file:fish.org][the sea]]                                | writing, poetry                                 | [2025-01-17] |
 | [[file:dwarves.org][the ultimate charm]]                     | writing, fiction                                | [2024-12-30] |
 | [[file:illiad.org][illiad]]                                 | scittle, clojure, classics                      | [2024-11-24] |
 | [[file:guile-http.org][guile: http request with sockets]]       | scheme, networking                              | [2024-11-24] |
 | [[file:cljs-openlayers.org][cljs / openlayers / pwa]]                | clojure, gis                                    | [2024-07-21] |
 | [[https://www.youtube.com/watch?v=VD90BpPGpEo][process]]                                | art, music, video                               | [2024-07-19] |
-| [[http://www.lzeitlin.xyz/vortex-doodle/][scittle and three.js]]                   | clojure, scittle, demo, graphics                | [2024-02-04] |
+| [[http://www.lzeitlin.com/vortex-doodle/][scittle and three.js]]                   | clojure, scittle, demo, graphics                | [2024-02-04] |
 | [[file:wfc.org][wave function collapse]]                 | clojure, computer science, interactive          | [2024-01-15] |
 | [[file:cljs-webgl1.org][webgl in cljs part 1]]                   | clojure, graphics                               | [2023-11-21] |
-| [[http://www.lzeitlin.xyz/laranjas/][particle system]]                        | clojure, demo                                   | [2023-11-19] |
-| [[http://www.lzeitlin.xyz/octohabit/][habit tracker]]                          | clojure, scittle, demo                          | [2023-08-02] |
+| [[http://www.lzeitlin.com/laranjas/][particle system]]                        | clojure, demo                                   | [2023-11-19] |
+| [[http://www.lzeitlin.com/octohabit/][habit tracker]]                          | clojure, scittle, demo                          | [2023-08-02] |
 | [[file:i-ching.org][i ching]]                                | clojure, scittle, interactive                   | [2023-05-25] |
 | [[file:scittle-hilbert-curve.org][scittle hilbert curve]]                  | clojure, computer science, scittle, interactive | [2023-02-22] |
 | [[file:how-this-blog-works.org][how this blog works]]                    | emacs                                           | [2023-02-06] |
@@ -39,7 +39,7 @@ hi im luke this is my blog and stuff i made
 
 
 #+ATTR_HTML: :align center
-[[mailto:luke@lzeitlin.xyz][send me an email]]
+[[mailto:luke@lzeitlin.com][send me an email]]
 
 
 
