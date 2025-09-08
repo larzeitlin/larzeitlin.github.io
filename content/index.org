@@ -6,6 +6,7 @@ hi im luke this is my blog and stuff i made
 #+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
+| [[file:milkweed.org][milkweed and mimicry]]                   | biology                                         | [2025-09-08] |
 | [[https://www.lzeitlin.com/astrosystem/][astrosystem]]                            | music, tools                                    | [2025-06-11] |
 | [[https://www.lzeitlin.com/awbit/][awbit gallary]]                          | concept, web design                             | [2025-06-08] |
 | [[file:fish.org][the sea]]                                | writing, poetry                                 | [2025-01-17] |

@@ -206,63 +206,63 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgeb1f67e">Guile Scheme - Making HTTP requests with sockets</a>
+<li><a href="#orgb466b44">Guile Scheme - Making HTTP requests with sockets</a>
 <ul>
-<li><a href="#org680ce14">Introduction</a></li>
-<li><a href="#org82f1a72">Requirements</a></li>
-<li><a href="#orga8e60c8">Setup</a></li>
-<li><a href="#orgfee5db2">Test the REPL</a></li>
-<li><a href="#org2dbae87">Sockets</a>
+<li><a href="#orgac3d410">Introduction</a></li>
+<li><a href="#orgef59e99">Requirements</a></li>
+<li><a href="#org72096aa">Setup</a></li>
+<li><a href="#org3713c72">Test the REPL</a></li>
+<li><a href="#org92a7179">Sockets</a>
 <ul>
-<li><a href="#orga622aa3">What are sockets?</a></li>
-<li><a href="#org2105427">Making a socket</a></li>
-<li><a href="#org497cc94">Why do we want a TCP stream?</a></li>
-<li><a href="#orga821b80">How does Guile interact with sockets?</a></li>
+<li><a href="#org45b7d39">What are sockets?</a></li>
+<li><a href="#orgac1a5dc">Making a socket</a></li>
+<li><a href="#org6e3f7ee">Why do we want a TCP stream?</a></li>
+<li><a href="#org1a41f6e">How does Guile interact with sockets?</a></li>
 </ul>
 </li>
-<li><a href="#org2f3b7bf">Who do we want to talk to?</a></li>
-<li><a href="#orga5ec20f">Connect the socket</a></li>
-<li><a href="#org82689ee">A test message</a></li>
-<li><a href="#orgd38bd39">Reading responses</a></li>
-<li><a href="#orgca48da9">HTTP Messages</a></li>
-<li><a href="#org319dda4">Read all of the response</a></li>
-<li><a href="#org190aa7e">Outroduction</a></li>
+<li><a href="#org02c5a34">Who do we want to talk to?</a></li>
+<li><a href="#orgb6543ae">Connect the socket</a></li>
+<li><a href="#org11f9875">A test message</a></li>
+<li><a href="#org32a62fc">Reading responses</a></li>
+<li><a href="#org25bfa9b">HTTP Messages</a></li>
+<li><a href="#org078e0cc">Read all of the response</a></li>
+<li><a href="#org1de1946">Outroduction</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgeb1f67e" class="outline-2">
-<h2 id="orgeb1f67e">Guile Scheme - Making HTTP requests with sockets</h2>
-<div class="outline-text-2" id="text-orgeb1f67e">
+<div id="outline-container-orgb466b44" class="outline-2">
+<h2 id="orgb466b44">Guile Scheme - Making HTTP requests with sockets</h2>
+<div class="outline-text-2" id="text-orgb466b44">
 </div>
-<div id="outline-container-org680ce14" class="outline-3">
-<h3 id="org680ce14">Introduction</h3>
-<div class="outline-text-3" id="text-org680ce14">
+<div id="outline-container-orgac3d410" class="outline-3">
+<h3 id="orgac3d410">Introduction</h3>
+<div class="outline-text-3" id="text-orgac3d410">
 <p>
 In this tutorial we are going to make an HTTP request without using the existing web HTTP modules in Guile Scheme using Emacs and geiser mode. This is something I like to do when picking up a new language as it forces me to use modules, learn concepts around strings and sequences, and generally start getting familiar with a language.
 </p>
 </div>
 </div>
-<div id="outline-container-org82f1a72" class="outline-3">
-<h3 id="org82f1a72">Requirements</h3>
-<div class="outline-text-3" id="text-org82f1a72">
+<div id="outline-container-orgef59e99" class="outline-3">
+<h3 id="orgef59e99">Requirements</h3>
+<div class="outline-text-3" id="text-orgef59e99">
 <p>
 To follow along you will need to <a href="https://www.gnu.org/software/guile/">install guile</a>. I recommend using Emacs with <a href="https://github.com/emacsmirror/geiser-guile">geiser-guile</a> installed (although you can use a worse editor if you wish).
 </p>
 </div>
 </div>
-<div id="outline-container-orga8e60c8" class="outline-3">
-<h3 id="orga8e60c8">Setup</h3>
-<div class="outline-text-3" id="text-orga8e60c8">
+<div id="outline-container-org72096aa" class="outline-3">
+<h3 id="org72096aa">Setup</h3>
+<div class="outline-text-3" id="text-org72096aa">
 <p>
 Make a new directory to contain your tutorial project. Add a <code>main.scm</code> file. Copy and paste the code blocks below as we go. Or just do it directly in the REPL. I personally prefer to have a text buffer open with a REPL connected.
 </p>
 </div>
 </div>
-<div id="outline-container-orgfee5db2" class="outline-3">
-<h3 id="orgfee5db2">Test the REPL</h3>
-<div class="outline-text-3" id="text-orgfee5db2">
+<div id="outline-container-org3713c72" class="outline-3">
+<h3 id="org3713c72">Test the REPL</h3>
+<div class="outline-text-3" id="text-org3713c72">
 <p>
 Start geiser mode. Test that is is connected by running <code>geiser-eval-region</code> on the form below
 </p>
@@ -272,21 +272,21 @@ Start geiser mode. Test that is is connected by running <code>geiser-eval-region
 </div>
 </div>
 </div>
-<div id="outline-container-org2dbae87" class="outline-3">
-<h3 id="org2dbae87">Sockets</h3>
-<div class="outline-text-3" id="text-org2dbae87">
+<div id="outline-container-org92a7179" class="outline-3">
+<h3 id="org92a7179">Sockets</h3>
+<div class="outline-text-3" id="text-org92a7179">
 </div>
-<div id="outline-container-orga622aa3" class="outline-4">
-<h4 id="orga622aa3">What are sockets?</h4>
-<div class="outline-text-4" id="text-orga622aa3">
+<div id="outline-container-org45b7d39" class="outline-4">
+<h4 id="org45b7d39">What are sockets?</h4>
+<div class="outline-text-4" id="text-org45b7d39">
 <p>
 Sockets are endpoints for communication between programs inside UNIX systems.
 </p>
 </div>
 </div>
-<div id="outline-container-org2105427" class="outline-4">
-<h4 id="org2105427">Making a socket</h4>
-<div class="outline-text-4" id="text-org2105427">
+<div id="outline-container-orgac1a5dc" class="outline-4">
+<h4 id="orgac1a5dc">Making a socket</h4>
+<div class="outline-text-4" id="text-orgac1a5dc">
 <p>
 Sockets are built into guile's core, so we can go ahead and make one with no additional modules. To demonstrate this, evaluate the form below to make a socket:
 </p>
@@ -309,17 +309,17 @@ The final argument here is 0 for protocol number. This just means default.
 </p>
 </div>
 </div>
-<div id="outline-container-org497cc94" class="outline-4">
-<h4 id="org497cc94">Why do we want a TCP stream?</h4>
-<div class="outline-text-4" id="text-org497cc94">
+<div id="outline-container-org6e3f7ee" class="outline-4">
+<h4 id="org6e3f7ee">Why do we want a TCP stream?</h4>
+<div class="outline-text-4" id="text-org6e3f7ee">
 <p>
 HTTP is built on top of TCP (Transfer Control Protocol). TCP provides a reliable, ordered, connection based protocol, making it useful for communication where you want to ensure that a message is received by a specific recipient. If you have seen diagrams titled something like "TCP/IP Model" before you may recall that TCP is in the Transport layer and HTTP is in the Application layer.
 </p>
 </div>
 </div>
-<div id="outline-container-orga821b80" class="outline-4">
-<h4 id="orga821b80">How does Guile interact with sockets?</h4>
-<div class="outline-text-4" id="text-orga821b80">
+<div id="outline-container-org1a41f6e" class="outline-4">
+<h4 id="org1a41f6e">How does Guile interact with sockets?</h4>
+<div class="outline-text-4" id="text-org1a41f6e">
 <p>
 The Scheme code above just calls the C function <code>socket()</code> which is part of the <a href="https://en.wikipedia.org/wiki/Berkeley_sockets">Berkeley Sockets API</a> which is implemented by the OS.
 </p>
@@ -335,9 +335,9 @@ We are going to reuse the same socket, so let's allocate it to a variable:
 </div>
 </div>
 </div>
-<div id="outline-container-org2f3b7bf" class="outline-3">
-<h3 id="org2f3b7bf">Who do we want to talk to?</h3>
-<div class="outline-text-3" id="text-org2f3b7bf">
+<div id="outline-container-org02c5a34" class="outline-3">
+<h3 id="org02c5a34">Who do we want to talk to?</h3>
+<div class="outline-text-3" id="text-org02c5a34">
 <p>
 Next we need someone to make a request to. We can use <code>getaddrinfo</code>  (again, in Guile's core) to get host and service info. Since it can return multiple results, we take the first with <code>car</code>:
 </p>
@@ -362,9 +362,9 @@ See more attributes here in the <a href="https://www.gnu.org/software/guile/manu
 </p>
 </div>
 </div>
-<div id="outline-container-orga5ec20f" class="outline-3">
-<h3 id="orga5ec20f">Connect the socket</h3>
-<div class="outline-text-3" id="text-orga5ec20f">
+<div id="outline-container-orgb6543ae" class="outline-3">
+<h3 id="orgb6543ae">Connect the socket</h3>
+<div class="outline-text-3" id="text-orgb6543ae">
 <p>
 Now let's connect our socket to the address:
 </p>
@@ -379,9 +379,9 @@ This should return <code>#t</code> if successful. Let's send a basic TCP message
 </p>
 </div>
 </div>
-<div id="outline-container-org82689ee" class="outline-3">
-<h3 id="org82689ee">A test message</h3>
-<div class="outline-text-3" id="text-org82689ee">
+<div id="outline-container-org11f9875" class="outline-3">
+<h3 id="org11f9875">A test message</h3>
+<div class="outline-text-3" id="text-org11f9875">
 <div class="org-src-container">
 <pre class="src src-scheme"><span class="org-rainbow-delimiters-depth-1">(</span>send my-sock <span class="org-string">"test/n"</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </pre>
@@ -405,9 +405,9 @@ This responds with the number of characters send (+ the null terminator).
 </p>
 </div>
 </div>
-<div id="outline-container-orgd38bd39" class="outline-3">
-<h3 id="orgd38bd39">Reading responses</h3>
-<div class="outline-text-3" id="text-orgd38bd39">
+<div id="outline-container-org32a62fc" class="outline-3">
+<h3 id="org32a62fc">Reading responses</h3>
+<div class="outline-text-3" id="text-org32a62fc">
 <p>
 Now let's try to receive some data back. In UNIX, pretty much everything is just a file, including sockets. So to read from a socket we will use the file associated with it. We open a file of <code>my-sock</code> and then read a line from it.
 </p>
@@ -437,9 +437,9 @@ We should find that the <code>connection is reset by peer</code>, this is becaus
 </p>
 </div>
 </div>
-<div id="outline-container-orgca48da9" class="outline-3">
-<h3 id="orgca48da9">HTTP Messages</h3>
-<div class="outline-text-3" id="text-orgca48da9">
+<div id="outline-container-org25bfa9b" class="outline-3">
+<h3 id="org25bfa9b">HTTP Messages</h3>
+<div class="outline-text-3" id="text-org25bfa9b">
 <p>
 Let's try with an HTTP request, which can have a basic format as follows:
 </p>
@@ -473,9 +473,9 @@ If this succeeds then we should be able to read a line from the file:
 </div>
 </div>
 </div>
-<div id="outline-container-org319dda4" class="outline-3">
-<h3 id="org319dda4">Read all of the response</h3>
-<div class="outline-text-3" id="text-org319dda4">
+<div id="outline-container-org078e0cc" class="outline-3">
+<h3 id="org078e0cc">Read all of the response</h3>
+<div class="outline-text-3" id="text-org078e0cc">
 <p>
 Instead we would like to take from the response until we hit the End Of File. We will use <code>unfold</code> to walk through the lines until we get to an EOF.
 </p>
@@ -505,9 +505,9 @@ We start by reading a line, check if it's an <code>eof</code>, if not then apply
 </div>
 </div>
 </div>
-<div id="outline-container-org190aa7e" class="outline-3">
-<h3 id="org190aa7e">Outroduction</h3>
-<div class="outline-text-3" id="text-org190aa7e">
+<div id="outline-container-org1de1946" class="outline-3">
+<h3 id="org1de1946">Outroduction</h3>
+<div class="outline-text-3" id="text-org1de1946">
 <p>
 Thanks for following along, I hope it's helpful for you to get up and running en Guile Scheme. ✌️
 </p>
