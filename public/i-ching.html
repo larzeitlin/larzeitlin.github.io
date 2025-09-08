@@ -206,14 +206,14 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf91000d">I Ching</a></li>
-<li><a href="#org6e58819">Hexagrams</a></li>
-<li><a href="#org15bcdc2">Hexagram selection</a></li>
-<li><a href="#org6349973">Yarrow stalks algorithm</a>
+<li><a href="#orgfe89017">I Ching</a></li>
+<li><a href="#orgd5dc72a">Hexagrams</a></li>
+<li><a href="#org3233889">Hexagram selection</a></li>
+<li><a href="#org8b8ee99">Yarrow stalks algorithm</a>
 <ul>
-<li><a href="#orgbaf3cab">Process</a></li>
-<li><a href="#org18b6a79">To generate a hexagram:</a></li>
-<li><a href="#orgfacb9d4">Implementation Notes</a></li>
+<li><a href="#org55d1131">Process</a></li>
+<li><a href="#orgd275777">To generate a hexagram:</a></li>
+<li><a href="#org76ab60f">Implementation Notes</a></li>
 </ul>
 </li>
 </ul>
@@ -223,9 +223,9 @@
         type="application/javascript"></script>
 <script type="application/x-scittle">
 </script>
-<div id="outline-container-orgf91000d" class="outline-2">
-<h2 id="orgf91000d">I Ching</h2>
-<div class="outline-text-2" id="text-orgf91000d">
+<div id="outline-container-orgfe89017" class="outline-2">
+<h2 id="orgfe89017">I Ching</h2>
+<div class="outline-text-2" id="text-orgfe89017">
 <p>
 The I Ching is a divination method associated with a book of symbols. This is the <code>Book of Changes</code>. You could think about it as randomly selected blobs of advice from a big book of advice. 
 </p>
@@ -235,9 +235,9 @@ Let's make an I Ching simulation step-by-step.
 </p>
 </div>
 </div>
-<div id="outline-container-org6e58819" class="outline-2">
-<h2 id="org6e58819">Hexagrams</h2>
-<div class="outline-text-2" id="text-org6e58819">
+<div id="outline-container-orgd5dc72a" class="outline-2">
+<h2 id="orgd5dc72a">Hexagrams</h2>
+<div class="outline-text-2" id="text-orgd5dc72a">
 <p>
 Each symbol is a hexagram. A hexagram is a binary array of 6 digits. (Therefore 2<sup>6</sup>=64 different hexagrams). Each is represented vertically with horizontal lines ether complete (yang) or broken (yin). 
 </p>
@@ -251,24 +251,24 @@ These are the first 6 hexagrams of the <a href="https://en.wikipedia.org/wiki/Ki
 </p>
 </div>
 </div>
-<div id="outline-container-org15bcdc2" class="outline-2">
-<h2 id="org15bcdc2">Hexagram selection</h2>
-<div class="outline-text-2" id="text-org15bcdc2">
+<div id="outline-container-org3233889" class="outline-2">
+<h2 id="org3233889">Hexagram selection</h2>
+<div class="outline-text-2" id="text-org3233889">
 <p>
 To choose a hexagram some randomization method is needed. It is common to use ether coins or sticks (traditionally yarrow stalks). These two methods yield different probabilities. Here we will use the yarrow stalks method, which is older and more elaborate.
 </p>
 </div>
 </div>
-<div id="outline-container-org6349973" class="outline-2">
-<h2 id="org6349973">Yarrow stalks algorithm</h2>
-<div class="outline-text-2" id="text-org6349973">
+<div id="outline-container-org8b8ee99" class="outline-2">
+<h2 id="org8b8ee99">Yarrow stalks algorithm</h2>
+<div class="outline-text-2" id="text-org8b8ee99">
 <p>
 There is quite a lot of ceremony (activity which does not effect the result) in this method. It would be simplest to just sample from the probabilities and generate the hexagram like that. Instead we are going to simulate it step-by-step, just for fun.
 </p>
 </div>
-<div id="outline-container-orgbaf3cab" class="outline-3">
-<h3 id="orgbaf3cab">Process</h3>
-<div class="outline-text-3" id="text-orgbaf3cab">
+<div id="outline-container-org55d1131" class="outline-3">
+<h3 id="org55d1131">Process</h3>
+<div class="outline-text-3" id="text-org55d1131">
 <p>
 We generate two hexagrams in parallel. We go line by line from the bottom to the top. Since we generate two at the same time, each "line" can have four different states: 
 </p>
@@ -288,9 +288,9 @@ There are multiple versions of this method. I've chosen what appeared to be the 
 </p>
 </div>
 </div>
-<div id="outline-container-org18b6a79" class="outline-3">
-<h3 id="org18b6a79">To generate a hexagram:</h3>
-<div class="outline-text-3" id="text-org18b6a79">
+<div id="outline-container-orgd275777" class="outline-3">
+<h3 id="orgd275777">To generate a hexagram:</h3>
+<div class="outline-text-3" id="text-orgd275777">
 <p>
 We are going to make various piles of stalks. I will refer to these with single character names (<code>l</code>, <code>r</code>, <code>d</code>, etc). We also want to recall intermediary results that go into the final result. These will be referred to as <code>result-a</code>, <code>result-b</code>, <code>result-c</code>. For each hexagram we need to generate 6 lines. Each line is attained from the sum of three results.
 </p>
@@ -314,9 +314,9 @@ We are going to make various piles of stalks. I will refer to these with single 
 </ol>
 </div>
 </div>
-<div id="outline-container-orgfacb9d4" class="outline-3">
-<h3 id="orgfacb9d4">Implementation Notes</h3>
-<div class="outline-text-3" id="text-orgfacb9d4">
+<div id="outline-container-org76ab60f" class="outline-3">
+<h3 id="org76ab60f">Implementation Notes</h3>
+<div class="outline-text-3" id="text-org76ab60f">
 <p>
 The algorithm explained above is implemented here in ClojureScript using Scittle to run it in the browser. The code is editable do feel free to tweak it and play around with it. Pseudo-randomness is added at the approx half splitting point in step 3. To make this somewhat realistic we sample from a normal distribution using a Box-Muller transform, and then round to the nearest integer to create an offset to the split.
 </p>
