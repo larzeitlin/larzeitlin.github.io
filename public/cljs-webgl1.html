@@ -206,53 +206,53 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org68ac297">WebGL in ClojureScript - part one</a>
+<li><a href="#org7c216cf">WebGL in ClojureScript - part one</a>
 <ul>
-<li><a href="#org6fc2557">What is it?</a></li>
+<li><a href="#org3eadb65">What is it?</a></li>
 </ul>
 </li>
-<li><a href="#orge235472">Getting set up</a>
+<li><a href="#org852077f">Getting set up</a>
 <ul>
-<li><a href="#org400dbbd">Canvas</a></li>
-<li><a href="#orgceb46e9">Setting the dimensions</a></li>
+<li><a href="#orgfda7efa">Canvas</a></li>
+<li><a href="#org4a071bc">Setting the dimensions</a></li>
 </ul>
 </li>
-<li><a href="#org43b42e7">Shader program</a>
+<li><a href="#orgdfa362a">Shader program</a>
 <ul>
-<li><a href="#org62ee6a2">Vertex Shader</a></li>
-<li><a href="#orgeeb19af">Fragment Shader</a></li>
-<li><a href="#orgcea7717">Program</a></li>
+<li><a href="#org5dd9ce9">Vertex Shader</a></li>
+<li><a href="#org969609e">Fragment Shader</a></li>
+<li><a href="#org27a8220">Program</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org68ac297" class="outline-2">
-<h2 id="org68ac297">WebGL in ClojureScript - part one</h2>
-<div class="outline-text-2" id="text-org68ac297">
+<div id="outline-container-org7c216cf" class="outline-2">
+<h2 id="org7c216cf">WebGL in ClojureScript - part one</h2>
+<div class="outline-text-2" id="text-org7c216cf">
 <p>
 This is a tutorial in using webGL in ClojureScript, mainly for my own reference as I go through it, but if it helps someone else then that's fab too.
 </p>
 </div>
-<div id="outline-container-org6fc2557" class="outline-3">
-<h3 id="org6fc2557">What is it?</h3>
-<div class="outline-text-3" id="text-org6fc2557">
+<div id="outline-container-org3eadb65" class="outline-3">
+<h3 id="org3eadb65">What is it?</h3>
+<div class="outline-text-3" id="text-org3eadb65">
 <p>
 WebGL a graphics rendering API for JavaScript. It it based on OpenGL and it is GPU accelerated. Like OpenGL, webGL code is split between the shader code, which is generally run on the GPU and written in a dialect of C called GLSL, and the orchestration code. Below is a hello world-y basic project setup.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orge235472" class="outline-2">
-<h2 id="orge235472">Getting set up</h2>
-<div class="outline-text-2" id="text-orge235472">
+<div id="outline-container-org852077f" class="outline-2">
+<h2 id="org852077f">Getting set up</h2>
+<div class="outline-text-2" id="text-org852077f">
 <p>
 You have some CLJS project set up. I reccomend you have a running browser REPL connected to your editor so that you can have all the live coding, fast-feedback goodness of that.
 </p>
 </div>
-<div id="outline-container-org400dbbd" class="outline-3">
-<h3 id="org400dbbd">Canvas</h3>
-<div class="outline-text-3" id="text-org400dbbd">
+<div id="outline-container-orgfda7efa" class="outline-3">
+<h3 id="orgfda7efa">Canvas</h3>
+<div class="outline-text-3" id="text-orgfda7efa">
 <p>
 We need a canvas element in the body of the html document. Give it an id so we can grab it. I called it <code>app</code> out of habit.
 </p>
@@ -273,9 +273,9 @@ Don't worry about the <code>width</code> and <code>height</code> for now. In clo
 </div>
 </div>
 </div>
-<div id="outline-container-orgceb46e9" class="outline-3">
-<h3 id="orgceb46e9">Setting the dimensions</h3>
-<div class="outline-text-3" id="text-orgceb46e9">
+<div id="outline-container-org4a071bc" class="outline-3">
+<h3 id="org4a071bc">Setting the dimensions</h3>
+<div class="outline-text-3" id="text-org4a071bc">
 <p>
 let's make a function to reset dimensions of both the canvas itself and the webgl context. Everything will be full window. We can call it whenever the window is resized.
 </p>
@@ -303,9 +303,9 @@ Okay let's stick it in a <code>-main</code>:
 </div>
 </div>
 </div>
-<div id="outline-container-org43b42e7" class="outline-2">
-<h2 id="org43b42e7">Shader program</h2>
-<div class="outline-text-2" id="text-org43b42e7">
+<div id="outline-container-orgdfa362a" class="outline-2">
+<h2 id="orgdfa362a">Shader program</h2>
+<div class="outline-text-2" id="text-orgdfa362a">
 <p>
 We will be making a <code>vertex shader</code> and a <code>fragment shader</code>. These two will be combined together into a <code>program</code>. We'll get into what these mean shortly. First we are going to make a convenience function that we can use to compile our shaders:
 </p>
@@ -323,9 +323,9 @@ We will be making a <code>vertex shader</code> and a <code>fragment shader</code
 </pre>
 </div>
 </div>
-<div id="outline-container-org62ee6a2" class="outline-3">
-<h3 id="org62ee6a2">Vertex Shader</h3>
-<div class="outline-text-3" id="text-org62ee6a2">
+<div id="outline-container-org5dd9ce9" class="outline-3">
+<h3 id="org5dd9ce9">Vertex Shader</h3>
+<div class="outline-text-3" id="text-org5dd9ce9">
 <p>
 Our vertex shader's job is to set the the value of <code>gl_position</code> for each <code>vertex</code> that we want to draw. This one is basically just a pass-through, it doesn't do anything other than read an attribute and set <code>gl_position</code> with it.
 </p>
@@ -351,9 +351,9 @@ void main() {
 </div>
 </div>
 </div>
-<div id="outline-container-orgeeb19af" class="outline-3">
-<h3 id="orgeeb19af">Fragment Shader</h3>
-<div class="outline-text-3" id="text-orgeeb19af">
+<div id="outline-container-org969609e" class="outline-3">
+<h3 id="org969609e">Fragment Shader</h3>
+<div class="outline-text-3" id="text-org969609e">
 <p>
 The fragment shader sets the colour at each vertex. The space on a face in between the verticies will be interpolated between the vertex colours. In our case we are just going to set it to a fixed colour (r, g, b, a).
 </p>
@@ -376,9 +376,9 @@ void main() {
 </div>
 </div>
 </div>
-<div id="outline-container-orgcea7717" class="outline-3">
-<h3 id="orgcea7717">Program</h3>
-<div class="outline-text-3" id="text-orgcea7717">
+<div id="outline-container-org27a8220" class="outline-3">
+<h3 id="org27a8220">Program</h3>
+<div class="outline-text-3" id="text-org27a8220">
 <p>
 Now we build a program from our shaders.
 </p>
