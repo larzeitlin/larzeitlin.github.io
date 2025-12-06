@@ -6,6 +6,7 @@ hi im luke this is my blog and stuff i made
 #+ATTR_HTML: :align center :id index-table
 | post                                   | tags                                            | date         |
 |----------------------------------------+-------------------------------------------------+--------------|
+| [[https://clojurecivitas.github.io/physics/numerical_methods.html][numerical methods for advection]]        | pdes, maths                                     | [2025-12-06] |
 | [[https://clojurecivitas.github.io/gis/geotiff.html][geotiff in jvm clojure]]                 | remote sensing, clojure, gis                    | [2025-11-20] |
 | [[https://clojurecivitas.github.io/earth_observation/waterquality.html][remote sensing water]]                   | earth observation, water quality                | [2025-09-28] |
 | [[file:milkweed.org][milkweed and mimicry]]                   | biology                                         | [2025-09-08] |
