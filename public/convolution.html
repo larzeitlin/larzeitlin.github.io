@@ -206,21 +206,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4d68a6c">Convolution</a>
+<li><a href="#orga2dcf20">Convolution</a>
 <ul>
-<li><a href="#org53f951d">What can convolution do for us?</a></li>
-<li><a href="#org2933f60">Do LTI systems exist?</a></li>
-<li><a href="#org4f0f671">OK, lets convolve!</a></li>
-<li><a href="#org26036f6">Why do we do the flip?</a></li>
+<li><a href="#org4a884eb">What can convolution do for us?</a></li>
+<li><a href="#orge1f261a">Do LTI systems exist?</a></li>
+<li><a href="#org31c3e97">OK, lets convolve!</a></li>
+<li><a href="#orgd02f560">Why do we do the flip?</a></li>
 <li><a href="#impulse-responses">Impulse Responses</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4d68a6c" class="outline-2">
-<h2 id="org4d68a6c">Convolution</h2>
-<div class="outline-text-2" id="text-org4d68a6c">
+<div id="outline-container-orga2dcf20" class="outline-2">
+<h2 id="orga2dcf20">Convolution</h2>
+<div class="outline-text-2" id="text-orga2dcf20">
 <p>
 Convolution is, to me at least, a really inspirational subject. Why?
 Because it can initially seem like DSP magic, but it's really not hard
@@ -247,9 +247,9 @@ Now, before we get onto how it works, let's first establish why we'd
 bother.
 </p>
 </div>
-<div id="outline-container-org53f951d" class="outline-3">
-<h3 id="org53f951d">What can convolution do for us?</h3>
-<div class="outline-text-3" id="text-org53f951d">
+<div id="outline-container-org4a884eb" class="outline-3">
+<h3 id="org4a884eb">What can convolution do for us?</h3>
+<div class="outline-text-3" id="text-org4a884eb">
 <p>
 Quite a lot actually. We can use convolution to model any <b>linear time
 invariant</b> (LTI) system. Let's explore that term:
@@ -293,13 +293,13 @@ Again, this is shown by A producing the same result as B.
 </p>
 
 
-<div id="org2882df1" class="figure">
+<div id="org61cde70" class="figure">
 <p><img src="images/linear1.jpg" alt="linear1.jpg" />
 </p>
 </div>
 
 
-<div id="org1535992" class="figure">
+<div id="org580ee81" class="figure">
 <p><img src="images/3.1.png" alt="3.1.png" />
 </p>
 </div>
@@ -350,9 +350,9 @@ do so.
 </p>
 </div>
 </div>
-<div id="outline-container-org2933f60" class="outline-3">
-<h3 id="org2933f60">Do LTI systems exist?</h3>
-<div class="outline-text-3" id="text-org2933f60">
+<div id="outline-container-orge1f261a" class="outline-3">
+<h3 id="orge1f261a">Do LTI systems exist?</h3>
+<div class="outline-text-3" id="text-orge1f261a">
 <p>
 <i>"What what? You just told us that a whole heap of stuff is LTI!"</i>
 </p>
@@ -375,9 +375,9 @@ stealing the room's soul. Magic, right?
 </p>
 </div>
 </div>
-<div id="outline-container-org4f0f671" class="outline-3">
-<h3 id="org4f0f671">OK, lets convolve!</h3>
-<div class="outline-text-3" id="text-org4f0f671">
+<div id="outline-container-org31c3e97" class="outline-3">
+<h3 id="org31c3e97">OK, lets convolve!</h3>
+<div class="outline-text-3" id="text-org31c3e97">
 <p>
 Before going any further, I should point out that the mathematical
 operator for convolution is often drawn as an asterisk: * . This is a
@@ -392,7 +392,7 @@ The definition of discrete-time convolution is as follows:
 </p>
 
 
-<div id="orgaf7355b" class="figure">
+<div id="org096ff0e" class="figure">
 <p><img src="images/3.2.jpeg" alt="3.2.jpeg" />
 </p>
 </div>
@@ -465,7 +465,7 @@ flipped around 0 on the y axis)</li>
 </ul>
 
 
-<div id="org86b85f4" class="figure">
+<div id="orgb5cd761" class="figure">
 <p><img src="images/3.3.gif" alt="3.3.gif" />
 </p>
 </div>
@@ -520,9 +520,9 @@ together.</b>
 </p>
 </div>
 </div>
-<div id="outline-container-org26036f6" class="outline-3">
-<h3 id="org26036f6">Why do we do the flip?</h3>
-<div class="outline-text-3" id="text-org26036f6">
+<div id="outline-container-orgd02f560" class="outline-3">
+<h3 id="orgd02f560">Why do we do the flip?</h3>
+<div class="outline-text-3" id="text-orgd02f560">
 <p>
 We need to flip g because we want the <b>beginning of g</b> to meet the
 <b>beginning of f</b> first, and the <b>end of g</b> to meet the <b>end of f</b> last,
@@ -555,7 +555,7 @@ points apart from one point where it's value is 1. For example: [0, 1, 0,
 </p>
 
 
-<div id="org5f67a43" class="figure">
+<div id="org7f38ae9" class="figure">
 <p><img src="images/3.4.jpeg" alt="3.4.jpeg" />
 </p>
 </div>
