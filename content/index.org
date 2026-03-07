@@ -44,5 +44,4 @@ hi im luke this is my blog and stuff i made
 #+ATTR_HTML: :align center
 [[mailto:luke@lzeitlin.com][send me an email]]
 
-
-
+Send me bitcoin: bc1qkhsmd70p2ggmdzfnfp40tp707lla8tqc7y6cay
